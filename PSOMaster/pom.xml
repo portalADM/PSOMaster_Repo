@@ -10,6 +10,7 @@
 	<properties>
 		<springframework.version>4.2.0.RELEASE</springframework.version>
 		<jackson.version>2.5.3</jackson.version>
+		<log4j.version>1.2.17</log4j.version>
 	</properties>
 
 	<dependencies>
@@ -39,6 +40,14 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		
+		<!-- Log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
@@ -59,7 +68,7 @@
 					<version>2.4</version>
 					<configuration>
 						<warSourceDirectory>src/main/webapp</warSourceDirectory>
-						<warName>Spring4MVCAngularJSExample</warName>
+						<warName>PSOMaster</warName>
 						<failOnMissingWebXml>false</failOnMissingWebXml>
 					</configuration>
 				</plugin>
