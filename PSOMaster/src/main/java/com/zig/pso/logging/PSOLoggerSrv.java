@@ -1,5 +1,10 @@
-/**
+/************************************************************************************************************
+ * Class Name :  PSOLoggerSrv.java
+ * Description:  This class prints Info,Errors and Debug messages in log files.
  * 
+ * Author     :  Nilesh Patil
+ * Date       :  Jun 26, 2016
+ * **********************************************************************************************************
  */
 package com.zig.pso.logging;
 
@@ -9,9 +14,6 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-/**
- * @author Nilesh Patil
- */
 public class PSOLoggerSrv
 {
 

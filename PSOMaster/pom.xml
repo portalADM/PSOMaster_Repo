@@ -41,13 +41,22 @@
 			<version>1.2</version>
 		</dependency>
 		
+		<!-- oracle -->
+		<dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.3.0</version>
+        </dependency>
+
 		<!-- Log4j -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
+
 		
+
 	</dependencies>
 
 	<build>
