@@ -1,4 +1,4 @@
-package com.zig.pso.configuration;
+package com.zig.pso.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
