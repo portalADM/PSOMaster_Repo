@@ -1,6 +1,6 @@
 /************************************************************************************************************
  * Class Name :  OrderInfoManagerDAOImpl.java
- * Description:  This class implments methods for order related operations.
+ * Description:  This class implements methods for order related operations.
  * 
  * Author     :  Nilesh Patil
  * Date       :  Jun 26, 2016

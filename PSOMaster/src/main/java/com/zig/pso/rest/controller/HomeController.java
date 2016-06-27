@@ -14,10 +14,11 @@ import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.service.OrderInfoManagerService;
 
 @RestController
-@RequestMapping("/")
 public class HomeController
 {
-
+    /*
+     * Order Service injection
+     */
     @Autowired
     OrderInfoManagerService orderService;
 
@@ -31,4 +32,5 @@ public class HomeController
         nameList = orderService.getOrderIds();
         return new ResponseEntity<List<String>>(nameList, HttpStatus.OK);
     }
+
 }
