@@ -1,4 +1,4 @@
-var module = angular.module("PSOMaster", [ 'ngRoute','ngSanitize']);
+var module = angular.module("PSOMaster", [ 'ngRoute','ngSanitize','chart.js']);
 
 module.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/dashboard', {
