@@ -108,57 +108,5 @@
 
 	</div>
 
-
-
-
-	<div id="updateOrder-modal" class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Update Order Status</h4>
-				</div>
-				<div class="modal-body">
-					<div class="well" id="">
-						<form class="form-horizontal">
-							<div class="form-group">
-								<label class="col-lg-4 control-label textAlgnInit">Order</label>
-								<div class="col-lg-8">
-									<label class="col-lg-12 control-label textAlgnInit">25636589</label>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-lg-4 control-label textAlgnInit">Current Status</label>
-								<div class="col-lg-8">
-									<label class="col-lg-12 control-label textAlgnInit">ORFI</label>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="select" class="col-lg-4 control-label textAlgnInit">New
-									Status</label>
-								<div class="col-lg-8">
-									<select class="form-control" id="select">
-										<option value="OPEN">OPEN</option>
-										<option value="PDRS">PDRS</option>
-										<option value="ACTI">ACTI</option>
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-lg-4"></div>
-			                    <div class="col-lg-8">
-			                      <button type="reset" class="btn btn-default">Cancel</button>
-			                      <button type="submit" class="btn btn-primary">Submit</button>
-			                    </div>
-			                  </div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-
 </body>
 </html>
