@@ -26,4 +26,14 @@ public class OrderQueries
     {
         return orderProp.getProperty("order.orderlist");
     }
+    
+    public static String getPortalOrderData()
+    {
+        return orderProp.getProperty("order.portalOrder");
+    }
+    
+    public static String getShipmentOrderData()
+    {
+        return orderProp.getProperty("order.shipOrder");
+    }
 }

@@ -10,10 +10,14 @@ package com.zig.pso.dao;
 
 import java.util.ArrayList;
 
+import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
+
 /**
  * 
  */
 public interface OrderInfoManagerDAO
 {
     public ArrayList<String> getOrderIds();
+    
+    public PortalOrderMasterResponseBean getPortalDataInfo(String OrderId);
 }

@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zig.pso.dao.OrderInfoManagerDAO;
+import com.zig.pso.dao.OrderInfoManagerDAOImpl;
+import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 
 @Service
 public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
@@ -35,5 +37,16 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
 
         return orderList;
     }
+    
+    
+    @Override
+    public PortalOrderMasterResponseBean getPortalOrderDataInfo(String OrderId )
+	{
+    	PortalOrderMasterResponseBean portalOrderDetail=new PortalOrderMasterResponseBean();
+    	OrderInfoManagerDAO detail= new OrderInfoManagerDAOImpl();
+		portalOrderDetail=detail.getPortalDataInfo(OrderId);		
+		return portalOrderDetail;
+		
+	}
 
 }
