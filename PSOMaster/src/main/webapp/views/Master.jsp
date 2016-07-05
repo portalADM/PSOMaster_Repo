@@ -52,6 +52,7 @@
     <script src="resources/js/app.js"></script>
     <script src="resources/js/controller/DashboardController.js"></script>
     <script src="resources/js/controller/OrderMasterController.js"></script>
+    <script src="resources/js/controller/UpdateOrderController.js"></script>
     
     
   <script type="text/javascript">

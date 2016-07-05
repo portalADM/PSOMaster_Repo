@@ -5,3 +5,42 @@
 .noPadBtm{
 	padding-bottom:0px !important;
 }
+
+.textAignLeft{
+	text-align: left !important;
+}
+
+.floatRight{
+	float: right !important;
+}
+
+.panelHeaderIcon{
+	    margin-right: 23px;
+    color: #317eac;
+}
+
+
+
+.Width30Per{
+       width: 30% !important;
+}
+
+.cursorPointer{
+       cursor: pointer !important;
+}
+
+.noFloat{
+           float: none !important;
+}
+
+.mar10{
+           margin: 10px !important;
+}
+
+.noPadLeft{
+	padding-left: 0px !important;
+}
+
+.textAlgnInit{
+           text-align: initial !important;
+}
