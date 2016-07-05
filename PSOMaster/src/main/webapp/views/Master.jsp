@@ -46,13 +46,15 @@
     <script src="resources/js/libs/bootstrap.min.js"></script>
     <script src="resources/js/libs/bootswatch.js"></script>
     <script src="resources/js/libs/jquery-ui.js"></script>
-    
+    <script src="resources/js/libs/charts/Chart.js"></script>
+	<script src="resources/js/libs/charts/angular-chart.js"></script>
     
     <!-- Application Modules Import -->
     <script src="resources/js/app.js"></script>
     <script src="resources/js/controller/DashboardController.js"></script>
     <script src="resources/js/controller/OrderMasterController.js"></script>
     <script src="resources/js/controller/UpdateOrderController.js"></script>
+    <script src="resources/js/controller/StuckOrderDetailsController.js"></script>
     
     
   <script type="text/javascript">

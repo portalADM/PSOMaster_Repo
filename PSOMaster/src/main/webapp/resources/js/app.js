@@ -17,6 +17,10 @@ module.config([ '$routeProvider', function($routeProvider) {
 		templateUrl : 'views/sendEmail.jsp',
 		controller : 'OrderMasterController'
 	})
+	.when('/StuckOrderDetails/:orderStatus', {
+		templateUrl : 'views/StuckOrderDetails.jsp',
+		controller : 'StuckOrderDetailsController'
+	})
 	.otherwise({
 		redirectTo : '/dashboard'
 	});
