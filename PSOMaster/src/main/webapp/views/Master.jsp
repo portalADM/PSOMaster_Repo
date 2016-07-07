@@ -56,6 +56,8 @@
     <script src="resources/js/controller/UpdateOrderController.js"></script>
     <script src="resources/js/controller/StuckOrderDetailsController.js"></script>
     
+    <script src="resources/js/service/OrderService.js"></script>
+    
     
   <script type="text/javascript">
 /* <![CDATA[ */

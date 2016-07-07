@@ -20,9 +20,9 @@
 				<div class="bs-component">
 					<form class="navbar-form navbar-left" role="search">
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Order Id">
+							<input type="text" class="form-control" ng-model="orderID" placeholder="Order Id">
 						</div>
-						<button type="submit" class="btn btn-default">Submit</button>
+						<button type="submit" class="btn btn-default" ng-click="searchOrderDetails()">Submit</button>
 					</form>
 
 				</div>
@@ -32,7 +32,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="bs-component">
-					<h3>Order : 26598536 
+					<h3>Order : {{portalOrderDetails.orderId}} 
 					<a href="#updateOrder"><span class="glyphicon glyphicon-edit floatRight panelHeaderIcon" aria-hidden="true"></span></a>  
 					<a href="#sendEmail"><span class="glyphicon glyphicon-envelope floatRight panelHeaderIcon" aria-hidden="true"></a></span>
 					</h3> 
@@ -60,7 +60,7 @@
 									<label class="col-lg-6 control-label textAignLeft">Order ID :</label>
 									<div class="col-lg-6">
 										<div class="radio">
-											<label> 26598536 </label>
+											<label> {{portalOrderDetails.orderId}} </label>
 										</div>
 									</div>
 								</div>
@@ -68,7 +68,7 @@
 									<label class="col-lg-6 control-label textAignLeft">Order Type :</label>
 									<div class="col-lg-6">
 										<div class="radio">
-											<label> BYOD </label>
+											<label> {{portalOrderDetails.orderType}} </label>
 										</div>
 									</div>
 								</div>
@@ -76,7 +76,7 @@
 									<label class="col-lg-6 control-label textAignLeft">Status Code :</label>
 									<div class="col-lg-6">
 										<div class="radio">
-											<label> ORFI </label>
+											<label> {{portalOrderDetails.status}}  </label>
 										</div>
 									</div>
 								</div>
@@ -84,7 +84,7 @@
 									<label class="col-lg-6 control-label textAignLeft">Order Created Date :</label>
 									<div class="col-lg-6">
 										<div class="radio">
-											<label> 06/05/2016 </label>
+											<label>{{portalOrderDetails.sys_creation_date}}</label>
 										</div>
 									</div>
 								</div>
@@ -92,7 +92,7 @@
 									<label class="col-lg-6 control-label textAignLeft">Last update Date :</label>
 									<div class="col-lg-6">
 										<div class="radio">
-											<label> 06/05/2016 </label>
+											<label>{{portalOrderDetails.sys_update_date}}</label>
 										</div>
 									</div>
 								</div>

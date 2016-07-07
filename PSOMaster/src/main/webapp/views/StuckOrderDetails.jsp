@@ -50,9 +50,9 @@
 			<div class="col-lg-6">
 				<div class="bs-component" style="margin-bottom: 15px;">
 					<div class="btn-group btn-group-justified mar10">
-						<a href="#" class="btn btn-default">1212112</a> 
-						<a href="#" class="btn btn-default">2342349</a> 
-						<a href="#" class="btn btn-default">3453453</a>
+						<a href="#getOrder/211468608" class="btn btn-default">211468608</a> 
+						<a href="#getOrder/211468607" class="btn btn-default">211468607</a> 
+						<a href="#getOrder/211468606" class="btn btn-default">211468606</a>
 					</div>
 					
 					<div class="btn-group btn-group-justified mar10">

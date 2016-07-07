@@ -9,6 +9,10 @@ module.config([ '$routeProvider', function($routeProvider) {
 		templateUrl : 'views/OrderMaster.jsp',
 		controller : 'OrderMasterController'
 	})
+	.when('/getOrder/:orderID', {
+		templateUrl : 'views/OrderMaster.jsp',
+		controller : 'OrderMasterController'
+	})
 	.when('/updateOrder', {
 		templateUrl : 'views/updateOrder.jsp',
 		controller : 'UpdateOrderController'
