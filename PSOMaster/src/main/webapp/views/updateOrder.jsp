@@ -24,7 +24,7 @@
 		<div ng-init="accordion=0">
 
 			<!-- Update Order Status Panel Start -->
-			<div class="panel panel-primary ">
+			<div class="panel panel-info ">
 				<div class="panel-heading accordion cursorPointer" ng-class="{active:accordion==1}">
 					<h3 class="panel-title" ng-click="accordion = 1" >Update Order Status
 					</h3>
@@ -73,7 +73,7 @@
 			<!-- Update Order Status Panel End -->
 			
 			<!-- Update Order SIM Panel Start -->
-			<div class="panel panel-primary">
+			<div class="panel panel-info">
 				<div class="panel-heading accordion cursorPointer" ng-click="accordion = 2" ng-class="{active:accordion==2}">
 					<h3 class="panel-title">Update Order SIM</h3>
 				</div>
@@ -108,7 +108,7 @@
 			<!-- Update Order SIM Panel End -->
 			
 			<!-- Update Order IMEI Panel Start -->
-			<div class="panel panel-primary">
+			<div class="panel panel-info">
 				<div class="panel-heading accordion cursorPointer" ng-click="accordion = 3" ng-class="{active:accordion==3}">
 					<h3 class="panel-title">Update Order IMEI</h3>
 				</div>
@@ -144,7 +144,7 @@
 			
 			
 			<!-- Update Order RetryCount Panel Start -->
-			<div class="panel panel-primary">
+			<div class="panel panel-info">
 				<div class="panel-heading accordion cursorPointer" ng-click="accordion = 4" ng-class="{active:accordion==4}">
 					<h3 class="panel-title">Update Order RetryCount</h3>
 				</div>
