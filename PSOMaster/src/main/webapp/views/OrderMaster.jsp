@@ -33,8 +33,8 @@
 			<div class="col-lg-12">
 				<div class="bs-component">
 					<h3>Order : {{portalOrderDetails.orderId}} 
-					<a href="#updateOrder"><span class="glyphicon glyphicon-edit floatRight panelHeaderIcon" aria-hidden="true"></span></a>  
-					<a href="#sendEmail"><span class="glyphicon glyphicon-envelope floatRight panelHeaderIcon" aria-hidden="true"></a></span>
+					<a href="#updateOrder"><span tooltip-placement="bottom" uib-tooltip="Update Order" class="glyphicon glyphicon-edit floatRight panelHeaderIcon marRight50" aria-hidden="true"></span></a>  
+					<a href="#sendEmail"><span tooltip-placement="bottom" uib-tooltip="Send Email" class="glyphicon glyphicon-envelope floatRight panelHeaderIcon" aria-hidden="true"></a></span>
 					</h3> 
 				</div>
 			</div>

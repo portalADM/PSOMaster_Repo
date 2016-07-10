@@ -13,7 +13,7 @@
 <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="../" class="navbar-brand"> <span class="glyphicon glyphicon-briefcase marRight8"></span>PSO Master</a>
+          <a href="#dashboard" class="navbar-brand"> <span class="glyphicon glyphicon-briefcase marRight8"></span>PSO Master</a>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -40,9 +40,11 @@
 
 	<!-- Application Libreries Import -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-route.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.min.js"></script>   
+	<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.3.js"></script>
     <script src="resources/js/libs/bootstrap.min.js"></script>
     <script src="resources/js/libs/bootswatch.js"></script>
     <script src="resources/js/libs/jquery-ui.js"></script>
@@ -57,6 +59,7 @@
     <script src="resources/js/controller/StuckOrderDetailsController.js"></script>
     
     <script src="resources/js/service/OrderService.js"></script>
+    <script src="resources/js/libs/utils/CommonUtils.js"></script>
     
     
   <script type="text/javascript">
