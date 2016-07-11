@@ -13,123 +13,73 @@
 				<div class="page-header noPadBtm">
 					<h3 id="navbar">
 						<span class="glyphicon glyphicon-edit marRight8"></span>{{title}}
+						<a href="#orderMaster" tooltip-placement="bottom" uib-tooltip="back"
+							class="glyphicon glyphicon-chevron-left floatRight cursorPointer"></a>
 					</h3>
 				</div>
 			</div>
 		</div>
 	
 	
-	
-		<div class="row">
-			<div class="col-lg-4">
-				<div class=" noPadBtm">
-					<div class="bs-component">
-						<form class="form-horizontal">
-							<fieldset>
-								<div class="form-group">
-									<div class="col-lg-12">
-										<div class="radio">
-											<p><a class="btn btn-primary btn-lg col-lg-12" ng-click="updateOrderPopup()">Update Order Status</a></p>
-										</div>
-									</div>
-								</div>
+		<div ng-init="accordion=0">
 
-								<div class="form-group">
-									<div class="col-lg-12">
-										<div class="radio">
-										<p><a class="btn btn-primary btn-lg col-lg-12" ng-click="updateSimModal()">Update Order SIM</a></p>
+			<!-- Update Order Status Panel Start -->
+			<div class="panel panel-info ">
+				<div class="panel-heading accordion cursorPointer" ng-class="{active:accordion==1}">
+					<h3 class="panel-title" ng-click="accordion = 1" >Update Order Status
+					</h3>
+				</div>
+				<div class="panel-body accordion-content" ng-show="accordion==1">
+					<div class="">
+						<div class="">
+							<div class="well" id="">
+								<form class="form-horizontal">
+									<div class="form-group">
+										<label class="col-lg-4 control-label textAlgnInit">Order</label>
+										<div class="col-lg-8">
+											<label class="col-lg-12 control-label textAlgnInit noPadLeft">25636589</label>
 										</div>
 									</div>
-								</div>
-
-								<div class="form-group">
-									<div class="col-lg-12">
-										<div class="radio">
-										<p><a class="btn btn-primary btn-lg col-lg-12" ng-click="updateImeiModal()">Update Order IMEI</a></p>
+									<div class="form-group">
+										<label class="col-lg-4 control-label textAlgnInit">Current
+											Status</label>
+										<div class="col-lg-8 noPadLeft">
+											<label class="col-lg-12 control-label textAlgnInit">ORFI</label>
 										</div>
 									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-lg-12">
-										<div class="radio">
-										<p><a class="btn btn-primary btn-lg col-lg-12" ng-click="updateRetryModal()">Update Order RetryCount</a></p>
+									<div class="form-group">
+										<label for="select" class="col-lg-4 control-label textAlgnInit">New
+											Status</label>
+										<div class="col-lg-8">
+											<select class="form-control" id="select">
+												<option value="OPEN">OPEN</option>
+												<option value="PDRS">PDRS</option>
+												<option value="ACTI">ACTI</option>
+											</select>
 										</div>
 									</div>
-								</div>
-							</fieldset>
-						</form>
+									<div class="form-group">
+										<div class="col-lg-4"></div>
+										<div class="col-lg-8">
+											<button type="reset" class="btn btn-default">Submit</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-
-	</div>
-	
-	
-	
-	
-	<!-- UPDATE ORDER POPUP START -->
-	
-	<div id="updateOrder-modal" class="modal fade">
-              <div class="modal-dialog">
-                     <div class="modal-content">
-                           <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                  <h4 class="modal-title">Update Order Status</h4>
-                           </div>
-                           <div class="modal-body">
-                                  <div class="well" id="">
-                                         <form class="form-horizontal">
-                                                <div class="form-group">
-                                                       <label class="col-lg-4 control-label textAlgnInit">Order</label>
-                                                       <div class="col-lg-8">
-                                                              <label class="col-lg-12 control-label textAlgnInit noPadLeft">25636589</label>
-                                                       </div>
-                                                </div>
-                                                <div class="form-group">
-                                                       <label class="col-lg-4 control-label textAlgnInit">Current Status</label>
-                                                       <div class="col-lg-8 noPadLeft">
-                                                              <label class="col-lg-12 control-label textAlgnInit">ORFI</label>
-                                                       </div>
-                                                </div>
-                                                <div class="form-group">
-                                                       <label for="select" class="col-lg-4 control-label textAlgnInit">New
-                                                              Status</label>
-                                                       <div class="col-lg-8">
-                                                              <select class="form-control" id="select">
-                                                                     <option value="OPEN">OPEN</option>
-                                                                     <option value="PDRS">PDRS</option>
-                                                                     <option value="ACTI">ACTI</option>
-                                                              </select>
-                                                       </div>
-                                                </div>
-                                                <div class="form-group">
-                                                       <div class="col-lg-4"></div>
-                                         <div class="col-lg-8">
-                                           <button type="reset" class="btn btn-default">Submit</button>
-                                         </div>
-                                       </div>
-                                         </form>
-                                  </div>
-                           </div>
-                     </div>
-              </div>
-       </div>
-	
-	
-	<!-- UPDATE ORDER POPUP END -->
-	
-	
-	<!-- UPDATE SIM POPUP START -->
-	
-	<div id="updateSim-modal" class="modal fade">
-              <div class="modal-dialog">
-                     <div class="modal-content">
-                           <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                  <h4 class="modal-title">Update SIM </h4>
-                           </div>
-                           <div class="modal-body">
+			<!-- Update Order Status Panel End -->
+			
+			<!-- Update Order SIM Panel Start -->
+			<div class="panel panel-info">
+				<div class="panel-heading accordion cursorPointer" ng-click="accordion = 2" ng-class="{active:accordion==2}">
+					<h3 class="panel-title">Update Order SIM</h3>
+				</div>
+				<div class="panel-body accordion-content" ng-show="accordion==2">
+					<div class="">
+                           <div class="">
                                   <div class="well" id="">
                                          <form class="form-horizontal">
                                                 <div class="form-group">
@@ -152,23 +102,19 @@
                                          </form>
                                   </div>
                            </div>
-                     </div>
-              </div>
-       </div>
-	
-	
-	<!-- UPDATE SIM POPUP END -->
-	
-<!-- UPDATE IMEI POPUP START -->
-	
-	<div id="updateImei-modal" class="modal fade">
-              <div class="modal-dialog">
-                     <div class="modal-content">
-                           <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                  <h4 class="modal-title">Update IMEI </h4>
-                           </div>
-                           <div class="modal-body">
+                     </div>	
+				</div>
+			</div>
+			<!-- Update Order SIM Panel End -->
+			
+			<!-- Update Order IMEI Panel Start -->
+			<div class="panel panel-info">
+				<div class="panel-heading accordion cursorPointer" ng-click="accordion = 3" ng-class="{active:accordion==3}">
+					<h3 class="panel-title">Update Order IMEI</h3>
+				</div>
+				<div class="panel-body accordion-content" ng-show="accordion==3">
+					 <div class="">
+                           <div class="">
                                   <div class="well" id="">
                                          <form class="form-horizontal">
                                                 <div class="form-group">
@@ -192,21 +138,19 @@
                                   </div>
                            </div>
                      </div>
-              </div>
-       </div>
-	
-	<!-- UPDATE SIM POPUP END -->
-	
-	<!-- UPDATE RETRY POPUP START -->
-	
-	<div id="updateRetry-modal" class="modal fade">
-              <div class="modal-dialog">
-                     <div class="modal-content">
-                           <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                  <h4 class="modal-title">Update Order Status</h4>
-                           </div>
-                           <div class="modal-body">
+				</div>
+			</div>
+			<!-- Update Order IMEI Panel Start -->
+			
+			
+			<!-- Update Order RetryCount Panel Start -->
+			<div class="panel panel-info">
+				<div class="panel-heading accordion cursorPointer" ng-click="accordion = 4" ng-class="{active:accordion==4}">
+					<h3 class="panel-title">Update Order RetryCount</h3>
+				</div>
+				<div class="panel-body accordion-content" ng-show="accordion==4">
+					 <div class="">
+                           <div class="">
                                   <div class="well" id="">
                                          <form class="form-horizontal">
                                                 <div class="form-group">
@@ -232,11 +176,15 @@
                                   </div>
                            </div>
                      </div>
-              </div>
-       </div>
+				</div>
+			</div>
+			<!-- Update Order RetryCount Panel Start -->
+			
+		</div>
+
+	</div>
 	
 	
-	<!-- UPDATE RETRY POPUP END -->
 	
 </body>
 </html>

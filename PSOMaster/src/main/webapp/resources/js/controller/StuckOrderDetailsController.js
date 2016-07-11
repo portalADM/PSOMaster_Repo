@@ -1,4 +1,4 @@
-module.controller("StuckOrderDetailsController", function($scope, $routeParams,$http) {
+module.controller("StuckOrderDetailsController", function($scope, $routeParams,$http,CommonUtils) {
 
 	$scope.title = "Stuck Order Details";
 	$scope.orderStatus = $routeParams.orderStatus;
@@ -26,9 +26,13 @@ module.controller("StuckOrderDetailsController", function($scope, $routeParams,$
 								desc : 'Port In Response Type Failed'
 							}];
 	
-	$scope.stuckOrders = [1212112,65656565,3232323,8998989,111212,78454545,23232323];
+	$scope.stuckOrders = [1212112,65656565,3232323,8998989,111212,78454545,23232323,3232367,8998977,1112199];
 	
+	$scope.grouppedOrders=[];
 	
-	$("#updateOrder-modal").modal();
-
+	$scope.init = function(){
+		$scope.grouppedOrders = CommonUtils.getGrouppedOrderList($scope.stuckOrders);
+	}
+	
+	$scope.init();
 });

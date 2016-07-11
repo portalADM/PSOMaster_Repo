@@ -13,7 +13,7 @@
 				<div class="page-header noPadBtm">
 					<h3 id="navbar">
 						<span class="glyphicon glyphicon-list-alt marRight8"></span>{{title}}
-						<a href="#dashboard"
+						<a href="#dashboard"  tooltip-placement="bottom" uib-tooltip="back"
 							class="glyphicon glyphicon-chevron-left floatRight cursorPointer"></a>
 					</h3>
 				</div>
@@ -44,68 +44,22 @@
 				<h3 id="type-blockquotes">Orders</h3>
 			</div>
 		</div>
-
-
+		
 		<div class="row">
-			<div class="col-lg-6">
+			<div class="col-lg-8">
 				<div class="bs-component" style="margin-bottom: 15px;">
-					<div class="btn-group btn-group-justified mar10">
-						<a href="#" class="btn btn-default">1212112</a> 
-						<a href="#" class="btn btn-default">2342349</a> 
-						<a href="#" class="btn btn-default">3453453</a>
-					</div>
-					
-					<div class="btn-group btn-group-justified mar10">
-						<a href="#" class="btn btn-default">12121456</a> 
-						<a href="#" class="btn btn-default">56756755</a> 
-						<a href="#" class="btn btn-default">56765776</a>
-					</div>
-					
-					<div class="btn-group btn-group-justified mar10">
-						<a href="#" class="btn btn-default">56756734</a> 
-						<a href="#" class="btn btn-default">56756756</a> 
-						<a href="#" class="btn btn-default">56756765</a>
-					</div>
-					
-					<div class="btn-group btn-group-justified mar10">
-						<a href="#" class="btn btn-default">1212112</a> 
-						<a href="#" class="btn btn-default">2342349</a> 
-						<a href="#" class="btn btn-default">3453453</a>
-					</div>
-					
-					<div class="btn-group btn-group-justified mar10">
-						<a href="#" class="btn btn-default">12121456</a> 
-						<a href="#" class="btn btn-default">56756755</a> 
-						<a href="#" class="btn btn-default">56765776</a>
-					</div>
-					
-					<div class="btn-group btn-group-justified mar10">
-						<a href="#" class="btn btn-default">56756734</a> 
-						<a href="#" class="btn btn-default">56756756</a> 
-						<a href="#" class="btn btn-default">56756765</a>
-					</div>
-					
-					<div class="btn-group btn-group-justified mar10">
-						<a href="#" class="btn btn-default">1212112</a> 
-						<a href="#" class="btn btn-default">2342349</a> 
-						<a href="#" class="btn btn-default">3453453</a>
-					</div>
-					
-					<div class="btn-group btn-group-justified mar10">
-						<a href="#" class="btn btn-default">12121456</a> 
-						<a href="#" class="btn btn-default">56756755</a> 
-						<a href="#" class="btn btn-default">56765776</a>
-					</div>
-					
-					<div class="btn-group btn-group-justified mar10">
-						<a href="#" class="btn btn-default">56756734</a> 
-						<a href="#" class="btn btn-default">56756756</a> 
-						<a href="#" class="btn btn-default">56756765</a>
+					<div class="btn-group btn-group-justified mar10" ng-repeat="groups in grouppedOrders">
+						<div ng-if="groups.length>1">
+							<a href="#getOrder/{{order}}" class="btn btn-default col-lg-3 mar5"  ng-repeat="order in groups"><p>{{order}}</p></a>
+						</div>
+						<div ng-if="groups.length==1">
+							<a href="#getOrder/{{groups[0]}}" class="btn btn-default col-lg-3 mar5"  ><p>{{groups[0]}}</p></a>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
+		
 	</div>
 
 </body>

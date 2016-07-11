@@ -1,4 +1,4 @@
-var module = angular.module("PSOMaster", [ 'ngRoute','ngSanitize','chart.js']);
+var module = angular.module("PSOMaster", [ 'ngRoute','ngSanitize','chart.js','ngAnimate', 'ui.bootstrap']);
 
 module.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/dashboard', {
@@ -6,6 +6,10 @@ module.config([ '$routeProvider', function($routeProvider) {
 		controller : 'DashboardController'
 	})
 	.when('/orderMaster', {
+		templateUrl : 'views/OrderMaster.jsp',
+		controller : 'OrderMasterController'
+	})
+	.when('/getOrder/:orderID', {
 		templateUrl : 'views/OrderMaster.jsp',
 		controller : 'OrderMasterController'
 	})

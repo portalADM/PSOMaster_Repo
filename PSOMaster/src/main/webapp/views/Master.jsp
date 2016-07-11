@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,58 +9,117 @@
 <link rel="stylesheet" href="resources/css/bootswatch.min.css" media="screen">
 <link rel="stylesheet" href="resources/css/psoStyle.css" media="screen">
 </head>
-<body  ng-app="PSOMaster">
-<div class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="../" class="navbar-brand"> <span class="glyphicon glyphicon-briefcase marRight8"></span>PSO Master</a>
-          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-        <div class="navbar-collapse collapse" id="navbar-main">
-          <ul class="nav navbar-nav">
-            <li>
-              <a href="#/dashboard">Dashboard</a>
-            </li>
-            <li>
-              <a href="#/orderMaster">Order Master</a>
-            </li>
-			</ul>
-        </div>
-      </div>
-    </div>
+<body ng-app="PSOMaster">
+	<div class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a href="#dashboard" class="navbar-brand"> <span
+					class="glyphicon glyphicon-briefcase marRight8"></span>PSO Master
+				</a>
+				<button class="navbar-toggle" type="button" data-toggle="collapse"
+					data-target="#navbar-main">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="navbar-collapse collapse" id="navbar-main">
+				<ul class="nav navbar-nav">
+					<li><a href="#/dashboard">Dashboard</a></li>
+					<li><a href="#/orderMaster">Order Master</a></li>
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#" id="themes"><span
+							class="glyphicon glyphicon-user marRight8"></span>Hi John Snow <span
+							class="caret"></span></a>
+						<ul class="dropdown-menu" aria-labelledby="themes">
+							<li><a href="../default/">Logout</a></li>
+						</ul></li>
+				</ul>
+
+			</div>
+		</div>
+	</div>
 
 
-    <div class="container">
+	<div class="container">
+
+		<div class=" clearfix marTop20">
+			<div class="row" ng-show="false">
+				<div class="col-lg-12">
+					<div class="bs-component">
+						<div class="alert alert-dismissible alert-warning">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							<span class="glyphicon glyphicon-exclamation-sign marRight8"></span><strong>Oh snap!</strong> <a href="#" class="alert-link">Change
+								a few things up</a> and try submitting again.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" ng-show="false">
+				<div class="col-lg-12">
+					<div class="bs-component">
+						<div class="alert alert-dismissible alert-danger">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							<span class="glyphicon glyphicon-thumbs-down marRight8"></span><strong>Oh snap!</strong> <a href="#" class="alert-link">Change
+								a few things up</a> and try submitting again.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" ng-show="false">
+				<div class="col-lg-12">
+					<div class="bs-component">
+						<div class="alert alert-dismissible alert-success">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							<span class="glyphicon glyphicon-thumbs-up marRight8"></span><strong>Well done!</strong> You successfully read <a href="#"
+								class="alert-link">this important alert message</a>.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" ng-show="false">
+				<div class="col-lg-12">
+					<div class="bs-component">
+						<div class="alert alert-dismissible alert-info">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							<span class="glyphicon glyphicon-info-sign marRight8"></span><strong>Heads up!</strong> This <a href="#" class="alert-link">alert
+								needs your attention</a>, but it's not super important.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
 		<div ng-view></div>
-    </div>
+	</div>
 
 	<!-- Application Libreries Import -->
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-route.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.min.js"></script>   
-    <script src="resources/js/libs/bootstrap.min.js"></script>
-    <script src="resources/js/libs/bootswatch.js"></script>
-    <script src="resources/js/libs/jquery-ui.js"></script>
-    <script src="resources/js/libs/charts/Chart.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.min.js"></script>
+	<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.3.js"></script>
+	<script src="resources/js/libs/bootstrap.min.js"></script>
+	<script src="resources/js/libs/bootswatch.js"></script>
+	<script src="resources/js/libs/jquery-ui.js"></script>
+	<script src="resources/js/libs/charts/Chart.js"></script>
 	<script src="resources/js/libs/charts/angular-chart.js"></script>
-    
-    <!-- Application Modules Import -->
-    <script src="resources/js/app.js"></script>
-    <script src="resources/js/controller/DashboardController.js"></script>
-    <script src="resources/js/controller/OrderMasterController.js"></script>
-    <script src="resources/js/controller/UpdateOrderController.js"></script>
-    <script src="resources/js/controller/StuckOrderDetailsController.js"></script>
-    
-    
-  <script type="text/javascript">
-/* <![CDATA[ */
-(function(){try{var s,a,i,j,r,c,l=document.getElementsByTagName("a"),t=document.createElement("textarea");for(i=0;l.length-i;i++){try{a=l[i].getAttribute("href");if(a&&a.indexOf("/cdn-cgi/l/email-protection") > -1  && (a.length > 28)){s='';j=27+ 1 + a.indexOf("/cdn-cgi/l/email-protection");if (a.length > j) {r=parseInt(a.substr(j,2),16);for(j+=2;a.length>j&&a.substr(j,1)!='X';j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}j+=1;s+=a.substr(j,a.length-j);}t.innerHTML=s.replace(/</g,"&lt;").replace(/>/g,"&gt;");l[i].setAttribute("href","mailto:"+t.value);}}catch(e){}}}catch(e){}})();
-/* ]]> */
-</script>
+
+	<!-- Application Modules Import -->
+	<script src="resources/js/app.js"></script>
+	<script src="resources/js/controller/DashboardController.js"></script>
+	<script src="resources/js/controller/OrderMasterController.js"></script>
+	<script src="resources/js/controller/UpdateOrderController.js"></script>
+	<script src="resources/js/controller/StuckOrderDetailsController.js"></script>
+
+	<script src="resources/js/service/OrderService.js"></script>
+	<script src="resources/js/libs/utils/CommonUtils.js"></script>
+
+
 </body>
 </html>
