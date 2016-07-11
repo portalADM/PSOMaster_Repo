@@ -27,6 +27,7 @@ public class PortalOrderMasterResponseBean extends BaseResponseBean implements S
     private java.lang.String OrderType;
     private java.lang.String ban;
     private java.lang.String ptn;
+    private PortalEnrollmentInfo enrollInfo;
 
     private ArrayList<PortalShipmentInfo> portalShipmentInfo;
 
@@ -135,20 +136,31 @@ public class PortalOrderMasterResponseBean extends BaseResponseBean implements S
         this.portalShipmentInfo = portalShipmentInfo;
     }
 
+    public PortalEnrollmentInfo getEnrollInfo()
+    {
+        return enrollInfo;
+    }
+
+    public void setEnrollInfo(PortalEnrollmentInfo enrollInfo)
+    {
+        this.enrollInfo = enrollInfo;
+    }
+
     @Override
     public String toString()
     {
         return "PortalOrderMasterResponseBean [orderId=" + orderId + ", status=" + status + ", sys_creation_date=" + sys_creation_date + ", sys_update_date=" + sys_update_date + ", originatorId="
-                + originatorId + ", retry=" + retry + ", OrderType=" + OrderType + ", ban=" + ban + ", ptn=" + ptn + ", portalShipmentInfo=" + portalShipmentInfo + "]";
+                + originatorId + ", retry=" + retry + ", OrderType=" + OrderType + ", ban=" + ban + ", ptn=" + ptn + ", enrollInfo=" + enrollInfo + ", portalShipmentInfo=" + portalShipmentInfo + "]";
     }
 
     @Override
     public int hashCode()
     {
         final int prime = 31;
-        int result = 1;
+        int result = super.hashCode();
         result = prime * result + ((OrderType == null) ? 0 : OrderType.hashCode());
         result = prime * result + ((ban == null) ? 0 : ban.hashCode());
+        result = prime * result + ((enrollInfo == null) ? 0 : enrollInfo.hashCode());
         result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
         result = prime * result + ((originatorId == null) ? 0 : originatorId.hashCode());
         result = prime * result + ((portalShipmentInfo == null) ? 0 : portalShipmentInfo.hashCode());
@@ -165,7 +177,7 @@ public class PortalOrderMasterResponseBean extends BaseResponseBean implements S
     {
         if (this == obj)
             return true;
-        if (obj == null)
+        if (!super.equals(obj))
             return false;
         if (getClass() != obj.getClass())
             return false;
@@ -183,6 +195,13 @@ public class PortalOrderMasterResponseBean extends BaseResponseBean implements S
                 return false;
         }
         else if (!ban.equals(other.ban))
+            return false;
+        if (enrollInfo == null)
+        {
+            if (other.enrollInfo != null)
+                return false;
+        }
+        else if (!enrollInfo.equals(other.enrollInfo))
             return false;
         if (orderId == null)
         {

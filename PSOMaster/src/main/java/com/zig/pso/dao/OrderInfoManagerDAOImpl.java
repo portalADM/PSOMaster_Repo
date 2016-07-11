@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
+import com.zig.pso.rest.bean.PortalEnrollmentInfo;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalShipmentInfo;
 import com.zig.pso.utility.DBConnection;
@@ -94,9 +95,23 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             ResultSet rs2 = pstm2.executeQuery();
             while (rs2.next())
             {
+                PortalEnrollmentInfo enrollInfo = new PortalEnrollmentInfo();
+
+                enrollInfo.setFirst_name(rs2.getString("first_name"));
+                enrollInfo.setLast_name(rs2.getString("last_name"));
+                enrollInfo.setEmail(rs2.getString("email"));
+                enrollInfo.setPhone_number(rs2.getString("phone_number"));
+                enrollInfo.setAddress1(rs2.getString("address1"));
+                enrollInfo.setAddress2(rs2.getString("address2"));
+                enrollInfo.setCity(rs2.getString("city"));
+                enrollInfo.setState(rs2.getString("state"));
+                enrollInfo.setZip_code(rs2.getString("zip_code"));
+
+                portalOrderlist.setEnrollInfo(enrollInfo);
+                portalOrderlist.setPortalShipmentInfo(portalShipArrlist);
+
                 portalOrderlist.setOrderId(rs2.getString("order_id"));
                 portalOrderlist.setStatus(rs2.getString("status_code"));
-
                 portalOrderlist.setRetry(rs2.getString("retry"));
                 portalOrderlist.setSys_creation_date(rs2.getString("sys_creation_date"));
                 portalOrderlist.setSys_update_date(rs2.getString("sys_update_date"));
@@ -104,7 +119,6 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 portalOrderlist.setOrderType(rs2.getString("ORDER_TYPE"));
                 portalOrderlist.setBan(rs2.getString("BAN_NUMBER"));
                 portalOrderlist.setPtn(rs2.getString("CTN_NUMBER"));
-                portalOrderlist.setPortalShipmentInfo(portalShipArrlist);
                 portalOrderlist.setErrorCode(0);
                 portalOrderlist.setErrorMsg("Success");
             }
