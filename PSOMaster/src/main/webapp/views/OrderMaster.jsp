@@ -207,7 +207,7 @@
 												<label class="col-lg-6 control-label textAignLeft">First Name :</label>
 												<div class="col-lg-6">
 													<div class="radio">
-														<label> Jon </label>
+														<label> {{portalOrderDetails.enrollInfo.first_name}} </label>
 													</div>
 												</div>
 											</div>
@@ -215,7 +215,7 @@
 												<label class="col-lg-6 control-label textAignLeft">Last Name:</label>
 												<div class="col-lg-6">
 													<div class="radio">
-														<label> Snow </label>
+														<label> {{portalOrderDetails.enrollInfo.last_name}} </label>
 													</div>
 												</div>
 											</div>
@@ -223,7 +223,7 @@
 												<label class="col-lg-6 control-label textAignLeft">Email Id :</label>
 												<div class="col-lg-6">
 													<div class="radio">
-														<label> jon.snow@amdocs.com </label>
+														<label> {{portalOrderDetails.enrollInfo.email}} </label>
 													</div>
 												</div>
 											</div>
@@ -232,7 +232,7 @@
 												<label class="col-lg-6 control-label textAignLeft">Phone Number :</label>
 												<div class="col-lg-6">
 													<div class="radio">
-														<label> 9876543210 </label>
+														<label> {{portalOrderDetails.enrollInfo.phone_number}} </label>
 													</div>
 												</div>
 											</div>
@@ -240,7 +240,7 @@
 												<label class="col-lg-6 control-label textAignLeft">Address :</label>
 												<div class="col-lg-6">
 													<div class="radio">
-														<label> 5211 Boardwalk ST Atlanta GA </label>
+														<label>{{portalOrderDetails.enrollInfo.address1}} {{portalOrderDetails.enrollInfo.address2}} {{portalOrderDetails.enrollInfo.city}} {{portalOrderDetails.enrollInfo.state}}</label>
 													</div>
 												</div>
 											</div>
@@ -248,7 +248,7 @@
 												<label class="col-lg-6 control-label textAignLeft">ZIP :</label>
 												<div class="col-lg-6">
 													<div class="radio">
-														<label> Atlanta </label>
+														<label> {{portalOrderDetails.enrollInfo.zip_code}} </label>
 													</div>
 												</div>
 											</div>
