@@ -1,6 +1,22 @@
+/*body {
+	font-family: 'Open Sans', sans-serif;
+	background: url(../images/5.jpg) no-repeat center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-size: 100% 100%;
+}*/
+
+
 .marRight8{
 	margin-right: 8px;
 }
+
+.marLeft8{
+	margin-left: 8px;
+}
+
 
 .marRight50{
 	margin-right: 50px !important;

@@ -98,25 +98,26 @@
 	</div>
 
 	<!-- Application Libreries Import -->
-	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-route.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.min.js"></script>
-	<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.3.js"></script>
-	<script src="resources/js/libs/bootstrap.min.js"></script>
-	<script src="resources/js/libs/bootswatch.js"></script>
-	<script src="resources/js/libs/jquery-ui.js"></script>
+	<script src="resources/js/libs/jquery/jquery-1.10.2.min.js"></script>
+	<script src="resources/js/libs/angularjs/angular.min.js"></script>
+	<script src="resources/js/libs/angularjs/angular-animate.js"></script>
+	<script src="resources/js/libs/angularjs/angular-route.min.js"></script>
+	<script src="resources/js/libs/angularjs/angular-sanitize.min.js"></script>
+	<script src="resources/js/libs/bootstrap/ui-bootstrap-tpls-1.3.3.js"></script>
+	<script src="resources/js/libs/bootstrap/bootstrap.min.js"></script>
+	<script src="resources/js/libs/bootstrap/bootswatch.js"></script>
+	<script src="resources/js/libs/jquery/jquery-ui.js"></script>
 	<script src="resources/js/libs/charts/Chart.js"></script>
 	<script src="resources/js/libs/charts/angular-chart.js"></script>
 
-	<!-- Application Modules Import -->
+	<!-- Application Modules Controller Import -->
 	<script src="resources/js/app.js"></script>
 	<script src="resources/js/controller/DashboardController.js"></script>
 	<script src="resources/js/controller/OrderMasterController.js"></script>
 	<script src="resources/js/controller/UpdateOrderController.js"></script>
 	<script src="resources/js/controller/StuckOrderDetailsController.js"></script>
 
+	<!-- Application Modules Services Import -->
 	<script src="resources/js/service/OrderService.js"></script>
 	<script src="resources/js/libs/utils/CommonUtils.js"></script>
 
