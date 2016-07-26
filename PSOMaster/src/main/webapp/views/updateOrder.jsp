@@ -140,7 +140,7 @@
                      </div>
 				</div>
 			</div>
-			<!-- Update Order IMEI Panel Start -->
+			<!-- Update Order IMEI Panel End -->
 			
 			
 			<!-- Update Order RetryCount Panel Start -->
@@ -178,7 +178,48 @@
                      </div>
 				</div>
 			</div>
-			<!-- Update Order RetryCount Panel Start -->
+			<!-- Update Order RetryCount Panel End -->
+			
+			
+			<a class="btn btn-warning btn-lg">Bulk Order Update <span class="glyphicon glyphicon-list-alt marLeft8"></span></a>
+			
+			<!-- Buld Order Update Panel Start -->
+			<!-- <div class="panel panel-info">
+				<div class="panel-heading accordion cursorPointer" ng-click="accordion = 5" ng-class="{active:accordion==5}">
+					<h3 class="panel-title">Buld Order Update</h3>
+				</div>
+				<div class="panel-body accordion-content" ng-show="accordion==5">
+					 <div class="">
+                           <div class="">
+                                  <div class="well" id="">
+                                         <form class="form-horizontal">
+                                                <div class="form-group">
+                                                       <label class="col-lg-4 control-label textAlgnInit">Order</label>
+                                                       <div class="col-lg-8 noPadLeft">
+                                                              <label class="col-lg-12 control-label textAlgnInit ">25636589</label>
+                                                       </div>
+                                                </div>
+                                                <div class="form-group">
+                                                       <label for="select" class="col-lg-4 control-label textAlgnInit">Set Retry Count</label>
+                                                       <div class="col-lg-8">
+                                                       <input type="number" class="form-control" id="inputEmail" placeholder="count">
+                                                       </div>
+                                                </div>
+                                                <div class="form-group">
+                                                       <div class="col-lg-4"></div>
+                                         <div class="col-lg-8">
+                                           <button type="reset" class="btn btn-default">Submit</button>
+                                         </div>
+                                       </div>
+                                         </form>
+                                  </div>
+                           </div>
+                     </div>
+				</div>
+			</div> -->
+			<!-- Buld Order Update Panel End -->
+			
+			
 			
 		</div>
 
