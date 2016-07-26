@@ -18,4 +18,18 @@ module.service('OrderService', function($http) {
 		);
 	}
 	
+this.getEnsembleOrderDetails = function(orderID){
+		
+		return $http.get('ensembleOrder/'+orderID)
+		.then(
+				function(response){
+					return response.data;
+				}, 
+				function(errResponse){
+					console.error('Error while fetching users');
+					return $q.reject(errResponse);
+				}
+		);
+	}
+	
 });

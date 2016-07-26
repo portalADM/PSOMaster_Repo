@@ -6,17 +6,8 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	
 	console.log($scope.orderID);
 	
-	$scope.portalOrderDetails = {
-			orderId : '',
-			orderType : '',
-			originatorId : '',
-			ban : '',
-			ptn : '',
-			retry : '',
-			status : '',
-			sys_creation_date : '',
-			sys_update_date : ''
-	};
+	$scope.portalOrderDetails = {};
+	$scope.ensembleOrderDetails = {};
 	
 	
 	/*
@@ -65,6 +56,15 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	 * Method that calls Order Service to get Ensemble Order Details 
 	 */
 	function getENSOrderDetails(orderID){
+		OrderService.getEnsembleOrderDetails(orderID).then(
+				function(d) {
+					$scope.ensembleOrderDetails = d;
+					console.log($scope.ensembleOrderDetails);
+	       		},
+		       function(errResponse){
+				console.error('Error while fetching Currencies');
+		       }
+		);
 		
 	}
 	

@@ -1,5 +1,5 @@
 /************************************************************************************************************
- * Class Name : PortalOrderMasterResponseBean.java Description: Author : Nilesh Patil Date : Jun 29, 2016
+ * Class Name : PortalOrderMasterResponseBean.java Description: Author : Ankita Mishra Date : Jun 29, 2016
  * **********************************************************************************************************
  */
 package com.zig.pso.rest.bean;

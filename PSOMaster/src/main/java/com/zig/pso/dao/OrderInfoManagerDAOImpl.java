@@ -1,5 +1,5 @@
 /************************************************************************************************************
- * Class Name : OrderInfoManagerDAOImpl.java Description: This class implements methods for order related operations. Author : Nilesh Patil Date : Jun 26, 2016
+ * Class Name : OrderInfoManagerDAOImpl.java Description: This class implements methods for order related operations. Author : Ankita Mishra Date : Jun 26, 2016
  * **********************************************************************************************************
  */
 package com.zig.pso.dao;
@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
+import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalEnrollmentInfo;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalShipmentInfo;
@@ -131,6 +132,49 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
 
         return portalOrderlist;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see com.zig.pso.dao.OrderInfoManagerDAO#getEnsembleDataInfo(java.lang.String)
+     */
+    @Override
+    public EnsOrderMasterResponseBean getEnsembleDataInfo(String orderId)
+    {
+
+        EnsOrderMasterResponseBean ensOrderlist = null;
+
+        String sql = OrderQueries.getEnsembleOrderData();
+
+        try
+        {
+            ensOrderlist = new EnsOrderMasterResponseBean();
+            PreparedStatement pstm = ensDBConnection.prepareStatement(sql);
+            pstm.setString(1, orderId);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next())
+            {
+
+                ensOrderlist.setensOrderId(rs.getString("ENS_ORDER_OID"));
+                ensOrderlist.setOrderStatus(rs.getString("ORDER_STATUS"));
+                ensOrderlist.setPtn(rs.getString("PTN"));
+                ensOrderlist.setPtnStatus(rs.getString("PTN_STATUS"));
+                ensOrderlist.setBan(rs.getString("BAN"));
+                ensOrderlist.setApplicationId(rs.getString("APPLICATION_ID"));
+                ensOrderlist.setSys_creation_date(rs.getString("SYS_CREATION_DATE"));
+                ensOrderlist.setSys_update_date(rs.getString("SYS_UPDATE_DATE"));
+                ensOrderlist.setErrorCode(0);
+                ensOrderlist.setErrorMsg("Success");
+            }
+        }
+        catch (SQLException e)
+        {
+            ensOrderlist.setErrorCode((e.getErrorCode()));
+            ensOrderlist.setErrorMsg(e.getMessage());
+            // e.printStackTrace();
+        }
+
+        return ensOrderlist;
     }
 
 }

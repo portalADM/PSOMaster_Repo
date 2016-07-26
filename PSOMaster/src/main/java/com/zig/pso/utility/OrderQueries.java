@@ -1,10 +1,7 @@
 /************************************************************************************************************
- * Class Name :  OrderQueries.java
- * Description:  This class provides the SQL queries for database operations.
+ * Class Name : OrderQueries.java Description: This class provides the SQL queries for database operations.
  * 
- * Author     :  Nilesh Patil
- * Date       :  Jun 26, 2016
- * **********************************************************************************************************
+ * Author : Nilesh Patil Date : Jun 26, 2016 **********************************************************************************************************
  */
 package com.zig.pso.utility;
 
@@ -26,14 +23,19 @@ public class OrderQueries
     {
         return orderProp.getProperty("order.orderlist");
     }
-    
+
     public static String getPortalOrderData()
     {
         return orderProp.getProperty("order.portalOrder");
     }
-    
+
     public static String getShipmentOrderData()
     {
         return orderProp.getProperty("order.shipOrder");
+    }
+
+    public static String getEnsembleOrderData()
+    {
+        return orderProp.getProperty("order.ensembleOrder");
     }
 }

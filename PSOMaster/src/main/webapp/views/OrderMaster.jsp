@@ -100,7 +100,7 @@
 									<label class="col-lg-6 control-label textAignLeft">SIM :</label>
 									<div class="col-lg-6">
 										<div class="radio">
-											<label> 89011503278900173274 </label>
+											<label> {{portalOrderDetails.portalShipmentInfo[1].sim}} </label>
 										</div>
 									</div>
 								</div>
@@ -109,7 +109,7 @@
 									<label class="col-lg-6 control-label textAignLeft">IMEI :</label>
 									<div class="col-lg-6">
 										<div class="radio">
-											<label> 990000000036612 </label>
+											<label> {{portalOrderDetails.portalShipmentInfo[0].imei}} </label>
 										</div>
 									</div>
 								</div>
@@ -134,7 +134,7 @@
 									<label class="col-lg-6 control-label textAignLeft">Order ID :</label>
 									<div class="col-lg-6">
 										<div class="radio">
-											<label> 65898536 </label>
+											<label> {{ensembleOrderDetails.ensOrderId}} </label>
 										</div>
 									</div>
 								</div>
@@ -143,7 +143,7 @@
 									<label class="col-lg-6 control-label textAignLeft">Order Status :</label>
 									<div class="col-lg-6">
 										<div class="radio">
-											<label> O </label>
+											<label> {{ensembleOrderDetails.orderStatus}} </label>
 										</div>
 									</div>
 								</div>
@@ -152,7 +152,23 @@
 									<label class="col-lg-6 control-label textAignLeft">BAN :</label>
 									<div class="col-lg-6">
 										<div class="radio">
-											<label> 558830028 </label>
+											<label> {{ensembleOrderDetails.ban}} </label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-lg-6 control-label textAignLeft">PTN :</label>
+									<div class="col-lg-6">
+										<div class="radio">
+											<label> {{ensembleOrderDetails.ptn}} </label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-lg-6 control-label textAignLeft">PTN Status :</label>
+									<div class="col-lg-6">
+										<div class="radio">
+											<label> {{ensembleOrderDetails.ptnStatus}} </label>
 										</div>
 									</div>
 								</div>
@@ -160,7 +176,7 @@
 									<label class="col-lg-6 control-label textAignLeft">APPLICATION :</label>
 									<div class="col-lg-6">
 										<div class="radio">
-											<label> PORTAL </label>
+											<label> {{ensembleOrderDetails.applicationId}} </label>
 										</div>
 									</div>
 								</div>
@@ -169,7 +185,7 @@
 									<label class="col-lg-6 control-label textAignLeft">SYS Creation Date :</label>
 									<div class="col-lg-6">
 										<div class="radio">
-											<label> 2016-06-28 </label>
+											<label> {{ensembleOrderDetails.sys_creation_date}} </label>
 										</div>
 									</div>
 								</div>
@@ -178,7 +194,7 @@
 									<label class="col-lg-6 control-label textAignLeft">SYS Update Date :</label>
 									<div class="col-lg-6">
 										<div class="radio">
-											<label> 2016-06-28 </label>
+											<label> {{ensembleOrderDetails.sys_update_date}} </label>
 										</div>
 									</div>
 								</div>
@@ -240,7 +256,7 @@
 												<label class="col-lg-6 control-label textAignLeft">Address :</label>
 												<div class="col-lg-6">
 													<div class="radio">
-														<label>{{portalOrderDetails.enrollInfo.address1}} {{portalOrderDetails.enrollInfo.address2}} {{portalOrderDetails.enrollInfo.city}} {{portalOrderDetails.enrollInfo.state}}</label>
+														<label>{{portalOrderDetails.enrollInfo.address1}} {{portalOrderDetails.enrollInfo.address2}}, {{portalOrderDetails.enrollInfo.city}}, {{portalOrderDetails.enrollInfo.state}}</label>
 													</div>
 												</div>
 											</div>
