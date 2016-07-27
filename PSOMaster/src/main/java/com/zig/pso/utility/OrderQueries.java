@@ -38,4 +38,9 @@ public class OrderQueries
     {
         return orderProp.getProperty("order.ensembleOrder");
     }
+
+    public static String getApiOrderData()
+    {
+        return orderProp.getProperty("order.apiOrder");
+    }
 }

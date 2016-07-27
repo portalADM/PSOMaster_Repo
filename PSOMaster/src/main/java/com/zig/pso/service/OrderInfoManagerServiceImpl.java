@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zig.pso.dao.OrderInfoManagerDAO;
+import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 import com.zig.pso.utility.CommonUtility;
@@ -62,6 +63,19 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
         ensOrderDetail = orderDAO.getEnsembleDataInfo(OrderId);
 
         return ensOrderDetail;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see com.zig.pso.service.OrderInfoManagerService#getAPIOrderDataInfo(java.lang.String)
+     */
+    @Override
+    public ArrayList<ApiOrderMasterResponseBean> getAPIOrderDataInfo(String OrderId)
+    {
+        ArrayList<ApiOrderMasterResponseBean> apiOrderDetail = new ArrayList<ApiOrderMasterResponseBean>();
+        apiOrderDetail = orderDAO.getAPIDataInfo(OrderId);
+
+        return apiOrderDetail;
     }
 
 }

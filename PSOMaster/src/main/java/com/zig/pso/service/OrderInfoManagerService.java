@@ -7,6 +7,7 @@ package com.zig.pso.service;
 
 import java.util.ArrayList;
 
+import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 
@@ -25,4 +26,10 @@ public interface OrderInfoManagerService
      * @return
      */
     public EnsOrderMasterResponseBean getEnsOrderDataInfo(String OrderId);
+
+    /**
+     * @param OrderId
+     * @return
+     */
+    public ArrayList<ApiOrderMasterResponseBean> getAPIOrderDataInfo(String OrderId);
 }

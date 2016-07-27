@@ -7,6 +7,7 @@ package com.zig.pso.dao;
 
 import java.util.ArrayList;
 
+import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 
@@ -24,4 +25,6 @@ public interface OrderInfoManagerDAO
      * @return
      */
     public EnsOrderMasterResponseBean getEnsembleDataInfo(String orderId);
+
+    public ArrayList<ApiOrderMasterResponseBean> getAPIDataInfo(String orderId);
 }

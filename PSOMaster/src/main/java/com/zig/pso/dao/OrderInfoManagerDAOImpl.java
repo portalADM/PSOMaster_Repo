@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
+import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalEnrollmentInfo;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
@@ -175,6 +176,48 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
 
         return ensOrderlist;
+    }
+
+    @Override
+    public ArrayList<ApiOrderMasterResponseBean> getAPIDataInfo(String orderId)
+    {
+
+        ApiOrderMasterResponseBean apiOutput = null;
+
+        String sql = OrderQueries.getApiOrderData();
+
+        ArrayList<ApiOrderMasterResponseBean> apiList = new ArrayList<ApiOrderMasterResponseBean>();
+
+        try
+        {
+
+            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm.setString(1, orderId);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next())
+            {
+
+                apiOutput = new ApiOrderMasterResponseBean();
+                apiOutput.setOrderId(rs.getString("ORDER_ID"));
+                apiOutput.setErrorMessage(rs.getString("ERROR_MESSAGE"));
+                apiOutput.setSource(rs.getString("SOURCE"));
+                apiOutput.setAPIName(rs.getString("API_NAME"));
+                apiOutput.setSysCreationDate(rs.getString("SYS_CREATION_DATE"));
+                apiOutput.setOriginatorID(rs.getString("ORIGINATOR_ID"));
+
+                apiList.add(apiOutput);
+                // System.out.println(rs.getString("STATUS_MESSAGE").toString());
+
+            }
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return apiList;
     }
 
 }
