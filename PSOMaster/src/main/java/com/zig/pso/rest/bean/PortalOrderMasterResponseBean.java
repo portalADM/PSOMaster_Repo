@@ -5,7 +5,8 @@
 package com.zig.pso.rest.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+
+import PortalShipmentInfo.PortalShipmentInfoForUI;
 
 /************************************************************************************************************
  * Class Name : PortalOrderMasterResponseBean.java Description: This Response bean for Get Portal order details rest Service Author : Ankita Mishra Date : Jun 29, 2016
@@ -29,7 +30,7 @@ public class PortalOrderMasterResponseBean extends BaseResponseBean implements S
     private java.lang.String ptn;
     private PortalEnrollmentInfo enrollInfo;
 
-    private ArrayList<PortalShipmentInfo> portalShipmentInfo;
+    private PortalShipmentInfoForUI portalShipmentInfo;
 
     public java.lang.String getOrderId()
     {
@@ -126,12 +127,12 @@ public class PortalOrderMasterResponseBean extends BaseResponseBean implements S
         return serialVersionUID;
     }
 
-    public ArrayList<PortalShipmentInfo> getPortalShipmentInfo()
+    public PortalShipmentInfoForUI getPortalShipmentInfo()
     {
         return portalShipmentInfo;
     }
 
-    public void setPortalShipmentInfo(ArrayList<PortalShipmentInfo> portalShipmentInfo)
+    public void setPortalShipmentInfo(PortalShipmentInfoForUI portalShipmentInfo)
     {
         this.portalShipmentInfo = portalShipmentInfo;
     }

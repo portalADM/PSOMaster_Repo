@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
+import com.zig.pso.rest.bean.PortalShipmentInfo;
 
 /**
  * 
@@ -27,4 +28,6 @@ public interface OrderInfoManagerDAO
     public EnsOrderMasterResponseBean getEnsembleDataInfo(String orderId);
 
     public ArrayList<ApiOrderMasterResponseBean> getAPIDataInfo(String orderId);
+
+    public ArrayList<PortalShipmentInfo> getPortalShipmentInfoFromDB(String orderId);
 }

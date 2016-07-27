@@ -69,29 +69,12 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
     public PortalOrderMasterResponseBean getPortalDataInfo(String OrderId)
     {
         PortalOrderMasterResponseBean portalOrderlist = null;
-        ArrayList<PortalShipmentInfo> portalShipArrlist = new ArrayList<PortalShipmentInfo>();
         String sql = OrderQueries.getPortalOrderData();
-        String shipSql = OrderQueries.getShipmentOrderData();
 
         try
         {
             portalOrderlist = new PortalOrderMasterResponseBean();
 
-            PreparedStatement pstm = portalDBConnection.prepareStatement(shipSql);
-            pstm.setString(1, OrderId);
-            ResultSet rs = pstm.executeQuery();
-            while (rs.next())
-            {
-                PortalShipmentInfo portalShiplist = new PortalShipmentInfo();
-                portalShiplist.setEpc_sku_id(rs.getString("Epc_sku_id"));
-                portalShiplist.setImei(rs.getString("imei"));
-                portalShiplist.setProduct_type(rs.getString("product_type"));
-                portalShiplist.setEsn_number(rs.getString("esn_no"));
-                portalShiplist.setShipment_date(rs.getString("shipment_date"));
-                portalShiplist.setSim(rs.getString("sim"));
-                portalShipArrlist.add(portalShiplist);
-
-            }
             PreparedStatement pstm2 = portalDBConnection.prepareStatement(sql);
             pstm2.setString(1, OrderId);
             ResultSet rs2 = pstm2.executeQuery();
@@ -110,7 +93,6 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 enrollInfo.setZip_code(rs2.getString("zip_code"));
 
                 portalOrderlist.setEnrollInfo(enrollInfo);
-                portalOrderlist.setPortalShipmentInfo(portalShipArrlist);
 
                 portalOrderlist.setOrderId(rs2.getString("order_id"));
                 portalOrderlist.setStatus(rs2.getString("status_code"));
@@ -176,6 +158,44 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
 
         return ensOrderlist;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.zig.pso.dao.OrderInfoManagerDAO#getPortalShipmentInfoFromDB(java.lang.String)
+     */
+    @Override
+    public ArrayList<PortalShipmentInfo> getPortalShipmentInfoFromDB(String orderId)
+    {
+        ArrayList<PortalShipmentInfo> portalShipArrlist = new ArrayList<PortalShipmentInfo>();
+        // String shipSql = OrderQueries.getShipmentOrderData();
+
+        String shipSql = "SELECT ORDER_ID,EPC_SKU_ID,PRODUCT_TYPE,ESN_NO,IMEI as YONUMBER,SIM,SHIPMENT_DATE FROM ZIG_ORDER_SHIPMENT_INFO WHERE ORDER_ID = ?";
+
+        try
+        {
+            PreparedStatement pstm = portalDBConnection.prepareStatement(shipSql);
+            pstm.setString(1, orderId);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next())
+            {
+                PortalShipmentInfo portalShiplist = new PortalShipmentInfo();
+                portalShiplist.setEpc_sku_id(rs.getString("EPC_SKU_ID"));
+                portalShiplist.setImei(rs.getString("YONUMBER"));
+                portalShiplist.setProduct_type(rs.getString("PRODUCT_TYPE"));
+                portalShiplist.setEsn_number(rs.getString("ESN_NO"));
+                portalShiplist.setShipment_date(rs.getString("SHIPMENT_DATE"));
+                portalShiplist.setSim(rs.getString("SIM"));
+                portalShipArrlist.add(portalShiplist);
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return portalShipArrlist;
     }
 
     @Override

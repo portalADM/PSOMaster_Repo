@@ -7,6 +7,8 @@ package com.zig.pso.service;
 
 import java.util.ArrayList;
 
+import PortalShipmentInfo.PortalShipmentInfoForUI;
+
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
@@ -32,4 +34,10 @@ public interface OrderInfoManagerService
      * @return
      */
     public ArrayList<ApiOrderMasterResponseBean> getAPIOrderDataInfo(String OrderId);
+
+    /**
+     * @param OrderId
+     * @return
+     */
+    public PortalShipmentInfoForUI getPortalShipmentInfo(String OrderId);
 }
