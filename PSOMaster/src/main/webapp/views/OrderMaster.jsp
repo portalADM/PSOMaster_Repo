@@ -32,7 +32,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="bs-component">
-					<h3>Order : {{portalOrderDetails.orderId}} 
+					<h3 ng-show="portalOrderDetails.orderId.length>0">Order : {{portalOrderDetails.orderId}}</h3><h3 >
 					<a href="#updateOrder"><span tooltip-placement="bottom" uib-tooltip="Update Order" class="glyphicon glyphicon-edit floatRight panelHeaderIcon marRight50" aria-hidden="true"></span></a>  
 					<a href="#sendEmail"><span tooltip-placement="bottom" uib-tooltip="Send Email" class="glyphicon glyphicon-envelope floatRight panelHeaderIcon" aria-hidden="true"></a></span>
 					</h3> 
@@ -41,7 +41,7 @@
 		</div>
 		 
 
-		<div class="bs-docs-section">
+		<div class="bs-docs-section"  ng-show="portalOrderDetails.orderId.length>0" >
 			<!-- <div class="row">
 				<div class="col-lg-12">
 					<div class="page-header">
@@ -80,6 +80,24 @@
 										</div>
 									</div>
 								</div>
+								
+								<div class="form-group">
+									<label class="col-lg-6 control-label textAignLeft">Retry Count :</label>
+									<div class="col-lg-6">
+										<div class="radio">
+											<label>{{portalOrderDetails.retry}}</label>
+										</div>
+									</div>
+								</div>
+								
+							<div class="form-group">
+									<label class="col-lg-6 control-label textAignLeft">Originator ID :</label>
+									<div class="col-lg-6">
+										<div class="radio">
+											<label>{{portalOrderDetails.originatorId}}</label>
+										</div>
+									</div>
+								</div>
 								<div class="form-group">
 									<label class="col-lg-6 control-label textAignLeft">Order Created Date :</label>
 									<div class="col-lg-6">
@@ -93,23 +111,6 @@
 									<div class="col-lg-6">
 										<div class="radio">
 											<label>{{portalOrderDetails.sys_update_date}}</label>
-										</div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-lg-6 control-label textAignLeft">SIM :</label>
-									<div class="col-lg-6">
-										<div class="radio">
-											<label> {{portalOrderDetails.portalShipmentInfo[1].sim}} </label>
-										</div>
-									</div>
-								</div>
-								
-								<div class="form-group">
-									<label class="col-lg-6 control-label textAignLeft">IMEI :</label>
-									<div class="col-lg-6">
-										<div class="radio">
-											<label> {{portalOrderDetails.portalShipmentInfo[0].imei}} </label>
 										</div>
 									</div>
 								</div>
@@ -274,7 +275,72 @@
 									</form>
 							</div>	
 						</div>
+						<!-- RIGHT -->
+			             <div class="col-lg-6">
+							<div class="well bs-component">
+								<form class="form-horizontal">
+										<fieldset>
+											<legend>Shipment Details</legend>
+											<div class="form-group">
+												<label class="col-lg-6 control-label textAignLeft">SIM :</label>
+												<div class="col-lg-6">
+													<div class="radio">
+														<label>{{portalOrderDetails.portalShipmentInfo.sim}} </label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-lg-6 control-label textAignLeft">IMEI :</label>
+												<div class="col-lg-6">
+													<div class="radio">
+														<label> {{portalOrderDetails.portalShipmentInfo.imei}}</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-lg-6 control-label textAignLeft">EPC Sku ID :</label>
+												<div class="col-lg-6">
+													<div class="radio">
+														<label>{{portalOrderDetails.portalShipmentInfo.epc_sku_id}}</label>
+													</div>
+												</div>
+											</div>
+											
+											<div class="form-group">
+												<label class="col-lg-6 control-label textAignLeft">Plan :</label>
+												<div class="col-lg-6">
+													<div class="radio">
+														<label> {{portalOrderDetails.portalShipmentInfo.plan}}</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group" ng-show="portalOrderDetails.portalShipmentInfo.accessoryAvailable">
+												<label class="col-lg-6 control-label textAignLeft">Accessories</label>
+												<div class="col-lg-6">
+													<div class="radio" ng-repeat="acc in portalOrderDetails.portalShipmentInfo.accessoryList">
+														<label>{{acc}}</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group" ng-show="portalOrderDetails.portalShipmentInfo.addonAvailable">
+												<label class="col-lg-6 control-label textAignLeft">AddOns :</label>
+												<div class="col-lg-6">
+													<div class="radio" ng-repeat="addon in portalOrderDetails.portalShipmentInfo.addonList">
+														<label> {{addon}} </label>
+													</div>
+												</div>
+											</div>
+											
+											
+										</fieldset>
+									</form>
+							</div>	
+						</div>
+						<!-- RIGHT END -->
 			</div>
+			
+				
+		
 			
 			
 			<div class="panel panel-info">
@@ -286,97 +352,22 @@
 			              <table class="table table-striped table-hover ">
 			                <thead>
 			                  <tr>
-			                    <th>#</th>
-			                    <th>Order ID</th>
+			                  <th>Source</th>
 			                    <th>Error Message</th>
-			                    <th>Source</th>
 			                    <th>API Name</th>
 			                    <th>Creation Date</th>
-			                   <!--  <th>Originator ID</th> -->
+			                   <th>Originator ID</th>
 			                  </tr>
 			                </thead>
 			                <tbody>
-			                  <tr>
-			                    <td>1</td>
-			                    <td>211467901</td>
-			                    <td>null</td>
-			                    <td>Brightpoint</td>
-			                    <td>OrderSubmissionService</td>
-			                    <td>2016-06-28 04:47:29.22</td>
-			                   <!--  <td>atllvatapp12</td> -->
+			                  <tr ng-repeat=" api in apiOrderDetails">
+			                  <td>{{api.source}}</td>
+			                    <td>{{api.errorMessage}}</td>
+			                    <td>{{api.apiname}}</td>
+			                    <td>{{api.sysCreationDate}}</td>
+			                   <td>{{api.originatorID}}</td>
 			                  </tr>
-			                  <tr>
-			                    <td>2</td>
-			                    <td>211467901</td>
-			                    <td>Success:AccountId:558830028;Device Amount:53.49;Plan Amount:50.0;Amount on CC:103.49000000000001;zig~CNG-CSI~102255bc-858d-4560-a2f2-177a1b8b5eb2</td>
-			                    <td>CSI</td>
-			                    <td>AddWirelinePaymentService</td>
-			                    <td>2016-06-28 04:47:26.14</td>
-			                   <!--  <td>atllvatapp12</td> -->
-			                  </tr>
-			                  <tr>
-			                    <td>3</td>
-			                    <td>211467901</td>
-			                    <td>Success:CnvId:zig~CNG-CSI~102255bc-858d-4560-a2f2-177a1b8b5eb2 PreAuth:NDOATG160628438775Amt:103.49</td>
-			                    <td>CSI</td>
-			                     <td>ValidateCreditCardService</td>
-			                    <td>2016-06-28 04:40:45.774</td>
-			                    <!--  <td>atllvatapp12</td> -->
-			                  </tr>
-			                 <tr>
-			                    <td>4</td>
-			                    <td>211467901</td>
-			                    <td>Success</td>
-			                    <td>CSM</td>
-			                     <td>CalculateServiceTaxService</td>
-			                    <td>2016-06-28 04:40:30.111</td>
-			                    <!--  <td>atllvatapp12</td> -->
-			                  </tr>
-			                  <tr>
-			                    <td>5</td>
-			                    <td>211467901</td>
-			                    <td>Success</td>
-			                    <td>CSM</td>
-			                    <td>CalculateTaxV2Service</td>
-			                    <td>2016-06-28 04:40:29.467</td>
-			                    <!--  <td>atllvatapp12</td> -->
-			                  </tr>
-			                  <tr>
-			                    <td>6</td>
-			                    <td>211467901</td>
-			                    <td>Success:558830028;8083398478;48202000002</td>
-			                    <td>CSM</td>
-			                    <td>SubscriberCreationService</td>
-			                    <td>2016-06-28 04:40:29.152</td>
-			                   <!--  <td>atllvatapp12</td> -->
-			                  </tr>
-			                 <tr>
-			                    <td>7</td>
-			                    <td>211467901</td>
-			                    <td>Success:CnvId:zig~CNG-CSI~3212e220-6adb-4e12-8e41-ac2c2d8035b7</td>
-			                    <td>CSI</td>
-			                    <td>AddPaymentProfileService</td>
-			                    <td>2016-06-28 04:40:09.968</td>
-			                    <!--  <td>atllvatapp12</td> -->
-			                  </tr>
-			                  <tr>
-			                    <td>8</td>
-			                    <td>211467901</td>
-			                    <td>Success:558830028;84</td>
-			                    <td>CSM</td>
-			                    <td>ZigCSMCreateBANService</td>
-			                    <td>2016-06-28 04:39:48.665</td>
-			                  <!--  <td>atllvatapp12</td> -->
-			                  </tr>
-			                  <tr>
-			                    <td>9</td>
-			                    <td>211467901</td>
-			                    <td>Success</td>
-			                    <td>CSM</td>
-			                    <td>ValidateAddressService</td>
-			                    <td>2016-06-28 04:39:47.83</td>
-			                 <!--  <td>atllvatapp12</td> -->
-			                  </tr>
+			               
 			                </tbody>
 			              </table> 
 			            </div><!-- /example -->

@@ -8,6 +8,7 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	
 	$scope.portalOrderDetails = {};
 	$scope.ensembleOrderDetails = {};
+	$scope.apiOrderDetails= {};
 	
 	
 	/*
@@ -49,6 +50,15 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	 * Method that calls Order Service to get Portal Order API Details 
 	 */
 	function getPortalOrderAPIDetails(orderID){
+		OrderService.getPortalAPIDetails(orderID).then(
+		function(d){
+			$scope.apiOrderDetails=d;
+			console.log($scope.apiOrderDetails);
+		},
+		function(errResponse){
+			console.error('Error while fetching API details');	
+		}
+		);
 		
 	}
 	
