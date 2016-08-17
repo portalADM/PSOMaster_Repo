@@ -119,6 +119,7 @@
 
 	<!-- Application Modules Services Import -->
 	<script src="resources/js/service/OrderService.js"></script>
+	<script src="resources/js/service/DashboardService.js"></script>
 	<script src="resources/js/libs/utils/CommonUtils.js"></script>
 
 

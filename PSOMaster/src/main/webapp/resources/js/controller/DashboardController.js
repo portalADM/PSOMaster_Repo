@@ -1,4 +1,4 @@
-module.controller("DashboardController", function($scope, $routeParams,$http) {
+module.controller("DashboardController", function($scope, $routeParams,$http,DashboardService) {
 	
 	$scope.title = "Dashboard";
 	
@@ -51,5 +51,26 @@ module.controller("DashboardController", function($scope, $routeParams,$http) {
 	    [14, 48, 25, 14, 86, 78, 25, 48, 56, 14],
 	    [25, 48, 40, 19, 86, 27, 90, 78, 32, 25]
 	  ];
+	  
+	  
+	  // -------------------------------
+	  
+	  //
+	$scope.init=function(){
+		DashboardService.getStuckOrderCount().then(
+				function(data) {
+					$scope.stuckOrderDetails= data.stuckOrderList;
+					console.log($scope.stuckOrderDetails);
+	       		},
+		       function(errResponse){
+				console.error('Error while fetching Currencies');
+		       }
+		);
+	}
+	
+	$scope.init();
+	  
+	  
+	  
 	
 });

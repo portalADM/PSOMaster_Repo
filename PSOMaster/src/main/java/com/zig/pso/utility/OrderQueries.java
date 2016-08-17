@@ -43,4 +43,14 @@ public class OrderQueries
     {
         return orderProp.getProperty("order.apiOrder");
     }
+    
+    public static String getstuckOrdersCount()
+    {
+        return orderProp.getProperty("order.stuckOrdersCount");
+    }
+    
+    public static String getstuckOrdersbyStatus()
+    {
+        return orderProp.getProperty("order.stuckOrdersbyStatus");
+    }
 }

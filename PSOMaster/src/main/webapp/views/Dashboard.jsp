@@ -37,33 +37,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><a href="#StuckOrderDetails/OSHF" class="cursorPointer">OSHF</a></td>
-                    <td>10</td>
-                  </tr>
-                  <tr>
-                    <td><a href="#StuckOrderDetails/ORFI" class="cursorPointer">ORFI</a></td>
-                     <td>15</td>
-                  </tr>
-                  <tr>
-                    <td><a href="#StuckOrderDetails/ORLF" class="cursorPointer">ORLF</a></td>
-                    <td>10</td>
-                  </tr>
-                  <tr>
-                    <td><a href="#StuckOrderDetails/ACTF" class="cursorPointer">ACTF</a></td>
-                    <td>10</td>
-                  </tr>
-                  <tr>
-                    <td><a href="#StuckOrderDetails/OURF" class="cursorPointer">OURF</a></td>
-                    <td>21</td>
-                  </tr>
-                 <tr>
-                    <td><a href="#StuckOrderDetails/PDRF" class="cursorPointer">PDRF</a></td>
-                    <td>10</td>
-                  </tr>
-                  <tr>
-                    <td><a href="#StuckOrderDetails/PRTF" class="cursorPointer">PRTF</a></td>
-                     <td>5</td>
+                  <tr ng-repeat="status in stuckOrderDetails">
+                    <td><a href="#StuckOrderDetails/{{status.orderStatus}}" class="cursorPointer">{{status.orderStatus}}</a></td>
+                    <td>{{status.count}}</td>
                   </tr>
                 </tbody>
               </table> 

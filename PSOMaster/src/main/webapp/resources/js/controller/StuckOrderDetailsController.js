@@ -1,4 +1,4 @@
-module.controller("StuckOrderDetailsController", function($scope, $routeParams,$http,CommonUtils) {
+module.controller("StuckOrderDetailsController", function($scope, $routeParams,$http,CommonUtils,DashboardService) {
 
 	$scope.title = "Stuck Order Details";
 	$scope.orderStatus = $routeParams.orderStatus;
@@ -30,8 +30,19 @@ module.controller("StuckOrderDetailsController", function($scope, $routeParams,$
 	
 	$scope.grouppedOrders=[];
 	
-	$scope.init = function(){
-		$scope.grouppedOrders = CommonUtils.getGrouppedOrderList($scope.stuckOrders);
+	
+	$scope.init=function(){
+		DashboardService.getStuckOrderForStatus($scope.orderStatus).then(
+				function(data) {
+					$scope.stuckOrders= data;
+					console.log($scope.stuckOrders);
+					$scope.grouppedOrders = CommonUtils.getGrouppedOrderList($scope.stuckOrders);
+					console.log($scope.grouppedOrders);
+	       		},
+		       function(errResponse){
+				console.error('Error while fetching Currencies');
+		       }
+		);
 	}
 	
 	$scope.init();
