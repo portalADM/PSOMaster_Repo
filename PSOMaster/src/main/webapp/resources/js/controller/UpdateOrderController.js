@@ -2,6 +2,8 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http) 
 	
 	$scope.title = "Update Order";
 	
+	$scope.orderID = $routeParams.orderID;
+	
 	
 	$scope.updateOrderPopup = function(){
         $("#updateOrder-modal").modal();

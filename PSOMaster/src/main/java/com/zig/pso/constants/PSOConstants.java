@@ -25,4 +25,12 @@ public class PSOConstants
     public final static String ENS_DB_URL = "ensDbUrl";
     public final static String ENS_DB_USER = "ensDBUsername";
     public final static String ENS_DB_PASSWORD = "ensDBPassword";
+
+    /*
+     * Error Code & Message Constants
+     */
+    public final static int ERROR_CODE = -1;
+    public final static int INFO_CODE = 1;
+    public final static int SUCCESS_CODE = 0;
+    public final static String NO_DATA = "No Data Found.";
 }

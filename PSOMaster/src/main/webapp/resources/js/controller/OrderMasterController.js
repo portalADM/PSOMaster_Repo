@@ -1,10 +1,8 @@
-module.controller("OrderMasterController", function($scope, $routeParams,$http,OrderService) {
+module.controller("OrderMasterController", function($scope, $routeParams,$http,OrderService,MessageService) {
 	
 	$scope.title = "Order Master";
 	
 	$scope.orderID = $routeParams.orderID;
-	
-	console.log($scope.orderID);
 	
 	$scope.portalOrderDetails = {};
 	$scope.ensembleOrderDetails = {};
@@ -18,14 +16,25 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 		
 		var orderID = $scope.orderID;
 		
-		// Get Portal Order Details
-		$scope.portalOrderDetails = getPortalOrderDetails(orderID);
+		if(orderID != undefined && orderID.length>0){
+			// Get Portal Order Details
+			getPortalOrderDetails(orderID);
+			
+			// Get Portal Order API Details
+			getPortalOrderAPIDetails(orderID);
+			
+			// Get Ensemble Order Details
+			getENSOrderDetails(orderID);
+		}
+		else{
+			MessageService.showInfo("Please Enter Order ID",5000);
+			return;
+		}
 		
-		// Get Portal Order API Details
-		getPortalOrderAPIDetails(orderID);
-		
-		// Get Ensemble Order Details
-		getENSOrderDetails(orderID);
+		/*MessageService.showSuccess('This is Success Message',5000);
+		MessageService.showError('This is Error Message',6000);
+		MessageService.showInfo('This is Info Message',7000);
+		MessageService.showWarning('This is Warning Message',8000);*/
 	}
 	
 	
@@ -35,13 +44,15 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	function getPortalOrderDetails(orderID){
 		
 		OrderService.getPortalOrderDetails(orderID).then(
-				function(d) {
-					$scope.portalOrderDetails = d;
-					console.log($scope.portalOrderDetails);
+				function(data) {
+					if(data.errorCode != 0){
+						MessageService.showError(data.errorMsg,5000);
+					}
+					$scope.portalOrderDetails = data;
 	       		},
-		       function(errResponse){
-				console.error('Error while fetching Currencies');
-		       }
+		        function(errResponse){
+	       			MessageService.showError(errResponse,5000);
+		        }
 		);
 		
 	}
@@ -51,13 +62,11 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	 */
 	function getPortalOrderAPIDetails(orderID){
 		OrderService.getPortalAPIDetails(orderID).then(
-		function(d){
-			$scope.apiOrderDetails=d;
-			console.log($scope.apiOrderDetails);
-		},
-		function(errResponse){
-			console.error('Error while fetching API details');	
-		}
+				function(data){
+					$scope.apiOrderDetails=data;
+				},
+				function(errResponse){
+				}
 		);
 		
 	}
@@ -69,11 +78,10 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 		OrderService.getEnsembleOrderDetails(orderID).then(
 				function(d) {
 					$scope.ensembleOrderDetails = d;
-					console.log($scope.ensembleOrderDetails);
 	       		},
-		       function(errResponse){
-				console.error('Error while fetching Currencies');
-		       }
+		        function(errResponse){
+	       			
+		        }
 		);
 		
 	}

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
+import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalEnrollmentInfo;
@@ -36,6 +37,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
     /*
      * (non-Javadoc)
+     * 
      * @see com.zig.pso.dao.OrderInfoManagerDAO#getOrderIds()
      */
     @Override
@@ -63,6 +65,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
     /*
      * (non-Javadoc)
+     * 
      * @see com.zig.pso.dao.OrderInfoManagerDAO#getPortalDataInfo()
      */
     @Override
@@ -109,9 +112,14 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (SQLException e)
         {
-            portalOrderlist.setErrorCode((e.getErrorCode()));
+            portalOrderlist.setErrorCode(PSOConstants.ERROR_CODE);
             portalOrderlist.setErrorMsg(e.getMessage());
-            // e.printStackTrace();
+        }
+
+        if (portalOrderlist.getOrderId() == null)
+        {
+            portalOrderlist.setErrorCode(PSOConstants.INFO_CODE);
+            portalOrderlist.setErrorMsg(PSOConstants.NO_DATA);
         }
 
         return portalOrderlist;
@@ -119,6 +127,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
     /*
      * (non-Javadoc)
+     * 
      * @see com.zig.pso.dao.OrderInfoManagerDAO#getEnsembleDataInfo(java.lang.String)
      */
     @Override

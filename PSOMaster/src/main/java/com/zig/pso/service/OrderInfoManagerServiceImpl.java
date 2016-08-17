@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import PortalShipmentInfo.PortalShipmentInfoForUI;
 
+import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.dao.OrderInfoManagerDAO;
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
@@ -48,12 +49,16 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
     {
         PortalOrderMasterResponseBean portalOrderDetail = new PortalOrderMasterResponseBean();
         portalOrderDetail = orderDAO.getPortalDataInfo(OrderId);
-        int type = Integer.parseInt(portalOrderDetail.getOrderType());
-        String orderType = commonUtil.getOrderType(type);
-        portalOrderDetail.setOrderType(orderType);
+        if (portalOrderDetail.getErrorCode() == PSOConstants.SUCCESS_CODE)
+        {
+            int type = Integer.parseInt(portalOrderDetail.getOrderType());
+            String orderType = commonUtil.getOrderType(type);
+            portalOrderDetail.setOrderType(orderType);
 
-        PortalShipmentInfoForUI shipmentInfoFromDb = getPortalShipmentInfo(OrderId);
-        portalOrderDetail.setPortalShipmentInfo(shipmentInfoFromDb);
+            PortalShipmentInfoForUI shipmentInfoFromDb = getPortalShipmentInfo(OrderId);
+            portalOrderDetail.setPortalShipmentInfo(shipmentInfoFromDb);
+        }
+
         return portalOrderDetail;
 
     }

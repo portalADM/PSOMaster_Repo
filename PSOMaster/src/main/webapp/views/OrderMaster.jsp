@@ -17,13 +17,21 @@
 					</h3>
 				</div>
 
+					<flash-message></flash-message> 
+				
 				<div class="bs-component">
-					<form class="navbar-form navbar-left" role="search">
+					<form class="navbar-form navbar-left noPad" role="search">
 						<div class="form-group">
 							<input type="text" class="form-control" ng-model="orderID" placeholder="Order Id">
 						</div>
 						<button type="submit" class="btn btn-default" ng-click="searchOrderDetails()">Submit</button>
 					</form>
+					<div class="bs-component">
+						<h3>
+							<a  ng-href="{{orderID.length>0 ? '#updateOrder/'+orderID : '#updateOrder'}}" ><span tooltip-placement="bottom" uib-tooltip="Update Order" class="glyphicon glyphicon-edit floatRight panelHeaderIcon marRight50" aria-hidden="true"></span></a>  
+							<a href="#sendEmail"><span tooltip-placement="bottom" uib-tooltip="Send Email" class="glyphicon glyphicon-envelope floatRight panelHeaderIcon" aria-hidden="true"></a></span>
+						</h3> 
+					</div>
 
 				</div>
 			</div>
@@ -32,10 +40,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="bs-component">
-					<h3 ng-show="portalOrderDetails.orderId.length>0">Order : {{portalOrderDetails.orderId}}</h3><h3 >
-					<a href="#updateOrder"><span tooltip-placement="bottom" uib-tooltip="Update Order" class="glyphicon glyphicon-edit floatRight panelHeaderIcon marRight50" aria-hidden="true"></span></a>  
-					<a href="#sendEmail"><span tooltip-placement="bottom" uib-tooltip="Send Email" class="glyphicon glyphicon-envelope floatRight panelHeaderIcon" aria-hidden="true"></a></span>
-					</h3> 
+					<h3 ng-show="portalOrderDetails.orderId.length>0">Order : {{portalOrderDetails.orderId}}</h3>
 				</div>
 			</div>
 		</div>

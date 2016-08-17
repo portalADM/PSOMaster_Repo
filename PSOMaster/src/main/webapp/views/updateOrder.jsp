@@ -37,19 +37,12 @@
 									<div class="form-group">
 										<label class="col-lg-4 control-label textAlgnInit">Order</label>
 										<div class="col-lg-8">
-											<label class="col-lg-12 control-label textAlgnInit noPadLeft">25636589</label>
+											<label ng-if="orderID.length>0" class="col-lg-12 control-label textAlgnInit noPadLeft">{{orderID}}</label>
+											<input ng-if="orderID==undefined" type="text" class="form-control" ng-model="orderID" placeholder="Order ID">
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-lg-4 control-label textAlgnInit">Current
-											Status</label>
-										<div class="col-lg-8 noPadLeft">
-											<label class="col-lg-12 control-label textAlgnInit">ORFI</label>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="select" class="col-lg-4 control-label textAlgnInit">New
-											Status</label>
+										<label for="select" class="col-lg-4 control-label textAlgnInit">New Status</label>
 										<div class="col-lg-8">
 											<select class="form-control" id="select">
 												<option value="OPEN">OPEN</option>
@@ -85,7 +78,8 @@
                                                 <div class="form-group">
                                                        <label class="col-lg-4 control-label textAlgnInit">Order</label>
                                                        <div class="col-lg-8 noPadLeft">
-                                                              <label class="col-lg-12 control-label textAlgnInit noPadLeft">25636589</label>
+                                                            <label ng-if="orderID.length>0" class="col-lg-12 control-label textAlgnInit noPadLeft">{{orderID}}</label>
+															<input ng-if="orderID==undefined" type="text" class="form-control" ng-model="orderID" placeholder="Order ID">
                                                        </div>
                                                 </div>
                                                 <div class="form-group">
@@ -120,7 +114,8 @@
                                                 <div class="form-group">
                                                        <label class="col-lg-4 control-label textAlgnInit">Order</label>
                                                        <div class="col-lg-8 noPadLeft">
-                                                              <label class="col-lg-12 control-label textAlgnInit noPadLeft">25636589</label>
+                                                              <label ng-if="orderID.length>0" class="col-lg-12 control-label textAlgnInit noPadLeft">{{orderID}}</label>
+															  <input ng-if="orderID==undefined" type="text" class="form-control" ng-model="orderID" placeholder="Order ID">
                                                        </div>
                                                 </div>
                                                 <div class="form-group">
@@ -156,19 +151,20 @@
                                                 <div class="form-group">
                                                        <label class="col-lg-4 control-label textAlgnInit">Order</label>
                                                        <div class="col-lg-8 noPadLeft">
-                                                              <label class="col-lg-12 control-label textAlgnInit ">25636589</label>
+                                                               <label ng-if="orderID.length>0" class="col-lg-12 control-label textAlgnInit noPadLeft">{{orderID}}</label>
+															   <input ng-if="orderID==undefined" type="text" class="form-control" ng-model="orderID" placeholder="Order ID">
                                                        </div>
                                                 </div>
                                                 <div class="form-group">
                                                        <label for="select" class="col-lg-4 control-label textAlgnInit">Set
                                                               Retry Count</label>
-                                                       <div class="col-lg-8">
+                                                       <div class="col-lg-8 noPad">
                                                        <input type="number" class="form-control" id="inputEmail" placeholder="count">
                                                        </div>
                                                 </div>
                                                 <div class="form-group">
                                                        <div class="col-lg-4"></div>
-                                         <div class="col-lg-8">
+                                         <div class="col-lg-8 noPad">
                                            <button type="reset" class="btn btn-default">Submit</button>
                                          </div>
                                        </div>

@@ -70,3 +70,7 @@
 .textAlgnInit{
            text-align: initial !important;
 }
+
+.noPad{
+	padding: 0px;
+}

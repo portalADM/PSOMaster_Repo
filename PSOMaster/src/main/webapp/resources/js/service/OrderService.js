@@ -1,4 +1,4 @@
-module.service('OrderService', function($http) {
+module.service('OrderService', function($http,$q) {
 	
 	/*
 	 *Service Method that will fetch Portal Order Details  
@@ -12,7 +12,6 @@ module.service('OrderService', function($http) {
 					return response.data;
 				}, 
 				function(errResponse){
-					console.error('Error while fetching users');
 					return $q.reject(errResponse);
 				}
 		);
@@ -31,7 +30,6 @@ this.getEnsembleOrderDetails = function(orderID){
 					return response.data;
 				}, 
 				function(errResponse){
-					console.error('Error while fetching users');
 					return $q.reject(errResponse);
 				}
 		);
@@ -50,7 +48,6 @@ this.getPortalAPIDetails=function(orderID){
 				return response.data;
 			},
 			function(errResponse){
-				console.error('Error while fetching users');
 				return $q.reject(errResponse);
 			}
 			);

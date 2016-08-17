@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="resources/css/bootstrap.css" media="screen">
 <link rel="stylesheet" href="resources/css/bootswatch.min.css" media="screen">
 <link rel="stylesheet" href="resources/css/psoStyle.css" media="screen">
+<link rel="stylesheet" href="resources/css/angular-flash.css" media="screen">
 </head>
 <body ng-app="PSOMaster">
 	<div class="navbar navbar-default navbar-fixed-top">
@@ -45,55 +46,6 @@
 
 	<div class="container">
 
-		<div class=" clearfix marTop20">
-			<div class="row" ng-show="false">
-				<div class="col-lg-12">
-					<div class="bs-component">
-						<div class="alert alert-dismissible alert-warning">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<span class="glyphicon glyphicon-exclamation-sign marRight8"></span><strong>Oh snap!</strong> <a href="#" class="alert-link">Change
-								a few things up</a> and try submitting again.
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row" ng-show="false">
-				<div class="col-lg-12">
-					<div class="bs-component">
-						<div class="alert alert-dismissible alert-danger">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<span class="glyphicon glyphicon-thumbs-down marRight8"></span><strong>Oh snap!</strong> <a href="#" class="alert-link">Change
-								a few things up</a> and try submitting again.
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row" ng-show="false">
-				<div class="col-lg-12">
-					<div class="bs-component">
-						<div class="alert alert-dismissible alert-success">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<span class="glyphicon glyphicon-thumbs-up marRight8"></span><strong>Well done!</strong> You successfully read <a href="#"
-								class="alert-link">this important alert message</a>.
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row" ng-show="false">
-				<div class="col-lg-12">
-					<div class="bs-component">
-						<div class="alert alert-dismissible alert-info">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<span class="glyphicon glyphicon-info-sign marRight8"></span><strong>Heads up!</strong> This <a href="#" class="alert-link">alert
-								needs your attention</a>, but it's not super important.
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-
 		<div ng-view></div>
 	</div>
 
@@ -103,6 +55,7 @@
 	<script src="resources/js/libs/angularjs/angular-animate.js"></script>
 	<script src="resources/js/libs/angularjs/angular-route.min.js"></script>
 	<script src="resources/js/libs/angularjs/angular-sanitize.min.js"></script>
+	<script src="resources/js/libs/angularjs/angular-flash.js"></script>
 	<script src="resources/js/libs/bootstrap/ui-bootstrap-tpls-1.3.3.js"></script>
 	<script src="resources/js/libs/bootstrap/bootstrap.min.js"></script>
 	<script src="resources/js/libs/bootstrap/bootswatch.js"></script>
@@ -121,7 +74,7 @@
 	<script src="resources/js/service/OrderService.js"></script>
 	<script src="resources/js/service/DashboardService.js"></script>
 	<script src="resources/js/libs/utils/CommonUtils.js"></script>
-
+	<script src="resources/js/libs/utils/MessageService.js"></script>
 
 </body>
 </html>
