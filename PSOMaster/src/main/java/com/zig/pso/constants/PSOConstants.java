@@ -33,4 +33,11 @@ public class PSOConstants
     public final static int INFO_CODE = 1;
     public final static int SUCCESS_CODE = 0;
     public final static String NO_DATA = "No Data Found.";
+    public final static String Successfully_updated_status = "Successfully updated status- inside DAO.";
+    public final static String Unsuccessful_while_updating_Info = "Unsuccessful while updating Info.";
+    public final static String Invalid_Status_Code = "Invalid Status Code";
+    public final static String Invalid_IMEI_Number = "Invalid IMEI number";
+    public final static String Invalid_Sim_Number = "Invalid SIM Number";
+    public final static String Invalid_Retry_Count = "Invalid Retry Count";
+    public final static String Invalid_Credentials = "Invalid Credentials";
 }

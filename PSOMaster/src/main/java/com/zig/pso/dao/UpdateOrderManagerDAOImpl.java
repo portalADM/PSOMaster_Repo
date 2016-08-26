@@ -6,83 +6,155 @@
 package com.zig.pso.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
+import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.UpdateOrderRequestBean;
 import com.zig.pso.utility.DBConnection;
+import com.zig.pso.utility.OrderQueries;
 
 /**
  * 
  */
 @Repository
-public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
-{
-    private Connection portalDBConnection = null;
+public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO {
+	private Connection portalDBConnection = null;
 
-    private Connection ensDBConnection = null;
+	// private Connection ensDBConnection = null;
 
-    /**
-     * @param portalDBConnection
-     * @param ensDBConnection
-     */
-    public UpdateOrderManagerDAOImpl()
-    {
-        portalDBConnection = DBConnection.getPortalDBConnection();
-        ensDBConnection = DBConnection.getENSDBConnection();
-    }
+	/**
+	 * @param portalDBConnection
+	 * @param ensDBConnection
+	 */
+	public UpdateOrderManagerDAOImpl() {
+		portalDBConnection = DBConnection.getPortalDBConnection();
+		// ensDBConnection = DBConnection.getENSDBConnection();
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see com.zig.pso.dao.UpdateOrderManagerDAO#updateOrderStatus(com.zig.pso.rest.bean.UpdateOrderRequestBean)
-     */
-    @Override
-    public BaseResponseBean updateOrderStatus(UpdateOrderRequestBean updateOrderRequest)
-    {
-        BaseResponseBean updateOrderRes = new BaseResponseBean();
-        updateOrderRes.setErrorCode(0);
-        updateOrderRes.setErrorMsg("Successfully updated status- inside DAO");
-        return updateOrderRes;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.zig.pso.dao.UpdateOrderManagerDAO#updateOrderStatus(com.zig.pso.rest
+	 * .bean.UpdateOrderRequestBean)
+	 */
+	@Override
+	public BaseResponseBean updateOrderStatus(
+			UpdateOrderRequestBean updateOrderRequest) {
+		BaseResponseBean updateOrderRes = new BaseResponseBean();
+		try {
+			String sql = OrderQueries.updateOrderStatus();
+			PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+			pstm.setString(1, updateOrderRequest.getNewValue());
+			pstm.setString(2, updateOrderRequest.getOrderId());
+			int i = pstm.executeUpdate();
+			if (i < 1) {
+				updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
+				updateOrderRes.setErrorMsg(PSOConstants.Unsuccessful_while_updating_Info);
+			} else {
+				updateOrderRes.setErrorCode(PSOConstants.SUCCESS_CODE);
+				updateOrderRes.setErrorMsg(PSOConstants.Successfully_updated_status);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
+			updateOrderRes.setErrorMsg(PSOConstants.Unsuccessful_while_updating_Info);
+		}
 
-    /*
-     * (non-Javadoc)
-     * @see com.zig.pso.dao.UpdateOrderManagerDAO#updateOrderSim(com.zig.pso.rest.bean.UpdateOrderRequestBean)
-     */
-    @Override
-    public BaseResponseBean updateOrderSim(UpdateOrderRequestBean updateOrderRequest)
-    {
-        BaseResponseBean updateOrderRes = new BaseResponseBean();
-        updateOrderRes.setErrorCode(0);
-        updateOrderRes.setErrorMsg("Successfully updated sim -inside DAO");
-        return updateOrderRes;
-    }
+		return updateOrderRes;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see com.zig.pso.dao.UpdateOrderManagerDAO#updateOrderImei(com.zig.pso.rest.bean.UpdateOrderRequestBean)
-     */
-    @Override
-    public BaseResponseBean updateOrderImei(UpdateOrderRequestBean updateOrderRequest)
-    {
-        BaseResponseBean updateOrderRes = new BaseResponseBean();
-        updateOrderRes.setErrorCode(0);
-        updateOrderRes.setErrorMsg("Successfully updated imei -inside DAO");
-        return updateOrderRes;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.zig.pso.dao.UpdateOrderManagerDAO#updateOrderSim(com.zig.pso.rest
+	 * .bean.UpdateOrderRequestBean)
+	 */
+	@Override
+	public BaseResponseBean updateOrderSim(
+			UpdateOrderRequestBean updateOrderRequest) {
+		try {
+			String sql = OrderQueries.updateOrderSim();
+			PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+			pstm.setString(1, updateOrderRequest.getNewValue());
+			pstm.setString(2, updateOrderRequest.getOrderId());
+			int i = pstm.executeUpdate();
+			if (i < 1) {
+				// message to be shown if not updated
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		BaseResponseBean updateOrderRes = new BaseResponseBean();
+		updateOrderRes.setErrorCode(0);
+		updateOrderRes.setErrorMsg("Successfully updated sim -inside DAO");
+		return updateOrderRes;
 
-    /*
-     * (non-Javadoc)
-     * @see com.zig.pso.dao.UpdateOrderManagerDAO#updateOrderRetryCount(com.zig.pso.rest.bean.UpdateOrderRequestBean)
-     */
-    @Override
-    public BaseResponseBean updateOrderRetryCount(UpdateOrderRequestBean updateOrderRequest)
-    {
-        BaseResponseBean updateOrderRes = new BaseResponseBean();
-        updateOrderRes.setErrorCode(0);
-        updateOrderRes.setErrorMsg("Successfully updated retry -inside DAO");
-        return updateOrderRes;
-    }
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.zig.pso.dao.UpdateOrderManagerDAO#updateOrderImei(com.zig.pso.rest
+	 * .bean.UpdateOrderRequestBean)
+	 */
+	@Override
+	public BaseResponseBean updateOrderImei(
+			UpdateOrderRequestBean updateOrderRequest) {
+		try {
+			String sql = OrderQueries.updateOrderIMEI();
+			PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+			pstm.setString(1, updateOrderRequest.getNewValue());
+			pstm.setString(2, updateOrderRequest.getOrderId());
+			int i = pstm.executeUpdate();
+			if (i < 1) {
+				// message to be shown if not updated
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		BaseResponseBean updateOrderRes = new BaseResponseBean();
+		updateOrderRes.setErrorCode(0);
+		updateOrderRes.setErrorMsg("Successfully updated imei -inside DAO");
+		return updateOrderRes;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.zig.pso.dao.UpdateOrderManagerDAO#updateOrderRetryCount(com.zig.pso
+	 * .rest.bean.UpdateOrderRequestBean)
+	 */
+	@Override
+	public BaseResponseBean updateOrderRetryCount(
+			UpdateOrderRequestBean updateOrderRequest) {
+		try {
+			String sql = OrderQueries.updateOrderRetryCount();
+			PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+			pstm.setString(1, updateOrderRequest.getNewValue());
+			pstm.setString(2, updateOrderRequest.getOrderId());
+			int i = pstm.executeUpdate();
+			if (i < 1) {
+				// message to be shown if not updated
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		BaseResponseBean updateOrderRes = new BaseResponseBean();
+		updateOrderRes.setErrorCode(0);
+		updateOrderRes.setErrorMsg("Successfully updated retry -inside DAO");
+		return updateOrderRes;
+	}
 
 }

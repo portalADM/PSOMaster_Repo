@@ -53,4 +53,28 @@ public class OrderQueries
     {
         return orderProp.getProperty("order.stuckOrdersbyStatus");
     }
+    public static String updateOrderStatus()
+    {
+        return orderProp.getProperty("order.updateOrderStatusQuerry");
+    }
+    
+    public static String updateOrderSim()
+    {
+        return orderProp.getProperty("order.updateOrderSIMQuerry");
+    }
+    
+    public static String updateOrderIMEI()
+    {
+        return orderProp.getProperty("order.updateOrderIMEIQuerry");
+    }
+    
+    public static String updateOrderRetryCount()
+    {
+        return orderProp.getProperty("order.updateOrderRetryCountQuerry");
+    }
+    
+    public static String getUserDetails()
+    {
+        return orderProp.getProperty("order.getUserDetailsQuerry");
+    }
 }
