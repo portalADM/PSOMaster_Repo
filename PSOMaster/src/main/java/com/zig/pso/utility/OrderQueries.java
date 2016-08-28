@@ -73,6 +73,11 @@ public class OrderQueries
         return orderProp.getProperty("order.updateOrderRetryCountQuerry");
     }
     
+    public static String updateOrderTrack()
+    {
+        return orderProp.getProperty("order.updateOrderTrackerQuerry");
+    }
+    
     public static String getUserDetails()
     {
         return orderProp.getProperty("order.getUserDetailsQuerry");

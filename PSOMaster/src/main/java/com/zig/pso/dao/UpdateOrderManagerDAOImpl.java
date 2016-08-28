@@ -34,7 +34,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO {
 		portalDBConnection = DBConnection.getPortalDBConnection();
 		// ensDBConnection = DBConnection.getENSDBConnection();
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -56,6 +56,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO {
 				updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
 				updateOrderRes.setErrorMsg(PSOConstants.Unsuccessful_while_updating_Info);
 			} else {
+				updateOrderRes = updateOrderTrack(updateOrderRequest,"ZIG_AUTO_MASTER");
 				updateOrderRes.setErrorCode(PSOConstants.SUCCESS_CODE);
 				updateOrderRes.setErrorMsg(PSOConstants.Successfully_updated_status);
 			}
@@ -93,6 +94,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO {
 			e.printStackTrace();
 		}
 		BaseResponseBean updateOrderRes = new BaseResponseBean();
+		updateOrderRes = updateOrderTrack(updateOrderRequest,"ZIG_ORDER_SHIPMENT_INFO");
 		updateOrderRes.setErrorCode(0);
 		updateOrderRes.setErrorMsg("Successfully updated sim -inside DAO");
 		return updateOrderRes;
@@ -123,6 +125,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO {
 			e.printStackTrace();
 		}
 		BaseResponseBean updateOrderRes = new BaseResponseBean();
+		updateOrderRes = updateOrderTrack(updateOrderRequest,"ZIG_ORDER_SHIPMENT_INFO");
 		updateOrderRes.setErrorCode(0);
 		updateOrderRes.setErrorMsg("Successfully updated imei -inside DAO");
 		return updateOrderRes;
@@ -152,9 +155,41 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO {
 			e.printStackTrace();
 		}
 		BaseResponseBean updateOrderRes = new BaseResponseBean();
+		updateOrderRes = updateOrderTrack(updateOrderRequest,"ZIG_AUTO_MASTER");
 		updateOrderRes.setErrorCode(0);
 		updateOrderRes.setErrorMsg("Successfully updated retry -inside DAO");
 		return updateOrderRes;
 	}
+
+	/* (non-Javadoc)
+	 * @see com.zig.pso.dao.UpdateOrderManagerDAO#updateOrderTrack(com.zig.pso.rest.bean.UpdateOrderRequestBean)
+	 */
+	public BaseResponseBean updateOrderTrack(
+			UpdateOrderRequestBean updateOrderRequest,String tablename) {
+		try {
+			String sql = OrderQueries.updateOrderTrack();
+			PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+			pstm.setString(1, updateOrderRequest.getOrderId());
+			pstm.setString(2, updateOrderRequest.getType());
+			pstm.setString(3, updateOrderRequest.getNewValue());
+			pstm.setString(4, "123456789");
+			pstm.setString(5, "kalir");
+			pstm.setString(6, tablename);
+			int i = pstm.executeUpdate();
+			if (i < 1) {
+				// message to be shown if not updated
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		BaseResponseBean updateOrderRes = new BaseResponseBean();
+		updateOrderRes.setErrorCode(0);
+		updateOrderRes.setErrorMsg("Successfully updated order track -inside DAO");
+		return updateOrderRes;
+
+	}
+		
+	
 
 }
