@@ -15,7 +15,9 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
+import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.StuckOrdersCount;
+import com.zig.pso.utility.CommonUtility;
 import com.zig.pso.utility.DBConnection;
 import com.zig.pso.utility.OrderQueries;
 
@@ -57,6 +59,11 @@ public class DashboardDAOImpl implements DashboardDAO {
 			}
 			
 		} catch (Exception e) {
+			
+			String logRefID = CommonUtility.getLogRefID();
+			
+			PSOLoggerSrv.printERROR(e,logRefID);
+			
 			 e.printStackTrace();
 		}
 		
@@ -76,13 +83,14 @@ public class DashboardDAOImpl implements DashboardDAO {
 			PreparedStatement pstm=portalDBConnection.prepareStatement(sql);
 			pstm.setString(1, status);
 			ResultSet rs=pstm.executeQuery();
-			while(rs.next()){
-				
+			while(rs.next())
+			{
 				stuckOrderList.add(rs.getString("order_id"));
 			}
 			
 		} catch (Exception e) {
-			 e.printStackTrace();
+			String logRefID = CommonUtility.getLogRefID();
+			PSOLoggerSrv.printERROR(e,logRefID);
 		}
 		return stuckOrderList;
 	

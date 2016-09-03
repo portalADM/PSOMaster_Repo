@@ -35,21 +35,36 @@ public class PSOLoggerSrv
             props.load(PSOLoggerSrv.class.getResourceAsStream("/log4j.properties"));
             PropertyConfigurator.configure(props);
             psoLogger = Logger.getLogger(PSO_LOGGER_NAME);
+            initLoggerFile();
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
     }
+    
+    public static void initLoggerFile()
+    {
+      PSOLoggerSrv.printINFO("\n"
+              +"###############################################################################"
+    		  +"\n"
+    		  +" \n   ###### ###### ######     ###   ### ####### ###### ###### ###### ######       "
+    		  +" \n   ##  ## ##     ##  ##     ## # # ## ##   ## ##       ##   ##     ##  ##       "
+    		  +" \n   ###### ###### ##  ##     ##  #  ## ####### ######   ##   ###### ######       "
+    		  +" \n   ##         ## ##  ##     ##     ## ##   ##     ##   ##   ##     ## #         "
+    		  +" \n   ##     ###### ######     ##     ## ##   ## ######   ##   ###### ##  ##       "
+    		  +" \n"
+    		  +" \n"
+    		  +"###############################################################################");
+    }
 
     public static void printINFO(String infoMessage)
     {
         StringBuffer strMessage = new StringBuffer();
-        strMessage.append("--------------------------------------------------------------------------------");
         strMessage.append("\n");
         strMessage.append(infoMessage);
         strMessage.append("\n");
-        strMessage.append("--------------------------------------------------------------------------------");
+        strMessage.append("-----------------------------------------------------------------------------------------------------");
         psoLogger.info(strMessage);
     }
 
@@ -61,6 +76,16 @@ public class PSOLoggerSrv
     public static void printERROR(String infoMessage)
     {
         psoLogger.error(infoMessage);
+    }
+    
+    public static void printERROR(Exception exe, String logRefID)
+    {
+    	 StringBuffer strMessage = new StringBuffer();
+         strMessage.append("\n");
+         strMessage.append("LOG_REF_ID : "+logRefID);
+         strMessage.append("\n");
+         strMessage.append("-----------------------------------------------------------------------------------------------------");
+         psoLogger.error(strMessage, exe);
     }
 
 }
