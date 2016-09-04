@@ -33,9 +33,9 @@ public class ImplDailyRollingFileAppender extends DailyRollingFileAppender
 
     public synchronized void setFile(String fileName, boolean append, boolean bufferedIO, int bufferSize) throws IOException
     {
-        //super.setFile(FILEPATH + SLA_LOG_FILE_NAME, append, bufferedIO, bufferSize);
-        super.setFile("E:\\Softwares\\JAVA SOFTWARES\\eclipse-jee-luna-SR1-win32\\eclipse\\logs\\" + SLA_LOG_FILE_NAME, append, bufferedIO, bufferSize);
-        
+        super.setFile(FILEPATH + SLA_LOG_FILE_NAME, append, bufferedIO, bufferSize);
+        // super.setFile("E:\\Softwares\\JAVA SOFTWARES\\eclipse-jee-luna-SR1-win32\\eclipse\\logs\\" + SLA_LOG_FILE_NAME, append, bufferedIO, bufferSize);
+
     }
 
 }

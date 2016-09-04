@@ -7,11 +7,10 @@ package com.zig.pso.service;
 
 import java.util.ArrayList;
 
-import PortalShipmentInfo.PortalShipmentInfoForUI;
-
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
+import com.zig.pso.rest.bean.PortalShipmentInfoForUI;
 
 public interface OrderInfoManagerService
 {

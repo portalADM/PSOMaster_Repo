@@ -13,13 +13,13 @@
 				<div class="page-header noPadBtm">
 					<h3 id="navbar">
 						<span class="glyphicon glyphicon-edit marRight8"></span>{{title}}
-						<a href="#orderMaster" tooltip-placement="bottom" uib-tooltip="back"
-							class="glyphicon glyphicon-chevron-left floatRight cursorPointer"></a>
+						<a href="#orderMaster" tooltip-placement="bottom" uib-tooltip="back" class="glyphicon glyphicon-chevron-left floatRight cursorPointer"></a>
 					</h3>
 				</div>
 			</div>
 		</div>
 	
+		<flash-message></flash-message> 
 	
 		<div ng-init="accordion=0">
 
@@ -83,16 +83,15 @@
                                                        </div>
                                                 </div>
                                                 <div class="form-group">
-                                                       <label for="select" class="col-lg-4 control-label textAlgnInit">New
-                                                              SIM</label>
-                                                            <input type="text" class="form-control" id="inputEmail" placeholder="SIM">
+                                                       <label for="select" class="col-lg-4 control-label textAlgnInit">New SIM</label>
+                                                       <input type="text" class="form-control" id="inputEmail" placeholder="SIM">
                                                 </div>
                                                 <div class="form-group">
                                                        <div class="col-lg-4"></div>
-                                         <div class="col-lg-8 noPadLeft">
-                                           <button type="reset" class="btn btn-default">Submit</button>
-                                         </div>
-                                       </div>
+				                                         <div class="col-lg-8 noPadLeft">
+				                                           <button type="reset" class="btn btn-default">Submit</button>
+				                                         </div>
+				                                </div>
                                          </form>
                                   </div>
                            </div>
@@ -144,8 +143,6 @@
 					<h3 class="panel-title">Update Order RetryCount</h3>
 				</div>
 				<div class="panel-body accordion-content" ng-show="accordion==4">
-					 <div class="">
-                           <div class="">
                                   <div class="well" id="">
                                          <form class="form-horizontal">
                                                 <div class="form-group">
@@ -170,50 +167,106 @@
                                        </div>
                                          </form>
                                   </div>
-                           </div>
-                     </div>
 				</div>
 			</div>
 			<!-- Update Order RetryCount Panel End -->
 			
 			
-			<a class="btn btn-warning btn-lg">Bulk Order Update <span class="glyphicon glyphicon-list-alt marLeft8"></span></a>
+		<!-- 	<a class="btn btn-warning btn-lg">Bulk Order Update <span class="glyphicon glyphicon-list-alt marLeft8"></span></a> -->
 			
-			<!-- Buld Order Update Panel Start -->
-			<!-- <div class="panel panel-info">
-				<div class="panel-heading accordion cursorPointer" ng-click="accordion = 5" ng-class="{active:accordion==5}">
-					<h3 class="panel-title">Buld Order Update</h3>
-				</div>
-				<div class="panel-body accordion-content" ng-show="accordion==5">
-					 <div class="">
-                           <div class="">
-                                  <div class="well" id="">
-                                         <form class="form-horizontal">
-                                                <div class="form-group">
-                                                       <label class="col-lg-4 control-label textAlgnInit">Order</label>
-                                                       <div class="col-lg-8 noPadLeft">
-                                                              <label class="col-lg-12 control-label textAlgnInit ">25636589</label>
-                                                       </div>
-                                                </div>
-                                                <div class="form-group">
-                                                       <label for="select" class="col-lg-4 control-label textAlgnInit">Set Retry Count</label>
-                                                       <div class="col-lg-8">
-                                                       <input type="number" class="form-control" id="inputEmail" placeholder="count">
-                                                       </div>
-                                                </div>
-                                                <div class="form-group">
-                                                       <div class="col-lg-4"></div>
-                                         <div class="col-lg-8">
-                                           <button type="reset" class="btn btn-default">Submit</button>
-                                         </div>
+			
+		<!-- Buld Order Update Panel Start -->	
+		 <div class="panel panel-warning">
+               <div class="panel-heading  accordion cursorPointer" ng-click="accordion = 5" ng-class="{active:accordion==5}">
+                 	<h3 class="panel-title">Bulk Order Update <span class="glyphicon glyphicon-list-alt marLeft8"></span></h3>
+               </div>
+               <div class="panel-body  accordion-content"  ng-show="accordion==5">
+        	 			<div class="well" id="">
+                                <form class="form-horizontal">
+                                	 <div class="form-group">
+						                    <label class="col-lg-2 control-label textAlgnInit">Update Type</label>
+						                    <div class="col-lg-10">
+						                      <div class="radio">
+						                        <label class="col-lg-2">
+						                          <input type="radio" ng-model="updateType"  value="status"> Status
+						                        </label>
+						                        <label class="col-lg-2">
+						                           <input type="radio" ng-model="updateType" value="sim"> SIM
+						                        </label>
+						                        <label class="col-lg-2">
+						                           <input type="radio" ng-model="updateType" value="imei"> IMEI
+						                        </label>
+						                        <label class="col-lg-2">
+						                           <input type="radio" ng-model="updateType" value="retry"> Retry Count
+						                        </label>
+						                        <label class="col-lg-4">
+						                        		<a tooltip-placement="bottom" uib-tooltip="Help" ng-click='openHelpModel()'  class="glyphicon glyphicon-info-sign  helpIcon floatRight cursorPointer"></a>
+														<a href="downloadSampleExcel/{{updateType}}">
+															<img class="excelIcon floatRight marRight8" tooltip-placement="left" uib-tooltip="Download Excel" src="resources/images/excel2.png">
+														</a> 
+						                        </label>
+						                      </div>
+						                    </div>
+					                  </div>
+                                       <div class="form-group marTop30">
+                                              <label class="col-lg-2 control-label textAlgnInit noPadTop">Upload File</label>
+                                              <div class="col-lg-10 noPadLeft">
+						   							  <input type = "file" class="custom-file-input padLeft15" file-model = "myFile"/>
+                                              </div>
                                        </div>
-                                         </form>
-                                  </div>
-                           </div>
-                     </div>
-				</div>
-			</div> -->
-			<!-- Buld Order Update Panel End -->
+                                       <div class="form-group marTop30">
+                                              <div class="col-lg-2"></div>
+			                                  <div class="col-lg-10 ">
+			                                      <button  type="reset" class="btn btn-defaul"  ng-click = "uploadFile()">Update</button>
+			                                  </div>
+		                              </div>
+                                </form>
+                        </div>
+               </div>
+         </div>
+		<!-- Buld Order Update Panel End -->	
+			
+			
+			<!-- Help Popup Panel start -->
+			 <div id="UpdateHelp-modal" class="modal fade">
+		        <div class="modal-dialog modal-lg">
+		          <div class="modal-content">
+		            <div class="modal-header">
+		              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		              <h4 class="modal-title">Bulk Order Update</h4>
+		            </div>
+		            <div class="modal-body helpPupupHeight">
+		              <table cellpadding="10px" cellspacing="10px">
+		              	<tbody>
+		              		<tr>
+		              			<td>Bulk Order update will allow user to update orders in bulk in one Go.</td>
+		              		</tr>
+		              		<tr>
+		              			<td>Please follow below steps to update multiple orders:</td>
+		              		</tr>
+		              		<tr>
+		              			<td>1) Select Order Update type.</td>
+		              		</tr>
+		              		<tr>
+		              			<td>2) Click on Download Icon to download sample excel sheet.</td>
+		              		</tr>
+		              		<tr>
+		              			<td>3) Add order details in downloaded Excel sheet and the type of data you want to update [i.e. Status, SIM, IMEI, Retry Count]</td>
+		              		</tr>
+		              	</tbody>    
+		              </table>
+		              
+		              <img src="resources/images/Capture3.jpg" class="helpPopupImage">
+		              
+		              <div class="col-lg-12">
+			              <img class="helpExcelImage" src="resources/images/HelpExcelImage.PNG" >
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+		      </div>
+			
+			<!-- Help Popup Panel End -->
 			
 			
 			

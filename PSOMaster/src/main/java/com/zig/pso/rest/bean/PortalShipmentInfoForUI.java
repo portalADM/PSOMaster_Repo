@@ -6,7 +6,7 @@
  * Date       :  Jul 27, 2016
  * **********************************************************************************************************
  */
-package PortalShipmentInfo;
+package com.zig.pso.rest.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -40,4 +40,24 @@ public class PSOConstants
     public final static String Invalid_Sim_Number = "Invalid SIM Number";
     public final static String Invalid_Retry_Count = "Invalid Retry Count";
     public final static String Invalid_Credentials = "Invalid Credentials";
+
+    public final static String BACKEND_ERROR = "There is a backend Error. Please try after some time.";
+    public final static String BULK_UPDATE_SUCCESS = "Updates done successfully";
+
+    /*
+     * Update Order Contants
+     */
+    public final static String STATUS = "status";
+    public final static String SIM = "sim";
+    public final static String IMEI = "imei";
+    public final static String RETRY_COUNT = "retry";
+
+    public final static String UPDATE_STATUS_EXCEL = "UPDATE_STATUS.xlsx";
+    public final static String UPDATE_SIM_EXCEL = "UPDATE_SIM.xlsx";
+    public final static String UPDATE_IMEI_EXCEL = "UPDATE_IMEI.xlsx";
+    public final static String UPDATE_RETRY_EXCEL = "UPDATE_RETRY.xlsx";
+
+    public final static String EXCEL_CONT_TYPE = "application/octet-stream";
+    public final static String CONTENT_DISPOSITION = "Content-Disposition";
+
 }

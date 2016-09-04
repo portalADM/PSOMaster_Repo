@@ -10,14 +10,13 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import PortalShipmentInfo.PortalShipmentInfoForUI;
-
 import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.dao.OrderInfoManagerDAO;
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalShipmentInfo;
+import com.zig.pso.rest.bean.PortalShipmentInfoForUI;
 import com.zig.pso.utility.CommonUtility;
 
 @Service

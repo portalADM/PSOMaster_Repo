@@ -45,7 +45,6 @@
 
 
 	<div class="container">
-
 		<div ng-view></div>
 	</div>
 
@@ -75,6 +74,10 @@
 	<script src="resources/js/service/DashboardService.js"></script>
 	<script src="resources/js/libs/utils/CommonUtils.js"></script>
 	<script src="resources/js/libs/utils/MessageService.js"></script>
+	<script src="resources/js/service/FileUploadService.js"></script>
+	
+	<!-- Application Modules Directives Import -->
+	<script src="resources/js/directive/fileModel.js"></script>
 
 </body>
 </html>

@@ -6,8 +6,6 @@ package com.zig.pso.rest.bean;
 
 import java.io.Serializable;
 
-import PortalShipmentInfo.PortalShipmentInfoForUI;
-
 /************************************************************************************************************
  * Class Name : PortalOrderMasterResponseBean.java Description: This Response bean for Get Portal order details rest Service Author : Ankita Mishra Date : Jun 29, 2016
  * **********************************************************************************************************
