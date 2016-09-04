@@ -1,4 +1,4 @@
-module.controller("UpdateOrderController", function($scope, $routeParams,$http,FileUploadService) {
+module.controller("UpdateOrderController", function($scope, $routeParams,$http,FileUploadService,MessageService) {
 	
 	$scope.title = "Update Order";
 	
@@ -25,6 +25,11 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 	
 	
 	 $scope.uploadFile = function(){
+		 var updateType = $scope.updateType;
+		 if(undefined == $scope.myFile){
+			 MessageService.showError('Please upload File to update Orders',5000);
+			 return;
+		 }
 		 var file = $scope.myFile;
 		 var uploadUrl = "upload/"+$scope.updateType;
 	      
