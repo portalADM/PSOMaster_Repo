@@ -30,4 +30,6 @@ public interface OrderInfoManagerDAO
     public ArrayList<ApiOrderMasterResponseBean> getAPIDataInfo(String orderId);
 
     public ArrayList<PortalShipmentInfo> getPortalShipmentInfoFromDB(String orderId);
+
+    public String getAPIRequestBody(String seq_number);
 }

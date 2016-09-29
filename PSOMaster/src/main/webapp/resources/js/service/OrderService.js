@@ -50,7 +50,31 @@ module.service('OrderService', function($http,$q) {
 				function(errResponse){
 					return $q.reject(errResponse);
 				}
-				);
+		);
+	}
+	
+	/*
+	 *Service Method that will fetch Order API Request Body  
+	 * 
+	 */
+	this.getOrderAPIRequest=function(seq_number){
+		
+		return  $http({
+			  method: 'GET',
+			  url: 'getAPIRequest/'+seq_number,
+              transformResponse : function(data) {
+            	  var x2js = new X2JS();  
+                  var aftCnv = x2js.xml_str2json(data);  
+                  return aftCnv;  
+                //return $.parseXML(data);
+              }
+			  }).then(function successCallback(response) {
+				console.log(response);
+				return response.data;
+			  }, function errorCallback(response) {
+				  console.log(response);
+			  });
+		
 	}
 	
 });

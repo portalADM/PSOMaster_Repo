@@ -221,7 +221,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
 
             for (OrderUpdateInputData order : orderUpdateData)
             {
-                pstm.setString(1, order.getStatus());
+                pstm.setString(1, order.getStatus().trim());
                 pstm.setString(2, order.getOrderId());
                 pstm.addBatch();
             }
@@ -264,7 +264,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
 
             for (OrderUpdateInputData order : orderUpdateData)
             {
-                pstm.setString(1, order.getSim());
+                pstm.setString(1, order.getSim().trim());
                 pstm.setString(2, order.getOrderId());
                 pstm.addBatch();
             }
@@ -307,7 +307,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
 
             for (OrderUpdateInputData order : orderUpdateData)
             {
-                pstm.setString(1, order.getImei());
+                pstm.setString(1, order.getImei().trim());
                 pstm.setString(2, order.getOrderId());
                 pstm.addBatch();
             }
@@ -350,7 +350,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
 
             for (OrderUpdateInputData order : orderUpdateData)
             {
-                pstm.setString(1, order.getRetryCount());
+                pstm.setString(1, order.getRetryCount().trim());
                 pstm.setString(2, order.getOrderId());
                 pstm.addBatch();
             }

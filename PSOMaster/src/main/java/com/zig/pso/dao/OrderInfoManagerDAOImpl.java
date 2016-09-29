@@ -226,7 +226,6 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
             while (rs.next())
             {
-
                 apiOutput = new ApiOrderMasterResponseBean();
                 apiOutput.setOrderId(rs.getString("ORDER_ID"));
                 apiOutput.setErrorMessage(rs.getString("ERROR_MESSAGE"));
@@ -234,10 +233,9 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 apiOutput.setAPIName(rs.getString("API_NAME"));
                 apiOutput.setSysCreationDate(rs.getString("SYS_CREATION_DATE"));
                 apiOutput.setOriginatorID(rs.getString("ORIGINATOR_ID"));
+                apiOutput.setSeqNumber(rs.getString("SEQ_NUM"));
 
                 apiList.add(apiOutput);
-                // System.out.println(rs.getString("STATUS_MESSAGE").toString());
-
             }
 
         }
@@ -247,6 +245,39 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
 
         return apiList;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.zig.pso.dao.OrderInfoManagerDAO#getAPIRequestBody(java.lang.String)
+     */
+    @Override
+    public String getAPIRequestBody(String seq_number)
+    {
+        String sql = OrderQueries.getAPIRequest();
+
+        String apiReqBody = null;
+
+        try
+        {
+
+            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm.setString(1, seq_number);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next())
+            {
+                apiReqBody = rs.getString("REQUEST");
+            }
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return apiReqBody;
     }
 
 }

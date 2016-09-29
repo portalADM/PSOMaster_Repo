@@ -22,7 +22,7 @@
 				<div class="bs-component">
 					<form class="navbar-form navbar-left noPad" role="search">
 						<div class="form-group">
-							<input type="text" class="form-control" ng-model="orderID" placeholder="Order Id">
+							<input type="text" class="form-control" ng-model="orderID" placeholder="Order Id" >
 						</div>
 						<button type="submit" class="btn btn-default" ng-click="searchOrderDetails()">Submit</button>
 					</form>
@@ -30,6 +30,7 @@
 						<h3>
 							<a  ng-href="{{orderID.length>0 ? '#updateOrder/'+orderID : '#updateOrder'}}" ><span tooltip-placement="bottom" uib-tooltip="Update Order" class="glyphicon glyphicon-edit floatRight panelHeaderIcon marRight50" aria-hidden="true"></span></a>  
 							<a href="#sendEmail"><span tooltip-placement="bottom" uib-tooltip="Send Email" class="glyphicon glyphicon-envelope floatRight panelHeaderIcon" aria-hidden="true"></a></span>
+							<a ng-click="getHelp()"><span tooltip-placement="bottom" uib-tooltip="Help" class="glyphicon glyphicon-info-sign floatRight panelHeaderIcon" aria-hidden="true"></span></a>
 						</h3> 
 					</div>
 
@@ -368,7 +369,7 @@
 			                  <tr ng-repeat=" api in apiOrderDetails">
 			                  <td>{{api.source}}</td>
 			                    <td>{{api.errorMessage}}</td>
-			                    <td>{{api.apiname}}</td>
+			                    <td><a ng-click="getAPIRequest(api.seqNumber)">{{api.apiname}}</a></td>
 			                    <td>{{api.sysCreationDate}}</td>
 			                   <td>{{api.originatorID}}</td>
 			                  </tr>
@@ -378,6 +379,49 @@
 			            </div><!-- /example -->
                 </div>
               </div>
+              
+              
+              
+              
+            <!-- Order API Req Body Popup Panel start -->
+			<div id="orderApiReqBody-modal" class="modal fade">
+		        <div class="modal-dialog modal-lg">
+		          <div class="modal-content">
+		            <div class="modal-header">
+		              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		              <h4 class="modal-title">API Request Body</h4>
+		            </div>
+		            <div class="modal-body " id="myApiReqBody">
+		              {{orderAPIReqBody}}
+		            </div>
+		          </div>
+		        </div>
+		      </div>
+			<!-- Order API Req Body Popup Panel start -->
+			
+			
+			 <!-- Order Help Popup Panel start -->
+			<div id="orderHelp-modal" class="modal fade" ng-if="portalOrderDetails.status!=undefined && portalOrderDetails.status!=null" >
+		        <div class="modal-dialog modal-lg">
+		          <div class="modal-content">
+		            <div class="modal-header">
+		              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		              <h4 class="modal-title">Stuck Order Help</h4>
+		            </div>
+		            <div class="modal-body ">
+			              <div ng-repeat="(key, data) in orderHelpData">
+							  <ul ng-if="portalOrderDetails.status == key" ng-repeat="line in data">
+								  <li><b>{{line}}</b></li>
+							  </ul>
+						  </div>
+		            </div>
+		          </div>
+		        </div>
+		      </div>
+			<!-- Order Help Popup Panel start -->
+		
+              
+              
 			
 		</div>
 

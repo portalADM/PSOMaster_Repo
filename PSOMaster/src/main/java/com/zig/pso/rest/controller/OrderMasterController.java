@@ -67,4 +67,11 @@ public class OrderMasterController
         return new ResponseEntity<ArrayList<ApiOrderMasterResponseBean>>(nameList, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/getAPIRequest/{seq_number}", method = RequestMethod.GET)
+    public ResponseEntity<String> getAPIRequest(@PathVariable("seq_number") String seq_number)
+    {
+        String data = orderService.getAPIRequestBody(seq_number);
+        return new ResponseEntity<String>(data, HttpStatus.OK);
+    }
+
 }

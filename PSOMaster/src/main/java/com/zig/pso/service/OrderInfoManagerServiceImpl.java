@@ -153,4 +153,15 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
 
         return shipInfoForUi;
     }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.zig.pso.service.OrderInfoManagerService#getAPIRequestBody(java.lang.String)
+     */
+    @Override
+    public String getAPIRequestBody(String seq_number)
+    {
+        return orderDAO.getAPIRequestBody(seq_number);
+    }
 }

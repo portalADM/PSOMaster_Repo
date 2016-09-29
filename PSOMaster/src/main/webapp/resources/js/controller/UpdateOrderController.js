@@ -44,6 +44,13 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 					if(data.errorCode != 0){
 						MessageService.showError(data.errorMsg,5000);
 					}
+					console.log(data);
+					
+					if(data.invalidOrders.length>0){
+						$scope.inValidOrders = data.invalidOrders;
+						console.log(data.invalidOrders);
+						$("#UpdateResponse-modal").modal();
+					}
 	       		},
 		        function(errResponse){
 	       			MessageService.showError(errResponse,5000);

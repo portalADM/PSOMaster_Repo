@@ -9,6 +9,7 @@ package com.zig.pso.service;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -24,6 +25,7 @@ import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.BulkUpdateInputBean;
 import com.zig.pso.rest.bean.OrderUpdateInputData;
 import com.zig.pso.rest.bean.UpdateOrderRequestBean;
+import com.zig.pso.rest.bean.ValidatedBulkUpdateOrderDetailsBean;
 
 /**
  * 
@@ -35,6 +37,11 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
     @Autowired
     UpdateOrderManagerDAO updateDAO;
 
+    private static final String SIM = "sim";
+    private static final String IMEI = "imei";
+    private static final String STATUS = "status";
+    private static final String RETRY_COUNT = "retry";
+
     /*
      * (non-Javadoc)
      * 
@@ -43,7 +50,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
     @Override
     public BaseResponseBean updateSingleOrderData(UpdateOrderRequestBean updateOrderRequest)
     {
-        if (updateOrderRequest.getType().equalsIgnoreCase("status"))
+        if (updateOrderRequest.getType().equalsIgnoreCase(STATUS))
         {
             BaseResponseBean updateOrderRes = new BaseResponseBean();
             String value = updateOrderRequest.getNewValue();
@@ -117,9 +124,9 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
      * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderData(com.zig.pso.rest.bean.BulkUpdateInputBean)
      */
     @Override
-    public BaseResponseBean updateBulkOrderStatus(BulkUpdateInputBean updateOrderRequest)
+    public BaseResponseBean updateBulkOrderStatus(ArrayList<OrderUpdateInputData> orderUpdateData)
     {
-        return updateDAO.updateBulkOrderStatus(updateOrderRequest.getOrderUpdateData());
+        return updateDAO.updateBulkOrderStatus(orderUpdateData);
     }
 
     /*
@@ -128,9 +135,9 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
      * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderSim(com.zig.pso.rest.bean.BulkUpdateInputBean)
      */
     @Override
-    public BaseResponseBean updateBulkOrderSim(BulkUpdateInputBean updateOrderRequest)
+    public BaseResponseBean updateBulkOrderSim(ArrayList<OrderUpdateInputData> orderUpdateData)
     {
-        return updateDAO.updateBulkOrderSim(updateOrderRequest.getOrderUpdateData());
+        return updateDAO.updateBulkOrderSim(orderUpdateData);
     }
 
     /*
@@ -139,9 +146,9 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
      * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderImei(com.zig.pso.rest.bean.BulkUpdateInputBean)
      */
     @Override
-    public BaseResponseBean updateBulkOrderImei(BulkUpdateInputBean updateOrderRequest)
+    public BaseResponseBean updateBulkOrderImei(ArrayList<OrderUpdateInputData> orderUpdateData)
     {
-        return updateDAO.updateBulkOrderImei(updateOrderRequest.getOrderUpdateData());
+        return updateDAO.updateBulkOrderImei(orderUpdateData);
     }
 
     /*
@@ -150,9 +157,9 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
      * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderRetryCount(com.zig.pso.rest.bean.BulkUpdateInputBean)
      */
     @Override
-    public BaseResponseBean updateBulkOrderRetryCount(BulkUpdateInputBean updateOrderRequest)
+    public BaseResponseBean updateBulkOrderRetryCount(ArrayList<OrderUpdateInputData> orderUpdateData)
     {
-        return updateDAO.updateBulkOrderRetryCount(updateOrderRequest.getOrderUpdateData());
+        return updateDAO.updateBulkOrderRetryCount(orderUpdateData);
     }
 
     /*
@@ -168,7 +175,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
         try
         {
-            int i = 0;
+            int i = 1;
             XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
             XSSFSheet worksheet = workbook.getSheetAt(0);
             while (i <= worksheet.getLastRowNum())
@@ -187,19 +194,19 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
                         order.setOrderId(cell.getStringCellValue());
                     else
                     {
-                        if (updateType.equalsIgnoreCase("status"))
+                        if (updateType.equalsIgnoreCase(STATUS))
                         {
                             order.setStatus(cell.getStringCellValue());
                         }
-                        else if (updateType.equalsIgnoreCase("sim"))
+                        else if (updateType.equalsIgnoreCase(SIM))
                         {
                             order.setSim(cell.getStringCellValue());
                         }
-                        else if (updateType.equalsIgnoreCase("imei"))
+                        else if (updateType.equalsIgnoreCase(IMEI))
                         {
                             order.setImei(cell.getStringCellValue());
                         }
-                        else if (updateType.equalsIgnoreCase("retry"))
+                        else if (updateType.equalsIgnoreCase(RETRY_COUNT))
                         {
                             order.setRetryCount(cell.getStringCellValue());
                         }
@@ -222,4 +229,50 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
         return orderBulkData;
     }
 
+    @Override
+    public ValidatedBulkUpdateOrderDetailsBean validateUploadedData(BulkUpdateInputBean orderBulkData)
+    {
+        ValidatedBulkUpdateOrderDetailsBean validatedOrderData = new ValidatedBulkUpdateOrderDetailsBean();
+        List<String> invalidOrderIDs = new ArrayList<String>();
+        ArrayList<OrderUpdateInputData> validOerderData = new ArrayList<OrderUpdateInputData>();
+        String numOnlyRegex = "[0-9]+";
+        String charOnlyRegex = "[a-zA-Z]+";
+
+        boolean isValidOrder = true;
+
+        for (OrderUpdateInputData orders : orderBulkData.getOrderUpdateData())
+        {
+            if (STATUS.equals(orderBulkData.getUpdateType()) && (null == orders.getStatus() || !orders.getStatus().matches(charOnlyRegex) || orders.getSim().length() != 4))
+            {
+                isValidOrder = false;
+                System.out.println("Not Matching " + orders.getOrderId());
+            }
+            else if (SIM.equals(orderBulkData.getUpdateType()) && (null == orders.getSim() || !orders.getSim().matches(numOnlyRegex) || orders.getSim().length() != 21))
+            {
+                isValidOrder = false;
+                System.out.println("Not Matching " + orders.getOrderId());
+            }
+            else if (IMEI.equals(orderBulkData.getUpdateType()) && (null == orders.getImei() || !orders.getImei().matches(numOnlyRegex) || orders.getImei().length() != 16))
+            {
+                isValidOrder = false;
+                System.out.println("Not Matching " + orders.getOrderId());
+            }
+            else if (RETRY_COUNT.equals(orderBulkData.getUpdateType()) && (null == orders.getRetryCount() || !orders.getRetryCount().matches(numOnlyRegex) || orders.getRetryCount().length() != 1))
+            {
+                isValidOrder = false;
+                System.out.println("Not Matching " + orders.getOrderId());
+            }
+
+            if (isValidOrder)
+                validOerderData.add(orders);
+            else
+                invalidOrderIDs.add(orders.getOrderId());
+
+            isValidOrder = true;
+        }
+
+        validatedOrderData.setInvalidOrders(invalidOrderIDs);
+        validatedOrderData.setOrderUpdateData(validOerderData);
+        return validatedOrderData;
+    }
 }

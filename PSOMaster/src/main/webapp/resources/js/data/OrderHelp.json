@@ -1,0 +1,12 @@
+{
+
+	"ORFS" : [
+				"check in IMM Ship Advice service response API if it contains SIM/IMEI (depending on type of order—add a check) and shipment table is populated or not otherwise populate it and mark order to ORSH",
+				"In OSHF, means it is failed while shipping (sim or imei entry is missing not present in Ship Advice service) Here, we need to ask with IMM to provide missing detail.",
+				"IF device is BYOD, then we don’t ask with BP. Check in the zig_extra_order table, there will be a temporary order usually created. Take it and check in the zig_ser_order_err with that temporary id and check with equipmentdevice api XML. You will get imei and update it."
+			],
+	"ORFI"	: [
+				"Mark to open. If it gets repeatedly stuck with error as incomplete details -> create separate XML and post it to IMM manually. ",
+				"Need to have all details in the description page (failed XML..and other table details from which we need to query the missing data)"
+		    ]
+}

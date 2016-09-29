@@ -1,4 +1,4 @@
-module.controller("OrderMasterController", function($scope, $routeParams,$http,OrderService,MessageService) {
+module.controller("OrderMasterController", function($scope, $routeParams,$http,OrderService,MessageService,AppDataService) {
 	
 	$scope.title = "Order Master";
 	
@@ -89,6 +89,42 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	
 	if($scope.orderID!=undefined){
 		$scope.searchOrderDetails();
+	}
+	
+	
+	$scope.orderAPIReqBody = null;
+	$scope.getAPIRequest = function(seq_number){
+		alert(seq_number);
+		OrderService.getOrderAPIRequest(seq_number).then(
+				function(d) {
+					console.log(d);
+					
+					document.getElementById("myApiReqBody").innerHTML=d;
+					
+					$scope.orderAPIReqBody  = JSON.stringify(d, undefined, 4);
+					console.log($scope.orderAPIReqBody);
+					$("#orderApiReqBody-modal").modal();
+	       		},
+		        function(errResponse){
+	       			
+		        }
+		);
+	}
+	
+	
+	$scope.orderHelpData = null;
+	$scope.getHelp = function(){
+		AppDataService.getOrderHelpData()
+			.then(
+					function(response){
+						console.log(response.data);
+						$scope.orderHelpData = response.data;
+						$("#orderHelp-modal").modal();
+					}, 
+					function(errResponse){
+						return $q.reject(errResponse);
+					}
+			);
 	}
 	
 });

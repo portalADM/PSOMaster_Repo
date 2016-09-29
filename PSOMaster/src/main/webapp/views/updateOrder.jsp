@@ -227,48 +227,70 @@
 		<!-- Buld Order Update Panel End -->	
 			
 			
-			<!-- Help Popup Panel start -->
-			 <div id="UpdateHelp-modal" class="modal fade">
-		        <div class="modal-dialog modal-lg">
-		          <div class="modal-content">
-		            <div class="modal-header">
-		              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		              <h4 class="modal-title">Bulk Order Update</h4>
-		            </div>
-		            <div class="modal-body helpPupupHeight">
-		              <table cellpadding="10px" cellspacing="10px">
-		              	<tbody>
-		              		<tr>
-		              			<td>Bulk Order update will allow user to update orders in bulk in one Go.</td>
-		              		</tr>
-		              		<tr>
-		              			<td>Please follow below steps to update multiple orders:</td>
-		              		</tr>
-		              		<tr>
-		              			<td>1) Select Order Update type.</td>
-		              		</tr>
-		              		<tr>
-		              			<td>2) Click on Download Icon to download sample excel sheet.</td>
-		              		</tr>
-		              		<tr>
-		              			<td>3) Add order details in downloaded Excel sheet and the type of data you want to update [i.e. Status, SIM, IMEI, Retry Count]</td>
-		              		</tr>
-		              	</tbody>    
-		              </table>
-		              
-		              <img src="resources/images/Capture3.jpg" class="helpPopupImage">
-		              
-		              <div class="col-lg-12">
-			              <img class="helpExcelImage" src="resources/images/HelpExcelImage.PNG" >
-		              </div>
-		            </div>
-		          </div>
-		        </div>
-		      </div>
+		<!-- Help Popup Panel start -->
+		 <div id="UpdateHelp-modal" class="modal fade">
+	        <div class="modal-dialog modal-lg">
+	          <div class="modal-content">
+	            <div class="modal-header">
+	              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	              <h4 class="modal-title">Bulk Order Update</h4>
+	            </div>
+	            <div class="modal-body helpPupupHeight">
+	              <table cellpadding="10px" cellspacing="10px">
+	              	<tbody>
+	              		<tr>
+	              			<td>Bulk Order update will allow user to update orders in bulk in one Go.</td>
+	              		</tr>
+	              		<tr>
+	              			<td>Please follow below steps to update multiple orders:</td>
+	              		</tr>
+	              		<tr>
+	              			<td>1) Select Order Update type.</td>
+	              		</tr>
+	              		<tr>
+	              			<td>2) Click on Download Icon to download sample excel sheet.</td>
+	              		</tr>
+	              		<tr>
+	              			<td>3) Add order details in downloaded Excel sheet and the type of data you want to update [i.e. Status, SIM, IMEI, Retry Count]</td>
+	              		</tr>
+	              	</tbody>    
+	              </table>
+	              
+	              <img src="resources/images/Capture3.jpg" class="helpPopupImage">
+	              
+	              <div class="col-lg-12">
+		              <img class="helpExcelImage" src="resources/images/HelpExcelImage.PNG" >
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+		
+		<!-- Help Popup Panel End -->
 			
-			<!-- Help Popup Panel End -->
-			
-			
+		
+		<!-- Bulk Update Message Popup Panel start -->
+		<div id="UpdateResponse-modal" class="modal fade">
+	        <div class="modal-dialog modal-lg">
+	          <div class="modal-content">
+	            <div class="modal-header">
+	              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	              <h4 class="modal-title">Below Orders Failed</h4>
+	            </div>
+	            <div class="modal-body ">
+	              <table cellpadding="10px" cellspacing="10px">
+	              	<tbody>
+	              		<tr ng-repeat="orders in inValidOrders">
+	              			<td>{{orders}}</td>
+	              		</tr>
+	              	</tbody>    
+	              </table>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+		<!-- Bulk Update Message Popup Panel start -->
+		
 			
 		</div>
 

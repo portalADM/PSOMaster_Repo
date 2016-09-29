@@ -22,13 +22,7 @@ public class ApiOrderMasterResponseBean extends BaseResponseBean implements Seri
     private String SysCreationDate;
     private String OriginatorID;
     private String ErrorMessage;
-
-    @Override
-    public String toString()
-    {
-        return "ApiOrderMasterResponseBean [OrderId=" + OrderId + ", Source=" + Source + ", APIName=" + APIName + ", SysCreationDate=" + SysCreationDate + ", OriginatorID=" + OriginatorID
-                + ", ErrorMessage=" + ErrorMessage + "]";
-    }
+    private String seqNumber;
 
     public String getOrderId()
     {
@@ -95,6 +89,27 @@ public class ApiOrderMasterResponseBean extends BaseResponseBean implements Seri
         return serialVersionUID;
     }
 
+    /**
+     * @return the seqNumber
+     */
+    public String getSeqNumber()
+    {
+        return seqNumber;
+    }
+
+    /**
+     * @param seqNumber the seqNumber to set
+     */
+    public void setSeqNumber(String seqNumber)
+    {
+        this.seqNumber = seqNumber;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#hashCode()
+     */
     @Override
     public int hashCode()
     {
@@ -106,9 +121,15 @@ public class ApiOrderMasterResponseBean extends BaseResponseBean implements Seri
         result = prime * result + ((OriginatorID == null) ? 0 : OriginatorID.hashCode());
         result = prime * result + ((Source == null) ? 0 : Source.hashCode());
         result = prime * result + ((SysCreationDate == null) ? 0 : SysCreationDate.hashCode());
+        result = prime * result + ((seqNumber == null) ? 0 : seqNumber.hashCode());
         return result;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
     @Override
     public boolean equals(Object obj)
     {
@@ -161,7 +182,26 @@ public class ApiOrderMasterResponseBean extends BaseResponseBean implements Seri
         }
         else if (!SysCreationDate.equals(other.SysCreationDate))
             return false;
+        if (seqNumber == null)
+        {
+            if (other.seqNumber != null)
+                return false;
+        }
+        else if (!seqNumber.equals(other.seqNumber))
+            return false;
         return true;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return "ApiOrderMasterResponseBean [OrderId=" + OrderId + ", Source=" + Source + ", APIName=" + APIName + ", SysCreationDate=" + SysCreationDate + ", OriginatorID=" + OriginatorID
+                + ", ErrorMessage=" + ErrorMessage + ", seqNumber=" + seqNumber + "]";
     }
 
 }

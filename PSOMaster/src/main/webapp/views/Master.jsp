@@ -61,6 +61,7 @@
 	<script src="resources/js/libs/jquery/jquery-ui.js"></script>
 	<script src="resources/js/libs/charts/Chart.js"></script>
 	<script src="resources/js/libs/charts/angular-chart.js"></script>
+	<script src="resources/js/libs/utils/xml2json.js"></script>
 
 	<!-- Application Modules Controller Import -->
 	<script src="resources/js/app.js"></script>
@@ -75,6 +76,7 @@
 	<script src="resources/js/libs/utils/CommonUtils.js"></script>
 	<script src="resources/js/libs/utils/MessageService.js"></script>
 	<script src="resources/js/service/FileUploadService.js"></script>
+	<script src="resources/js/service/AppDataService.js"></script>
 	
 	<!-- Application Modules Directives Import -->
 	<script src="resources/js/directive/fileModel.js"></script>

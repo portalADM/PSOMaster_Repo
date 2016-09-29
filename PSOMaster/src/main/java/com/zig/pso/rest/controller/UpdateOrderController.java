@@ -37,7 +37,9 @@ import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.BulkUpdateInputBean;
+import com.zig.pso.rest.bean.BulkUpdateOrderResponseBean;
 import com.zig.pso.rest.bean.UpdateOrderRequestBean;
+import com.zig.pso.rest.bean.ValidatedBulkUpdateOrderDetailsBean;
 import com.zig.pso.service.UpdateOrderManagerService;
 
 /**
@@ -64,31 +66,39 @@ public class UpdateOrderController
     @RequestMapping(value = "/upload/{updateType}", method = RequestMethod.POST)
     public ResponseEntity<BaseResponseBean> uploadFile(HttpServletRequest request, @RequestParam Map<String, Object> params, @PathVariable("updateType") String updateType)
     {
-        BaseResponseBean response = new BaseResponseBean();
+        BulkUpdateOrderResponseBean bulkUpdateResponse = new BulkUpdateOrderResponseBean();
         if (request instanceof MultipartRequest)
         {
+            BaseResponseBean response = new BaseResponseBean();
             MultipartFile file = ((MultipartRequest) request).getFile("file");
 
             BulkUpdateInputBean orderBulkData = updateService.getUploadedFileData(file, updateType);
 
+            ValidatedBulkUpdateOrderDetailsBean validatedOrders = updateService.validateUploadedData(orderBulkData);
+
             if (updateType.equalsIgnoreCase(PSOConstants.STATUS))
             {
-                response = updateService.updateBulkOrderStatus(orderBulkData);
+                response = updateService.updateBulkOrderStatus(validatedOrders.getValidOrderData());
             }
             else if (updateType.equalsIgnoreCase(PSOConstants.SIM))
             {
-                response = updateService.updateBulkOrderSim(orderBulkData);
+                response = updateService.updateBulkOrderSim(validatedOrders.getValidOrderData());
             }
             else if (updateType.equalsIgnoreCase(PSOConstants.IMEI))
             {
-                response = updateService.updateBulkOrderImei(orderBulkData);
+                response = updateService.updateBulkOrderImei(validatedOrders.getValidOrderData());
             }
             else if (updateType.equalsIgnoreCase(PSOConstants.RETRY_COUNT))
             {
-                response = updateService.updateBulkOrderRetryCount(orderBulkData);
+                response = updateService.updateBulkOrderRetryCount(validatedOrders.getValidOrderData());
             }
+
+            bulkUpdateResponse.setInvalidOrders(validatedOrders.getInvalidOrders());
+            bulkUpdateResponse.setErrorCode(response.getErrorCode());
+            bulkUpdateResponse.setErrorMsg(response.getErrorMsg());
+
         }
-        return new ResponseEntity<BaseResponseBean>(response, HttpStatus.OK);
+        return new ResponseEntity<BaseResponseBean>(bulkUpdateResponse, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/downloadSampleExcel/{orderType}", method = RequestMethod.GET)

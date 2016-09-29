@@ -39,4 +39,10 @@ public interface OrderInfoManagerService
      * @return
      */
     public PortalShipmentInfoForUI getPortalShipmentInfo(String OrderId);
+
+    /**
+     * @param seq_number
+     * @return String
+     */
+    public String getAPIRequestBody(String seq_number);
 }

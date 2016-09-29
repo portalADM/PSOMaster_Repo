@@ -43,43 +43,49 @@ public class OrderQueries
     {
         return orderProp.getProperty("order.apiOrder");
     }
-    
+
     public static String getstuckOrdersCount()
     {
         return orderProp.getProperty("order.stuckOrdersCount");
     }
-    
+
     public static String getstuckOrdersbyStatus()
     {
         return orderProp.getProperty("order.stuckOrdersbyStatus");
     }
+
     public static String updateOrderStatus()
     {
         return orderProp.getProperty("order.updateOrderStatusQuerry");
     }
-    
+
     public static String updateOrderSim()
     {
         return orderProp.getProperty("order.updateOrderSIMQuerry");
     }
-    
+
     public static String updateOrderIMEI()
     {
         return orderProp.getProperty("order.updateOrderIMEIQuerry");
     }
-    
+
     public static String updateOrderRetryCount()
     {
         return orderProp.getProperty("order.updateOrderRetryCountQuerry");
     }
-    
+
     public static String updateOrderTrack()
     {
         return orderProp.getProperty("order.updateOrderTrackerQuerry");
     }
-    
+
     public static String getUserDetails()
     {
         return orderProp.getProperty("order.getUserDetailsQuerry");
+    }
+
+    public static String getAPIRequest()
+    {
+        return orderProp.getProperty("order.getAPIRequest");
     }
 }
