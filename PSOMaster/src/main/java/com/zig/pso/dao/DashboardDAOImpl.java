@@ -96,23 +96,59 @@ public class DashboardDAOImpl implements DashboardDAO {
 	
 	}
 
+	/* (non-Javadoc)
+	 * @see com.zig.pso.dao.DashboardDAO#getStuckOrderhandled()
+	 */
+	@Override
+	public ArrayList<StuckOrdersCount> getStuckOrderhandled() {
+		// TODO Auto-generated method stub
+		ArrayList<StuckOrdersCount> stuckOrderList=new ArrayList<StuckOrdersCount>();
+		String sql=OrderQueries.getOrderHandled();
+		try {
+			PreparedStatement pstm=portalDBConnection.prepareStatement(sql);
+			ResultSet rs=pstm.executeQuery();
+			StuckOrdersCount stuckOrderCount= null;
+			while(rs.next())
+			{
+				stuckOrderCount = new StuckOrdersCount();
+				stuckOrderCount.setCount(rs.getInt("count"));
+				stuckOrderCount.setOrderStatus(rs.getString("new_value"));
+				stuckOrderList.add(stuckOrderCount);
+			}
+			
+		} catch (Exception e) {
+			String logRefID = CommonUtility.getLogRefID();
+			PSOLoggerSrv.printERROR(e,logRefID);
+		}
+		return stuckOrderList;
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}
+
+	/* (non-Javadoc)
+	 * @see com.zig.pso.dao.DashboardDAO#getStuckOrderallStatus()
+	 */
+	@Override
+	public ArrayList<StuckOrdersCount> getStuckOrderallStatus() {
+		// TODO Auto-generated method stub
+		ArrayList<StuckOrdersCount> stuckOrderList=new ArrayList<StuckOrdersCount>();
+		String sql=OrderQueries.getstuckOrderStatusbyCount();
+		
+		try {
+			PreparedStatement pstm=portalDBConnection.prepareStatement(sql);
+			ResultSet rs=pstm.executeQuery();
+			StuckOrdersCount stuckOrderCount= null;
+			while(rs.next())
+			{
+				stuckOrderCount = new StuckOrdersCount();
+				stuckOrderCount.setCount(rs.getInt("count"));
+				stuckOrderCount.setOrderStatus(rs.getString("status_code"));
+				stuckOrderList.add(stuckOrderCount);
+			}
+			
+		} catch (Exception e) {
+			String logRefID = CommonUtility.getLogRefID();
+			PSOLoggerSrv.printERROR(e,logRefID);
+		}
+		return stuckOrderList;
+	}
 }

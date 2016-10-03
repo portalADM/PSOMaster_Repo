@@ -21,5 +21,17 @@ public interface DashboardService
 public ArrayList<StuckOrdersCount> getStuckOrderList();
 
 public ArrayList<String> getStuckOrderList1(String status);
+
+/**
+ * @param status
+ * @return
+ */
+ArrayList<StuckOrdersCount> getStuckOrderhandled();
+
+/**
+ * @param status
+ * @return
+ */
+ArrayList<StuckOrdersCount> getStuckOrderallStatus();
 	
 }

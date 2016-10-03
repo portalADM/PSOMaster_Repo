@@ -46,4 +46,24 @@ public class DashboardServiceImpl implements DashboardService {
 		return dashboardDAO.getStuckOrderList1(status);
 	}
 
+	
+	/* (non-Javadoc)
+	 * @see com.zig.pso.service.DashboardService#getStuckOrderList1(java.lang.String)
+	 */
+	@Override
+	public ArrayList<StuckOrdersCount> getStuckOrderhandled() {
+		// TODO Auto-generated method stub
+		return dashboardDAO.getStuckOrderhandled();
+	}
+
+	
+	/* (non-Javadoc)
+	 * @see com.zig.pso.service.DashboardService#getStuckOrderList1(java.lang.String)
+	 */
+	@Override
+	public ArrayList<StuckOrdersCount> getStuckOrderallStatus() {
+		// TODO Auto-generated method stub
+		return dashboardDAO.getStuckOrderallStatus();
+	}
+
 }

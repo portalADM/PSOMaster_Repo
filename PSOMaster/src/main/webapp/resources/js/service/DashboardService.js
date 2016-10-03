@@ -32,4 +32,32 @@ this.getStuckOrderForStatus = function(status){
 				}
 		);
 	}
+
+this.getStuckOrderHandled = function(status){
+	
+	return $http.get('stuckOrderHandled/')
+	.then(
+			function(response){
+				return response.data;
+			}, 
+			function(errResponse){
+				console.error('Error while fetching orders');
+				return $q.reject(errResponse);
+			}
+	);
+}
+
+this.getStuckOrderallStatus = function(status){
+	
+	return $http.get('stuckOrderallStatus/')
+	.then(
+			function(response){
+				return response.data;
+			}, 
+			function(errResponse){
+				console.error('Error while fetching orders');
+				return $q.reject(errResponse);
+			}
+	);
+}
 });

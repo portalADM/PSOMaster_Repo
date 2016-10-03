@@ -27,4 +27,16 @@ public interface DashboardDAO {
 	 * @return
 	 */
 	public ArrayList<String> getStuckOrderList1(String status);
+
+	/**
+	 * @param status
+	 * @return
+	 */
+	ArrayList<StuckOrdersCount> getStuckOrderhandled();
+
+	/**
+	 * @param status
+	 * @return
+	 */
+	ArrayList<StuckOrdersCount> getStuckOrderallStatus();
 }

@@ -62,4 +62,29 @@ public class DashBoardController
         nameList = orderService.getAPIOrderDataInfo(id);
         return new ResponseEntity<ArrayListString>(nameList, HttpStatus.OK);
     }*/
+	
+	@RequestMapping(value ="/stuckOrderHandled",method=RequestMethod.GET)
+	public ResponseEntity<StuckOrderDetailResponse>   getStuckOrderhandled()
+	{
+		   PSOLoggerSrv.printINFO("############### THIS IS TEST LOG FILE ###########################");
+
+		   StuckOrderDetailResponse stuckOrdersList = new StuckOrderDetailResponse();
+		   
+		   ArrayList<StuckOrdersCount> stuckOrderCountList = dashboardService.getStuckOrderhandled();
+		   stuckOrdersList.setStuckOrderList(stuckOrderCountList);
+	        return new ResponseEntity<StuckOrderDetailResponse>(stuckOrdersList, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value ="/stuckOrderallStatus",method=RequestMethod.GET)
+	public ResponseEntity<StuckOrderDetailResponse>   getStuckOrderallStatus()
+	{
+		   PSOLoggerSrv.printINFO("############### THIS IS TEST LOG FILE ###########################");
+
+		   StuckOrderDetailResponse stuckOrdersList = new StuckOrderDetailResponse();
+		   
+		   ArrayList<StuckOrdersCount> stuckOrderCountList = dashboardService.getStuckOrderallStatus();
+		   stuckOrdersList.setStuckOrderList(stuckOrderCountList);
+	        return new ResponseEntity<StuckOrderDetailResponse>(stuckOrdersList, HttpStatus.OK);
+	}
+	
 }	

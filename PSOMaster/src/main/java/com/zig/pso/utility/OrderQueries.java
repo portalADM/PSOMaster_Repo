@@ -88,4 +88,15 @@ public class OrderQueries
     {
         return orderProp.getProperty("order.getAPIRequest");
     }
+
+    
+    public static String getOrderHandled()
+    {
+        return orderProp.getProperty("order.handled");
+    }
+    
+    public static String getstuckOrderStatusbyCount()
+    {
+        return orderProp.getProperty("order.stuckOrdersStatusbyCount");
+    }
 }
