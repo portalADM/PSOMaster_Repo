@@ -73,6 +73,7 @@
 	<!-- Application Modules Services Import -->
 	<script src="resources/js/service/OrderService.js"></script>
 	<script src="resources/js/service/DashboardService.js"></script>
+	<script src="resources/js/service/UpdateOrderService.js"></script>
 	<script src="resources/js/libs/utils/CommonUtils.js"></script>
 	<script src="resources/js/libs/utils/MessageService.js"></script>
 	<script src="resources/js/service/FileUploadService.js"></script>

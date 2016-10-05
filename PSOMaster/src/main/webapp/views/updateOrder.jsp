@@ -44,17 +44,17 @@
 									<div class="form-group">
 										<label for="select" class="col-lg-4 control-label textAlgnInit">New Status</label>
 										<div class="col-lg-8">
-											<select class="form-control" id="select">
+											<select class="form-control" ng-model="newStatus" id="select">
 												<option value="OPEN">OPEN</option>
 												<option value="PDRS">PDRS</option>
-												<option value="ACTI">ACTI</option>
+												<option value="ORFI">ORFI</option>
 											</select>
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="col-lg-4"></div>
 										<div class="col-lg-8">
-											<button type="reset" class="btn btn-default">Submit</button>
+											<button type="reset" class="btn btn-default" ng-click="updateOrder('status')">Submit</button>
 										</div>
 									</div>
 								</form>
@@ -84,12 +84,12 @@
                                                 </div>
                                                 <div class="form-group">
                                                        <label for="select" class="col-lg-4 control-label textAlgnInit">New SIM</label>
-                                                       <input type="text" class="form-control" id="inputEmail" placeholder="SIM">
+                                                       <input type="text" ng-model="newSIM" class="form-control" id="inputEmail" placeholder="SIM">
                                                 </div>
                                                 <div class="form-group">
                                                        <div class="col-lg-4"></div>
 				                                         <div class="col-lg-8 noPadLeft">
-				                                           <button type="reset" class="btn btn-default">Submit</button>
+				                                           <button type="reset" class="btn btn-default"  ng-click="updateOrder('sim')">Submit</button>
 				                                         </div>
 				                                </div>
                                          </form>
@@ -120,12 +120,12 @@
                                                 <div class="form-group">
                                                        <label for="select" class="col-lg-4 control-label textAlgnInit">New
                                                               IMEI</label>
-                                                            <input type="text" class="form-control" id="inputEmail" placeholder="IMEI">
+                                                            <input type="text" ng-model="newIMEI" class="form-control" id="inputEmail" placeholder="IMEI">
                                                 </div>
                                                 <div class="form-group">
                                                        <div class="col-lg-4"></div>
                                          <div class="col-lg-8 noPadLeft">
-                                           <button type="reset" class="btn btn-default">Submit</button>
+                                           <button type="reset" class="btn btn-default"  ng-click="updateOrder('imei')">Submit</button>
                                          </div>
                                        </div>
                                          </form>
@@ -156,13 +156,13 @@
                                                        <label for="select" class="col-lg-4 control-label textAlgnInit">Set
                                                               Retry Count</label>
                                                        <div class="col-lg-8 noPad">
-                                                       <input type="number" class="form-control" id="inputEmail" placeholder="count">
+                                                       <input type="number" ng-model="newRetry" class="form-control" id="inputEmail" placeholder="count">
                                                        </div>
                                                 </div>
                                                 <div class="form-group">
                                                        <div class="col-lg-4"></div>
                                          <div class="col-lg-8 noPad">
-                                           <button type="reset" class="btn btn-default">Submit</button>
+                                           <button type="reset" class="btn btn-default" ng-click="updateOrder('retry')">Submit</button>
                                          </div>
                                        </div>
                                          </form>

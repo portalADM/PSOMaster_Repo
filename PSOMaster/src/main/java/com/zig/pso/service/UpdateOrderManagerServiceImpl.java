@@ -1,8 +1,5 @@
 /************************************************************************************************************
- * Class Name : UpdateOrderManagerServiceImpl.java 
- * Description:
- * Author : Ankita Mishra 
- * Date : Aug 1, 2016 
+ * Class Name : UpdateOrderManagerServiceImpl.java Description: Author : Ankita Mishra Date : Aug 1, 2016
  * **********************************************************************************************************
  */
 package com.zig.pso.service;
@@ -44,7 +41,6 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#updateSingleOrderData(com.zig.pso.rest.bean.UpdateOrderRequestBean)
      */
     @Override
@@ -65,13 +61,14 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
             }
             return updateOrderRes;
         }
-        else if (updateOrderRequest.getType().equalsIgnoreCase("sim"))
+        else if (updateOrderRequest.getType().equalsIgnoreCase(SIM))
         {
             BaseResponseBean updateOrderRes = new BaseResponseBean();
             String value = updateOrderRequest.getNewValue();
             String regex = "[0-9]+";
             Boolean isNumeric = value.matches(regex);
-            if (value.length() == 21 && isNumeric)
+            System.out.println(value.length());
+            if (value.length() == 20 && isNumeric)
             {
                 updateOrderRes = updateDAO.updateOrderSim(updateOrderRequest);
             }
@@ -82,13 +79,13 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
             }
             return updateOrderRes;
         }
-        else if (updateOrderRequest.getType().equalsIgnoreCase("imei"))
+        else if (updateOrderRequest.getType().equalsIgnoreCase(IMEI))
         {
             BaseResponseBean updateOrderRes = new BaseResponseBean();
             String value = updateOrderRequest.getNewValue();
             String regex = "[0-9]+";
             Boolean isNumeric = value.matches(regex);
-            if (value.length() == 16 && isNumeric)
+            if (value.length() == 15 && isNumeric)
             {
                 updateOrderRes = updateDAO.updateOrderImei(updateOrderRequest);
             }
@@ -99,7 +96,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
             }
             return updateOrderRes;
         }
-        else if (updateOrderRequest.getType().equalsIgnoreCase("retry"))
+        else if (updateOrderRequest.getType().equalsIgnoreCase(RETRY_COUNT))
         {
             BaseResponseBean updateOrderRes = new BaseResponseBean();
             int value = Integer.parseInt(updateOrderRequest.getNewValue());
@@ -120,7 +117,6 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderData(com.zig.pso.rest.bean.BulkUpdateInputBean)
      */
     @Override
@@ -131,7 +127,6 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderSim(com.zig.pso.rest.bean.BulkUpdateInputBean)
      */
     @Override
@@ -142,7 +137,6 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderImei(com.zig.pso.rest.bean.BulkUpdateInputBean)
      */
     @Override
@@ -153,7 +147,6 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderRetryCount(com.zig.pso.rest.bean.BulkUpdateInputBean)
      */
     @Override
@@ -164,7 +157,6 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#getUploadedFileData(org.springframework.web.multipart.MultipartFile)
      */
     @Override
