@@ -28,5 +28,9 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Softwares/Libs/EmailUtility.jar"/>
+	<classpathentry kind="lib" path="C:/Softwares/Libs/mail.jar"/>
+	<classpathentry kind="lib" path="C:/Softwares/Libs/mailapi-1.4.4.jar"/>
+	<classpathentry kind="lib" path="C:/Softwares/Libs/gurmsrv_classes.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -1,10 +1,7 @@
 /************************************************************************************************************
- * Class Name :  PSOConstants.java
- * Description:  This class contains application constants.
+ * Class Name : PSOConstants.java Description: This class contains application constants.
  * 
- * Author     :  Nilesh Patil
- * Date       :  Jun 26, 2016
- * **********************************************************************************************************
+ * Author : Nilesh Patil Date : Jun 26, 2016 **********************************************************************************************************
  */
 package com.zig.pso.constants;
 
@@ -40,6 +37,9 @@ public class PSOConstants
     public final static String Invalid_Sim_Number = "Invalid SIM Number";
     public final static String Invalid_Retry_Count = "Invalid Retry Count";
     public final static String Invalid_Credentials = "Invalid Credentials";
+    public final static String Error_Occurred_While_sending_mail = "Some Error occurred while sending mail.Please try Again";
+    public final static String Successfully_sent_mail = "mail is sent succesfully";
+    public final static String Invalid_Request = "BAD Request";
 
     public final static String BACKEND_ERROR = "There is a backend Error. Please try after some time.";
     public final static String BULK_UPDATE_SUCCESS = "Updates done successfully";
