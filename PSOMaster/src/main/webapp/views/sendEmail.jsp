@@ -33,32 +33,32 @@
                       	uib-tooltip="Add Emails ; seprated"
              			tooltip-placement="bottom-left"
              			tooltip-trigger="mouseenter"
-                       id="inputEmail" placeholder="Email" value='support@imm.com'>
+                       id="inputEmail" ng-model="toEmail" placeholder="Email" value='support@imm.com'>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputPassword" class="col-lg-2 control-label">CC</label>
                     <div class="col-lg-10">
-                     <input type="text" class="form-control  col-lg-12" id="inputEmail" placeholder="Email" value='CricketPortalDevOGS@amdocs.com'>
+                     <input type="text" class="form-control  col-lg-12" ng-model="ccEmail" id="inputEmail" placeholder="Email" value='CricketPortalDevOGS@amdocs.com'>
                     </div>
                   </div>
                    <div class="form-group">
                     <label for="inputEmail" class="col-lg-2 control-label">Subject	</label>
                     <div class="col-lg-10">
-                      <input type="text" class="form-control col-lg-12" id="inputEmail" >
+                      <input type="text" class="form-control col-lg-12" ng-model="subject" id="inputEmail" >
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="textArea" class="col-lg-2 control-label ">Message</label>
                     <div class="col-lg-10">
-                      <textarea class="form-control" rows="18" cols="125" id="textArea"></textarea>
+                      <textarea class="form-control" rows="18" cols="125" ng-model="content" id="textArea"></textarea>
                     </div>
                   </div>
                  
                   <div class="form-group">
                     <div class="col-lg-10 col-lg-offset-2">
                      <!--  <button type="reset" class="btn btn-default">Cancel</button> -->
-                      <button type="submit" class="btn btn-primary">Send</button>
+                      <button type="submit" class="btn btn-primary" ng-click="sendEmail()">Send</button>
                     </div>
                   </div>
                 </fieldset>

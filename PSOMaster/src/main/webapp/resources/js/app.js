@@ -23,7 +23,7 @@ module.config([ '$routeProvider', function($routeProvider) {
 	})
 	.when('/sendEmail', {
 		templateUrl : 'views/sendEmail.jsp',
-		controller : 'OrderMasterController'
+		controller : 'SendEmailController'
 	})
 	.when('/StuckOrderDetails/:orderStatus', {
 		templateUrl : 'views/StuckOrderDetails.jsp',

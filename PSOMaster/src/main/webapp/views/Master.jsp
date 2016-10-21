@@ -69,6 +69,7 @@
 	<script src="resources/js/controller/OrderMasterController.js"></script>
 	<script src="resources/js/controller/UpdateOrderController.js"></script>
 	<script src="resources/js/controller/StuckOrderDetailsController.js"></script>
+	<script src="resources/js/controller/SendEmailController.js"></script>
 
 	<!-- Application Modules Services Import -->
 	<script src="resources/js/service/OrderService.js"></script>
@@ -78,6 +79,7 @@
 	<script src="resources/js/libs/utils/MessageService.js"></script>
 	<script src="resources/js/service/FileUploadService.js"></script>
 	<script src="resources/js/service/AppDataService.js"></script>
+	<script src="resources/js/service/SendEmailService.js"></script>
 	
 	<!-- Application Modules Directives Import -->
 	<script src="resources/js/directive/fileModel.js"></script>
