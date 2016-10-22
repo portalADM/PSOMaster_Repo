@@ -302,7 +302,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             ResultSet rs2 = pstm2.executeQuery();
             while (rs2.next())
             {
-                portalOrderlist.setOrderId(rs2.getString("order_idwer"));
+                portalOrderlist.setOrderId(rs2.getString("order_id"));
                 portalOrderlist.setStatus(rs2.getString("status_code"));
                 portalOrderlist.setRetry(rs2.getString("retry"));
                 portalOrderlist.setSys_creation_date(rs2.getString("sys_creation_date"));

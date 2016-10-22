@@ -32,11 +32,6 @@ module.controller("DashboardController", function($scope, $routeParams,$http,Das
 	  };
 	  
 	  
-	  
-	  
-	  
-	
-	  
 	  $scope.labelsBar = ['1 June', '2 June', '3 June', '4 June', '5 June', '6 June', '7 June', '8 June', '9 June', '10 June'];
 	  $scope.seriesBar = ["OSHF", "ORFI", "ORLF", "ACTF", "OURF", "PDRF", "PRTF"];
 	  $scope.dataBar = [
@@ -50,27 +45,26 @@ module.controller("DashboardController", function($scope, $routeParams,$http,Das
 	    [25, 48, 40, 19, 86, 27, 90, 78, 32, 25]
 	  ];
 	  
-	  
-	  // -------------------------------
-	  
-	  //
-	$scope.init=function(){
+	$scope.init=function()
+	{
 		DashboardService.getStuckOrderCount().then(
 				function(data) {
 					$scope.stuckOrderDetails= data.stuckOrderList;
-					console.log($scope.stuckOrderDetails);
 	       		},
 		       function(errResponse){
-				console.error('Error while fetching Currencies');
+	       			console.error('Error while fetching Currencies');
 		       }
 		);
 		
 		DashboardService.getStuckOrderHandled().then(
 				function(data) {
-					$scope.stuckOrderDetailsHandled= data.stuckOrderList;
-					console.log($scope.stuckOrderDetailsHandled);
-					$scope.labelsPie = [$scope.stuckOrderDetailsHandled[0].orderStatus,$scope.stuckOrderDetailsHandled[1].orderStatus,$scope.stuckOrderDetailsHandled[2].orderStatus,$scope.stuckOrderDetailsHandled[3].orderStatus,$scope.stuckOrderDetailsHandled[4].orderStatus,$scope.stuckOrderDetailsHandled[5].orderStatus,$scope.stuckOrderDetailsHandled[6].orderStatus];
-					$scope.dataPie = [$scope.stuckOrderDetailsHandled[0].count,$scope.stuckOrderDetailsHandled[1].count,$scope.stuckOrderDetailsHandled[2].count,$scope.stuckOrderDetailsHandled[3].count,$scope.stuckOrderDetailsHandled[4].count,$scope.stuckOrderDetailsHandled[5].count,$scope.stuckOrderDetailsHandled[6].count];
+					
+					if(data.stuckOrderList!=undefined && data.stuckOrderList.lenght>0){
+						$scope.stuckOrderDetailsHandled= data.stuckOrderList;
+						$scope.labelsPie = [$scope.stuckOrderDetailsHandled[0].orderStatus,$scope.stuckOrderDetailsHandled[1].orderStatus,$scope.stuckOrderDetailsHandled[2].orderStatus,$scope.stuckOrderDetailsHandled[3].orderStatus,$scope.stuckOrderDetailsHandled[4].orderStatus,$scope.stuckOrderDetailsHandled[5].orderStatus,$scope.stuckOrderDetailsHandled[6].orderStatus];
+						$scope.dataPie = [$scope.stuckOrderDetailsHandled[0].count,$scope.stuckOrderDetailsHandled[1].count,$scope.stuckOrderDetailsHandled[2].count,$scope.stuckOrderDetailsHandled[3].count,$scope.stuckOrderDetailsHandled[4].count,$scope.stuckOrderDetailsHandled[5].count,$scope.stuckOrderDetailsHandled[6].count];	
+					}
+					
 	       		},
 		       function(errResponse){
 				console.error('Error while fetching Currencies');
@@ -79,13 +73,16 @@ module.controller("DashboardController", function($scope, $routeParams,$http,Das
 		
 		DashboardService.getStuckOrderallStatus().then(
 				function(data) {
-					$scope.stuckOrderDetailsallStatus= data.stuckOrderList;
-					console.log($scope.stuckOrderDetailsallStatus);
-					$scope.labelsDounuts =[$scope.stuckOrderDetailsallStatus[0].orderStatus,$scope.stuckOrderDetailsallStatus[1].orderStatus,$scope.stuckOrderDetailsallStatus[2].orderStatus,$scope.stuckOrderDetailsallStatus[3].orderStatus,$scope.stuckOrderDetailsallStatus[4].orderStatus,$scope.stuckOrderDetailsallStatus[5].orderStatus,$scope.stuckOrderDetailsallStatus[6].orderStatus];
-					$scope.dataDounuts =  [$scope.stuckOrderDetailsallStatus[0].count,$scope.stuckOrderDetailsallStatus[1].count,$scope.stuckOrderDetailsallStatus[2].count,$scope.stuckOrderDetailsallStatus[3].count,$scope.stuckOrderDetailsallStatus[4].count,$scope.stuckOrderDetailsallStatus[5].count,$scope.stuckOrderDetailsallStatus[6].count];
+					
+					if(data.stuckOrderList!=undefined && data.stuckOrderList.length>0){
+						$scope.stuckOrderDetailsallStatus= data.stuckOrderList;
+						$scope.labelsDounuts =[$scope.stuckOrderDetailsallStatus[0].orderStatus,$scope.stuckOrderDetailsallStatus[1].orderStatus,$scope.stuckOrderDetailsallStatus[2].orderStatus,$scope.stuckOrderDetailsallStatus[3].orderStatus,$scope.stuckOrderDetailsallStatus[4].orderStatus,$scope.stuckOrderDetailsallStatus[5].orderStatus,$scope.stuckOrderDetailsallStatus[6].orderStatus];
+						$scope.dataDounuts =  [$scope.stuckOrderDetailsallStatus[0].count,$scope.stuckOrderDetailsallStatus[1].count,$scope.stuckOrderDetailsallStatus[2].count,$scope.stuckOrderDetailsallStatus[3].count,$scope.stuckOrderDetailsallStatus[4].count,$scope.stuckOrderDetailsallStatus[5].count,$scope.stuckOrderDetailsallStatus[6].count];	
+					}
+					
 	       		},
 		       function(errResponse){
-				console.error('Error while fetching Currencies');
+	       			console.error('Error while fetching Currencies');
 		       }
 		);
 	}
