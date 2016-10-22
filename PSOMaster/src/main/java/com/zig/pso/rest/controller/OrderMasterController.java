@@ -1,7 +1,6 @@
 /************************************************************************************************************
- * Class Name : OrderMasterController.java Description:
- * 
- * Author : Ankita Mishra Date : Jun 29, 2016 **********************************************************************************************************
+ * Class Name : OrderMasterController.java Description: Author : Ankita Mishra Date : Jun 29, 2016
+ * **********************************************************************************************************
  */
 package com.zig.pso.rest.controller;
 
@@ -22,7 +21,7 @@ import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 import com.zig.pso.service.OrderInfoManagerService;
 
 /**
- * 
+ * This controller is responsible for providing all the details regarding the order.
  */
 @RestController
 public class OrderMasterController
@@ -31,45 +30,56 @@ public class OrderMasterController
     @Autowired
     OrderInfoManagerService orderService;
 
+    /**
+     * This Method provides order details from Portal Core Database.
+     */
     @RequestMapping(value = "/portalOrder/{id}", method = RequestMethod.GET)
-    public ResponseEntity<PortalOrderMasterResponseBean> getAllName(@PathVariable("id") String id)
+    public ResponseEntity<PortalOrderMasterResponseBean> getPortalOrderDetails(@PathVariable("id") String id)
     {
 
-        PSOLoggerSrv.printINFO("############### THIS IS TEST LOG FILE ###########################");
+        PSOLoggerSrv.printDEBUG("OrderMasterController", "getPortalOrderDetails", "Order ID : " + id);
 
         PortalOrderMasterResponseBean nameList = new PortalOrderMasterResponseBean();
-        // nameList.setOrderId(id);
         nameList = orderService.getPortalOrderDataInfo(id);
         return new ResponseEntity<PortalOrderMasterResponseBean>(nameList, HttpStatus.OK);
     }
 
+    /**
+     * This Method provides order details from Ensemble Database.
+     */
     @RequestMapping(value = "/ensembleOrder/{id}", method = RequestMethod.GET)
-    public ResponseEntity<EnsOrderMasterResponseBean> getAllEnsDetail(@PathVariable("id") String id)
+    public ResponseEntity<EnsOrderMasterResponseBean> getOrderEnsDetail(@PathVariable("id") String id)
     {
 
-        PSOLoggerSrv.printINFO("############### THIS IS TEST LOG FILE ###########################");
+        PSOLoggerSrv.printDEBUG("OrderMasterController", "getOrderEnsDetail", "Order ID : " + id);
 
         EnsOrderMasterResponseBean nameList = new EnsOrderMasterResponseBean();
-        // nameList.setOrderId(id);
         nameList = orderService.getEnsOrderDataInfo(id);
         return new ResponseEntity<EnsOrderMasterResponseBean>(nameList, HttpStatus.OK);
     }
 
+    /**
+     * This Method provides order API details
+     */
     @RequestMapping(value = "/apiOrder/{id}", method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<ApiOrderMasterResponseBean>> getAllApiDetails(@PathVariable("id") String id)
+    public ResponseEntity<ArrayList<ApiOrderMasterResponseBean>> getOrderApiDetails(@PathVariable("id") String id)
     {
 
-        PSOLoggerSrv.printINFO("############### THIS IS TEST LOG FILE ###########################");
+        PSOLoggerSrv.printDEBUG("OrderMasterController", "getOrderApiDetails", "Order ID : " + id);
 
         ArrayList<ApiOrderMasterResponseBean> nameList = new ArrayList<ApiOrderMasterResponseBean>();
-        // nameList.setOrderId(id);
         nameList = orderService.getAPIOrderDataInfo(id);
         return new ResponseEntity<ArrayList<ApiOrderMasterResponseBean>>(nameList, HttpStatus.OK);
     }
 
+    /**
+     * This Method provides order API Request XML
+     */
     @RequestMapping(value = "/getAPIRequest/{seq_number}", method = RequestMethod.GET)
-    public ResponseEntity<String> getAPIRequest(@PathVariable("seq_number") String seq_number)
+    public ResponseEntity<String> getOrderAPIRequest(@PathVariable("seq_number") String seq_number)
     {
+        PSOLoggerSrv.printDEBUG("OrderMasterController", "getOrderAPIRequest", "seq_number : " + seq_number);
+
         String data = orderService.getAPIRequestBody(seq_number);
         return new ResponseEntity<String>(data, HttpStatus.OK);
     }

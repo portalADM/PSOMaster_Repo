@@ -6,19 +6,6 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 	
 	$scope.orderID = $routeParams.orderID;
 	
-	
-/*	$scope.updateOrderPopup = function(){
-        $("#updateOrder-modal").modal();
-	}
-	
-	$scope.updateSimModal = function(){
-        $("#updateSim-modal").modal();
-	}
-	
-	$scope.updateImeiModal = function(){
-        $("#updateImei-modal").modal();
-	}*/
-	
 	$scope.openHelpModel = function(){
         $("#UpdateHelp-modal").modal();
 	}
@@ -29,8 +16,8 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 		
 		var newValue='';
 		
-		if(updatetype=='status'){
-		newValue=$scope.newStatus;}
+		if(updatetype=='status')
+			newValue=$scope.newStatus;
 		else if(updatetype=='sim')
 			newValue=$scope.newSIM;
 		else if(updatetype=='imei')
@@ -40,15 +27,19 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 			
 		var orderID = $scope.orderID;
 		
-		
-		
 		UpdateOrderService.updateOrderDetails(updatetype,newValue,orderID).then(
-				function(d) {
-					$scope.updateOrderRes = d;
-					console.log($scope.updateOrderRes);
+				function(response) {
+					if(response!=undefined && response.errorCode == 0){
+						$scope.updateOrderRes = response;
+						MessageService.showSuccess(response.errorMsg,5000);
+					}
+					else{
+						MessageService.showError(response.errorMsg,5000);
+					}
 	       		},
 		       function(errResponse){
 				console.error('Error while fetching Currencies');
+					MessageService.showSuccess('Error occured while updating order. Please try again later.',5000);
 		       }
 		);
        
@@ -75,11 +66,12 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 					if(data.errorCode != 0){
 						MessageService.showError(data.errorMsg,5000);
 					}
-					console.log(data);
+					else{
+						MessageService.showSuccess(data.errorMsg,5000);
+					}
 					
 					if(data.invalidOrders.length>0){
 						$scope.inValidOrders = data.invalidOrders;
-						console.log(data.invalidOrders);
 						$("#UpdateResponse-modal").modal();
 					}
 	       		},

@@ -1,5 +1,8 @@
 /************************************************************************************************************
- * Class Name : UpdateOrderManagerServiceImpl.java Description: Author : Ankita Mishra Date : Aug 1, 2016
+ * Class Name : UpdateOrderManagerServiceImpl.java 
+ * Description: 
+ * Author : Ankita Mishra 
+ * Date : Aug 1, 2016
  * **********************************************************************************************************
  */
 package com.zig.pso.service;
@@ -41,6 +44,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
     /*
      * (non-Javadoc)
+     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#updateSingleOrderData(com.zig.pso.rest.bean.UpdateOrderRequestBean)
      */
     @Override
@@ -68,7 +72,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
             String regex = "[0-9]+";
             Boolean isNumeric = value.matches(regex);
             System.out.println(value.length());
-            if (value.length() == 20 && isNumeric)
+            if (value.length() == 19 && isNumeric)
             {
                 updateOrderRes = updateDAO.updateOrderSim(updateOrderRequest);
             }
@@ -117,6 +121,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
     /*
      * (non-Javadoc)
+     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderData(com.zig.pso.rest.bean.BulkUpdateInputBean)
      */
     @Override
@@ -127,6 +132,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
     /*
      * (non-Javadoc)
+     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderSim(com.zig.pso.rest.bean.BulkUpdateInputBean)
      */
     @Override
@@ -137,6 +143,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
     /*
      * (non-Javadoc)
+     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderImei(com.zig.pso.rest.bean.BulkUpdateInputBean)
      */
     @Override
@@ -147,6 +154,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
     /*
      * (non-Javadoc)
+     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderRetryCount(com.zig.pso.rest.bean.BulkUpdateInputBean)
      */
     @Override
@@ -157,6 +165,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
     /*
      * (non-Javadoc)
+     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#getUploadedFileData(org.springframework.web.multipart.MultipartFile)
      */
     @Override
@@ -234,7 +243,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
         for (OrderUpdateInputData orders : orderBulkData.getOrderUpdateData())
         {
-            if (STATUS.equals(orderBulkData.getUpdateType()) && (null == orders.getStatus() || !orders.getStatus().matches(charOnlyRegex) || orders.getSim().length() != 4))
+            if (STATUS.equals(orderBulkData.getUpdateType()) && (null == orders.getStatus() || !orders.getStatus().matches(charOnlyRegex) || orders.getStatus().length() != 4))
             {
                 isValidOrder = false;
                 System.out.println("Not Matching " + orders.getOrderId());
