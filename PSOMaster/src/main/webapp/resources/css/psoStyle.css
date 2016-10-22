@@ -115,6 +115,10 @@
 	    height: 715px;
 }
 
+.panelMinHeight{
+	min-height: 290px;
+}
+
 
 
 /*File Upload Button CSS Start*/

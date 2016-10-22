@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
+import com.zig.pso.rest.bean.PortalEnrollmentInfo;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalShipmentInfo;
 
@@ -32,4 +33,12 @@ public interface OrderInfoManagerDAO
     public ArrayList<PortalShipmentInfo> getPortalShipmentInfoFromDB(String orderId);
 
     public String getAPIRequestBody(String seq_number);
+
+    public PortalOrderMasterResponseBean getZigAutoMasterData(String orderId);
+
+    public PortalEnrollmentInfo getOrderEnrollmentInfo(String orderId);
+
+    public PortalOrderMasterResponseBean getCustomerBANandCTN(String orderId);
+
+    public String getOrderTypeFromExtraOrder(String orderId);
 }

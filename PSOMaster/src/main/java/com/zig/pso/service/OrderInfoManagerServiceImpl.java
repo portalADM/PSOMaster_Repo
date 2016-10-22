@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.dao.OrderInfoManagerDAO;
+import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
+import com.zig.pso.rest.bean.PortalEnrollmentInfo;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalShipmentInfo;
 import com.zig.pso.rest.bean.PortalShipmentInfoForUI;
@@ -43,17 +45,62 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
         return orderList;
     }
 
+    /*
+     * Returns Portal order details
+     * 
+     * @see com.zig.pso.service.OrderInfoManagerService#getPortalOrderDataInfo()
+     */
     @Override
     public PortalOrderMasterResponseBean getPortalOrderDataInfo(String OrderId)
     {
-        PortalOrderMasterResponseBean portalOrderDetail = new PortalOrderMasterResponseBean();
-        portalOrderDetail = orderDAO.getPortalDataInfo(OrderId);
-        if (portalOrderDetail.getErrorCode() == PSOConstants.SUCCESS_CODE)
-        {
-            int type = Integer.parseInt(portalOrderDetail.getOrderType());
-            String orderType = commonUtil.getOrderType(type);
-            portalOrderDetail.setOrderType(orderType);
 
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getPortalOrderDataInfo", "Order ID : " + OrderId);
+
+        PortalOrderMasterResponseBean portalOrderDetail = new PortalOrderMasterResponseBean();
+
+        /* ZIG AUTO MASTER */
+        PortalOrderMasterResponseBean autoMasterData = orderDAO.getZigAutoMasterData(OrderId);
+        if (autoMasterData != null)
+        {
+            portalOrderDetail.setOrderId(autoMasterData.getOrderId());
+            portalOrderDetail.setStatus(autoMasterData.getStatus());
+            portalOrderDetail.setRetry(autoMasterData.getRetry());
+            portalOrderDetail.setSys_creation_date(autoMasterData.getSys_creation_date());
+            portalOrderDetail.setSys_update_date(autoMasterData.getSys_update_date());
+            portalOrderDetail.setOriginatorId(autoMasterData.getOriginatorId());
+        }
+        else
+        {
+            portalOrderDetail.setErrorCode(PSOConstants.INFO_CODE);
+            portalOrderDetail.setErrorMsg(PSOConstants.NO_DATA);
+        }
+
+        /* ZIG ENROLLMENT */
+        PortalEnrollmentInfo enrollmentInfo = orderDAO.getOrderEnrollmentInfo(OrderId);
+        if (enrollmentInfo != null)
+        {
+            portalOrderDetail.setEnrollInfo(enrollmentInfo);
+        }
+
+        /* ZIG CUSTOMER BACKEND INFO */
+        PortalOrderMasterResponseBean orderBanAndCtn = orderDAO.getCustomerBANandCTN(OrderId);
+        if (orderBanAndCtn != null)
+        {
+            portalOrderDetail.setPtn(orderBanAndCtn.getPtn());
+            portalOrderDetail.setBan(orderBanAndCtn.getBan());
+        }
+
+        /* ZIG EXTRA ORDER */
+        String orderType = orderDAO.getOrderTypeFromExtraOrder(OrderId);
+        if (orderType != null)
+        {
+            int type = Integer.parseInt(orderType);
+            String orderTypeString = commonUtil.getOrderType(type);
+            portalOrderDetail.setOrderType(orderTypeString);
+        }
+
+        if (portalOrderDetail.getOrderId() != null)
+        {
             PortalShipmentInfoForUI shipmentInfoFromDb = getPortalShipmentInfo(OrderId);
             portalOrderDetail.setPortalShipmentInfo(shipmentInfoFromDb);
         }
@@ -70,8 +117,14 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
     @Override
     public EnsOrderMasterResponseBean getEnsOrderDataInfo(String OrderId)
     {
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getEnsOrderDataInfo", "Order ID : " + OrderId);
+
         EnsOrderMasterResponseBean ensOrderDetail = new EnsOrderMasterResponseBean();
         ensOrderDetail = orderDAO.getEnsembleDataInfo(OrderId);
+
+        if (ensOrderDetail == null)
+        {
+        }
 
         return ensOrderDetail;
     }
@@ -84,6 +137,8 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
     @Override
     public ArrayList<ApiOrderMasterResponseBean> getAPIOrderDataInfo(String OrderId)
     {
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getAPIOrderDataInfo", "Order ID : " + OrderId);
+
         ArrayList<ApiOrderMasterResponseBean> apiOrderDetail = new ArrayList<ApiOrderMasterResponseBean>();
         apiOrderDetail = orderDAO.getAPIDataInfo(OrderId);
 
@@ -98,6 +153,8 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
     @Override
     public PortalShipmentInfoForUI getPortalShipmentInfo(String OrderId)
     {
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getPortalShipmentInfo", "Order ID : " + OrderId);
+
         ArrayList<PortalShipmentInfo> shipmentInfoFromDb = orderDAO.getPortalShipmentInfoFromDB(OrderId);
 
         return getShipmentInfoForUI(shipmentInfoFromDb);
@@ -110,6 +167,8 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
      */
     public PortalShipmentInfoForUI getShipmentInfoForUI(ArrayList<PortalShipmentInfo> shipmentInfFromDb)
     {
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getPortalShipmentInfo", "Shipment Details : " + shipmentInfFromDb.size());
+
         PortalShipmentInfoForUI shipInfoForUi = new PortalShipmentInfoForUI();
 
         for (PortalShipmentInfo ship : shipmentInfFromDb)
@@ -162,6 +221,8 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
     @Override
     public String getAPIRequestBody(String seq_number)
     {
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getAPIRequestBody", "Seq_number : " + seq_number);
+
         return orderDAO.getAPIRequestBody(seq_number);
     }
 }

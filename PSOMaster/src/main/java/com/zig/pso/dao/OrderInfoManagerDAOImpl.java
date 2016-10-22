@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import com.zig.pso.constants.PSOConstants;
+import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalEnrollmentInfo;
@@ -58,6 +59,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         catch (SQLException e)
         {
             e.printStackTrace();
+            PSOLoggerSrv.printERROR(e, "getOrderIds", "OrderInfoManagerDAOImpl");
         }
 
         return orderlist;
@@ -114,6 +116,8 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         {
             portalOrderlist.setErrorCode(PSOConstants.ERROR_CODE);
             portalOrderlist.setErrorMsg(e.getMessage());
+
+            PSOLoggerSrv.printERROR(e, "getPortalDataInfo", "OrderInfoManagerDAOImpl");
         }
 
         if (portalOrderlist.getOrderId() == null)
@@ -146,7 +150,6 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             ResultSet rs = pstm.executeQuery();
             while (rs.next())
             {
-
                 ensOrderlist.setensOrderId(rs.getString("ENS_ORDER_OID"));
                 ensOrderlist.setOrderStatus(rs.getString("ORDER_STATUS"));
                 ensOrderlist.setPtn(rs.getString("PTN"));
@@ -161,9 +164,10 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (SQLException e)
         {
-            ensOrderlist.setErrorCode((e.getErrorCode()));
-            ensOrderlist.setErrorMsg(e.getMessage());
-            // e.printStackTrace();
+            ensOrderlist.setErrorCode(PSOConstants.ERROR_CODE);
+            ensOrderlist.setErrorMsg(PSOConstants.BACKEND_ERROR);
+
+            PSOLoggerSrv.printERROR(e, "getEnsembleDataInfo", "OrderInfoManagerDAOImpl");
         }
 
         return ensOrderlist;
@@ -201,7 +205,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            PSOLoggerSrv.printERROR(e, "getPortalShipmentInfoFromDB", "OrderInfoManagerDAOImpl");
         }
 
         return portalShipArrlist;
@@ -219,7 +223,6 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
         try
         {
-
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
             pstm.setString(1, orderId);
             ResultSet rs = pstm.executeQuery();
@@ -241,7 +244,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            PSOLoggerSrv.printERROR(e, "getAPIDataInfo", "OrderInfoManagerDAOImpl");
         }
 
         return apiList;
@@ -261,7 +264,6 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
         try
         {
-
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
             pstm.setString(1, seq_number);
             ResultSet rs = pstm.executeQuery();
@@ -274,10 +276,171 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            PSOLoggerSrv.printERROR(e, "getAPIRequestBody", "OrderInfoManagerDAOImpl");
         }
 
         return apiReqBody;
     }
 
+    /*
+     * ZIG_AUTO_MASTER
+     */
+    public PortalOrderMasterResponseBean getZigAutoMasterData(String orderId)
+    {
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getZigAutoMasterData", "Order ID : " + orderId);
+
+        PortalOrderMasterResponseBean portalOrderlist = null;
+
+        String sql = OrderQueries.getPortalOrderDetails();
+
+        try
+        {
+            portalOrderlist = new PortalOrderMasterResponseBean();
+
+            PreparedStatement pstm2 = portalDBConnection.prepareStatement(sql);
+            pstm2.setString(1, orderId);
+            ResultSet rs2 = pstm2.executeQuery();
+            while (rs2.next())
+            {
+                portalOrderlist.setOrderId(rs2.getString("order_idwer"));
+                portalOrderlist.setStatus(rs2.getString("status_code"));
+                portalOrderlist.setRetry(rs2.getString("retry"));
+                portalOrderlist.setSys_creation_date(rs2.getString("sys_creation_date"));
+                portalOrderlist.setSys_update_date(rs2.getString("sys_update_date"));
+                portalOrderlist.setOriginatorId(rs2.getString("Originator_id"));
+                portalOrderlist.setErrorCode(0);
+                portalOrderlist.setErrorMsg("Success");
+            }
+        }
+        catch (SQLException e)
+        {
+            portalOrderlist.setErrorCode(PSOConstants.ERROR_CODE);
+            portalOrderlist.setErrorMsg(e.getMessage());
+
+            PSOLoggerSrv.printERROR(e, "getZigAutoMasterData", "OrderInfoManagerDAOImpl");
+        }
+
+        if (portalOrderlist.getOrderId() == null)
+        {
+            portalOrderlist.setErrorCode(PSOConstants.INFO_CODE);
+            portalOrderlist.setErrorMsg(PSOConstants.NO_DATA);
+
+            PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getZigAutoMasterData", PSOConstants.NO_DATA);
+        }
+
+        return portalOrderlist;
+    }
+
+    /*
+     * ZIG_EXTRA_ORDER - ORDER_TYPE
+     */
+    public String getOrderTypeFromExtraOrder(String orderId)
+    {
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getOrderTypeFromExtraOrder", "Order ID : " + orderId);
+
+        String sql = OrderQueries.getOrderType();
+
+        String orderStatus = null;
+        try
+        {
+
+            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm.setString(1, orderId);
+            ResultSet rs2 = pstm.executeQuery();
+            while (rs2.next())
+            {
+                orderStatus = rs2.getString("order_type");
+            }
+        }
+        catch (SQLException e)
+        {
+            PSOLoggerSrv.printERROR(e, "getOrderTypeFromExtraOrder", "OrderInfoManagerDAOImpl");
+        }
+
+        if (orderStatus == null)
+        {
+            PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getOrderTypeFromExtraOrder", PSOConstants.NO_DATA);
+        }
+
+        return orderStatus;
+    }
+
+    /*
+     * ZIG_CUSTOMER_BACKEND_INFO - BAN & CTN
+     */
+    public PortalOrderMasterResponseBean getCustomerBANandCTN(String orderId)
+    {
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getCustomerBANandCTN", "Order ID : " + orderId);
+
+        PortalOrderMasterResponseBean portalOrderlist = null;
+
+        String sql = OrderQueries.getOrderBANandCTN();
+
+        try
+        {
+            portalOrderlist = new PortalOrderMasterResponseBean();
+
+            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm.setString(1, orderId);
+            ResultSet rs2 = pstm.executeQuery();
+            while (rs2.next())
+            {
+                portalOrderlist.setBan(rs2.getString("BAN_NUMBER"));
+                portalOrderlist.setPtn(rs2.getString("CTN_NUMBER"));
+            }
+        }
+        catch (SQLException e)
+        {
+            portalOrderlist.setErrorCode(PSOConstants.ERROR_CODE);
+            portalOrderlist.setErrorMsg(e.getMessage());
+
+            PSOLoggerSrv.printERROR(e, "getCustomerBANandCTN", "OrderInfoManagerDAOImpl");
+        }
+
+        return portalOrderlist;
+    }
+
+    /*
+     * ZIG_ENROLLMENT
+     */
+    public PortalEnrollmentInfo getOrderEnrollmentInfo(String orderId)
+    {
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getOrderEnrollmentInfo", "Order ID : " + orderId);
+
+        PortalEnrollmentInfo enrollInfo = null;
+
+        String sql = OrderQueries.getEnrollment();
+
+        try
+        {
+            enrollInfo = new PortalEnrollmentInfo();
+
+            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm.setString(1, orderId);
+            ResultSet rs2 = pstm.executeQuery();
+            while (rs2.next())
+            {
+                enrollInfo.setFirst_name(rs2.getString("first_name"));
+                enrollInfo.setLast_name(rs2.getString("last_name"));
+                enrollInfo.setEmail(rs2.getString("email"));
+                enrollInfo.setPhone_number(rs2.getString("phone_number"));
+                enrollInfo.setAddress1(rs2.getString("address1"));
+                enrollInfo.setAddress2(rs2.getString("address2"));
+                enrollInfo.setCity(rs2.getString("city"));
+                enrollInfo.setState(rs2.getString("state"));
+                enrollInfo.setZip_code(rs2.getString("zip_code"));
+            }
+        }
+        catch (SQLException e)
+        {
+            PSOLoggerSrv.printERROR(e, "getOrderEnrollmentInfo", "OrderInfoManagerDAOImpl");
+        }
+
+        if (enrollInfo == null)
+        {
+            PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getOrderEnrollmentInfo", PSOConstants.NO_DATA);
+        }
+
+        return enrollInfo;
+    }
 }

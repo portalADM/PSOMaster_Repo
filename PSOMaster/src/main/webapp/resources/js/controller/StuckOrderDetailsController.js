@@ -35,9 +35,7 @@ module.controller("StuckOrderDetailsController", function($scope, $routeParams,$
 		DashboardService.getStuckOrderForStatus($scope.orderStatus).then(
 				function(data) {
 					$scope.stuckOrders= data;
-					console.log($scope.stuckOrders);
 					$scope.grouppedOrders = CommonUtils.getGrouppedOrderList($scope.stuckOrders);
-					console.log($scope.grouppedOrders);
 	       		},
 		       function(errResponse){
 				console.error('Error while fetching Currencies');

@@ -14,6 +14,8 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import com.zig.pso.utility.PropertyReader;
+
 public class PSOLoggerSrv
 {
 
@@ -26,6 +28,12 @@ public class PSOLoggerSrv
     /** Hold the log4j.properties flie key in the system. */
     protected static final String LOG4J_CONFIGURATION_FILE_SYS_PROP = "log4j.configuration";
 
+    private static Properties appProperty = null;
+
+    private static boolean isInfoEnabled = false;
+    private static boolean isDebugEnabled = false;
+    private static boolean isErrorEnabled = false;
+
     static
     {
 
@@ -35,14 +43,22 @@ public class PSOLoggerSrv
             props.load(PSOLoggerSrv.class.getResourceAsStream("/log4j.properties"));
             PropertyConfigurator.configure(props);
             psoLogger = Logger.getLogger(PSO_LOGGER_NAME);
+
+            appProperty = PropertyReader.getAppProperties();
+
+            isInfoEnabled = Boolean.parseBoolean(appProperty.getProperty("infoLogEnable"));
+            isDebugEnabled = Boolean.parseBoolean(appProperty.getProperty("debugLogEnable"));
+            isErrorEnabled = Boolean.parseBoolean(appProperty.getProperty("errorLogEnable"));
+
             initLoggerFile();
+
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
     }
-    
+
     public static void initLoggerFile()
     {
       PSOLoggerSrv.printINFO("\n"
@@ -60,32 +76,71 @@ public class PSOLoggerSrv
 
     public static void printINFO(String infoMessage)
     {
-        StringBuffer strMessage = new StringBuffer();
-        strMessage.append("\n");
-        strMessage.append(infoMessage);
-        strMessage.append("\n");
-        strMessage.append("-----------------------------------------------------------------------------------------------------");
-        psoLogger.info(strMessage);
+        if (isInfoEnabled)
+        {
+            StringBuffer strMessage = new StringBuffer();
+            strMessage.append("\n");
+            strMessage.append(infoMessage);
+            strMessage.append("\n");
+            strMessage.append("-----------------------------------------------------------------------------------------------------");
+            psoLogger.info(strMessage);
+        }
     }
 
     public static void printDEBUG(String infoMessage)
     {
-        psoLogger.debug(infoMessage);
+        if (isDebugEnabled)
+        {
+            psoLogger.debug(infoMessage);
+        }
+    }
+
+    public static void printDEBUG(String ClassName, String MethodName, String debugMessage)
+    {
+        if (isDebugEnabled)
+        {
+            StringBuffer strMessage = new StringBuffer();
+            strMessage.append("\n");
+            strMessage.append("Class Name  : " + ClassName + "  , Method Name : " + MethodName);
+            strMessage.append("\n");
+            strMessage.append(debugMessage);
+            strMessage.append("\n");
+            strMessage.append("-----------------------------------------------------------------------------------------------------");
+            psoLogger.debug(strMessage);
+        }
     }
 
     public static void printERROR(String infoMessage)
     {
-        psoLogger.error(infoMessage);
+        if (isErrorEnabled)
+        {
+            psoLogger.error(infoMessage);
+        }
     }
-    
+
     public static void printERROR(Exception exe, String logRefID)
     {
-    	 StringBuffer strMessage = new StringBuffer();
-         strMessage.append("\n");
-         strMessage.append("LOG_REF_ID : "+logRefID);
-         strMessage.append("\n");
-         strMessage.append("-----------------------------------------------------------------------------------------------------");
-         psoLogger.error(strMessage, exe);
+        if (isErrorEnabled)
+        {
+            StringBuffer strMessage = new StringBuffer();
+            strMessage.append("\n");
+            strMessage.append("LOG_REF_ID : " + logRefID);
+            strMessage.append("\n");
+            strMessage.append("-----------------------------------------------------------------------------------------------------");
+            psoLogger.error(strMessage, exe);
+        }
+    }
+
+    public static void printERROR(Exception exe, String MethodName, String ClassName)
+    {
+        if (isErrorEnabled)
+        {
+            StringBuffer strMessage = new StringBuffer();
+            strMessage.append("\n");
+            strMessage.append("Class Name  : " + ClassName + "  , Method Name : " + MethodName);
+            strMessage.append("\n");
+            psoLogger.error(strMessage, exe);
+        }
     }
 
 }

@@ -57,10 +57,11 @@
           <div class="panel-heading">
             <h3 class="panel-title">Stuck Order backlogs in last 10 Days</h3>
           </div>
-          <div class="panel-body">
+          <div class="panel-body panelMinHeight">
 			 <canvas id="bar" class="chart chart-bar"
 			  chart-data="dataBar" chart-labels="labelsBar"> chart-series="seriesBar"
 			</canvas>
+			
           </div>
         </div>
         
@@ -68,7 +69,7 @@
           <div class="panel-heading">
             <h3 class="panel-title">Stuck Orders handled in Last 10 Days</h3>
           </div>
-          <div class="panel-body">
+          <div class="panel-body panelMinHeight">
            <canvas id="pie" class="chart chart-pie"
 			  chart-data="dataPie" chart-labels="labelsPie" chart-options="options">
 			</canvas> 
@@ -81,7 +82,7 @@
           <div class="panel-heading">
             <h3 class="panel-title">Orders stuck in different statuses</h3>
           </div>
-          <div class="panel-body">
+          <div class="panel-body panelMinHeight">
            <canvas id="doughnut" class="chart chart-doughnut"
 			  chart-data="dataDounuts" chart-labels="labelsDounuts">
 			</canvas>
@@ -92,7 +93,7 @@
           <div class="panel-heading">
             <h3 class="panel-title">Orders stuck due to failure from Third Parties in last 10 Days</h3>
           </div>
-          <div class="panel-body">
+          <div class="panel-body panelMinHeight">
            <canvas id="line" class="chart chart-line" chart-data="data"
 			chart-labels="labels" chart-series="series" chart-options="options"
 			chart-dataset-override="datasetOverride" chart-click="onClick"></canvas>

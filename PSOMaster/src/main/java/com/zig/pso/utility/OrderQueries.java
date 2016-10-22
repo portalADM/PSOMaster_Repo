@@ -89,14 +89,33 @@ public class OrderQueries
         return orderProp.getProperty("order.getAPIRequest");
     }
 
-    
     public static String getOrderHandled()
     {
         return orderProp.getProperty("order.handled");
     }
-    
+
     public static String getstuckOrderStatusbyCount()
     {
         return orderProp.getProperty("order.stuckOrdersStatusbyCount");
+    }
+
+    public static String getPortalOrderDetails()
+    {
+        return orderProp.getProperty("order.getPortalOrderDetails");
+    }
+
+    public static String getOrderType()
+    {
+        return orderProp.getProperty("order.getOrderType");
+    }
+
+    public static String getOrderBANandCTN()
+    {
+        return orderProp.getProperty("order.getOrderBTNandCTN");
+    }
+
+    public static String getEnrollment()
+    {
+        return orderProp.getProperty("order.getEnrollmentDetails");
     }
 }
