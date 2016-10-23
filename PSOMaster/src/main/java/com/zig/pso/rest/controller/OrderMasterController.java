@@ -7,8 +7,6 @@
  */
 package com.zig.pso.rest.controller;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,14 +63,12 @@ public class OrderMasterController
      * This Method provides order API details
      */
     @RequestMapping(value = "/apiOrder/{id}", method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<ApiOrderMasterResponseBean>> getOrderApiDetails(@PathVariable("id") String id)
+    public ResponseEntity<ApiOrderMasterResponseBean> getOrderApiDetails(@PathVariable("id") String id)
     {
-
         PSOLoggerSrv.printDEBUG("OrderMasterController", "getOrderApiDetails", "Order ID : " + id);
-
-        ArrayList<ApiOrderMasterResponseBean> nameList = new ArrayList<ApiOrderMasterResponseBean>();
-        nameList = orderService.getAPIOrderDataInfo(id);
-        return new ResponseEntity<ArrayList<ApiOrderMasterResponseBean>>(nameList, HttpStatus.OK);
+        ApiOrderMasterResponseBean orderApiResponse = new ApiOrderMasterResponseBean();
+        orderApiResponse = orderService.getAPIOrderDataInfo(id);
+        return new ResponseEntity<ApiOrderMasterResponseBean>(orderApiResponse, HttpStatus.OK);
     }
 
     /**

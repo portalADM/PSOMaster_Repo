@@ -42,13 +42,17 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	 * Method that calls Order Service to get Portal Order Details 
 	 */
 	function getPortalOrderDetails(orderID){
-		
+		$scope.portalOrderDetails = [];
 		OrderService.getPortalOrderDetails(orderID).then(
-				function(data) {
-					if(data.errorCode != 0){
-						MessageService.showError(data.errorMsg,5000);
-					}
-					$scope.portalOrderDetails = data;
+				function(response) {
+					
+					if(response.errorCode==0)
+						$scope.portalOrderDetails = response;
+					else if(response.errorCode==1)
+						MessageService.showInfo('No Portal Order details found.',5000);
+					else if(response.errorCode==-1)
+						MessageService.showError(response.errorMsg,5000);
+					
 	       		},
 		        function(errResponse){
 	       			MessageService.showError(errResponse,5000);
@@ -61,9 +65,17 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	 * Method that calls Order Service to get Portal Order API Details 
 	 */
 	function getPortalOrderAPIDetails(orderID){
+		$scope.apiOrderDetails = [];
 		OrderService.getPortalAPIDetails(orderID).then(
-				function(data){
-					$scope.apiOrderDetails=data;
+				function(response){
+					if(response.errorCode==0)
+						$scope.apiOrderDetails=response.orderAPIList;
+					else if(response.errorCode==1)
+						MessageService.showInfo('No API Details found.',5000);
+					else if(response.errorCode==-1)
+						MessageService.showError(response.errorMsg,5000);
+					
+					
 				},
 				function(errResponse){
 				}
@@ -75,12 +87,18 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	 * Method that calls Order Service to get Ensemble Order Details 
 	 */
 	function getENSOrderDetails(orderID){
+		$scope.ensembleOrderDetails = [];
 		OrderService.getEnsembleOrderDetails(orderID).then(
-				function(d) {
-					$scope.ensembleOrderDetails = d;
+				function(response) {
+					if(response.errorCode==0)
+						$scope.ensembleOrderDetails = response;
+					else if(response.errorCode==1)
+						MessageService.showInfo('No Ensemble details found',5000);
+					else if(response.errorCode==-1)
+						MessageService.showError(response.errorMsg,5000);
 	       		},
 		        function(errResponse){
-	       			
+	       			MessageService.showError(errResponse,5000);
 		        }
 		);
 		
@@ -96,13 +114,9 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	$scope.getAPIRequest = function(seq_number){
 		alert(seq_number);
 		OrderService.getOrderAPIRequest(seq_number).then(
-				function(d) {
-					console.log(d);
-					
-					document.getElementById("myApiReqBody").innerHTML=d;
-					
+				function(response) {
+					document.getElementById("myApiReqBody").innerHTML=response;
 					$scope.orderAPIReqBody  = JSON.stringify(d, undefined, 4);
-					console.log($scope.orderAPIReqBody);
 					$("#orderApiReqBody-modal").modal();
 	       		},
 		        function(errResponse){
@@ -115,9 +129,7 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	$scope.orderHelpData = null;
 	$scope.getHelp = function(){
 		AppDataService.getOrderHelpData()
-			.then(
-					function(response){
-						console.log(response.data);
+			.then(function(response){
 						$scope.orderHelpData = response.data;
 						$("#orderHelp-modal").modal();
 					}, 

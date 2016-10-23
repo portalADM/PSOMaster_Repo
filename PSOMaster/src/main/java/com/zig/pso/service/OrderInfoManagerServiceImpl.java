@@ -32,6 +32,10 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
 
     @Autowired
     CommonUtility commonUtil;
+    
+    private static final String ADDON = "addon";
+    private static final String ACCESSORY = "accessory";
+    private static final String PLAN = "plan";
 
     /*
      * (non-Javadoc)
@@ -62,7 +66,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
 
         /* ZIG AUTO MASTER */
         PortalOrderMasterResponseBean autoMasterData = orderDAO.getZigAutoMasterData(OrderId);
-        if (autoMasterData != null)
+        if (autoMasterData != null && autoMasterData.getOrderId()!=null)
         {
             portalOrderDetail.setOrderId(autoMasterData.getOrderId());
             portalOrderDetail.setStatus(autoMasterData.getStatus());
@@ -123,9 +127,10 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
 
         EnsOrderMasterResponseBean ensOrderDetail = new EnsOrderMasterResponseBean();
         ensOrderDetail = orderDAO.getEnsembleDataInfo(OrderId);
-
-        if (ensOrderDetail == null)
+        if (ensOrderDetail.getensOrderId()==null && ensOrderDetail.getErrorCode()!=PSOConstants.ERROR_CODE)
         {
+            ensOrderDetail.setErrorCode(PSOConstants.INFO_CODE);
+            ensOrderDetail.setErrorMsg(PSOConstants.NO_DATA);
         }
 
         return ensOrderDetail;
@@ -137,14 +142,27 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
      * @see com.zig.pso.service.OrderInfoManagerService#getAPIOrderDataInfo(java.lang.String)
      */
     @Override
-    public ArrayList<ApiOrderMasterResponseBean> getAPIOrderDataInfo(String OrderId)
+    public ApiOrderMasterResponseBean getAPIOrderDataInfo(String OrderId)
     {
-        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getAPIOrderDataInfo", "Order ID : " + OrderId);
-
-        ArrayList<ApiOrderMasterResponseBean> apiOrderDetail = new ArrayList<ApiOrderMasterResponseBean>();
-        apiOrderDetail = orderDAO.getAPIDataInfo(OrderId);
-
-        return apiOrderDetail;
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getAPIOrderDataInfo - Start", "Order ID : " + OrderId);
+        ApiOrderMasterResponseBean apiResponse = new ApiOrderMasterResponseBean();
+        apiResponse = orderDAO.getAPIDataInfo(OrderId);
+        if(apiResponse!=null && apiResponse.getErrorCode()!=PSOConstants.ERROR_CODE)
+        {
+            if(apiResponse.getOrderAPIList().size()>0)
+            {
+                apiResponse.setErrorCode(PSOConstants.SUCCESS_CODE);
+                PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getAPIOrderDataInfo", "Num of API in response : " +apiResponse.getOrderAPIList().size());
+            }
+            else
+            {
+                apiResponse.setErrorCode(PSOConstants.INFO_CODE);
+                apiResponse.setErrorMsg(PSOConstants.NO_DATA);
+                PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getAPIOrderDataInfo - End", PSOConstants.NO_DATA);
+            }
+        }
+        
+        return apiResponse;
     }
 
     /*
@@ -195,17 +213,17 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
             {
                 shipInfoForUi.setEpc_sku_id(ship.getEpc_sku_id());
             }
-            if ("addon".equalsIgnoreCase(ship.getProduct_type()))
+            if (ADDON.equalsIgnoreCase(ship.getProduct_type()))
             {
                 shipInfoForUi.setAddonAvailable(true);
                 shipInfoForUi.getAddonList().add(ship.getEpc_sku_id());
             }
-            if ("accessory".equalsIgnoreCase(ship.getProduct_type()))
+            if (ACCESSORY.equalsIgnoreCase(ship.getProduct_type()))
             {
                 shipInfoForUi.setAccessoryAvailable(true);
                 shipInfoForUi.getAccessoryList().add(ship.getEpc_sku_id());
             }
-            if ("plan".equalsIgnoreCase(ship.getProduct_type()))
+            if (PLAN.equalsIgnoreCase(ship.getProduct_type()))
             {
                 shipInfoForUi.setPlanAvailable(true);
                 shipInfoForUi.setPlan(ship.getEpc_sku_id());

@@ -1,7 +1,9 @@
 /************************************************************************************************************
- * Class Name : OrderInfoManagerService.java Description: This interface contains methods for order related operations.
- * 
- * Author : Ankita Mishra Date : Jun 26, 2016 **********************************************************************************************************
+ * Class Name : OrderInfoManagerService.java 
+ * Description: This interface contains methods for order related operations. 
+ * Author : Ankita Mishra 
+ * Date : Jun 26, 2016 
+ * **********************************************************************************************************
  */
 package com.zig.pso.service;
 
@@ -32,7 +34,7 @@ public interface OrderInfoManagerService
      * @param OrderId
      * @return
      */
-    public ArrayList<ApiOrderMasterResponseBean> getAPIOrderDataInfo(String OrderId);
+    public ApiOrderMasterResponseBean getAPIOrderDataInfo(String OrderId);
 
     /**
      * @param OrderId

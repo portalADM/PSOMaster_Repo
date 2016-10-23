@@ -19,6 +19,7 @@ import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
+import com.zig.pso.rest.bean.OrderAPIDetailsBean;
 import com.zig.pso.rest.bean.PortalEnrollmentInfo;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalShipmentInfo;
@@ -208,14 +209,14 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
     }
 
     @Override
-    public ArrayList<ApiOrderMasterResponseBean> getAPIDataInfo(String orderId)
+    public ApiOrderMasterResponseBean getAPIDataInfo(String orderId)
     {
 
-        ApiOrderMasterResponseBean apiOutput = null;
+        OrderAPIDetailsBean apiOutput = null;
 
         String sql = OrderQueries.getApiOrderData();
-
-        ArrayList<ApiOrderMasterResponseBean> apiList = new ArrayList<ApiOrderMasterResponseBean>();
+        ApiOrderMasterResponseBean orderApiRsponse = new ApiOrderMasterResponseBean();
+        ArrayList<OrderAPIDetailsBean> apiList = new ArrayList<OrderAPIDetailsBean>();
 
         try
         {
@@ -225,7 +226,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
             while (rs.next())
             {
-                apiOutput = new ApiOrderMasterResponseBean();
+                apiOutput = new OrderAPIDetailsBean();
                 apiOutput.setOrderId(rs.getString("ORDER_ID"));
                 apiOutput.setErrorMessage(rs.getString("ERROR_MESSAGE"));
                 apiOutput.setSource(rs.getString("SOURCE"));
@@ -236,14 +237,17 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
                 apiList.add(apiOutput);
             }
+            orderApiRsponse.setOrderAPIList(apiList);
 
         }
         catch (Exception e)
         {
+            orderApiRsponse.setErrorCode(PSOConstants.ERROR_CODE);
+            orderApiRsponse.setErrorMsg(PSOConstants.BACKEND_ERROR);;
             PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getAPIDataInfo", e);
         }
 
-        return apiList;
+        return orderApiRsponse;
     }
 
     /*
