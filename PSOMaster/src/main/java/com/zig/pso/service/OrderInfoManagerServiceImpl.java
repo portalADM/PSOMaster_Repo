@@ -1,7 +1,9 @@
 /************************************************************************************************************
- * Class Name : OrderInfoManagerServiceImpl.java Description: This class implements methods for order related operations.
- * 
- * Author : Ankita Mishra Date : Jun 26, 2016 **********************************************************************************************************
+ * Class Name : OrderInfoManagerServiceImpl.java 
+ * Description: This class implements methods for order related operations.
+ * Author : Ankita Mishra 
+ * Date : Jun 26, 2016 
+ * **********************************************************************************************************
  */
 package com.zig.pso.service;
 

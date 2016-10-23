@@ -1,9 +1,8 @@
 /************************************************************************************************************
- * Class Name :  PSOLoggerSrv.java
- * Description:  This class prints Info,Errors and Debug messages in log files.
- * 
- * Author     :  Nilesh Patil
- * Date       :  Jun 26, 2016
+ * Class Name : PSOLoggerSrv.java 
+ * Description: This class prints Info,Errors and Debug messages in log files. 
+ * Author : Nilesh Patil 
+ * Date : Jun 26, 2016
  * **********************************************************************************************************
  */
 package com.zig.pso.logging;
@@ -61,17 +60,11 @@ public class PSOLoggerSrv
 
     public static void initLoggerFile()
     {
-      PSOLoggerSrv.printINFO("\n"
-              +"###############################################################################"
-    		  +"\n"
-    		  +" \n   ###### ###### ######     ###   ### ####### ###### ###### ###### ######       "
-    		  +" \n   ##  ## ##     ##  ##     ## # # ## ##   ## ##       ##   ##     ##  ##       "
-    		  +" \n   ###### ###### ##  ##     ##  #  ## ####### ######   ##   ###### ######       "
-    		  +" \n   ##         ## ##  ##     ##     ## ##   ##     ##   ##   ##     ## #         "
-    		  +" \n   ##     ###### ######     ##     ## ##   ## ######   ##   ###### ##  ##       "
-    		  +" \n"
-    		  +" \n"
-    		  +"###############################################################################");
+        PSOLoggerSrv.printINFO("\n" + "###############################################################################" + "\n"
+                + " \n   ###### ###### ######     ###   ### ####### ###### ###### ###### ######       " + " \n   ##  ## ##     ##  ##     ## # # ## ##   ## ##       ##   ##     ##  ##       "
+                + " \n   ###### ###### ##  ##     ##  #  ## ####### ######   ##   ###### ######       " + " \n   ##         ## ##  ##     ##     ## ##   ##     ##   ##   ##     ## #         "
+                + " \n   ##     ###### ######     ##     ## ##   ## ######   ##   ###### ##  ##       " + " \n" + " \n"
+                + "###############################################################################");
     }
 
     public static void printINFO(String infoMessage)
@@ -131,7 +124,7 @@ public class PSOLoggerSrv
         }
     }
 
-    public static void printERROR(Exception exe, String MethodName, String ClassName)
+    public static void printERROR(String ClassName, String MethodName, Exception exe)
     {
         if (isErrorEnabled)
         {

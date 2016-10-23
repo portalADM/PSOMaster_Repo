@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.dao.UpdateOrderManagerDAO;
+import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.BulkUpdateInputBean;
 import com.zig.pso.rest.bean.OrderUpdateInputData;
@@ -44,12 +45,13 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#updateSingleOrderData(com.zig.pso.rest.bean.UpdateOrderRequestBean)
      */
     @Override
     public BaseResponseBean updateSingleOrderData(UpdateOrderRequestBean updateOrderRequest)
     {
+        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "updateSingleOrderData",null);
+        
         if (updateOrderRequest.getType().equalsIgnoreCase(STATUS))
         {
             BaseResponseBean updateOrderRes = new BaseResponseBean();
@@ -121,56 +123,56 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderData(com.zig.pso.rest.bean.BulkUpdateInputBean)
      */
     @Override
     public BaseResponseBean updateBulkOrderStatus(ArrayList<OrderUpdateInputData> orderUpdateData)
     {
+        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "updateBulkOrderStatus", "Number of Orders to update: "+orderUpdateData.size());
         return updateDAO.updateBulkOrderStatus(orderUpdateData);
     }
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderSim(com.zig.pso.rest.bean.BulkUpdateInputBean)
      */
     @Override
     public BaseResponseBean updateBulkOrderSim(ArrayList<OrderUpdateInputData> orderUpdateData)
     {
+        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "updateBulkOrderSim", "Number of Orders to update: "+orderUpdateData.size());
         return updateDAO.updateBulkOrderSim(orderUpdateData);
     }
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderImei(com.zig.pso.rest.bean.BulkUpdateInputBean)
      */
     @Override
     public BaseResponseBean updateBulkOrderImei(ArrayList<OrderUpdateInputData> orderUpdateData)
     {
+        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "updateBulkOrderImei", "Number of Orders to update: "+orderUpdateData.size());
         return updateDAO.updateBulkOrderImei(orderUpdateData);
     }
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderRetryCount(com.zig.pso.rest.bean.BulkUpdateInputBean)
      */
     @Override
     public BaseResponseBean updateBulkOrderRetryCount(ArrayList<OrderUpdateInputData> orderUpdateData)
     {
+        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "updateBulkOrderRetryCount", "Number of Orders to update: "+orderUpdateData.size());
         return updateDAO.updateBulkOrderRetryCount(orderUpdateData);
     }
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.zig.pso.service.UpdateOrderManagerService#getUploadedFileData(org.springframework.web.multipart.MultipartFile)
      */
     @Override
     public BulkUpdateInputBean getUploadedFileData(MultipartFile file, String updateType)
     {
+        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "updateBulkOrderRetryCount", "updateType: "+ updateType);
         BulkUpdateInputBean orderBulkData = new BulkUpdateInputBean();
         ArrayList<OrderUpdateInputData> orderUpdateData = new ArrayList<OrderUpdateInputData>();
 

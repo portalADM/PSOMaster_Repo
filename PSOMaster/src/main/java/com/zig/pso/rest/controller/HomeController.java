@@ -1,7 +1,9 @@
 /************************************************************************************************************
- * Class Name : OrderMasterController.java Description:
- * 
- * Author : Ankita Mishra Date : Oct 05, 2016 **********************************************************************************************************
+ * Class Name : HomeController.java 
+ * Description:  
+ * Author : Ankita Mishra 
+ * Date : Oct 05, 2016 
+ * **********************************************************************************************************
  */
 package com.zig.pso.rest.controller;
 
@@ -21,9 +23,6 @@ import com.zig.pso.service.CommonAppService;
 @RestController
 public class HomeController
 {
-    /*
-     * Order Service injection
-     */
 
     @Autowired
     CommonAppService commonAppService;
@@ -32,7 +31,8 @@ public class HomeController
     public ResponseEntity<BaseResponseBean> sendEmailMethod(@RequestBody EmailRequestBean emailRequest)
     {
 
-        PSOLoggerSrv.printINFO("############### send email Rest ###########################");
+        String emailDetails ="TO : "+emailRequest.getToEmailIdList() +" \n CC : "+emailRequest.getCcEmailIdList() + " \n Subject : "+emailRequest.getEmailSubject();
+        PSOLoggerSrv.printDEBUG("OrderMasterController", "sendEmailMethod",  emailDetails);
 
         BaseResponseBean nameList = new BaseResponseBean();
         nameList = commonAppService.sendEmailService(emailRequest);

@@ -1,7 +1,9 @@
 /************************************************************************************************************
- * Class Name : UpdateOrderController.java Description:
- * 
- * Author : Ankita Mishra Date : Aug 1, 2016 **********************************************************************************************************
+ * Class Name : UpdateOrderController.java 
+ * Description: 
+ * Author : Ankita Mishra 
+ * Date : Aug 1, 2016 
+ * **********************************************************************************************************
  */
 package com.zig.pso.rest.controller;
 
@@ -55,8 +57,8 @@ public class UpdateOrderController
     @RequestMapping(value = "/updateOrder", method = RequestMethod.POST)
     public ResponseEntity<BaseResponseBean> updateSingleOrder(@RequestBody UpdateOrderRequestBean updateOrderRequest)
     {
-
-        PSOLoggerSrv.printINFO("############### updateOrder Rest ###########################");
+        String updateDetails = "Order ID : "+updateOrderRequest.getOrderId()+" \nNew Value : "+updateOrderRequest.getNewValue()+" \nUpdate Type : "+updateOrderRequest.getType();
+        PSOLoggerSrv.printDEBUG("UpdateOrderController", "updateSingleOrder", updateDetails);
 
         BaseResponseBean nameList = new BaseResponseBean();
         nameList = updateService.updateSingleOrderData(updateOrderRequest);
@@ -66,6 +68,8 @@ public class UpdateOrderController
     @RequestMapping(value = "/upload/{updateType}", method = RequestMethod.POST)
     public ResponseEntity<BaseResponseBean> uploadFile(HttpServletRequest request, @RequestParam Map<String, Object> params, @PathVariable("updateType") String updateType)
     {
+        PSOLoggerSrv.printDEBUG("UpdateOrderController", "uploadFile", "updateType : "+updateType);
+        
         BulkUpdateOrderResponseBean bulkUpdateResponse = new BulkUpdateOrderResponseBean();
         if (request instanceof MultipartRequest)
         {
@@ -105,6 +109,8 @@ public class UpdateOrderController
     @ResponseBody
     public void exportExcel(HttpServletResponse response, @PathVariable("orderType") String orderType) throws IOException
     {
+        PSOLoggerSrv.printDEBUG("UpdateOrderController", "exportExcel", "updateType : "+orderType);
+        
         String fileName = PSOConstants.UPDATE_STATUS_EXCEL;
         if (orderType.equalsIgnoreCase(PSOConstants.STATUS))
         {

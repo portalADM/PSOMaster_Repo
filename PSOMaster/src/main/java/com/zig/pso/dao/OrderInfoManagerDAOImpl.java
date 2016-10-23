@@ -1,5 +1,8 @@
 /************************************************************************************************************
- * Class Name : OrderInfoManagerDAOImpl.java Description: This class implements methods for order related operations. Author : Ankita Mishra Date : Jun 26, 2016
+ * Class Name : OrderInfoManagerDAOImpl.java 
+ * Description: This class implements methods for order related operations. 
+ * Author : Ankita Mishra 
+ * Date : Jun 26, 2016
  * **********************************************************************************************************
  */
 package com.zig.pso.dao;
@@ -38,7 +41,6 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.zig.pso.dao.OrderInfoManagerDAO#getOrderIds()
      */
     @Override
@@ -58,8 +60,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
-            PSOLoggerSrv.printERROR(e, "getOrderIds", "OrderInfoManagerDAOImpl");
+            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getOrderIds", e);
         }
 
         return orderlist;
@@ -67,7 +68,6 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.zig.pso.dao.OrderInfoManagerDAO#getPortalDataInfo()
      */
     @Override
@@ -117,7 +117,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             portalOrderlist.setErrorCode(PSOConstants.ERROR_CODE);
             portalOrderlist.setErrorMsg(e.getMessage());
 
-            PSOLoggerSrv.printERROR(e, "getPortalDataInfo", "OrderInfoManagerDAOImpl");
+            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getPortalDataInfo", e);
         }
 
         if (portalOrderlist.getOrderId() == null)
@@ -131,7 +131,6 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.zig.pso.dao.OrderInfoManagerDAO#getEnsembleDataInfo(java.lang.String)
      */
     @Override
@@ -166,8 +165,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         {
             ensOrderlist.setErrorCode(PSOConstants.ERROR_CODE);
             ensOrderlist.setErrorMsg(PSOConstants.BACKEND_ERROR);
-
-            PSOLoggerSrv.printERROR(e, "getEnsembleDataInfo", "OrderInfoManagerDAOImpl");
+            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getEnsembleDataInfo", e);
         }
 
         return ensOrderlist;
@@ -175,14 +173,12 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.zig.pso.dao.OrderInfoManagerDAO#getPortalShipmentInfoFromDB(java.lang.String)
      */
     @Override
     public ArrayList<PortalShipmentInfo> getPortalShipmentInfoFromDB(String orderId)
     {
         ArrayList<PortalShipmentInfo> portalShipArrlist = new ArrayList<PortalShipmentInfo>();
-        // String shipSql = OrderQueries.getShipmentOrderData();
 
         String shipSql = "SELECT ORDER_ID,EPC_SKU_ID,PRODUCT_TYPE,ESN_NO,IMEI as YONUMBER,SIM,SHIPMENT_DATE FROM ZIG_ORDER_SHIPMENT_INFO WHERE ORDER_ID = ?";
 
@@ -205,7 +201,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR(e, "getPortalShipmentInfoFromDB", "OrderInfoManagerDAOImpl");
+            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getPortalShipmentInfoFromDB", e);
         }
 
         return portalShipArrlist;
@@ -244,7 +240,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR(e, "getAPIDataInfo", "OrderInfoManagerDAOImpl");
+            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getAPIDataInfo", e);
         }
 
         return apiList;
@@ -252,7 +248,6 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.zig.pso.dao.OrderInfoManagerDAO#getAPIRequestBody(java.lang.String)
      */
     @Override
@@ -276,7 +271,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR(e, "getAPIRequestBody", "OrderInfoManagerDAOImpl");
+            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getAPIRequestBody", e);
         }
 
         return apiReqBody;
@@ -316,8 +311,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         {
             portalOrderlist.setErrorCode(PSOConstants.ERROR_CODE);
             portalOrderlist.setErrorMsg(e.getMessage());
-
-            PSOLoggerSrv.printERROR(e, "getZigAutoMasterData", "OrderInfoManagerDAOImpl");
+            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getZigAutoMasterData", e);
         }
 
         if (portalOrderlist.getOrderId() == null)
@@ -354,7 +348,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR(e, "getOrderTypeFromExtraOrder", "OrderInfoManagerDAOImpl");
+            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getOrderTypeFromExtraOrder", e);
         }
 
         if (orderStatus == null)
@@ -393,8 +387,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         {
             portalOrderlist.setErrorCode(PSOConstants.ERROR_CODE);
             portalOrderlist.setErrorMsg(e.getMessage());
-
-            PSOLoggerSrv.printERROR(e, "getCustomerBANandCTN", "OrderInfoManagerDAOImpl");
+            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getCustomerBANandCTN", e);
         }
 
         return portalOrderlist;
@@ -433,7 +426,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR(e, "getOrderEnrollmentInfo", "OrderInfoManagerDAOImpl");
+            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getOrderEnrollmentInfo", e);
         }
 
         if (enrollInfo == null)

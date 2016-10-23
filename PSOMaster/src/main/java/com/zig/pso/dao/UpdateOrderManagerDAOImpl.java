@@ -1,7 +1,9 @@
 /************************************************************************************************************
- * Class Name : UpdateOrderManagerDAOImpl.java Description:
- * 
- * Author : Ankita Mishra Date : Aug 1, 2016 **********************************************************************************************************
+ * Class Name : UpdateOrderManagerDAOImpl.java 
+ * Description: 
+ * Author : Ankita Mishra 
+ * Date : Aug 1, 2016 
+ * **********************************************************************************************************
  */
 package com.zig.pso.dao;
 
