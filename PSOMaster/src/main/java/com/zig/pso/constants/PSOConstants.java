@@ -1,7 +1,9 @@
 /************************************************************************************************************
- * Class Name : PSOConstants.java Description: This class contains application constants.
- * 
- * Author : Nilesh Patil Date : Jun 26, 2016 **********************************************************************************************************
+ * Class Name : PSOConstants.java 
+ * Description: This class contains application constants.
+ * Author : Nilesh Patil 
+ * Date : Jun 26, 2016 
+ * **********************************************************************************************************
  */
 package com.zig.pso.constants;
 
@@ -30,19 +32,23 @@ public class PSOConstants
     public final static int INFO_CODE = 1;
     public final static int SUCCESS_CODE = 0;
     public final static String NO_DATA = "No Data Found.";
-    public final static String Successfully_updated_status = "Successfully updated status- inside DAO.";
-    public final static String Unsuccessful_while_updating_Info = "Unsuccessful while updating Info.";
-    public final static String Invalid_Status_Code = "Invalid Status Code";
-    public final static String Invalid_IMEI_Number = "Invalid IMEI number";
-    public final static String Invalid_Sim_Number = "Invalid SIM Number";
-    public final static String Invalid_Retry_Count = "Invalid Retry Count";
-    public final static String Invalid_Credentials = "Invalid Credentials";
+    public final static String ORDER_UPDATE_SUCCESSFULL = "Order updated successfully.";
+    public final static String ORDER_UPDATE_FAIL = "Order Updated fail.";
+    public final static String NO_ORDER_UPDATED = "No Order updated.";
+    public final static String ORDER_INSERT_SUCCESSFULL = "Order inserted successfully.";
+    public final static String ORDER_INSERT_FAIL = "Order insert fail.";
+    public final static String NO_ORDER_INSERTED = "No Order inserted.";
+    public final static String INVALID_STATUS_CODE = "Invalid Status Code";
+    public final static String INVALID_IMEI = "Invalid IMEI number";
+    public final static String INVALID_SIM = "Invalid SIM Number";
+    public final static String INVALID_RETYR_COUNT = "Invalid Retry Count";
+    public final static String INVALID_CREADENTIALS = "Invalid Credentials";
     public final static String Error_Occurred_While_sending_mail = "Some Error occurred while sending mail.Please try Again";
     public final static String Successfully_sent_mail = "mail is sent succesfully";
     public final static String Invalid_Request = "BAD Request";
 
     public final static String BACKEND_ERROR = "There is a backend Error. Please try after some time.";
-    public final static String BULK_UPDATE_SUCCESS = "Updates done successfully";
+    public final static String BULK_UPDATE_SUCCESS = "Bulk Updates done successfully";
 
     /*
      * Update Order Contants

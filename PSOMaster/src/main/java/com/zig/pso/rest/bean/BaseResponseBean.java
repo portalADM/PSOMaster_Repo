@@ -1,7 +1,9 @@
 /************************************************************************************************************
- * Class Name : BaseResponseBean.java Description:
- * 
- * Author : Ankita Mishra Date : Jul 4, 2016 **********************************************************************************************************
+ * Class Name : BaseResponseBean.java 
+ * Description: 
+ * Author : Ankita Mishra 
+ * Date : Jul 4, 2016 
+ * **********************************************************************************************************
  */
 package com.zig.pso.rest.bean;
 
@@ -12,6 +14,7 @@ public class BaseResponseBean
 {
     private int errorCode;
     private String errorMsg;
+    private String logRefId;
 
     public int getErrorCode()
     {
@@ -33,12 +36,25 @@ public class BaseResponseBean
         this.errorMsg = errorMsg;
     }
 
-    @Override
-    public String toString()
+    /**
+     * @return the logRefId
+     */
+    public String getLogRefId()
     {
-        return "BaseResponseBean [errorCode=" + errorCode + ", errorMsg=" + errorMsg + "]";
+        return logRefId;
     }
 
+    /**
+     * @param logRefId the logRefId to set
+     */
+    public void setLogRefId(String logRefId)
+    {
+        this.logRefId = logRefId;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
     @Override
     public int hashCode()
     {
@@ -46,9 +62,13 @@ public class BaseResponseBean
         int result = 1;
         result = prime * result + errorCode;
         result = prime * result + ((errorMsg == null) ? 0 : errorMsg.hashCode());
+        result = prime * result + ((logRefId == null) ? 0 : logRefId.hashCode());
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
     @Override
     public boolean equals(Object obj)
     {
@@ -68,7 +88,25 @@ public class BaseResponseBean
         }
         else if (!errorMsg.equals(other.errorMsg))
             return false;
+        if (logRefId == null)
+        {
+            if (other.logRefId != null)
+                return false;
+        }
+        else if (!logRefId.equals(other.logRefId))
+            return false;
         return true;
     }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return "BaseResponseBean [errorCode=" + errorCode + ", errorMsg=" + errorMsg + ", logRefId=" + logRefId + "]";
+    }
+    
+    
 
 }

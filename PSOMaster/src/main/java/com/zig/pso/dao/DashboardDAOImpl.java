@@ -44,7 +44,7 @@ public class DashboardDAOImpl implements DashboardDAO
     @Override
     public ArrayList<StuckOrdersCount> getStuckOrderList()
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getStuckOrderList", null);
+        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getStuckOrderList", "");
 
         ArrayList<StuckOrdersCount> stuckOrderList = new ArrayList<StuckOrdersCount>();
         String sql = OrderQueries.getstuckOrdersCount();
@@ -109,7 +109,7 @@ public class DashboardDAOImpl implements DashboardDAO
     @Override
     public ArrayList<StuckOrdersCount> getStuckOrderhandled()
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getStuckOrderhandled", null);
+        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getStuckOrderhandled",  "");
 
         ArrayList<StuckOrdersCount> stuckOrderList = new ArrayList<StuckOrdersCount>();
         String sql = OrderQueries.getOrderHandled();
@@ -142,7 +142,7 @@ public class DashboardDAOImpl implements DashboardDAO
     @Override
     public ArrayList<StuckOrdersCount> getStuckOrderallStatus()
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getStuckOrderallStatus", null);
+        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getStuckOrderallStatus",  "");
 
         ArrayList<StuckOrdersCount> stuckOrderList = new ArrayList<StuckOrdersCount>();
         String sql = OrderQueries.getstuckOrderStatusbyCount();

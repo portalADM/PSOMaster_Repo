@@ -34,11 +34,11 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 						MessageService.showSuccess(response.errorMsg,5000);
 					}
 					else{
-						MessageService.showError(response.errorMsg,5000);
+						var errorMessage = response.errorMsg + "\n Log Reference ID : " + response.logRefId;
+						MessageService.showError(errorMessage,null);
 					}
 	       		},
 		       function(errResponse){
-				console.error('Error while fetching Currencies');
 					MessageService.showSuccess('Error occured while updating order. Please try again later.',5000);
 		       }
 		);
@@ -62,16 +62,20 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 	 function updateBulkOrder(file,uploadUrl){
 	      
 	      FileUploadService.uploadFileToUrl(file, uploadUrl).then(
-				function(data) {
-					if(data.errorCode != 0){
-						MessageService.showError(data.errorMsg,5000);
+				function(response) {
+					if(response.errorCode == 0){
+						MessageService.showSuccess(response.errorMsg,5000);
 					}
-					else{
-						MessageService.showSuccess(data.errorMsg,5000);
+					else if(response.errorCode == 1){
+						MessageService.showInfo(response.errorMsg,5000);
+					}
+					else if(response.errorCode == -1){
+						var errorMessage = response.errorMsg + "\n Log Reference ID : " + response.logRefId;
+						MessageService.showError(errorMessage,null);
 					}
 					
-					if(data.invalidOrders.length>0){
-						$scope.inValidOrders = data.invalidOrders;
+					if(response.invalidOrders.length>0){
+						$scope.inValidOrders = response.invalidOrders;
 						$("#UpdateResponse-modal").modal();
 					}
 	       		},

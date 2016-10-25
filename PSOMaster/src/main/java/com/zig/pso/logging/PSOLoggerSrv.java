@@ -80,11 +80,24 @@ public class PSOLoggerSrv
         }
     }
 
-    public static void printDEBUG(String infoMessage)
+    public static void printSQL_DEBUG(String ClassName, String MethodName, String logRefID,String sqlQuery, Object InputParams ,String updateStatus)
     {
         if (isDebugEnabled)
         {
-            psoLogger.debug(infoMessage);
+            StringBuffer strMessage = new StringBuffer();
+            strMessage.append("\n");
+            strMessage.append("Class Name  : " + ClassName + "  , Method Name : " + MethodName);
+            strMessage.append("\n");
+            strMessage.append("LOG_REF_ID  : " + logRefID);
+            strMessage.append("\n");
+            strMessage.append("Query       : " + sqlQuery);
+            strMessage.append("\n");
+            strMessage.append("Input Params  : "+InputParams);
+            strMessage.append("\n");
+            strMessage.append("Update Status : " + updateStatus);
+            strMessage.append("\n");
+            strMessage.append("-----------------------------------------------------------------------------------------------------");
+            psoLogger.debug(strMessage);
         }
     }
 
@@ -111,15 +124,20 @@ public class PSOLoggerSrv
         }
     }
 
-    public static void printERROR(Exception exe, String logRefID)
+    public static void printERROR(String ClassName, String MethodName, String logRefID,String sqlQuery, Object InputParams ,Exception exe)
     {
         if (isErrorEnabled)
         {
             StringBuffer strMessage = new StringBuffer();
             strMessage.append("\n");
-            strMessage.append("LOG_REF_ID : " + logRefID);
+            strMessage.append("Class Name  : " + ClassName + "  , Method Name : " + MethodName);
             strMessage.append("\n");
-            strMessage.append("-----------------------------------------------------------------------------------------------------");
+            strMessage.append("LOG_REF_ID  : " + logRefID);
+            strMessage.append("\n");
+            strMessage.append("Query       : " + sqlQuery);
+            strMessage.append("\n");
+            strMessage.append("Input Params : "+InputParams);
+            strMessage.append("\n");
             psoLogger.error(strMessage, exe);
         }
     }

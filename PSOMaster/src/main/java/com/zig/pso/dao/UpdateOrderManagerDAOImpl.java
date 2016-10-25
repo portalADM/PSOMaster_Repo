@@ -15,9 +15,11 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import com.zig.pso.constants.PSOConstants;
+import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.OrderUpdateInputData;
 import com.zig.pso.rest.bean.UpdateOrderRequestBean;
+import com.zig.pso.utility.CommonUtility;
 import com.zig.pso.utility.DBConnection;
 import com.zig.pso.utility.OrderQueries;
 
@@ -29,16 +31,12 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
 {
     private Connection portalDBConnection = null;
 
-    // private Connection ensDBConnection = null;
-
     /**
      * @param portalDBConnection
-     * @param ensDBConnection
      */
     public UpdateOrderManagerDAOImpl()
     {
         portalDBConnection = DBConnection.getPortalDBConnection();
-        // ensDBConnection = DBConnection.getENSDBConnection();
     }
 
     /*
@@ -50,30 +48,39 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
     public BaseResponseBean updateOrderStatus(UpdateOrderRequestBean updateOrderRequest)
     {
         BaseResponseBean updateOrderRes = new BaseResponseBean();
+        String logRefID = CommonUtility.getLogRefID();
+        
+        String sql = OrderQueries.updateOrderStatus();
+        
         try
         {
-            String sql = OrderQueries.updateOrderStatus();
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getNewValue());
             pstm.setString(2, updateOrderRequest.getOrderId());
             int i = pstm.executeUpdate();
             if (i < 1)
             {
-                updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
-                updateOrderRes.setErrorMsg(PSOConstants.Unsuccessful_while_updating_Info);
+                updateOrderRes.setErrorCode(PSOConstants.INFO_CODE);
+                updateOrderRes.setErrorMsg(PSOConstants.NO_ORDER_UPDATED);
+                updateOrderRes.setLogRefId(logRefID);
+                
             }
             else
             {
-                updateOrderRes = updateOrderTrack(updateOrderRequest, "ZIG_AUTO_MASTER");
+                updateOrderRes = updateOrderTrack(updateOrderRequest, "ZIG_AUTO_MASTER",logRefID);
                 updateOrderRes.setErrorCode(PSOConstants.SUCCESS_CODE);
-                updateOrderRes.setErrorMsg(PSOConstants.Successfully_updated_status);
+                updateOrderRes.setErrorMsg(PSOConstants.ORDER_UPDATE_SUCCESSFULL);
+                updateOrderRes.setLogRefId(logRefID);
             }
+            
+            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateOrderStatus", logRefID, sql,updateOrderRequest, updateOrderRes.getErrorMsg());
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
             updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
-            updateOrderRes.setErrorMsg(PSOConstants.Unsuccessful_while_updating_Info);
+            updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
+            updateOrderRes.setLogRefId(logRefID);
+            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateOrderStatus", logRefID, sql,updateOrderRequest, e);
         }
 
         return updateOrderRes;
@@ -87,26 +94,42 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
     @Override
     public BaseResponseBean updateOrderSim(UpdateOrderRequestBean updateOrderRequest)
     {
+        BaseResponseBean updateOrderRes = new BaseResponseBean();
+        String logRefID = CommonUtility.getLogRefID();
+        
+        String sql = OrderQueries.updateOrderSim();
+        
         try
         {
-            String sql = OrderQueries.updateOrderSim();
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getNewValue());
             pstm.setString(2, updateOrderRequest.getOrderId());
             int i = pstm.executeUpdate();
             if (i < 1)
             {
-                // message to be shown if not updated
+                updateOrderRes.setErrorCode(PSOConstants.INFO_CODE);
+                updateOrderRes.setErrorMsg(PSOConstants.NO_ORDER_UPDATED);
+                updateOrderRes.setLogRefId(logRefID);
             }
+            else
+            {
+                updateOrderRes = updateOrderTrack(updateOrderRequest, "ZIG_ORDER_SHIPMENT_INFO",logRefID);
+                updateOrderRes.setErrorCode(PSOConstants.SUCCESS_CODE);
+                updateOrderRes.setErrorMsg(PSOConstants.ORDER_UPDATE_SUCCESSFULL);
+                updateOrderRes.setLogRefId(logRefID);
+            }
+            
+            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateOrderSim", logRefID, sql,updateOrderRequest, updateOrderRes.getErrorMsg());
+            
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
+            updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
+            updateOrderRes.setLogRefId(logRefID);
+            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateOrderSim", logRefID, sql,updateOrderRequest, e);
         }
-        BaseResponseBean updateOrderRes = new BaseResponseBean();
-        updateOrderRes = updateOrderTrack(updateOrderRequest, "ZIG_ORDER_SHIPMENT_INFO");
-        updateOrderRes.setErrorCode(0);
-        updateOrderRes.setErrorMsg("Successfully updated sim -inside DAO");
+        
         return updateOrderRes;
 
     }
@@ -119,26 +142,42 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
     @Override
     public BaseResponseBean updateOrderImei(UpdateOrderRequestBean updateOrderRequest)
     {
+        BaseResponseBean updateOrderRes = new BaseResponseBean();
+        String logRefID = CommonUtility.getLogRefID();
+        
+        String sql = OrderQueries.updateOrderIMEI();
+        
         try
         {
-            String sql = OrderQueries.updateOrderIMEI();
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getNewValue());
             pstm.setString(2, updateOrderRequest.getOrderId());
             int i = pstm.executeUpdate();
             if (i < 1)
             {
-                // message to be shown if not updated
+                updateOrderRes.setErrorCode(PSOConstants.INFO_CODE);
+                updateOrderRes.setErrorMsg(PSOConstants.NO_ORDER_UPDATED);
+                updateOrderRes.setLogRefId(logRefID);
             }
+            else
+            {
+                updateOrderRes = updateOrderTrack(updateOrderRequest, "ZIG_ORDER_SHIPMENT_INFO",logRefID);
+                updateOrderRes.setErrorCode(PSOConstants.SUCCESS_CODE);
+                updateOrderRes.setErrorMsg(PSOConstants.ORDER_UPDATE_SUCCESSFULL);
+                updateOrderRes.setLogRefId(logRefID);
+            }
+            
+            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateOrderImei", logRefID,sql,updateOrderRequest, updateOrderRes.getErrorMsg());
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
+            updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
+            updateOrderRes.setLogRefId(logRefID);
+            
+            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateOrderImei", logRefID, sql,updateOrderRequest, e);
         }
-        BaseResponseBean updateOrderRes = new BaseResponseBean();
-        updateOrderRes = updateOrderTrack(updateOrderRequest, "ZIG_ORDER_SHIPMENT_INFO");
-        updateOrderRes.setErrorCode(0);
-        updateOrderRes.setErrorMsg("Successfully updated imei -inside DAO");
+        
         return updateOrderRes;
     }
 
@@ -150,26 +189,41 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
     @Override
     public BaseResponseBean updateOrderRetryCount(UpdateOrderRequestBean updateOrderRequest)
     {
+        BaseResponseBean updateOrderRes = new BaseResponseBean();
+        String logRefID = CommonUtility.getLogRefID();
+        
+        String sql = OrderQueries.updateOrderRetryCount();
+        
         try
         {
-            String sql = OrderQueries.updateOrderRetryCount();
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getNewValue());
             pstm.setString(2, updateOrderRequest.getOrderId());
             int i = pstm.executeUpdate();
             if (i < 1)
             {
-                // message to be shown if not updated
+                updateOrderRes.setErrorCode(PSOConstants.INFO_CODE);
+                updateOrderRes.setErrorMsg(PSOConstants.NO_ORDER_UPDATED);
+                updateOrderRes.setLogRefId(logRefID);
             }
+            else
+            {
+                updateOrderRes = updateOrderTrack(updateOrderRequest, "ZIG_AUTO_MASTER",logRefID);
+                updateOrderRes.setErrorCode(PSOConstants.SUCCESS_CODE);
+                updateOrderRes.setErrorMsg(PSOConstants.ORDER_UPDATE_SUCCESSFULL);
+                updateOrderRes.setLogRefId(logRefID);
+            }
+            
+            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateOrderRetryCount", logRefID,sql,updateOrderRequest, updateOrderRes.getErrorMsg());
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
+            updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
+            updateOrderRes.setLogRefId(logRefID);
+            
+            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateOrderRetryCount", logRefID, sql,updateOrderRequest, e);
         }
-        BaseResponseBean updateOrderRes = new BaseResponseBean();
-        updateOrderRes = updateOrderTrack(updateOrderRequest, "ZIG_AUTO_MASTER");
-        updateOrderRes.setErrorCode(0);
-        updateOrderRes.setErrorMsg("Successfully updated retry -inside DAO");
         return updateOrderRes;
     }
 
@@ -178,31 +232,42 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
      * 
      * @see com.zig.pso.dao.UpdateOrderManagerDAO#updateOrderTrack(com.zig.pso.rest.bean.UpdateOrderRequestBean)
      */
-    public BaseResponseBean updateOrderTrack(UpdateOrderRequestBean updateOrderRequest, String tablename)
+    public BaseResponseBean updateOrderTrack(UpdateOrderRequestBean updateOrderRequest, String tablename, String logRefId)
     {
+        BaseResponseBean updateOrderRes = new BaseResponseBean();
+        String sql = OrderQueries.updateOrderTrack();
+        
         try
         {
-            String sql = OrderQueries.updateOrderTrack();
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getOrderId());
             pstm.setString(2, updateOrderRequest.getType());
             pstm.setString(3, updateOrderRequest.getNewValue());
-            pstm.setString(4, "123456789");
-            pstm.setString(5, "kalir");
+            pstm.setString(4, logRefId);
+            pstm.setString(5, "admin");
             pstm.setString(6, tablename);
             int i = pstm.executeUpdate();
             if (i < 1)
             {
-                // message to be shown if not updated
+                updateOrderRes.setErrorCode(PSOConstants.INFO_CODE);
+                updateOrderRes.setErrorMsg(PSOConstants.NO_ORDER_INSERTED);
+                updateOrderRes.setLogRefId(logRefId);
             }
+            else
+            {
+                updateOrderRes.setErrorCode(PSOConstants.SUCCESS_CODE);
+                updateOrderRes.setErrorMsg(PSOConstants.ORDER_INSERT_SUCCESSFULL);
+                updateOrderRes.setLogRefId(logRefId);
+            }
+            
+            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateOrderTrack", logRefId,sql,updateOrderRequest, updateOrderRes.getErrorMsg());
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateOrderTrack", logRefId, sql,updateOrderRequest, e);
         }
-        BaseResponseBean updateOrderRes = new BaseResponseBean();
-        updateOrderRes.setErrorCode(0);
-        updateOrderRes.setErrorMsg("Successfully updated order track -inside DAO");
+        
+        
         return updateOrderRes;
 
     }
@@ -216,9 +281,12 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
     public BaseResponseBean updateBulkOrderStatus(ArrayList<OrderUpdateInputData> orderUpdateData)
     {
         BaseResponseBean updateOrderRes = new BaseResponseBean();
+        String logRefID = CommonUtility.getLogRefID();
+        
+        String sql = OrderQueries.updateOrderStatus();
+        
         try
         {
-            String sql = OrderQueries.updateOrderStatus();
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
 
             for (OrderUpdateInputData order : orderUpdateData)
@@ -233,18 +301,24 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             {
                 updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
                 updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
+                updateOrderRes.setLogRefId(logRefID);
             }
             else
             {
                 updateOrderRes.setErrorCode(PSOConstants.SUCCESS_CODE);
                 updateOrderRes.setErrorMsg(PSOConstants.BULK_UPDATE_SUCCESS);
+                updateOrderRes.setLogRefId(logRefID);
             }
+            
+            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateBulkOrderStatus", logRefID,sql,orderUpdateData, updateOrderRes.getErrorMsg());
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
             updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
             updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
+            updateOrderRes.setLogRefId(logRefID);
+            
+            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateBulkOrderStatus", logRefID, sql,orderUpdateData, e);
         }
 
         return updateOrderRes;
@@ -259,9 +333,12 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
     public BaseResponseBean updateBulkOrderSim(ArrayList<OrderUpdateInputData> orderUpdateData)
     {
         BaseResponseBean updateOrderRes = new BaseResponseBean();
+        String logRefID = CommonUtility.getLogRefID();
+        
+        String sql = OrderQueries.updateOrderSim();
+        
         try
         {
-            String sql = OrderQueries.updateOrderSim();
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
 
             for (OrderUpdateInputData order : orderUpdateData)
@@ -276,18 +353,24 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             {
                 updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
                 updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
+                updateOrderRes.setLogRefId(logRefID);
             }
             else
             {
                 updateOrderRes.setErrorCode(PSOConstants.SUCCESS_CODE);
                 updateOrderRes.setErrorMsg(PSOConstants.BULK_UPDATE_SUCCESS);
+                updateOrderRes.setLogRefId(logRefID);
             }
+            
+            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateBulkOrderSim", logRefID,sql,orderUpdateData, updateOrderRes.getErrorMsg());
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
             updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
-            updateOrderRes.setErrorMsg(PSOConstants.Unsuccessful_while_updating_Info);
+            updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
+            updateOrderRes.setLogRefId(logRefID);
+            
+            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateBulkOrderSim", logRefID, sql,orderUpdateData, e);
         }
 
         return updateOrderRes;
@@ -302,9 +385,13 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
     public BaseResponseBean updateBulkOrderImei(ArrayList<OrderUpdateInputData> orderUpdateData)
     {
         BaseResponseBean updateOrderRes = new BaseResponseBean();
+        String logRefID = CommonUtility.getLogRefID();
+        
+        String sql = OrderQueries.updateOrderIMEI();
+        
         try
         {
-            String sql = OrderQueries.updateOrderIMEI();
+            
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
 
             for (OrderUpdateInputData order : orderUpdateData)
@@ -319,18 +406,24 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             {
                 updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
                 updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
+                updateOrderRes.setLogRefId(logRefID);
             }
             else
             {
                 updateOrderRes.setErrorCode(PSOConstants.SUCCESS_CODE);
                 updateOrderRes.setErrorMsg(PSOConstants.BULK_UPDATE_SUCCESS);
+                updateOrderRes.setLogRefId(logRefID);
             }
+            
+            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateBulkOrderImei", logRefID,sql,orderUpdateData, updateOrderRes.getErrorMsg());
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
             updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
-            updateOrderRes.setErrorMsg(PSOConstants.Unsuccessful_while_updating_Info);
+            updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
+            updateOrderRes.setLogRefId(logRefID);
+            
+            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateBulkOrderImei", logRefID, sql,orderUpdateData, e);
         }
 
         return updateOrderRes;
@@ -345,9 +438,13 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
     public BaseResponseBean updateBulkOrderRetryCount(ArrayList<OrderUpdateInputData> orderUpdateData)
     {
         BaseResponseBean updateOrderRes = new BaseResponseBean();
+        String logRefID = CommonUtility.getLogRefID();
+        
+        String sql = OrderQueries.updateOrderRetryCount();
+        
         try
         {
-            String sql = OrderQueries.updateOrderRetryCount();
+            
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
 
             for (OrderUpdateInputData order : orderUpdateData)
@@ -362,18 +459,24 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             {
                 updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
                 updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
+                updateOrderRes.setLogRefId(logRefID);
             }
             else
             {
                 updateOrderRes.setErrorCode(PSOConstants.SUCCESS_CODE);
                 updateOrderRes.setErrorMsg(PSOConstants.BULK_UPDATE_SUCCESS);
+                updateOrderRes.setLogRefId(logRefID);
             }
+            
+            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateBulkOrderRetryCount", logRefID,sql,orderUpdateData, updateOrderRes.getErrorMsg());
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
             updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
-            updateOrderRes.setErrorMsg(PSOConstants.Unsuccessful_while_updating_Info);
+            updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
+            updateOrderRes.setLogRefId(logRefID);
+            
+            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateBulkOrderRetryCount", logRefID, sql,orderUpdateData, e);
         }
 
         return updateOrderRes;

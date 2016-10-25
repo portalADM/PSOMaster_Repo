@@ -1,7 +1,10 @@
 /************************************************************************************************************
- * Class Name : CommonUtility.java Description:
+ * Class Name : CommonUtility.java 
+ * Description: This class contains common utility methods for various usefull operations.
  * 
- * Author : Ankita Mishra Date : Jul 18, 2016 **********************************************************************************************************
+ * Author : Nilesh Patil
+ * Date : Jul 18, 2016 
+ * **********************************************************************************************************
  */
 package com.zig.pso.utility;
 

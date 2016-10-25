@@ -79,27 +79,39 @@ public class UpdateOrderController
             BulkUpdateInputBean orderBulkData = updateService.getUploadedFileData(file, updateType);
 
             ValidatedBulkUpdateOrderDetailsBean validatedOrders = updateService.validateUploadedData(orderBulkData);
-
-            if (updateType.equalsIgnoreCase(PSOConstants.STATUS))
+            if(validatedOrders.getValidOrderData().size()>0)
             {
-                response = updateService.updateBulkOrderStatus(validatedOrders.getValidOrderData());
+                if (updateType.equalsIgnoreCase(PSOConstants.STATUS))
+                {
+                    response = updateService.updateBulkOrderStatus(validatedOrders.getValidOrderData());
+                }
+                else if (updateType.equalsIgnoreCase(PSOConstants.SIM))
+                {
+                    response = updateService.updateBulkOrderSim(validatedOrders.getValidOrderData());
+                }
+                else if (updateType.equalsIgnoreCase(PSOConstants.IMEI))
+                {
+                    response = updateService.updateBulkOrderImei(validatedOrders.getValidOrderData());
+                }
+                else if (updateType.equalsIgnoreCase(PSOConstants.RETRY_COUNT))
+                {
+                    response = updateService.updateBulkOrderRetryCount(validatedOrders.getValidOrderData());
+                }
+                
+                bulkUpdateResponse.setErrorCode(response.getErrorCode());
+                bulkUpdateResponse.setErrorMsg(response.getErrorMsg());
+                bulkUpdateResponse.setLogRefId(response.getLogRefId());
             }
-            else if (updateType.equalsIgnoreCase(PSOConstants.SIM))
+            else
             {
-                response = updateService.updateBulkOrderSim(validatedOrders.getValidOrderData());
-            }
-            else if (updateType.equalsIgnoreCase(PSOConstants.IMEI))
-            {
-                response = updateService.updateBulkOrderImei(validatedOrders.getValidOrderData());
-            }
-            else if (updateType.equalsIgnoreCase(PSOConstants.RETRY_COUNT))
-            {
-                response = updateService.updateBulkOrderRetryCount(validatedOrders.getValidOrderData());
+                bulkUpdateResponse.setErrorCode(PSOConstants.INFO_CODE);
+                bulkUpdateResponse.setErrorMsg(PSOConstants.NO_ORDER_UPDATED);
             }
 
             bulkUpdateResponse.setInvalidOrders(validatedOrders.getInvalidOrders());
-            bulkUpdateResponse.setErrorCode(response.getErrorCode());
-            bulkUpdateResponse.setErrorMsg(response.getErrorMsg());
+
+            
+            
 
         }
         return new ResponseEntity<BaseResponseBean>(bulkUpdateResponse, HttpStatus.OK);
@@ -129,43 +141,50 @@ public class UpdateOrderController
             fileName = PSOConstants.UPDATE_RETRY_EXCEL;
         }
 
-        File file = null;
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        file = new File(classloader.getResource("sampleExcels/" + fileName).getFile());
-
-        if (!file.exists())
+        try
         {
-            String errorMessage = "Sorry. The file you are looking for does not exist";
-            System.out.println(errorMessage);
-            OutputStream outputStream = response.getOutputStream();
-            outputStream.write(errorMessage.getBytes(Charset.forName("UTF-8")));
-            outputStream.close();
-            return;
-        }
+            File file = null;
+            ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+            file = new File(classloader.getResource("sampleExcels/" + fileName).getFile());
 
-        String mimeType = URLConnection.guessContentTypeFromName(file.getName());
-        if (mimeType == null)
+            if (!file.exists())
+            {
+                String errorMessage = "Sorry. The file you are looking for does not exist";
+                System.out.println(errorMessage);
+                OutputStream outputStream = response.getOutputStream();
+                outputStream.write(errorMessage.getBytes(Charset.forName("UTF-8")));
+                outputStream.close();
+                return;
+            }
+
+            String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+            if (mimeType == null)
+            {
+                mimeType = PSOConstants.EXCEL_CONT_TYPE;
+            }
+
+            response.setContentType(mimeType);
+
+            /*
+             * "Content-Disposition : inline" will show viewable types [like images/text/pdf/anything viewable by browser] right on browser while others(zip e.g) will be directly downloaded [may provide
+             * save as popup, based on your browser setting.]
+             */
+            response.setHeader(PSOConstants.CONTENT_DISPOSITION, String.format("inline; filename=\"" + file.getName() + "\""));
+
+            /* "Content-Disposition : attachment" will be directly download, may provide save as popup, based on your browser setting */
+            // response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", file.getName()));
+
+            response.setContentLength((int) file.length());
+
+            InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+            // Copy bytes from source to destination(outputstream in this example), closes both streams.
+            FileCopyUtils.copy(inputStream, response.getOutputStream());
+        }
+        catch (Exception e)
         {
-            mimeType = PSOConstants.EXCEL_CONT_TYPE;
+            PSOLoggerSrv.printERROR("UpdateOrderController", "exportExcel", e);
         }
-
-        response.setContentType(mimeType);
-
-        /*
-         * "Content-Disposition : inline" will show viewable types [like images/text/pdf/anything viewable by browser] right on browser while others(zip e.g) will be directly downloaded [may provide
-         * save as popup, based on your browser setting.]
-         */
-        response.setHeader(PSOConstants.CONTENT_DISPOSITION, String.format("inline; filename=\"" + file.getName() + "\""));
-
-        /* "Content-Disposition : attachment" will be directly download, may provide save as popup, based on your browser setting */
-        // response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", file.getName()));
-
-        response.setContentLength((int) file.length());
-
-        InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
-
-        // Copy bytes from source to destination(outputstream in this example), closes both streams.
-        FileCopyUtils.copy(inputStream, response.getOutputStream());
 
     }
 }

@@ -79,6 +79,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
         {
             portalOrderDetail.setErrorCode(PSOConstants.INFO_CODE);
             portalOrderDetail.setErrorMsg(PSOConstants.NO_DATA);
+            PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getPortalOrderDataInfo", "No Data found in ZIG_AUTO_MASTER for Order ID : " + OrderId);
         }
 
         /* ZIG ENROLLMENT */
@@ -123,7 +124,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
     @Override
     public EnsOrderMasterResponseBean getEnsOrderDataInfo(String OrderId)
     {
-        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getEnsOrderDataInfo", "Order ID : " + OrderId);
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getEnsOrderDataInfo - Start", "Order ID : " + OrderId);
 
         EnsOrderMasterResponseBean ensOrderDetail = new EnsOrderMasterResponseBean();
         ensOrderDetail = orderDAO.getEnsembleDataInfo(OrderId);
@@ -131,6 +132,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
         {
             ensOrderDetail.setErrorCode(PSOConstants.INFO_CODE);
             ensOrderDetail.setErrorMsg(PSOConstants.NO_DATA);
+            PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getEnsOrderDataInfo - End", PSOConstants.NO_DATA);
         }
 
         return ensOrderDetail;

@@ -50,7 +50,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
     @Override
     public BaseResponseBean updateSingleOrderData(UpdateOrderRequestBean updateOrderRequest)
     {
-        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "updateSingleOrderData",null);
+        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "updateSingleOrderData","");
         
         if (updateOrderRequest.getType().equalsIgnoreCase(STATUS))
         {
@@ -63,7 +63,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
             else
             {
                 updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
-                updateOrderRes.setErrorMsg(PSOConstants.Invalid_Status_Code);
+                updateOrderRes.setErrorMsg(PSOConstants.INVALID_STATUS_CODE);
             }
             return updateOrderRes;
         }
@@ -81,7 +81,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
             else
             {
                 updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
-                updateOrderRes.setErrorMsg(PSOConstants.Invalid_Sim_Number);
+                updateOrderRes.setErrorMsg(PSOConstants.INVALID_SIM);
             }
             return updateOrderRes;
         }
@@ -98,7 +98,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
             else
             {
                 updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
-                updateOrderRes.setErrorMsg(PSOConstants.Invalid_IMEI_Number);
+                updateOrderRes.setErrorMsg(PSOConstants.INVALID_IMEI);
             }
             return updateOrderRes;
         }
@@ -113,7 +113,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
             else
             {
                 updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
-                updateOrderRes.setErrorMsg(PSOConstants.Invalid_Retry_Count);
+                updateOrderRes.setErrorMsg(PSOConstants.INVALID_RETYR_COUNT);
             }
             return updateOrderRes;
         }
@@ -226,7 +226,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            PSOLoggerSrv.printERROR("UpdateOrderManagerServiceImpl", "getUploadedFileData", e);
         }
 
         return orderBulkData;
@@ -235,6 +235,8 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
     @Override
     public ValidatedBulkUpdateOrderDetailsBean validateUploadedData(BulkUpdateInputBean orderBulkData)
     {
+        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "validateUploadedData", "");
+        
         ValidatedBulkUpdateOrderDetailsBean validatedOrderData = new ValidatedBulkUpdateOrderDetailsBean();
         List<String> invalidOrderIDs = new ArrayList<String>();
         ArrayList<OrderUpdateInputData> validOerderData = new ArrayList<OrderUpdateInputData>();
@@ -248,22 +250,18 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
             if (STATUS.equals(orderBulkData.getUpdateType()) && (null == orders.getStatus() || !orders.getStatus().matches(charOnlyRegex) || orders.getStatus().length() != 4))
             {
                 isValidOrder = false;
-                System.out.println("Not Matching " + orders.getOrderId());
             }
             else if (SIM.equals(orderBulkData.getUpdateType()) && (null == orders.getSim() || !orders.getSim().matches(numOnlyRegex) || orders.getSim().length() != 21))
             {
                 isValidOrder = false;
-                System.out.println("Not Matching " + orders.getOrderId());
             }
             else if (IMEI.equals(orderBulkData.getUpdateType()) && (null == orders.getImei() || !orders.getImei().matches(numOnlyRegex) || orders.getImei().length() != 16))
             {
                 isValidOrder = false;
-                System.out.println("Not Matching " + orders.getOrderId());
             }
             else if (RETRY_COUNT.equals(orderBulkData.getUpdateType()) && (null == orders.getRetryCount() || !orders.getRetryCount().matches(numOnlyRegex) || orders.getRetryCount().length() != 1))
             {
                 isValidOrder = false;
-                System.out.println("Not Matching " + orders.getOrderId());
             }
 
             if (isValidOrder)
@@ -274,6 +272,9 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
             isValidOrder = true;
         }
 
+        String debugMsg = "Num of Valid Orders : "+validOerderData.size()+" \nNum of Invalid Orders : "+invalidOrderIDs.size();
+        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "validateUploadedData", debugMsg);
+        
         validatedOrderData.setInvalidOrders(invalidOrderIDs);
         validatedOrderData.setOrderUpdateData(validOerderData);
         return validatedOrderData;
