@@ -84,7 +84,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                        <label for="select" class="col-lg-4 control-label textAlgnInit">New SIM</label>
-                                                       <input type="text" ng-model="newSIM" class="form-control" id="inputEmail" placeholder="SIM">
+                                                       <input type="text" ng-model="newSIM" class="form-control" id="inputEmail" placeholder="SIM" maxlength="20">
                                                 </div>
                                                 <div class="form-group">
                                                        <div class="col-lg-4"></div>
@@ -120,7 +120,7 @@
                                                 <div class="form-group">
                                                        <label for="select" class="col-lg-4 control-label textAlgnInit">New
                                                               IMEI</label>
-                                                            <input type="text" ng-model="newIMEI" class="form-control" id="inputEmail" placeholder="IMEI">
+                                                            <input type="text" ng-model="newIMEI" class="form-control" id="inputEmail" placeholder="IMEI" maxlength="15">
                                                 </div>
                                                 <div class="form-group">
                                                        <div class="col-lg-4"></div>
@@ -156,7 +156,7 @@
                                                        <label for="select" class="col-lg-4 control-label textAlgnInit">Set
                                                               Retry Count</label>
                                                        <div class="col-lg-8 noPad">
-                                                       <input type="number" ng-model="newRetry" class="form-control" id="inputEmail" placeholder="count">
+                                                       <input type="text" ng-model="newRetry" class="form-control" id="inputEmail" placeholder="count" maxlength="1">
                                                        </div>
                                                 </div>
                                                 <div class="form-group">
