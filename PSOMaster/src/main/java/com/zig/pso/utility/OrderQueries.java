@@ -29,11 +29,6 @@ public class OrderQueries
         return orderProp.getProperty("order.portalOrder");
     }
 
-    public static String getShipmentOrderData()
-    {
-        return orderProp.getProperty("order.shipOrder");
-    }
-
     public static String getEnsembleOrderData()
     {
         return orderProp.getProperty("order.ensembleOrder");
@@ -111,11 +106,36 @@ public class OrderQueries
 
     public static String getOrderBANandCTN()
     {
-        return orderProp.getProperty("order.getOrderBTNandCTN");
+        return orderProp.getProperty("order.getOrderBANandCTN");
     }
 
     public static String getEnrollment()
     {
         return orderProp.getProperty("order.getEnrollmentDetails");
+    }
+    
+    public static String getPortalLineItemInfoSQL()
+    {
+        return orderProp.getProperty("order.getPortalLineItemInfo");
+    }
+    
+    public static String getEnsLineItemInfoSQL()
+    {
+        return orderProp.getProperty("order.getEnsLineItemInfo");
+    }
+    
+    public static String getPortalPortinInfoSQL()
+    {
+        return orderProp.getProperty("order.getPortalPortinDetails");
+    }
+    
+    public static String getEnsPortinInfoSQL()
+    {
+        return orderProp.getProperty("order.getEnsPortinDetails");
+    }
+    
+    public static String getPortalShipmentInfoSQL()
+    {
+        return orderProp.getProperty("order.getPortalShipmentDetails");
     }
 }

@@ -17,8 +17,13 @@ import com.zig.pso.dao.OrderInfoManagerDAO;
 import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
+import com.zig.pso.rest.bean.EnsOrderPortRequestBean;
+import com.zig.pso.rest.bean.EnsembleLineItemInfoBean;
+import com.zig.pso.rest.bean.OrderPortInDetailsResponseBean;
 import com.zig.pso.rest.bean.PortalEnrollmentInfo;
+import com.zig.pso.rest.bean.PortalLineItemInfoBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
+import com.zig.pso.rest.bean.PortalOrderPortRequestBean;
 import com.zig.pso.rest.bean.PortalShipmentInfo;
 import com.zig.pso.rest.bean.PortalShipmentInfoForUI;
 import com.zig.pso.utility.CommonUtility;
@@ -105,10 +110,20 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
             String orderTypeString = commonUtil.getOrderType(type);
             portalOrderDetail.setOrderType(orderTypeString);
         }
+        
+        /* ZIG LINEITEM INFO */
+        ArrayList<PortalLineItemInfoBean> lineItemList = orderDAO.getPortalLineItemInfo(OrderId);
+        if(lineItemList!=null && lineItemList.size()>0){
+            portalOrderDetail.setPortalLineItemList(lineItemList);
+        }
 
+        /* ZIG SHIPMENT INFO */
         if (portalOrderDetail.getOrderId() != null)
         {
-            PortalShipmentInfoForUI shipmentInfoFromDb = getPortalShipmentInfo(OrderId);
+            //PortalShipmentInfoForUI shipmentInfoFromDb = getPortalShipmentInfo(OrderId);
+            //portalOrderDetail.setPortalShipmentInfo(shipmentInfoFromDb);
+            
+            ArrayList<PortalShipmentInfo> shipmentInfoFromDb = orderDAO.getPortalShipmentInfoFromDB(OrderId);
             portalOrderDetail.setPortalShipmentInfo(shipmentInfoFromDb);
         }
 
@@ -122,17 +137,25 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
      * @see com.zig.pso.service.OrderInfoManagerService#getEnsOrderDataInfo(java.lang.String)
      */
     @Override
-    public EnsOrderMasterResponseBean getEnsOrderDataInfo(String OrderId)
+    public EnsOrderMasterResponseBean getEnsOrderDataInfo(String orderId)
     {
-        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getEnsOrderDataInfo - Start", "Order ID : " + OrderId);
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getEnsOrderDataInfo - Start", "Order ID : " + orderId);
 
         EnsOrderMasterResponseBean ensOrderDetail = new EnsOrderMasterResponseBean();
-        ensOrderDetail = orderDAO.getEnsembleDataInfo(OrderId);
+        ensOrderDetail = orderDAO.getEnsembleDataInfo(orderId);
         if (ensOrderDetail.getensOrderId()==null && ensOrderDetail.getErrorCode()!=PSOConstants.ERROR_CODE)
         {
             ensOrderDetail.setErrorCode(PSOConstants.INFO_CODE);
             ensOrderDetail.setErrorMsg(PSOConstants.NO_DATA);
             PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getEnsOrderDataInfo - End", PSOConstants.NO_DATA);
+        }
+        else
+        {
+            ArrayList<EnsembleLineItemInfoBean> ensLineItemList = orderDAO.getEnsLineItemInfo(orderId);
+            if(ensLineItemList!=null && ensLineItemList.size()>0)
+            {
+                ensOrderDetail.setEnsLineItemList(ensLineItemList);
+            }
         }
 
         return ensOrderDetail;
@@ -246,5 +269,46 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
         PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getAPIRequestBody", "Seq_number : " + seq_number);
 
         return orderDAO.getAPIRequestBody(seq_number);
+    }
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.service.OrderInfoManagerService#getPortalOrderPortDetails(java.lang.String)
+     */
+    @Override
+    public OrderPortInDetailsResponseBean getPortalOrderPortDetails(String OrderId)
+    {
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getPortalOrderPortDetails - Start", "Order ID : " + OrderId);
+        OrderPortInDetailsResponseBean portDetails = new OrderPortInDetailsResponseBean();
+        
+        /*Portal Port-in Details*/
+        ArrayList<PortalOrderPortRequestBean> portData = orderDAO.getPortalOrderPortDetails(OrderId);
+        if(portData!=null && portData.size()>0)
+        {
+            portDetails.setErrorCode(PSOConstants.SUCCESS_CODE);
+            portDetails.setPortalPortReqDetailsList(portData);
+        }
+        else
+        {
+            portDetails.setErrorCode(PSOConstants.INFO_CODE);
+            portDetails.setErrorMsg(PSOConstants.NO_DATA);
+            PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getPortalOrderPortDetails - End", PSOConstants.NO_DATA);
+        }
+        
+        
+        /*Ensemble Port-in Details*/
+        ArrayList<EnsOrderPortRequestBean> ensPortDetails = orderDAO.getEnsOrderPortDetails(OrderId);
+        if(ensPortDetails!=null && ensPortDetails.size()>0)
+        {
+            portDetails.setErrorCode(PSOConstants.SUCCESS_CODE);
+            portDetails.setEnsPortReqDetailsList(ensPortDetails);
+        }
+        else
+        {
+            portDetails.setErrorCode(PSOConstants.INFO_CODE);
+            portDetails.setErrorMsg(PSOConstants.NO_DATA);
+            PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getPortalOrderPortDetails - End", PSOConstants.NO_DATA);
+        }
+        
+        return portDetails;
     }
 }

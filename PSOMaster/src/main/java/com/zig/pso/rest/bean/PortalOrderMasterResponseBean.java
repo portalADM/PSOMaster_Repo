@@ -1,21 +1,18 @@
 /************************************************************************************************************
- * Class Name : PortalOrderMasterResponseBean.java Description: Author : Ankita Mishra Date : Jun 29, 2016
+ * Class Name : PortalOrderMasterResponseBean.java 
+ * Description: 
+ * Author : Ankita Mishra 
+ * Date : Jun 29, 2016
  * **********************************************************************************************************
  */
 package com.zig.pso.rest.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-/************************************************************************************************************
- * Class Name : PortalOrderMasterResponseBean.java Description: This Response bean for Get Portal order details rest Service Author : Ankita Mishra Date : Jun 29, 2016
- * **********************************************************************************************************
- */
 public class PortalOrderMasterResponseBean extends BaseResponseBean implements Serializable
 {
-
-    /**
-     * 
-     */
     private static final long serialVersionUID = -9173854076277065361L;
     private java.lang.String orderId;
     private java.lang.String status;
@@ -28,7 +25,27 @@ public class PortalOrderMasterResponseBean extends BaseResponseBean implements S
     private java.lang.String ptn;
     private PortalEnrollmentInfo enrollInfo;
 
-    private PortalShipmentInfoForUI portalShipmentInfo;
+    //private PortalShipmentInfoForUI portalShipmentInfo;
+    
+    private ArrayList<PortalShipmentInfo> portalShipmentInfo;
+    
+    /**
+     * @return the portalShipmentInfo
+     */
+    public ArrayList<PortalShipmentInfo> getPortalShipmentInfo()
+    {
+        return portalShipmentInfo;
+    }
+
+    /**
+     * @param portalShipmentInfo the portalShipmentInfo to set
+     */
+    public void setPortalShipmentInfo(ArrayList<PortalShipmentInfo> portalShipmentInfo)
+    {
+        this.portalShipmentInfo = portalShipmentInfo;
+    }
+
+    private List<PortalLineItemInfoBean> portalLineItemList;
 
     public java.lang.String getOrderId()
     {
@@ -125,15 +142,15 @@ public class PortalOrderMasterResponseBean extends BaseResponseBean implements S
         return serialVersionUID;
     }
 
-    public PortalShipmentInfoForUI getPortalShipmentInfo()
-    {
-        return portalShipmentInfo;
-    }
-
-    public void setPortalShipmentInfo(PortalShipmentInfoForUI portalShipmentInfo)
-    {
-        this.portalShipmentInfo = portalShipmentInfo;
-    }
+//    public PortalShipmentInfoForUI getPortalShipmentInfo()
+//    {
+//        return portalShipmentInfo;
+//    }
+//
+//    public void setPortalShipmentInfo(PortalShipmentInfoForUI portalShipmentInfo)
+//    {
+//        this.portalShipmentInfo = portalShipmentInfo;
+//    }
 
     public PortalEnrollmentInfo getEnrollInfo()
     {
@@ -145,13 +162,25 @@ public class PortalOrderMasterResponseBean extends BaseResponseBean implements S
         this.enrollInfo = enrollInfo;
     }
 
-    @Override
-    public String toString()
+    /**
+     * @return the portalLineItemList
+     */
+    public List<PortalLineItemInfoBean> getPortalLineItemList()
     {
-        return "PortalOrderMasterResponseBean [orderId=" + orderId + ", status=" + status + ", sys_creation_date=" + sys_creation_date + ", sys_update_date=" + sys_update_date + ", originatorId="
-                + originatorId + ", retry=" + retry + ", OrderType=" + OrderType + ", ban=" + ban + ", ptn=" + ptn + ", enrollInfo=" + enrollInfo + ", portalShipmentInfo=" + portalShipmentInfo + "]";
+        return portalLineItemList;
     }
 
+    /**
+     * @param portalLineItemList the portalLineItemList to set
+     */
+    public void setPortalLineItemList(List<PortalLineItemInfoBean> portalLineItemList)
+    {
+        this.portalLineItemList = portalLineItemList;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
     @Override
     public int hashCode()
     {
@@ -162,6 +191,7 @@ public class PortalOrderMasterResponseBean extends BaseResponseBean implements S
         result = prime * result + ((enrollInfo == null) ? 0 : enrollInfo.hashCode());
         result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
         result = prime * result + ((originatorId == null) ? 0 : originatorId.hashCode());
+        result = prime * result + ((portalLineItemList == null) ? 0 : portalLineItemList.hashCode());
         result = prime * result + ((portalShipmentInfo == null) ? 0 : portalShipmentInfo.hashCode());
         result = prime * result + ((ptn == null) ? 0 : ptn.hashCode());
         result = prime * result + ((retry == null) ? 0 : retry.hashCode());
@@ -171,6 +201,9 @@ public class PortalOrderMasterResponseBean extends BaseResponseBean implements S
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
     @Override
     public boolean equals(Object obj)
     {
@@ -216,6 +249,13 @@ public class PortalOrderMasterResponseBean extends BaseResponseBean implements S
         }
         else if (!originatorId.equals(other.originatorId))
             return false;
+        if (portalLineItemList == null)
+        {
+            if (other.portalLineItemList != null)
+                return false;
+        }
+        else if (!portalLineItemList.equals(other.portalLineItemList))
+            return false;
         if (portalShipmentInfo == null)
         {
             if (other.portalShipmentInfo != null)
@@ -260,5 +300,19 @@ public class PortalOrderMasterResponseBean extends BaseResponseBean implements S
             return false;
         return true;
     }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return "PortalOrderMasterResponseBean [orderId=" + orderId + ", status=" + status + ", sys_creation_date=" + sys_creation_date + ", sys_update_date=" + sys_update_date + ", originatorId="
+                + originatorId + ", retry=" + retry + ", OrderType=" + OrderType + ", ban=" + ban + ", ptn=" + ptn + ", enrollInfo=" + enrollInfo + ", portalShipmentInfo=" + portalShipmentInfo
+                + ", portalLineItemList=" + portalLineItemList + "]";
+    }
+
+  
+   
 
 }

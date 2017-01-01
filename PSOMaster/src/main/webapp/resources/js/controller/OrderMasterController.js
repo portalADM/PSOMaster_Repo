@@ -8,7 +8,6 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	$scope.ensembleOrderDetails = {};
 	$scope.apiOrderDetails= {};
 	
-	
 	/*
 	 * Method that calls Order Service to get Portal and Ensemble Order Details 
 	 */
@@ -37,6 +36,64 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 		MessageService.showWarning('This is Warning Message',8000);*/
 	}
 	
+	/*
+	 * Method that calls Order Service to get Port status for the selected line
+	 */
+	$scope.getPortStatus = function(){
+		$scope.portalOrderPortInDetails = [];
+		$scope.ensOrderPortInDetails = [];
+		
+		var anyPortInLineAvailable = checkForPortInLines();
+		
+		if(anyPortInLineAvailable)
+		{
+			$("#orderPortDetails-modal").modal();
+			
+			OrderService.getPortInStatus($scope.orderID).then(
+					function(response) {
+						if(response.errorCode==0){
+							$scope.portalOrderPortInDetails = response.portalPortReqDetailsList;
+							if(response.ensPortReqDetailsList!=null)
+								$scope.ensOrderPortInDetails = response.ensPortReqDetailsList;
+						}
+						else if(response.errorCode==1)
+							MessageService.showInfo('No Portal Port In details found.',5000);
+						else if(response.errorCode==-1)
+							MessageService.showError(response.errorMsg,5000);
+						
+		       		},
+			        function(errResponse){
+		       			MessageService.showError(errResponse,5000);
+			        }
+			);
+		}
+		else
+		{
+			MessageService.showInfo('No Port-In line available for this Order',5000);
+		}
+	}
+	
+	function checkForPortInLines(){
+		
+		if($scope.portalOrderDetails.portalLineItemList==null)
+			return false;
+		
+		var keepChecking = true;
+		var anyPortInLinePresent = false;
+		angular.forEach($scope.portalOrderDetails.portalLineItemList,function(obj,index){
+			if(keepChecking)
+			{
+				if(obj.lineType === 'PORTIN')
+				{
+					keepChecking = false;
+					anyPortInLinePresent = true;
+				}
+			}	
+        })
+		
+		return anyPortInLinePresent;
+	}
+	
 	
 	/*
 	 * Method that calls Order Service to get Portal Order Details 
@@ -46,8 +103,9 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 		OrderService.getPortalOrderDetails(orderID).then(
 				function(response) {
 					
-					if(response.errorCode==0)
+					if(response.errorCode==0){
 						$scope.portalOrderDetails = response;
+					}	
 					else if(response.errorCode==1)
 						MessageService.showInfo('No Portal Order details found.',5000);
 					else if(response.errorCode==-1)
@@ -68,8 +126,10 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 		$scope.apiOrderDetails = [];
 		OrderService.getPortalAPIDetails(orderID).then(
 				function(response){
-					if(response.errorCode==0)
+					if(response.errorCode==0){
 						$scope.apiOrderDetails=response.orderAPIList;
+						
+					}	
 					else if(response.errorCode==1)
 						MessageService.showInfo('No API Details found.',5000);
 					else if(response.errorCode==-1)
@@ -112,11 +172,10 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	
 	$scope.orderAPIReqBody = null;
 	$scope.getAPIRequest = function(seq_number){
-		alert(seq_number);
 		OrderService.getOrderAPIRequest(seq_number).then(
 				function(response) {
 					document.getElementById("myApiReqBody").innerHTML=response;
-					$scope.orderAPIReqBody  = JSON.stringify(d, undefined, 4);
+					$scope.orderAPIReqBody  = JSON.stringify(response, undefined, 4);
 					$("#orderApiReqBody-modal").modal();
 	       		},
 		        function(errResponse){

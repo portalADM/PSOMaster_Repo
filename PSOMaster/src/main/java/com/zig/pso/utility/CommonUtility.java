@@ -36,6 +36,14 @@ public class CommonUtility
         {
             orderType = "Byod Order";
         }
+        else if (type == 400)
+        {
+            orderType = "SaveDesk Order";
+        }
+        else if (type == 500)
+        {
+            orderType = "MultiLine Order";
+        }
 
         return orderType;
     }

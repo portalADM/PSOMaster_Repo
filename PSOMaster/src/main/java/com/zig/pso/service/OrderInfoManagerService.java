@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
+import com.zig.pso.rest.bean.OrderPortInDetailsResponseBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalShipmentInfoForUI;
 
@@ -47,4 +48,10 @@ public interface OrderInfoManagerService
      * @return String
      */
     public String getAPIRequestBody(String seq_number);
+    
+    /**
+     * @param OrderId
+     * @return
+     */
+    public OrderPortInDetailsResponseBean getPortalOrderPortDetails(String OrderId);
 }

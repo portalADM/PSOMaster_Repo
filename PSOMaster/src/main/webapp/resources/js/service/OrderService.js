@@ -77,4 +77,22 @@ module.service('OrderService', function($http,$q) {
 		
 	}
 	
+	
+	/*
+	 *Service Method that will fetch order's Port-in status
+	 * 
+	 */
+	this.getPortInStatus = function(orderID){
+		
+		return $http.get('getPortInDetails/'+orderID)
+		.then(
+				function(response){
+					return response.data;
+				}, 
+				function(errResponse){
+					return $q.reject(errResponse);
+				}
+		);
+	}
+	
 });

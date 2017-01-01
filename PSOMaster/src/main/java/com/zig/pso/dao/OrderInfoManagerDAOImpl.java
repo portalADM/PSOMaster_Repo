@@ -19,9 +19,13 @@ import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
+import com.zig.pso.rest.bean.EnsOrderPortRequestBean;
+import com.zig.pso.rest.bean.EnsembleLineItemInfoBean;
 import com.zig.pso.rest.bean.OrderAPIDetailsBean;
 import com.zig.pso.rest.bean.PortalEnrollmentInfo;
+import com.zig.pso.rest.bean.PortalLineItemInfoBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
+import com.zig.pso.rest.bean.PortalOrderPortRequestBean;
 import com.zig.pso.rest.bean.PortalShipmentInfo;
 import com.zig.pso.utility.DBConnection;
 import com.zig.pso.utility.OrderQueries;
@@ -152,8 +156,6 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             {
                 ensOrderlist.setensOrderId(rs.getString("ENS_ORDER_OID"));
                 ensOrderlist.setOrderStatus(rs.getString("ORDER_STATUS"));
-                ensOrderlist.setPtn(rs.getString("PTN"));
-                ensOrderlist.setPtnStatus(rs.getString("PTN_STATUS"));
                 ensOrderlist.setBan(rs.getString("BAN"));
                 ensOrderlist.setApplicationId(rs.getString("APPLICATION_ID"));
                 ensOrderlist.setSys_creation_date(rs.getString("SYS_CREATION_DATE"));
@@ -181,7 +183,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
     {
         ArrayList<PortalShipmentInfo> portalShipArrlist = new ArrayList<PortalShipmentInfo>();
 
-        String shipSql = "SELECT ORDER_ID,EPC_SKU_ID,PRODUCT_TYPE,ESN_NO,IMEI as YONUMBER,SIM,SHIPMENT_DATE FROM ZIG_ORDER_SHIPMENT_INFO WHERE ORDER_ID = ?";
+        String shipSql = OrderQueries.getPortalShipmentInfoSQL();
 
         try
         {
@@ -192,11 +194,13 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             {
                 PortalShipmentInfo portalShiplist = new PortalShipmentInfo();
                 portalShiplist.setEpc_sku_id(rs.getString("EPC_SKU_ID"));
-                portalShiplist.setImei(rs.getString("YONUMBER"));
+                portalShiplist.setImei(rs.getString("IMEI"));
                 portalShiplist.setProduct_type(rs.getString("PRODUCT_TYPE"));
                 portalShiplist.setEsn_number(rs.getString("ESN_NO"));
                 portalShiplist.setShipment_date(rs.getString("SHIPMENT_DATE"));
                 portalShiplist.setSim(rs.getString("SIM"));
+                portalShiplist.setLineItemNo(rs.getString("LINE_ITEM_NO"));
+                portalShiplist.setDeviceDisplayName(rs.getString("DISPLAY_NAME"));
                 portalShipArrlist.add(portalShiplist);
             }
         }
@@ -439,5 +443,193 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
 
         return enrollInfo;
+    }
+
+    /* 
+     * ZIG_LINEITEM_INFO
+     */
+    @Override
+    public ArrayList<PortalLineItemInfoBean> getPortalLineItemInfo(String orderId)
+    {
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getPortalLineItemInfo", "Order ID : " + orderId);
+
+        ArrayList<PortalLineItemInfoBean> lineItemsList = new ArrayList<PortalLineItemInfoBean>(); 
+        PortalLineItemInfoBean lineItem = null;
+
+        String sql = OrderQueries.getPortalLineItemInfoSQL();
+
+        try
+        {
+            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm.setString(1, orderId);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next())
+            {
+                lineItem = new PortalLineItemInfoBean();
+                lineItem.setImei(rs.getString("IMEI"));
+                lineItem.setLineId(rs.getString("LINE_ID"));
+                lineItem.setLineType(rs.getString("LINE_TYPE"));
+                lineItem.setOrderId(rs.getString("ORDER_ID"));
+                lineItem.setPurchseDeviceCalled(getBooleanForServiceCall(rs.getString("PURCHASE_DEVICE_CALLED")));
+                lineItem.setSubFlowType(rs.getString("SUB_FLOW_TYPE"));
+                lineItem.setSubscriberId(rs.getString("SUBSCRIBER_ID"));
+                lineItem.setUpdateSubCalled(getBooleanForServiceCall(rs.getString("UPDATE_SUB_CALLED")));
+                lineItem.setWirelessNumber(rs.getString("WIRELESS_NUMBER"));
+                lineItem.setZipCode(rs.getString("ZIP_CODE"));
+                lineItemsList.add(lineItem);
+            }
+        }
+        catch (SQLException e)
+        {
+            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getPortalLineItemInfo", e);
+        }
+
+        if (lineItemsList == null || lineItemsList.size()==0)
+        {
+            PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getPortalLineItemInfo", PSOConstants.NO_DATA);
+        }
+
+        return lineItemsList;
+    }
+    
+    
+    public boolean getBooleanForServiceCall(String value)
+    {
+        if("1".equals(value))
+            return true;
+        else 
+            return false;
+    }
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.dao.OrderInfoManagerDAO#getEnsLineItemInfo(java.lang.String)
+     */
+    @Override
+    public ArrayList<EnsembleLineItemInfoBean> getEnsLineItemInfo(String orderId)
+    {
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getEnsLineItemInfo", "Order ID : " + orderId);
+
+        ArrayList<EnsembleLineItemInfoBean> enslineItemsList = new ArrayList<EnsembleLineItemInfoBean>(); 
+        EnsembleLineItemInfoBean lineItem = null;
+
+        String sql = OrderQueries.getEnsLineItemInfoSQL();
+        
+        try
+        {
+            PreparedStatement pstm = ensDBConnection.prepareStatement(sql);
+            pstm.setString(1, orderId);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next())
+            {
+                lineItem = new EnsembleLineItemInfoBean();
+                lineItem.setAccountNo(rs.getString("BAN"));
+                lineItem.setApplicationId(rs.getString("APPLICATION_ID"));
+                lineItem.setImei(rs.getString("IMEI_SIM"));
+                lineItem.setOrderid(rs.getString("ORDER_OID"));
+                lineItem.setPtn(rs.getString("PTN"));
+                lineItem.setPtnStatus(rs.getString("PTN_STATUS"));
+                lineItem.setSim(rs.getString("ICC_ID"));
+                lineItem.setSublineStatus(rs.getString("SUBLINE_STATUS"));
+                lineItem.setSubscriberNo(rs.getString("SUBSCRIBER_NO"));
+                enslineItemsList.add(lineItem);
+            }
+        }
+        catch (SQLException e)
+        {
+            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getEnsLineItemInfo", e);
+        }
+
+        if (enslineItemsList == null || enslineItemsList.size()==0)
+        {
+            PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getEnsLineItemInfo", PSOConstants.NO_DATA);
+        }
+
+        return enslineItemsList;
+    }
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.dao.OrderInfoManagerDAO#getPortalOrderPortDetails(java.lang.String)
+     */
+    @Override
+    public ArrayList<PortalOrderPortRequestBean> getPortalOrderPortDetails(String orderId)
+    {
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getPortalOrderPortDetails", "Order ID : " + orderId);
+
+        ArrayList<PortalOrderPortRequestBean> portItemList = new ArrayList<PortalOrderPortRequestBean>(); 
+        PortalOrderPortRequestBean portLine = null;
+
+        String sql = OrderQueries.getPortalPortinInfoSQL();
+
+        try
+        {
+            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm.setString(1, orderId);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next())
+            {
+                portLine = new PortalOrderPortRequestBean();
+                portLine.setLineId(rs.getString("LINE_ID"));
+                portLine.setOrderId(rs.getString("ORDER_ID"));
+                portLine.setPortStatus(rs.getString("PORTIN_STATUS"));
+                portLine.setSpName(rs.getString("SPNAME"));
+                portLine.setTransberNumber(rs.getString("NUMBER_TO_TRANSFER"));
+                portItemList.add(portLine);
+            }
+        }
+        catch (SQLException e)
+        {
+            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getPortalOrderPortDetails", e);
+        }
+
+        if (portItemList == null || portItemList.size()==0)
+        {
+            PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getPortalOrderPortDetails", PSOConstants.NO_DATA);
+        }
+
+        return portItemList;
+    }
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.dao.OrderInfoManagerDAO#getEnsOrderPortDetails(java.lang.String)
+     */
+    @Override
+    public ArrayList<EnsOrderPortRequestBean> getEnsOrderPortDetails(String orderId)
+    {
+        PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getEnsOrderPortDetails", "Order ID : " + orderId);
+
+        ArrayList<EnsOrderPortRequestBean> portItemList = new ArrayList<EnsOrderPortRequestBean>(); 
+        EnsOrderPortRequestBean portLine = null;
+
+        String sql = OrderQueries.getEnsPortinInfoSQL();
+
+        try
+        {
+            PreparedStatement pstm = ensDBConnection.prepareStatement(sql);
+            pstm.setString(1, orderId);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next())
+            {
+                portLine = new EnsOrderPortRequestBean();
+                portLine.setAccountNo(rs.getString("BAN"));
+                portLine.setExternalReqNo(rs.getString("EXTERNAL_REQ_NO"));
+                portLine.setPortType(rs.getString("PORT_PATH"));
+                portLine.setPtn(rs.getString("PTN_NO"));
+                portLine.setRequestNo(rs.getString("REQUEST_NO"));
+                portLine.setRequestStatus(rs.getString("REQUEST_STS"));
+                portLine.setStatusDesc(rs.getString("STATUS_DESC"));
+                portItemList.add(portLine);
+            }
+        }
+        catch (SQLException e)
+        {
+            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getEnsOrderPortDetails", e);
+        }
+
+        if (portItemList == null || portItemList.size()==0)
+        {
+            PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getEnsOrderPortDetails", PSOConstants.NO_DATA);
+        }
+
+        return portItemList;
     }
 }

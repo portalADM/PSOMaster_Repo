@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
+import com.zig.pso.rest.bean.OrderPortInDetailsResponseBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 import com.zig.pso.service.OrderInfoManagerService;
 
@@ -81,6 +82,18 @@ public class OrderMasterController
 
         String data = orderService.getAPIRequestBody(seq_number);
         return new ResponseEntity<String>(data, HttpStatus.OK);
+    }
+    
+    /**
+     * This Method provides order Port in Details
+     */
+    @RequestMapping(value = "/getPortInDetails/{id}", method = RequestMethod.GET)
+    public ResponseEntity<OrderPortInDetailsResponseBean> getPortinDetails(@PathVariable("id") String orderId)
+    {
+        PSOLoggerSrv.printDEBUG("OrderMasterController", "getPortinDetails", "orderId : " + orderId);
+
+        OrderPortInDetailsResponseBean portData = orderService.getPortalOrderPortDetails(orderId);
+        return new ResponseEntity<OrderPortInDetailsResponseBean>(portData, HttpStatus.OK);
     }
 
 }
