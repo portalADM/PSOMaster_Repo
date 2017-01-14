@@ -1,4 +1,4 @@
-module.controller("DashboardController", function($scope, $routeParams,$http,DashboardService) {
+module.controller("DashboardController", function($scope, $routeParams,$http,DashboardService,$rootScope) {
 	
 	$scope.title = "Dashboard";
 	
@@ -47,8 +47,10 @@ module.controller("DashboardController", function($scope, $routeParams,$http,Das
 	  
 	$scope.init=function()
 	{
+		$rootScope.spinner.on();
 		DashboardService.getStuckOrderCount().then(
 				function(data) {
+					$rootScope.spinner.off()
 					$scope.stuckOrderDetails= data.stuckOrderList;
 	       		},
 		       function(errResponse){

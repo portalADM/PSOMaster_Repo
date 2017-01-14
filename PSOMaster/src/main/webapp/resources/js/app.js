@@ -1,4 +1,4 @@
-var module = angular.module("PSOMaster", [ 'ngRoute','ngSanitize','chart.js','ngFlash','ngAnimate', 'ui.bootstrap']);
+var module = angular.module("PSOMaster", [ 'ngRoute','ngSanitize','chart.js','ngFlash','ngAnimate', 'ui.bootstrap','treasure-overlay-spinner']);
 
 module.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/dashboard', {
@@ -33,3 +33,19 @@ module.config([ '$routeProvider', function($routeProvider) {
 		redirectTo : '/dashboard'
 	});
 } ]);
+
+
+module.run(run);
+
+run.$inject = ['$rootScope'];
+function run ($rootScope) {
+	 $rootScope.spinner = {
+		        active: false,
+		        on: function () {
+		          this.active = true;
+		        },
+		        off: function () {
+		          this.active = false;
+		        }
+		      };
+}

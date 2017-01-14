@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="resources/css/bootswatch.min.css" media="screen">
 <link rel="stylesheet" href="resources/css/psoStyle.css" media="screen">
 <link rel="stylesheet" href="resources/css/angular-flash.css" media="screen">
+<link rel="stylesheet" href="resources/js/libs/loadMask/treasure-overlay-spinner.css" media="screen">
+
 </head>
 <body ng-app="PSOMaster">
 	<div class="navbar navbar-default navbar-fixed-top">
@@ -43,11 +45,12 @@
 		</div>
 	</div>
 
-
+	<treasure-overlay-spinner active='spinner.active'>
 	<div class="container">
 		<div ng-view></div>
 	</div>
-
+    </treasure-overlay-spinner> 
+    
 	<!-- Application Libreries Import -->
 	<script src="resources/js/libs/jquery/jquery-1.10.2.min.js"></script>
 	<script src="resources/js/libs/angularjs/angular.min.js"></script>
@@ -62,7 +65,8 @@
 	<script src="resources/js/libs/charts/Chart.js"></script>
 	<script src="resources/js/libs/charts/angular-chart.js"></script>
 	<script src="resources/js/libs/utils/xml2json.js"></script>
-
+	<script src="resources/js/libs/loadMask/treasure-overlay-spinner.js"></script>
+	
 	<!-- Application Modules Controller Import -->
 	<script src="resources/js/app.js"></script>
 	<script src="resources/js/controller/DashboardController.js"></script>

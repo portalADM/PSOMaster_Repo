@@ -1,4 +1,4 @@
-module.controller("OrderMasterController", function($scope, $routeParams,$http,OrderService,MessageService,AppDataService) {
+module.controller("OrderMasterController", function($scope, $routeParams,$http,OrderService,MessageService,AppDataService,$rootScope) {
 	
 	$scope.title = "Order Master";
 	
@@ -12,6 +12,7 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	 * Method that calls Order Service to get Portal and Ensemble Order Details 
 	 */
 	$scope.searchOrderDetails = function(){
+		$rootScope.spinner.on();
 		
 		var orderID = $scope.orderID;
 		
@@ -102,7 +103,7 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 		$scope.portalOrderDetails = [];
 		OrderService.getPortalOrderDetails(orderID).then(
 				function(response) {
-					
+					$rootScope.spinner.off();
 					if(response.errorCode==0){
 						$scope.portalOrderDetails = response;
 					}	
@@ -113,6 +114,7 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 					
 	       		},
 		        function(errResponse){
+	       			$rootScope.spinner.off();
 	       			MessageService.showError(errResponse,5000);
 		        }
 		);
