@@ -49,11 +49,11 @@
       </div>
       
        <div class="">
-              <h3 id="tables">Stuck Orders Statistics</h3>
-            </div>
+         <h3 id="tables">Stuck Orders Statistics</h3>
+       </div>
       
       <div class="row" class="col-lg-12">
-      	 <div class="panel panel-info col-lg-6">
+      	 <div class="panel panel-info col-lg-12">
           <div class="panel-heading">
             <h3 class="panel-title">Stuck Order backlogs in last 10 Days</h3>
           </div>
@@ -61,10 +61,15 @@
 			 <canvas id="bar" class="chart chart-bar"
 			  chart-data="dataBar" chart-labels="labelsBar"> chart-series="seriesBar"
 			</canvas>
-			
+			<table class="marTop20">
+				<tbody><tr><td ng-repeat="st in seriesBar" ><span style="color: {{seriesColors[seriesBar.indexOf(st)]}}" class="glyphicon glyphicon-stop  marLeft40 marRight5"></span>{{st}}</td></tr></tbody>
+			</table>
           </div>
         </div>
-        
+      </div>
+      
+      
+      <div class="row" class="col-lg-12">
         <div class="panel panel-info  col-lg-6">
           <div class="panel-heading">
             <h3 class="panel-title">Stuck Orders handled in Last 10 Days</h3>
@@ -75,10 +80,8 @@
 			</canvas> 
           </div>
         </div>
-      </div>
-      
-       <div class="row" class="col-lg-12">
-      	 <div class="panel panel-info col-lg-6">
+        
+         <div class="panel panel-info col-lg-6">
           <div class="panel-heading">
             <h3 class="panel-title">Orders stuck in different statuses</h3>
           </div>
@@ -88,7 +91,9 @@
 			</canvas>
           </div>
         </div>
-        
+      </div>
+      
+      <!--  <div class="row" class="col-lg-12">
         <div class="panel panel-info col-lg-6">
           <div class="panel-heading">
             <h3 class="panel-title">Orders stuck due to failure from Third Parties in last 10 Days</h3>
@@ -99,7 +104,7 @@
 			chart-dataset-override="datasetOverride" chart-click="onClick"></canvas>
           </div>
         </div>
-      </div>
+      </div> -->
       
 </body>
 </html>

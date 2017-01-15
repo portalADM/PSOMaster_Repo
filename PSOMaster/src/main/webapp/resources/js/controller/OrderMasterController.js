@@ -12,11 +12,11 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	 * Method that calls Order Service to get Portal and Ensemble Order Details 
 	 */
 	$scope.searchOrderDetails = function(){
-		$rootScope.spinner.on();
 		
 		var orderID = $scope.orderID;
 		
 		if(orderID != undefined && orderID.length>0){
+			$rootScope.spinner.on();
 			// Get Portal Order Details
 			getPortalOrderDetails(orderID);
 			

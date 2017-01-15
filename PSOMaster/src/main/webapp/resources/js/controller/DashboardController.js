@@ -2,7 +2,7 @@ module.controller("DashboardController", function($scope, $routeParams,$http,Das
 	
 	$scope.title = "Dashboard";
 	
-	$scope.labels = ['1 June', '2 June', '3 June', '4 June', '5 June', '6 June', '7 June', '8 June', '9 June', '10 June'];
+	/*$scope.labels = ['1 June', '2 June', '3 June', '4 June', '5 June', '6 June', '7 June', '8 June', '9 June', '10 June'];
 	  $scope.series = ['Series A', 'Series B'];
 	  $scope.data = [
 	    [65, 59, 80, 81, 56, 55, 40, 59, 80, 81],
@@ -10,7 +10,9 @@ module.controller("DashboardController", function($scope, $routeParams,$http,Das
 	  ];
 	  $scope.onClick = function (points, evt) {
 	    console.log(points, evt);
-	  };
+	  };*/
+	
+	
 	  $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
 	  $scope.options = {
 	    scales: {
@@ -44,6 +46,8 @@ module.controller("DashboardController", function($scope, $routeParams,$http,Das
 	    [14, 48, 25, 14, 86, 78, 25, 48, 56, 14],
 	    [25, 48, 40, 19, 86, 27, 90, 78, 32, 25]
 	  ];
+	  $scope.seriesColors = ["#72B3D4","#D5D5D5","#FF1F22","#1ECCC9","#FFA940","#A4B1C7","#E151B6"]
+	  
 	  
 	$scope.init=function()
 	{

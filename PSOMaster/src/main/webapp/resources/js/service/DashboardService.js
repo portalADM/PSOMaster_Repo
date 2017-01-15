@@ -1,4 +1,4 @@
-module.service('DashboardService', function($http) {
+module.service('DashboardService', function($http,$q) {
 	
 	/*
 	 *Service Method that will fetch Stuck Order list   stuckOrderList

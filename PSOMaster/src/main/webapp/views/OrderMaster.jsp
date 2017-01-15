@@ -30,8 +30,10 @@
 						<h3>
 							<a ng-href="{{orderID.length>0 ? '#updateOrder/'+orderID : '#updateOrder'}}">
 								<span tooltip-placement="bottom" uib-tooltip="Update Order" class="glyphicon glyphicon-edit floatRight panelHeaderIcon marRight50" aria-hidden="true"></span>
-								</a> <a href="#sendEmail"><span tooltip-placement="bottom" uib-tooltip="Send Email" class="glyphicon glyphicon-envelope floatRight panelHeaderIcon" aria-hidden="true"></a></span> 
-								<a ng-click="getHelp()"><span tooltip-placement="bottom" uib-tooltip="Help" class="glyphicon glyphicon-info-sign floatRight panelHeaderIcon" aria-hidden="true"></span></a>
+								</a> 
+								<!-- <a href="#sendEmail"><span tooltip-placement="bottom" uib-tooltip="Send Email" class="glyphicon glyphicon-envelope floatRight panelHeaderIcon" aria-hidden="true"></a> -->
+								</span> 
+								<a class="cursorPointer" ng-click="getHelp()"><span tooltip-placement="bottom" uib-tooltip="Help" class="glyphicon glyphicon-info-sign floatRight panelHeaderIcon" aria-hidden="true"></span></a>
 						</h3>
 					</div>
 
@@ -221,7 +223,7 @@
 										</tr>
 									</thead>
 									<tbody ng-repeat="lineItem in portalOrderDetails.portalLineItemList">
-										<tr class="info">
+										<tr >
 											<td>
 								              <span class="glyphicon glyphicon-minus-sign cursorPointer" ng-if="lineItem.expanded" ng-click="lineItem.expanded = false"></span>
 								              <span class="glyphicon glyphicon-plus-sign cursorPointer" ng-if="!lineItem.expanded" ng-click="lineItem.expanded = true"></span>

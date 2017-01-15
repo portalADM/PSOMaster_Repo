@@ -17,9 +17,18 @@
 	margin-left: 8px;
 }
 
+.marLeft40{
+	margin-left: 40px;
+}
+
+
 
 .marRight50{
 	margin-right: 50px !important;
+}
+
+.marRight5{
+	margin-right: 5px !important;
 }
 
 .noPadBtm{

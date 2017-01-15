@@ -7,18 +7,11 @@ package com.zig.pso.utility;
 
 import java.util.Properties;
 
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.EmailRequestBean;
 
-import amdocs.rm3g.utils.RMEmailAuthenticator;
 
 /**
  * 
@@ -44,7 +37,7 @@ public class SendMailUtility
     public synchronized static BaseResponseBean sendMail(EmailRequestBean emailRequest)
     {
 
-        System.setProperty("java.net.preferIPv4Stack", "true");
+        /*System.setProperty("java.net.preferIPv4Stack", "true");
 
         BaseResponseBean sentMailResponse = new BaseResponseBean();
 
@@ -68,11 +61,11 @@ public class SendMailUtility
             msg.setRecipient(Message.RecipientType.TO, new InternetAddress(emailRequest.getToEmailIdList()));
             msg.setRecipient(Message.RecipientType.CC, new InternetAddress(emailRequest.getCcEmailIdList()));
 
-            /*
+            
              * if (CollectionUtils.isNotEmpty(emailRequest.getToEmailIdList())) { for (String to : emailRequest.getToEmailIdList()) { msg.addRecipient(Message.RecipientType.TO, new
              * InternetAddress(to)); } } if (CollectionUtils.isNotEmpty(emailRequest.getCcEmailIdList())) { for (String cc : emailRequest.getCcEmailIdList()) {
              * msg.addRecipient(Message.RecipientType.CC, new InternetAddress(cc)); } }
-             */
+             
 
             msg.setContent(emailRequest.getEmailContent(), "text/html; charset=utf-8");
             msg.saveChanges();
@@ -89,6 +82,8 @@ public class SendMailUtility
             sentMailResponse.setErrorCode(PSOConstants.ERROR_CODE);
             sentMailResponse.setErrorMsg(PSOConstants.Error_Occurred_While_sending_mail);
             return sentMailResponse;
-        }
+        }*/
+    	
+    	return null;
     }
 }
