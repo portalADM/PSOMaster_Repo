@@ -138,4 +138,10 @@ public class OrderQueries
     {
         return orderProp.getProperty("order.getPortalShipmentDetails");
     }
+    
+    public static String getPortalStuckOrderBacklogInfoSQL()
+    {
+        return orderProp.getProperty("order.stuckOrderBacklogInLast10Days");
+    }
+    
 }

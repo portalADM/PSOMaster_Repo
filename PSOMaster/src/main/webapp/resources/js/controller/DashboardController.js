@@ -81,11 +81,26 @@ module.controller("DashboardController", function($scope, $routeParams,$http,Das
 				function(data) {
 					
 					if(data.stuckOrderList!=undefined && data.stuckOrderList.length>0){
-						$scope.stuckOrderDetailsallStatus= data.stuckOrderList;
-						$scope.labelsDounuts =[$scope.stuckOrderDetailsallStatus[0].orderStatus,$scope.stuckOrderDetailsallStatus[1].orderStatus,$scope.stuckOrderDetailsallStatus[2].orderStatus,$scope.stuckOrderDetailsallStatus[3].orderStatus,$scope.stuckOrderDetailsallStatus[4].orderStatus,$scope.stuckOrderDetailsallStatus[5].orderStatus,$scope.stuckOrderDetailsallStatus[6].orderStatus];
-						$scope.dataDounuts =  [$scope.stuckOrderDetailsallStatus[0].count,$scope.stuckOrderDetailsallStatus[1].count,$scope.stuckOrderDetailsallStatus[2].count,$scope.stuckOrderDetailsallStatus[3].count,$scope.stuckOrderDetailsallStatus[4].count,$scope.stuckOrderDetailsallStatus[5].count,$scope.stuckOrderDetailsallStatus[6].count];	
+						$scope.labelsDounuts = [];
+						$scope.dataDounuts = [];
+						
+						angular.forEach(data.stuckOrderList, function(value, key) {
+							  $scope.labelsDounuts.push(value.orderStatus);
+							  $scope.dataDounuts.push(value.count);
+						});
 					}
 					
+	       		},
+		       function(errResponse){
+	       			console.error('Error while fetching Currencies');
+		       }
+		);
+		
+		
+		DashboardService.getStuckOrderBacklog().then(
+				function(data) {
+					
+									
 	       		},
 		       function(errResponse){
 	       			console.error('Error while fetching Currencies');

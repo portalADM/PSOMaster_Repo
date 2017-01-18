@@ -10,6 +10,7 @@ package com.zig.pso.dao;
 
 import java.util.ArrayList;
 
+import com.zig.pso.rest.bean.StuckOrderBacklogDBResultsBean;
 import com.zig.pso.rest.bean.StuckOrdersCount;
 
 /**
@@ -39,4 +40,6 @@ public interface DashboardDAO {
 	 * @return
 	 */
 	ArrayList<StuckOrdersCount> getStuckOrderallStatus();
+	
+	ArrayList<StuckOrderBacklogDBResultsBean> getStuckOrderBackloagDetails();
 }

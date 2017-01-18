@@ -60,4 +60,19 @@ this.getStuckOrderallStatus = function(status){
 			}
 	);
 }
+
+
+this.getStuckOrderBacklog = function(status){
+	
+	return $http.get('stuckOrderBacklogs/')
+	.then(
+			function(response){
+				return response.data;
+			}, 
+			function(errResponse){
+				console.error('Error while fetching orders');
+				return $q.reject(errResponse);
+			}
+	);
+}
 });

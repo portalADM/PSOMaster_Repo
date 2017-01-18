@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import com.zig.pso.logging.PSOLoggerSrv;
+import com.zig.pso.rest.bean.StuckOrderBacklogDBResultsBean;
 import com.zig.pso.rest.bean.StuckOrdersCount;
 import com.zig.pso.utility.DBConnection;
 import com.zig.pso.utility.OrderQueries;
@@ -167,4 +168,36 @@ public class DashboardDAOImpl implements DashboardDAO
         }
         return stuckOrderList;
     }
+
+	/* (non-Javadoc)
+	 * @see com.zig.pso.dao.DashboardDAO#getStuckOrderBackloagDetails()
+	 */
+	@Override
+	public ArrayList<StuckOrderBacklogDBResultsBean> getStuckOrderBackloagDetails() {
+		PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getStuckOrderBackloagDetails",  "");
+
+        ArrayList<StuckOrderBacklogDBResultsBean> stuckOrderList = new ArrayList<StuckOrderBacklogDBResultsBean>();
+        String sql = OrderQueries.getPortalStuckOrderBacklogInfoSQL();
+
+        try
+        {
+            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            ResultSet rs = pstm.executeQuery();
+            StuckOrderBacklogDBResultsBean stuckOrderCount = null;
+            while (rs.next())
+            {
+                stuckOrderCount = new StuckOrderBacklogDBResultsBean();
+                stuckOrderCount.setCount(rs.getInt("ORDER_COUNT"));
+                stuckOrderCount.setOrderCreationDate(rs.getString("CREATION_DATE"));
+                stuckOrderCount.setStatusCode(rs.getString("STATUS_CODE"));
+                stuckOrderList.add(stuckOrderCount);
+            }
+
+        }
+        catch (Exception e)
+        {
+            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderallStatus", e);
+        }
+        return stuckOrderList;
+	}
 }

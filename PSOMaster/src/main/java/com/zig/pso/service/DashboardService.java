@@ -9,6 +9,7 @@ package com.zig.pso.service;
 
 import java.util.ArrayList;
 
+import com.zig.pso.rest.bean.StuckOrderBacklogUiResponseBean;
 import com.zig.pso.rest.bean.StuckOrdersCount;
 
 public interface DashboardService
@@ -33,5 +34,7 @@ public interface DashboardService
      * @return
      */
     ArrayList<StuckOrdersCount> getStuckOrderallStatus();
+    
+    public StuckOrderBacklogUiResponseBean getStuckOrderBacklogData();
 
 }

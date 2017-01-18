@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zig.pso.logging.PSOLoggerSrv;
+import com.zig.pso.rest.bean.StuckOrderBacklogUiResponseBean;
 import com.zig.pso.rest.bean.StuckOrderDetailResponse;
 import com.zig.pso.rest.bean.StuckOrdersCount;
 import com.zig.pso.service.DashboardService;
@@ -75,6 +76,17 @@ public class DashBoardController
         ArrayList<StuckOrdersCount> stuckOrderCountList = dashboardService.getStuckOrderallStatus();
         stuckOrdersList.setStuckOrderList(stuckOrderCountList);
         return new ResponseEntity<StuckOrderDetailResponse>(stuckOrdersList, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/stuckOrderBacklogs", method = RequestMethod.GET)
+    public ResponseEntity<StuckOrderBacklogUiResponseBean> getStuckOrderBacklogList()
+    {
+        PSOLoggerSrv.printDEBUG("DashBoardController", "getStuckOrderallStatus", "");
+
+        StuckOrderDetailResponse stuckOrdersList = new StuckOrderDetailResponse();
+
+        StuckOrderBacklogUiResponseBean data = dashboardService.getStuckOrderBacklogData();
+        return new ResponseEntity<StuckOrderBacklogUiResponseBean>(data, HttpStatus.OK);
     }
 
 }
