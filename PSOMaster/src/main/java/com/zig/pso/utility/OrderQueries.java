@@ -144,4 +144,9 @@ public class OrderQueries
         return orderProp.getProperty("order.stuckOrderBacklogInLast10Days");
     }
     
+    public static String getOrderLineSIMandIMEIDetailsSQL()
+    {
+        return orderProp.getProperty("order.getOrderLineSIMandIMEIDetails");
+    }
+    
 }

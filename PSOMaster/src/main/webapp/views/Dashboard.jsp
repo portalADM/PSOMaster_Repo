@@ -59,7 +59,7 @@
           </div>
           <div class="panel-body panelMinHeight">
 			 <canvas id="bar" class="chart chart-bar"
-			  chart-data="dataBar" chart-labels="labelsBar"> chart-series="seriesBar"
+			  chart-data="dataBar" chart-labels="labelsBar" chart-series="seriesBar">
 			</canvas>
 			<table class="marTop20">
 				<tbody><tr><td ng-repeat="st in seriesBar" ><span style="color: {{seriesColors[seriesBar.indexOf(st)]}}" class="glyphicon glyphicon-stop  marLeft40 marRight5"></span>{{st}}</td></tr></tbody>

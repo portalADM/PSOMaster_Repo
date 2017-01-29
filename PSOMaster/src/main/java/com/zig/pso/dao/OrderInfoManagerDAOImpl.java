@@ -24,6 +24,7 @@ import com.zig.pso.rest.bean.EnsembleLineItemInfoBean;
 import com.zig.pso.rest.bean.OrderAPIDetailsBean;
 import com.zig.pso.rest.bean.PortalEnrollmentInfo;
 import com.zig.pso.rest.bean.PortalLineItemInfoBean;
+import com.zig.pso.rest.bean.PortalOrderLineSIMandIMEIDetailsBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalOrderPortRequestBean;
 import com.zig.pso.rest.bean.PortalShipmentInfo;
@@ -632,4 +633,45 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
         return portItemList;
     }
+
+	/* (non-Javadoc)
+	 * @see com.zig.pso.dao.OrderInfoManagerDAO#getPortalLineSimAndImeiDetails(java.lang.String)
+	 */
+	@Override
+	public ArrayList<PortalShipmentInfo> getPortalLineSimAndImeiDetails(String orderId) {
+		PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getPortalLineSimAndImeiDetails", "Order ID : " + orderId);
+		
+        ArrayList<PortalShipmentInfo> portLineList = new ArrayList<PortalShipmentInfo>(); 
+        PortalShipmentInfo portLine = null;
+
+        String sql = OrderQueries.getOrderLineSIMandIMEIDetailsSQL();
+        try
+        {
+            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm.setString(1, orderId);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next())
+            {
+                portLine = new PortalShipmentInfo();
+                portLine.setImei(rs.getString("IMEI"));
+                portLine.setLineItemNo(rs.getString("LINE_ID"));
+                portLine.setOrderId(rs.getString("ORDER_ID"));
+                portLine.setPtn(rs.getString("WIRELESS_NUMBER"));
+                portLine.setSim(rs.getString("SIM"));
+                portLine.setSubscriberId(rs.getString("SUBSCRIBER_ID"));
+                portLineList.add(portLine);
+            }
+        }
+        catch (SQLException e)
+        {
+            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getPortalLineSimAndImeiDetails", e);
+        }
+
+        if (portLineList == null || portLineList.size()==0)
+        {
+            PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getPortalLineSimAndImeiDetails", PSOConstants.NO_DATA);
+        }
+
+        return portLineList;
+	}
 }

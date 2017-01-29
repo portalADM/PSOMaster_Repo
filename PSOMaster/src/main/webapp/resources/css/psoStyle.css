@@ -128,6 +128,16 @@
 	min-height: 290px;
 }
 
+.getLineBtn{
+	    margin-left: 35px;
+    cursor: pointer;
+    margin-top: -16px;
+}
+
+.simTBWidth{
+	    width: 60%;
+}
+
 
 
 /*File Upload Button CSS Start*/

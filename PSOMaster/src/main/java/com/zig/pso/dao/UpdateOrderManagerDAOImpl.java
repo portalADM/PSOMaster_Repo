@@ -104,6 +104,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getNewValue());
             pstm.setString(2, updateOrderRequest.getOrderId());
+            pstm.setString(3, updateOrderRequest.getLineId());
             int i = pstm.executeUpdate();
             if (i < 1)
             {
@@ -152,6 +153,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getNewValue());
             pstm.setString(2, updateOrderRequest.getOrderId());
+            pstm.setString(3, updateOrderRequest.getLineId());
             int i = pstm.executeUpdate();
             if (i < 1)
             {

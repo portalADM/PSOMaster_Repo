@@ -20,11 +20,10 @@
 		</div>
 	
 		<flash-message></flash-message> 
-	
 		<div ng-init="accordion=0">
-
+		
 			<!-- Update Order Status Panel Start -->
-			<div class="panel panel-info ">
+			<div ng-show="restrictedUpdates.indexOf('UPDATE_STATUS')===-1"  class="panel panel-info ">
 				<div class="panel-heading accordion cursorPointer" ng-class="{active:accordion==1}">
 					<h3 class="panel-title" ng-click="accordion = 1" >Update Order Status
 					</h3>
@@ -38,7 +37,7 @@
 										<label class="col-lg-4 control-label textAlgnInit">Order</label>
 										<div class="col-lg-8">
 											<label ng-if="orderID.length>0" class="col-lg-12 control-label textAlgnInit noPadLeft">{{orderID}}</label>
-											<input ng-if="orderID==undefined" type="text" class="form-control" ng-model="orderID" placeholder="Order ID">
+											<input ng-if="orderID===undefined" type="text" id="orderNUmber" class="form-control" ng-model="updateData.statusOrderId" placeholder="Order ID">
 										</div>
 									</div>
 									<div class="form-group">
@@ -66,7 +65,7 @@
 			<!-- Update Order Status Panel End -->
 			
 			<!-- Update Order SIM Panel Start -->
-			<div class="panel panel-info">
+			<div ng-show="restrictedUpdates.indexOf('UPDATE_SIM')===-1" class="panel panel-info">
 				<div class="panel-heading accordion cursorPointer" ng-click="accordion = 2" ng-class="{active:accordion==2}">
 					<h3 class="panel-title">Update Order SIM</h3>
 				</div>
@@ -77,21 +76,54 @@
                                          <form class="form-horizontal">
                                                 <div class="form-group">
                                                        <label class="col-lg-4 control-label textAlgnInit">Order</label>
-                                                       <div class="col-lg-8 noPadLeft">
+                                                       <div class="col-lg-2 noPadLeft">
                                                             <label ng-if="orderID.length>0" class="col-lg-12 control-label textAlgnInit noPadLeft">{{orderID}}</label>
-															<input ng-if="orderID==undefined" type="text" class="form-control" ng-model="orderID" placeholder="Order ID">
+															<input ng-if="orderID==undefined" type="text" class="form-control" ng-model="updateData.simOrderId" placeholder="Order ID">
                                                        </div>
+                                                       <h3  ng-click="getPortalLineSimandImeiDetails('sim')" type="reset"  class=""><span tooltip-placement="bottom" uib-tooltip="Get Line Details"  class="glyphicon glyphicon-list-alt getLineBtn"></span></h3>
                                                 </div>
                                                 <div class="form-group">
-                                                       <label for="select" class="col-lg-4 control-label textAlgnInit">New SIM</label>
-                                                       <input type="text" ng-model="newSIM" class="form-control" id="inputEmail" placeholder="SIM" maxlength="20">
+                                                       <!-- <label for="select" class="col-lg-4 control-label textAlgnInit">New SIM</label>
+                                                       <input type="text" ng-model="newSIM" class="form-control" id="inputEmail" placeholder="SIM" maxlength="20"> -->
+                                                       
+                                                        <div class="row mar10">
+												          <div class="col-lg-12">
+												            <div class="bs-component">
+												              <table class="table table-striped table-hover ">
+												                <thead>
+												                  <tr>
+												                    <th>#</th>
+												                    <th>LINE ID		</th>
+												                    <th>SUBSCRIBER ID</th>
+												                    <th>PTN</th>
+												                    <th>Current SIM Value</th>
+												                    <th  class="col-lg-4">New SIM Value</th>
+												                  </tr>
+												                </thead>
+												                <tbody>
+												                  <tr ng-repeat="line in PortalLineSimAndImeiDetails">
+												                    <td>1</td>
+												                    <td >{{line.lineItemNo}}</td>
+												                    <td >{{line.subscriberId}}</td>
+												                    <td >{{line.ptn}}</td>
+												                    <td >{{line.sim}}</td>
+												                    <td><h4 ng-show="!showEditSimTB1"><span class="glyphicon glyphicon-edit cursorPointer" ng-click="showEditSimTB1 = !showEditSimTB1"></span></h4>
+												                    	<div ng-show="showEditSimTB1" class="col-lg-12 noPad">
+												                    		<input ng-show="showEditSimTB1"  type="text" ng-model="newObject[line.lineItemNo]" class="form-control col-lg-6 simTBWidth" placeholder="SIM" maxlength="20">
+												                    		<div >
+												                    			<h4><span class="glyphicon glyphicon-ok-sign cursorPointer marLeft40" ng-click="updateSimAndImei(line,newObject[line.lineItemNo],'sim')" tooltip-placement="bottom" uib-tooltip="Update"  ></span>
+												                    			<span class="glyphicon glyphicon-remove-sign cursorPointer marLeft8 " tooltip-placement="bottom" uib-tooltip="Cancel"  ng-click="showEditSimTB1 = !showEditSimTB1; newObject[line.lineItemNo]=null"></span>
+												                    			</h4>
+												                    		</div>
+												                    	</div>
+												                    </td>
+												                  </tr>	
+												                </tbody>
+												              </table> 
+												            </div><!-- /example -->
+												          </div>
+												        </div>
                                                 </div>
-                                                <div class="form-group">
-                                                       <div class="col-lg-4"></div>
-				                                         <div class="col-lg-8 noPadLeft">
-				                                           <button type="reset" class="btn btn-default"  ng-click="updateOrder('sim')">Submit</button>
-				                                         </div>
-				                                </div>
                                          </form>
                                   </div>
                            </div>
@@ -101,7 +133,7 @@
 			<!-- Update Order SIM Panel End -->
 			
 			<!-- Update Order IMEI Panel Start -->
-			<div class="panel panel-info">
+			<div ng-show="restrictedUpdates.indexOf('UPDATE_IMEI')===-1" class="panel panel-info">
 				<div class="panel-heading accordion cursorPointer" ng-click="accordion = 3" ng-class="{active:accordion==3}">
 					<h3 class="panel-title">Update Order IMEI</h3>
 				</div>
@@ -110,24 +142,73 @@
                            <div class="">
                                   <div class="well" id="">
                                          <form class="form-horizontal">
-                                                <div class="form-group">
+                                                <!-- <div class="form-group">
                                                        <label class="col-lg-4 control-label textAlgnInit">Order</label>
                                                        <div class="col-lg-8 noPadLeft">
                                                               <label ng-if="orderID.length>0" class="col-lg-12 control-label textAlgnInit noPadLeft">{{orderID}}</label>
 															  <input ng-if="orderID==undefined" type="text" class="form-control" ng-model="orderID" placeholder="Order ID">
                                                        </div>
-                                                </div>
+                                                </div> -->
                                                 <div class="form-group">
-                                                       <label for="select" class="col-lg-4 control-label textAlgnInit">New
-                                                              IMEI</label>
+                                                       <label class="col-lg-4 control-label textAlgnInit">Order</label>
+                                                       <div class="col-lg-2 noPadLeft">
+                                                            <label ng-if="orderID.length>0" class="col-lg-12 control-label textAlgnInit noPadLeft">{{orderID}}</label>
+															<input ng-if="orderID==undefined" type="text" class="form-control" ng-model="updateData.imeiOrderId" placeholder="Order ID">
+                                                       </div>
+                                                       <h3  ng-click="getPortalLineSimandImeiDetails('imei')" type="reset"  class=""><span tooltip-placement="bottom" uib-tooltip="Get Line Details"  class="glyphicon glyphicon-list-alt getLineBtn"></span></h3>
+                                                </div>
+                                               <!--  <div class="form-group">
+                                                       <label for="select" class="col-lg-4 control-label textAlgnInit">New IMEI</label>
                                                             <input type="text" ng-model="newIMEI" class="form-control" id="inputEmail" placeholder="IMEI" maxlength="15">
-                                                </div>
+                                                </div> -->
                                                 <div class="form-group">
+                                                       <!-- <label for="select" class="col-lg-4 control-label textAlgnInit">New SIM</label>
+                                                       <input type="text" ng-model="newSIM" class="form-control" id="inputEmail" placeholder="SIM" maxlength="20"> -->
+                                                       
+                                                        <div class="row mar10">
+												          <div class="col-lg-12">
+												            <div class="bs-component">
+												              <table class="table table-striped table-hover ">
+												                <thead>
+												                  <tr>
+												                    <th>#</th>
+												                    <th>LINE ID		</th>
+												                    <th>SUBSCRIBER ID</th>
+												                    <th>PTN</th>
+												                    <th>Current IMEI Value</th>
+												                    <th  class="col-lg-4">New IMEI Value</th>
+												                  </tr>
+												                </thead>
+												                <tbody>
+												                  <tr ng-repeat="line in PortalLineSimAndImeiDetails">
+												                    <td>1</td>
+												                    <td >{{line.lineItemNo}}</td>
+												                    <td >{{line.subscriberId}}</td>
+												                    <td >{{line.ptn}}</td>
+												                    <td >{{line.imei}}</td>
+												                    <td><h4 ng-show="!showEditImeiTB1"><span class="glyphicon glyphicon-edit cursorPointer" ng-click="showEditImeiTB1 = !showEditImeiTB1"></span></h4>
+												                    	<div ng-show="showEditImeiTB1" class="col-lg-12 noPad">
+												                    		<input ng-show="showEditImeiTB1"  type="text" ng-model="newObject[line.lineItemNo]" class="form-control col-lg-6 simTBWidth" placeholder="IMEI" maxlength="20">
+												                    		<div >
+												                    			<h4><span class="glyphicon glyphicon-ok-sign cursorPointer marLeft40" ng-click="updateSimAndImei(line,newObject[line.lineItemNo],'imei')" tooltip-placement="bottom" uib-tooltip="Update"  ></span>
+												                    			<span class="glyphicon glyphicon-remove-sign cursorPointer marLeft8 " tooltip-placement="bottom" uib-tooltip="Cancel"  ng-click="showEditImeiTB1 = !showEditImeiTB1; newObject[line.lineItemNo]=null"></span>
+												                    			</h4>
+												                    		</div>
+												                    	</div>
+												                    </td>
+												                  </tr>	
+												                </tbody>
+												              </table> 
+												            </div><!-- /example -->
+												          </div>
+												        </div>
+                                                </div>
+                                               <!--  <div class="form-group">
                                                        <div class="col-lg-4"></div>
                                          <div class="col-lg-8 noPadLeft">
                                            <button type="reset" class="btn btn-default"  ng-click="updateOrder('imei')">Submit</button>
                                          </div>
-                                       </div>
+                                       </div> -->
                                          </form>
                                   </div>
                            </div>
@@ -138,7 +219,7 @@
 			
 			
 			<!-- Update Order RetryCount Panel Start -->
-			<div class="panel panel-info">
+			<div ng-show="restrictedUpdates.indexOf('UPDATE_RETRYCOUNT')===-1" class="panel panel-info">
 				<div class="panel-heading accordion cursorPointer" ng-click="accordion = 4" ng-class="{active:accordion==4}">
 					<h3 class="panel-title">Update Order RetryCount</h3>
 				</div>
@@ -149,7 +230,7 @@
                                                        <label class="col-lg-4 control-label textAlgnInit">Order</label>
                                                        <div class="col-lg-8 noPadLeft">
                                                                <label ng-if="orderID.length>0" class="col-lg-12 control-label textAlgnInit noPadLeft">{{orderID}}</label>
-															   <input ng-if="orderID==undefined" type="text" class="form-control" ng-model="orderID" placeholder="Order ID">
+															   <input ng-if="orderID==undefined" type="text" class="form-control" ng-model=updateData.retryCntOrderID placeholder="Order ID">
                                                        </div>
                                                 </div>
                                                 <div class="form-group">
@@ -176,7 +257,7 @@
 			
 			
 		<!-- Buld Order Update Panel Start -->	
-		 <div class="panel panel-warning">
+		 <div ng-show="restrictedUpdates.indexOf('BULK_UPDATE')===-1" class="panel panel-warning">
                <div class="panel-heading  accordion cursorPointer" ng-click="accordion = 5" ng-class="{active:accordion==5}">
                  	<h3 class="panel-title">Bulk Order Update <span class="glyphicon glyphicon-list-alt marLeft8"></span></h3>
                </div>

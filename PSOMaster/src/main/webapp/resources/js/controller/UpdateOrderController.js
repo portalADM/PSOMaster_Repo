@@ -1,4 +1,4 @@
-module.controller("UpdateOrderController", function($scope, $routeParams,$http,FileUploadService,MessageService,UpdateOrderService) {
+module.controller("UpdateOrderController", function($scope, $routeParams,$http,FileUploadService,MessageService,UpdateOrderService,OrderService,$rootScope) {
 	
 	$scope.title = "Update Order";
 	
@@ -6,46 +6,31 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 	
 	$scope.orderID = $routeParams.orderID;
 	
+	$scope.newOrderID=null;
+	
+	$scope.updateData={};
+	
 	$scope.openHelpModel = function(){
         $("#UpdateHelp-modal").modal();
 	}
 	
+	$scope.availableUpdates = [];
+	$scope.restrictedUpdates = [];
 	
+	$scope.init = function(){
+		getAvailableUpdates();
+	}
+	
+	$scope.init();
 	$scope.updateOrderRes = {};
 	$scope.updateOrder = function(updatetype){
-		
-		var newValue='';
-		
-		if(updatetype=='status')
-			newValue=$scope.newStatus;
-		else if(updatetype=='sim')
-			newValue=$scope.newSIM;
-		else if(updatetype=='imei')
-			newValue=$scope.newIMEI;
-		else if(updatetype=='retry')
-			newValue=$scope.newRetry;
-			
-		var orderID = $scope.orderID;
-		
-		UpdateOrderService.updateOrderDetails(updatetype,newValue,orderID).then(
-				function(response) {
-					if(response!=undefined && response.errorCode == 0){
-						$scope.updateOrderRes = response;
-						MessageService.showSuccess(response.errorMsg,5000);
-					}
-					else{
-						var errorMessage = response.errorMsg + "\n Log Reference ID : " + response.logRefId;
-						MessageService.showError(errorMessage,null);
-					}
-	       		},
-		       function(errResponse){
-					MessageService.showSuccess('Error occured while updating order. Please try again later.',5000);
-		       }
-		);
-       
+		updateOrderStatusAndRetryCount(updatetype);
 	}
 	
 	
+	 /*
+	  * This method will upload the file to update orders in bulk.
+	  */
 	 $scope.uploadFile = function(){
 		 var updateType = $scope.updateType;
 		 if(undefined == $scope.myFile){
@@ -58,7 +43,121 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 	     updateBulkOrder(file,uploadUrl);
 	 };
 	 
+	 /*
+	  * This method will get Portal order SIM and IMEI details
+	  */
+	 $scope.getPortalLineSimandImeiDetails = function(updateType){
+		 $rootScope.spinner.on();
+		 $scope.newObject = {};
+		 $scope.PortalLineSimAndImeiDetails = [];
+		 
+		 var orderID = null;
+		 
+		 if(updateType==='sim')
+			 orderID = ($scope.orderID===undefined || $scope.orderID===null) ? $scope.updateData.simOrderId : $scope.orderID;
+		 else if(updateType ==='imei')
+			 orderID = ($scope.orderID===undefined || $scope.orderID===null) ? $scope.updateData.imeiOrderId : $scope.orderID;
+		 
+		 OrderService.getPortalLineSimandImei(orderID).then(
+					function(response) {
+						$rootScope.spinner.off();
+						console.log(response.portalLineSimandImeiList);
+						$scope.PortalLineSimAndImeiDetails = response.portalLineSimandImeiList;
+		       		},
+			        function(errResponse){
+		       			$rootScope.spinner.off();
+		       			MessageService.showError(errResponse,5000);
+			        }
+			);
+	 }
 	 
+	 /*
+	  * This method will update the order SIM and IMEI
+	  */
+	 $scope.updateSimAndImei = function(lineObj,newValue,updateType){
+		 console.log(lineObj);
+		 console.log(newValue);
+		 
+		 $rootScope.spinner.on();
+		 
+		 var lineID = lineObj.lineItemNo;
+		 
+		 var orderID = null;
+		 
+		 if(updateType==='sim')
+			 orderID = ($scope.orderID===undefined || $scope.orderID===null) ? $scope.updateData.simOrderId : $scope.orderID;
+		 else if(updateType ==='imei')
+			 orderID = ($scope.orderID===undefined || $scope.orderID===null) ? $scope.updateData.imeiOrderId : $scope.orderID;
+		 
+		 if(newValue!==null && newValue!==undefined){
+			 UpdateOrderService.updateOrderDetails(updateType,newValue,orderID,lineID).then(
+						function(response) {
+							$rootScope.spinner.off();
+							if(response!=undefined && response.errorCode == 0){
+								$scope.updateOrderRes = response;
+								MessageService.showSuccess(response.errorMsg,5000);
+								$scope.getPortalLineSimandImeiDetails(updateType);
+							}
+							else{
+								$rootScope.spinner.off();
+								var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+								MessageService.showError(errorMessage,10000);
+							}
+			       		},
+				       function(errResponse){
+			       			$rootScope.spinner.off();
+							MessageService.showSuccess('Error occured while updating order. Please try again later.',5000);
+				       }
+				);
+		 }
+		 else{
+			 $rootScope.spinner.off();
+			 MessageService.showInfo('Please enter valid SIM / IMEI Value',10000);
+		 }
+		 
+	 }
+	 
+	 
+	 /*
+	  * This method will update the order status and retry count 
+	  */
+	 function updateOrderStatusAndRetryCount(updatetype){
+		 	var newValue='';
+		 	
+		 	updateData.retryCntOrderID
+			
+			if(updatetype=='status')
+				newValue=$scope.newStatus;
+			else if(updatetype=='retry')
+				newValue=$scope.newRetry;
+				
+			var orderID = null;
+			
+			if(updatetype==='status')
+				 orderID = ($scope.orderID===undefined || $scope.orderID===null) ? $scope.updateData.statusOrderId : $scope.orderID;
+			 else if(updatetype ==='retry')
+				 orderID = ($scope.orderID===undefined || $scope.orderID===null) ? $scope.updateData.retryCntOrderID : $scope.orderID;
+			
+			UpdateOrderService.updateOrderDetails(updatetype,newValue,orderID,null).then(
+					function(response) {
+						if(response!=undefined && response.errorCode == 0){
+							$scope.updateOrderRes = response;
+							MessageService.showSuccess(response.errorMsg,5000);
+						}
+						else{
+							var errorMessage = response.errorMsg + "\n Log Reference ID : " + response.logRefId;
+							MessageService.showError(errorMessage,null);
+						}
+		       		},
+			       function(errResponse){
+						MessageService.showSuccess('Error occured while updating order. Please try again later.',5000);
+			       }
+			);
+	 }
+	 
+	 /*
+	  * This method will update bulk orders 
+	  */
 	 function updateBulkOrder(file,uploadUrl){
 	      
 	      FileUploadService.uploadFileToUrl(file, uploadUrl).then(
@@ -83,6 +182,21 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 	       			MessageService.showError(errResponse,5000);
 		        }
 		  );
+	 }
+	 
+	 /*
+	  * This method will fetch the Available and restricted Update list
+	  */
+	 function getAvailableUpdates(){
+		 UpdateOrderService.getAllowedUpdates().then(
+					function(response) {
+						$scope.availableUpdates = response.availableUpdates;
+						$scope.restrictedUpdates = response.restrictedUpdates;
+		       		},
+			       function(errResponse){
+						MessageService.showSuccess('Error occured while getting available updates. Please try again later.',5000);
+			       }
+			);
 	 }
 	 
 });

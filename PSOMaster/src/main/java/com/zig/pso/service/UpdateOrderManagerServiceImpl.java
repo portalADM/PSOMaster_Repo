@@ -7,7 +7,9 @@
  */
 package com.zig.pso.service;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,11 +24,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.dao.UpdateOrderManagerDAO;
 import com.zig.pso.logging.PSOLoggerSrv;
+import com.zig.pso.rest.bean.AllowedUpdatesResponseBean;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.BulkUpdateInputBean;
 import com.zig.pso.rest.bean.OrderUpdateInputData;
 import com.zig.pso.rest.bean.UpdateOrderRequestBean;
 import com.zig.pso.rest.bean.ValidatedBulkUpdateOrderDetailsBean;
+import com.zig.pso.utility.PropertyReader;
 
 /**
  * 
@@ -279,4 +283,28 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
         validatedOrderData.setOrderUpdateData(validOerderData);
         return validatedOrderData;
     }
+
+	/* (non-Javadoc)
+	 * @see com.zig.pso.service.UpdateOrderManagerService#getAllowdedUpdates()
+	 */
+	@Override
+	public AllowedUpdatesResponseBean getAllowdedUpdates() {
+		
+		PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "getAllowdedUpdates", "");
+		
+		AllowedUpdatesResponseBean  updatesList = new AllowedUpdatesResponseBean(); 
+		
+		String availableUpdates = PropertyReader.getAdminProperties().getProperty("availableUpdates");
+		String restrictedUpdates = PropertyReader.getAdminProperties().getProperty("restrictedUpdates");
+		
+		if(availableUpdates!=null)
+			updatesList.setAvailableUpdates(Arrays.asList(availableUpdates.split(",")));
+		
+		if(restrictedUpdates!=null)
+			updatesList.setRestrictedUpdates(Arrays.asList(restrictedUpdates.split(",")));
+		
+		
+		return updatesList;
+
+	}
 }

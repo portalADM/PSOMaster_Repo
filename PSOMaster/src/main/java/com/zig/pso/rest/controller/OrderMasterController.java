@@ -19,6 +19,7 @@ import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
 import com.zig.pso.rest.bean.OrderPortInDetailsResponseBean;
+import com.zig.pso.rest.bean.PortalOrderLineSIMandIMEIDetailsBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 import com.zig.pso.service.OrderInfoManagerService;
 
@@ -94,6 +95,22 @@ public class OrderMasterController
 
         OrderPortInDetailsResponseBean portData = orderService.getPortalOrderPortDetails(orderId);
         return new ResponseEntity<OrderPortInDetailsResponseBean>(portData, HttpStatus.OK);
+    }
+    
+    
+    
+    /**
+     * This Method provides order Line's SIM and IMEI details from Portal Core Database.
+     */
+    @RequestMapping(value = "/getPortalLineSimandImei/{id}", method = RequestMethod.GET)
+    public ResponseEntity<PortalOrderLineSIMandIMEIDetailsBean> getPortalLineSimandImei(@PathVariable("id") String id)
+    {
+
+        PSOLoggerSrv.printDEBUG("OrderMasterController", "getPortalLineSimandImei", "Order ID : " + id);
+
+        PortalOrderLineSIMandIMEIDetailsBean nameList = new PortalOrderLineSIMandIMEIDetailsBean();
+        nameList = orderService.getPortalLineSimAndImeiDetails(id);
+        return new ResponseEntity<PortalOrderLineSIMandIMEIDetailsBean>(nameList, HttpStatus.OK);
     }
 
 }

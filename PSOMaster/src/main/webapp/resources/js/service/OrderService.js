@@ -95,4 +95,21 @@ module.service('OrderService', function($http,$q) {
 		);
 	}
 	
+	/*
+	 *Service Method that will fetch Portal Line's SIM and IMEI details  
+	 * 
+	 */
+	this.getPortalLineSimandImei = function(orderID){
+		
+		return $http.get('getPortalLineSimandImei/'+orderID)
+		.then(
+				function(response){
+					return response.data;
+				}, 
+				function(errResponse){
+					return $q.reject(errResponse);
+				}
+		);
+	}
+	
 });

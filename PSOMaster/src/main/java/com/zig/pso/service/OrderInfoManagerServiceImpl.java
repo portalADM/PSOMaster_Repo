@@ -22,6 +22,7 @@ import com.zig.pso.rest.bean.EnsembleLineItemInfoBean;
 import com.zig.pso.rest.bean.OrderPortInDetailsResponseBean;
 import com.zig.pso.rest.bean.PortalEnrollmentInfo;
 import com.zig.pso.rest.bean.PortalLineItemInfoBean;
+import com.zig.pso.rest.bean.PortalOrderLineSIMandIMEIDetailsBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalOrderPortRequestBean;
 import com.zig.pso.rest.bean.PortalShipmentInfo;
@@ -311,4 +312,17 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
         
         return portDetails;
     }
+
+	/* (non-Javadoc)
+	 * @see com.zig.pso.service.OrderInfoManagerService#getPortalLineSimAndImeiDetails(java.lang.String)
+	 */
+	@Override
+	public PortalOrderLineSIMandIMEIDetailsBean getPortalLineSimAndImeiDetails(String orderId) {
+		PortalOrderLineSIMandIMEIDetailsBean portalLineListResponse = new PortalOrderLineSIMandIMEIDetailsBean();
+		
+		ArrayList<PortalShipmentInfo> portalLineSimandImeiList = orderDAO.getPortalLineSimAndImeiDetails(orderId);
+		portalLineListResponse.setPortalLineSimandImeiList(portalLineSimandImeiList);
+		
+		return portalLineListResponse;
+	}
 }

@@ -15,6 +15,7 @@ import com.zig.pso.rest.bean.EnsOrderPortRequestBean;
 import com.zig.pso.rest.bean.EnsembleLineItemInfoBean;
 import com.zig.pso.rest.bean.PortalEnrollmentInfo;
 import com.zig.pso.rest.bean.PortalLineItemInfoBean;
+import com.zig.pso.rest.bean.PortalOrderLineSIMandIMEIDetailsBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalOrderPortRequestBean;
 import com.zig.pso.rest.bean.PortalShipmentInfo;
@@ -51,4 +52,6 @@ public interface OrderInfoManagerDAO
     public ArrayList<PortalOrderPortRequestBean> getPortalOrderPortDetails(String orderId);
     
     public ArrayList<EnsOrderPortRequestBean> getEnsOrderPortDetails(String orderId);
+    
+    public ArrayList<PortalShipmentInfo>  getPortalLineSimAndImeiDetails(String orderId);
 }

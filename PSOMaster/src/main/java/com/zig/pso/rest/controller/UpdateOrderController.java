@@ -37,6 +37,7 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.logging.PSOLoggerSrv;
+import com.zig.pso.rest.bean.AllowedUpdatesResponseBean;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.BulkUpdateInputBean;
 import com.zig.pso.rest.bean.BulkUpdateOrderResponseBean;
@@ -57,7 +58,7 @@ public class UpdateOrderController
     @RequestMapping(value = "/updateOrder", method = RequestMethod.POST)
     public ResponseEntity<BaseResponseBean> updateSingleOrder(@RequestBody UpdateOrderRequestBean updateOrderRequest)
     {
-        String updateDetails = "Order ID : "+updateOrderRequest.getOrderId()+" \nNew Value : "+updateOrderRequest.getNewValue()+" \nUpdate Type : "+updateOrderRequest.getType();
+        String updateDetails = "Order ID : "+updateOrderRequest.getOrderId()+" \nNew Value : "+updateOrderRequest.getNewValue()+" \nUpdate Type : "+updateOrderRequest.getType()+" \nLine Id : "+updateOrderRequest.getLineId();
         PSOLoggerSrv.printDEBUG("UpdateOrderController", "updateSingleOrder", updateDetails);
 
         BaseResponseBean nameList = new BaseResponseBean();
@@ -186,5 +187,15 @@ public class UpdateOrderController
             PSOLoggerSrv.printERROR("UpdateOrderController", "exportExcel", e);
         }
 
+    }
+    
+    @RequestMapping(value = "/getAllowedUpdates", method = RequestMethod.POST)
+    public ResponseEntity<AllowedUpdatesResponseBean> getAllowedUpdates(HttpServletRequest request, @RequestParam Map<String, Object> params)
+    {
+        PSOLoggerSrv.printDEBUG("UpdateOrderController", "getAllowedUpdates", null);
+
+        AllowedUpdatesResponseBean allowdedUpdatelist = new AllowedUpdatesResponseBean();
+        allowdedUpdatelist = updateService.getAllowdedUpdates();
+        return new ResponseEntity<AllowedUpdatesResponseBean>(allowdedUpdatelist, HttpStatus.OK);
     }
 }
