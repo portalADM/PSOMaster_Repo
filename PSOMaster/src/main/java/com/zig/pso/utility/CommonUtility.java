@@ -8,6 +8,9 @@
  */
 package com.zig.pso.utility;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
@@ -55,5 +58,14 @@ public class CommonUtility
     public static String getLogRefID()
     {
     	return RandomStringUtils.random(20, true, true);
+    }
+    
+    /*
+     * This method returns RANDOM name for temporary table for bulk update operation 
+     */
+    public static String getTempTableName()
+    {
+        String tempTableName = "TEMP_BU_" + new SimpleDateFormat("yyyyMMddhhmm").format(new Date());
+        return tempTableName;
     }
 }

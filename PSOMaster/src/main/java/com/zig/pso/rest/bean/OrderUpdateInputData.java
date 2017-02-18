@@ -15,43 +15,37 @@ import java.io.Serializable;
  */
 public class OrderUpdateInputData implements Serializable
 {
-
-    /**
-     * 
-     */
     private static final long serialVersionUID = -8676915922829518246L;
 
     private String orderId;
+    private String lineId;
     private String status;
     private String sim;
     private String imei;
     private String retryCount;
-
-    /**
-     * 
-     */
+   
     public OrderUpdateInputData()
     {
         super();
     }
-
     /**
      * @param orderId
+     * @param lineId
      * @param status
      * @param sim
      * @param imei
      * @param retryCount
      */
-    public OrderUpdateInputData(String orderId, String status, String sim, String imei, String retryCount)
+    public OrderUpdateInputData(String orderId, String lineId, String status, String sim, String imei, String retryCount)
     {
         super();
         this.orderId = orderId;
+        this.lineId = lineId;
         this.status = status;
         this.sim = sim;
         this.imei = imei;
         this.retryCount = retryCount;
     }
-
     /**
      * @return the orderId
      */
@@ -59,7 +53,6 @@ public class OrderUpdateInputData implements Serializable
     {
         return orderId;
     }
-
     /**
      * @param orderId the orderId to set
      */
@@ -67,7 +60,20 @@ public class OrderUpdateInputData implements Serializable
     {
         this.orderId = orderId;
     }
-
+    /**
+     * @return the lineId
+     */
+    public String getLineId()
+    {
+        return lineId;
+    }
+    /**
+     * @param lineId the lineId to set
+     */
+    public void setLineId(String lineId)
+    {
+        this.lineId = lineId;
+    }
     /**
      * @return the status
      */
@@ -75,7 +81,6 @@ public class OrderUpdateInputData implements Serializable
     {
         return status;
     }
-
     /**
      * @param status the status to set
      */
@@ -83,7 +88,6 @@ public class OrderUpdateInputData implements Serializable
     {
         this.status = status;
     }
-
     /**
      * @return the sim
      */
@@ -91,7 +95,6 @@ public class OrderUpdateInputData implements Serializable
     {
         return sim;
     }
-
     /**
      * @param sim the sim to set
      */
@@ -99,7 +102,6 @@ public class OrderUpdateInputData implements Serializable
     {
         this.sim = sim;
     }
-
     /**
      * @return the imei
      */
@@ -107,7 +109,6 @@ public class OrderUpdateInputData implements Serializable
     {
         return imei;
     }
-
     /**
      * @param imei the imei to set
      */
@@ -115,7 +116,6 @@ public class OrderUpdateInputData implements Serializable
     {
         this.imei = imei;
     }
-
     /**
      * @return the retryCount
      */
@@ -123,7 +123,6 @@ public class OrderUpdateInputData implements Serializable
     {
         return retryCount;
     }
-
     /**
      * @param retryCount the retryCount to set
      */
@@ -131,10 +130,7 @@ public class OrderUpdateInputData implements Serializable
     {
         this.retryCount = retryCount;
     }
-
-    /*
-     * (non-Javadoc)
-     * 
+    /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -143,16 +139,14 @@ public class OrderUpdateInputData implements Serializable
         final int prime = 31;
         int result = 1;
         result = prime * result + ((imei == null) ? 0 : imei.hashCode());
+        result = prime * result + ((lineId == null) ? 0 : lineId.hashCode());
         result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
         result = prime * result + ((retryCount == null) ? 0 : retryCount.hashCode());
         result = prime * result + ((sim == null) ? 0 : sim.hashCode());
         result = prime * result + ((status == null) ? 0 : status.hashCode());
         return result;
     }
-
-    /*
-     * (non-Javadoc)
-     * 
+    /* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -171,6 +165,13 @@ public class OrderUpdateInputData implements Serializable
                 return false;
         }
         else if (!imei.equals(other.imei))
+            return false;
+        if (lineId == null)
+        {
+            if (other.lineId != null)
+                return false;
+        }
+        else if (!lineId.equals(other.lineId))
             return false;
         if (orderId == null)
         {
@@ -202,16 +203,16 @@ public class OrderUpdateInputData implements Serializable
             return false;
         return true;
     }
-
-    /*
-     * (non-Javadoc)
-     * 
+    /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString()
     {
-        return "OrderUpdateInputData [orderId=" + orderId + ", status=" + status + ", sim=" + sim + ", imei=" + imei + ", retryCount=" + retryCount + "]";
+        return "OrderUpdateInputData [orderId=" + orderId + ", lineId=" + lineId + ", status=" + status + ", sim=" + sim + ", imei=" + imei + ", retryCount=" + retryCount + "]";
     }
 
+    
+    
+    
 }

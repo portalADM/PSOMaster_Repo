@@ -82,22 +82,25 @@ public class UpdateOrderController
             ValidatedBulkUpdateOrderDetailsBean validatedOrders = updateService.validateUploadedData(orderBulkData);
             if(validatedOrders.getValidOrderData().size()>0)
             {
-                if (updateType.equalsIgnoreCase(PSOConstants.STATUS))
-                {
-                    response = updateService.updateBulkOrderStatus(validatedOrders.getValidOrderData());
-                }
-                else if (updateType.equalsIgnoreCase(PSOConstants.SIM))
-                {
-                    response = updateService.updateBulkOrderSim(validatedOrders.getValidOrderData());
-                }
-                else if (updateType.equalsIgnoreCase(PSOConstants.IMEI))
-                {
-                    response = updateService.updateBulkOrderImei(validatedOrders.getValidOrderData());
-                }
-                else if (updateType.equalsIgnoreCase(PSOConstants.RETRY_COUNT))
-                {
-                    response = updateService.updateBulkOrderRetryCount(validatedOrders.getValidOrderData());
-                }
+                
+                bulkUpdateResponse.setTempTableDataList(validatedOrders.getValidOrderData());
+                
+//                if (updateType.equalsIgnoreCase(PSOConstants.STATUS))
+//                {
+//                    response = updateService.updateBulkOrderStatus(validatedOrders.getValidOrderData());
+//                }
+//                else if (updateType.equalsIgnoreCase(PSOConstants.SIM))
+//                {
+//                    response = updateService.updateBulkOrderSim(validatedOrders.getValidOrderData());
+//                }
+//                else if (updateType.equalsIgnoreCase(PSOConstants.IMEI))
+//                {
+//                    response = updateService.updateBulkOrderImei(validatedOrders.getValidOrderData());
+//                }
+//                else if (updateType.equalsIgnoreCase(PSOConstants.RETRY_COUNT))
+//                {
+//                    response = updateService.updateBulkOrderRetryCount(validatedOrders.getValidOrderData());
+//                }
                 
                 bulkUpdateResponse.setErrorCode(response.getErrorCode());
                 bulkUpdateResponse.setErrorMsg(response.getErrorMsg());
@@ -110,10 +113,7 @@ public class UpdateOrderController
             }
 
             bulkUpdateResponse.setInvalidOrders(validatedOrders.getInvalidOrders());
-
-            
-            
-
+            bulkUpdateResponse.setUpdateType(updateType);
         }
         return new ResponseEntity<BaseResponseBean>(bulkUpdateResponse, HttpStatus.OK);
     }

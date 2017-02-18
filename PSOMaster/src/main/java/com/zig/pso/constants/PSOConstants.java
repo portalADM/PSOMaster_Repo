@@ -49,6 +49,7 @@ public class PSOConstants
 
     public final static String BACKEND_ERROR = "There is a backend Error. Please try after some time.";
     public final static String BULK_UPDATE_SUCCESS = "Bulk Updates done successfully";
+    public final static String BULK_TEMP_INSERT_SUCCESS = "Bulk data insert done successfully";
 
     /*
      * Update Order Contants

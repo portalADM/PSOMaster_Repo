@@ -356,21 +356,56 @@
 	          <div class="modal-content">
 	            <div class="modal-header">
 	              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	              <h4 class="modal-title">Below Orders are Invalid</h4>
+	              <h4 class="modal-title">Please review and Update</h4>
 	            </div>
-	            <div class="modal-body ">
-	              <table cellpadding="10px" cellspacing="10px">
-	              	<tbody>
-	              		<tr ng-repeat="orders in inValidOrders">
-	              			<td>{{orders}}</td>
-	              		</tr>
-	              	</tbody>    
-	              </table>
+	            <div class="modal-body " ng-init="accordion='Valid'">
+           		 	<ul class="nav nav-tabs">
+		               <li ng-class="{active:accordion=='Valid'}"><a data-toggle="tab" ng-click="accordion = 'Valid'">Valid Order Data</a></li>
+		               <li ng-class="{active:accordion=='InValid'}"><a data-toggle="tab" ng-click="accordion = 'InValid'">InValid Order Data</a></li>
+		            </ul>
+		            <div id="myTabContent" class="tab-content">
+		                <div class="tab-pane fade active in" id="home" ng-show="accordion=='Valid'">
+							 <table class="table table-striped table-hover ">
+							 	<thead>
+							 		<tr>
+								 		<th>Order ID</th>
+								 		<th ng-show="tempTblUpdateType=='sim' || tempTblUpdateType=='imei'">Line ID</th>
+								 		<th ng-show="tempTblUpdateType=='status'">Status</th>
+								 		<th ng-show="tempTblUpdateType=='sim'">SIM</th>
+								 		<th ng-show="tempTblUpdateType=='imei'">IMEI</th>
+								 		<th ng-show="tempTblUpdateType=='retry'">Retry Count</th>
+								 	</tr>
+							 	</thead>
+				              	<tbody>
+				              		<tr ng-repeat="data in tempTableDataList">
+				              			<td>{{data.orderId}}</td>
+				              			<td ng-show="tempTblUpdateType=='sim' || tempTblUpdateType=='imei'">{{data.lineId}}</td>
+				              			<td ng-show="tempTblUpdateType=='status'">{{data.status}}</td>
+				              			<td ng-show="tempTblUpdateType=='sim'">{{data.sim}}</td>
+				              			<td ng-show="tempTblUpdateType=='imei'">{{data.imei}}</td>
+				              			<td ng-show="tempTblUpdateType=='retry'">{{data.retryCount}}</td>
+				              		</tr>
+				              	</tbody>    
+				              </table>
+				              <button type="submit" class="btn btn-default" ng-click="searchOrderDetails()">Update</button>
+		                </div>
+		                <div class="tab-pane fade active in" id="profile" ng-show="accordion=='InValid'">
+							 <table cellpadding="10px" cellspacing="10px">
+				              	<tbody>
+				              		<tr ng-repeat="orders in inValidOrders">
+				              			<td>{{orders}}</td>
+				              		</tr>
+				              	</tbody>    
+				              </table>
+		                </div>
+		            </div>
+				      
 	            </div>
 	          </div>
 	        </div>
 	      </div>
 		<!-- Bulk Update Message Popup Panel start -->
+		
 		
 			
 		</div>

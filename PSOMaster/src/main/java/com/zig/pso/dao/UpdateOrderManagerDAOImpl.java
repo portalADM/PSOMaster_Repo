@@ -9,6 +9,7 @@ package com.zig.pso.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.OrderUpdateInputData;
+import com.zig.pso.rest.bean.TempInsertBUResponse;
 import com.zig.pso.rest.bean.UpdateOrderRequestBean;
 import com.zig.pso.utility.CommonUtility;
 import com.zig.pso.utility.DBConnection;
@@ -482,6 +484,138 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         }
 
         return updateOrderRes;
+    }
+    
+    public BaseResponseBean createTempTableForBulkUpdate(String tempTableName)
+    {
+        BaseResponseBean createTempTableResp = new BaseResponseBean();
+        String logRefID = CommonUtility.getLogRefID();
+        
+        String sql = OrderQueries.getCreateTempTableForBulkUpdateSQL();
+        
+        try
+        {
+            sql = sql.replace("<TABLE_NAME>", tempTableName);
+            
+            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm.execute();
+            
+            createTempTableResp.setErrorCode(PSOConstants.SUCCESS_CODE);
+            createTempTableResp.setErrorMsg(PSOConstants.BULK_UPDATE_SUCCESS);
+            createTempTableResp.setLogRefId(logRefID);
+            
+            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "createTempTableForBulkUpdate", logRefID,sql,"Creating Temp table for Bulk update", createTempTableResp.getErrorMsg());
+        }
+        catch (SQLException e)
+        {
+            createTempTableResp.setErrorCode(PSOConstants.ERROR_CODE);
+            createTempTableResp.setErrorMsg(PSOConstants.BACKEND_ERROR);
+            createTempTableResp.setLogRefId(logRefID);
+            
+            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "createTempTableForBulkUpdate", logRefID, sql,"Creating Temp table for Bulk update", e);
+        }
+
+        return createTempTableResp;
+    }
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.dao.UpdateOrderManagerDAO#insertBulkOrderDataInTempTable(java.util.ArrayList)
+     */
+    @Override
+    public TempInsertBUResponse insertBulkOrderDataInTempTable(ArrayList<OrderUpdateInputData> orderUpdateData, String updateType)
+    {
+        TempInsertBUResponse insertDataInTempTableResp = new TempInsertBUResponse();
+        String logRefID = CommonUtility.getLogRefID();
+        
+        String tempTableName = CommonUtility.getTempTableName();
+        
+        BaseResponseBean createTempTableResp = createTempTableForBulkUpdate(tempTableName);
+        if(createTempTableResp.getErrorCode()==PSOConstants.SUCCESS_CODE)
+        {
+            String sql = OrderQueries.getInsertBulkOrderInTempTableSQL();
+            sql = sql.replace("<TABLE_NAME>", tempTableName);
+            
+            try
+            {
+                PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+
+                for (OrderUpdateInputData order : orderUpdateData)
+                {
+                    pstm.setString(1, order.getOrderId());
+                    pstm.setLong(2, Long.parseLong((order.getLineId()!=null)?order.getLineId():"0"));
+                    pstm.setString(3, order.getStatus());
+                    pstm.setString(4, order.getSim());
+                    pstm.setString(5, order.getImei());
+                    pstm.setInt(6, Integer.parseInt((order.getRetryCount()!=null)?order.getRetryCount():"0"));
+                    pstm.setString(7, "ADMIN");
+                    pstm.addBatch();
+                }
+
+                int[] recordsInserted = pstm.executeBatch();
+                if (recordsInserted.length < 0)
+                {
+                    insertDataInTempTableResp.setErrorCode(PSOConstants.ERROR_CODE);
+                    insertDataInTempTableResp.setErrorMsg(PSOConstants.BACKEND_ERROR);
+                    insertDataInTempTableResp.setLogRefId(logRefID);
+                }
+                else
+                {
+                    insertDataInTempTableResp.setErrorCode(PSOConstants.SUCCESS_CODE);
+                    insertDataInTempTableResp.setErrorMsg(PSOConstants.BULK_TEMP_INSERT_SUCCESS);
+                    insertDataInTempTableResp.setLogRefId(logRefID);
+                }
+                
+                PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "insertBulkOrderDataInTempTable", logRefID,sql,orderUpdateData, insertDataInTempTableResp.getErrorMsg());
+            }
+            catch (SQLException e)
+            {
+                insertDataInTempTableResp.setErrorCode(PSOConstants.ERROR_CODE);
+                insertDataInTempTableResp.setErrorMsg(PSOConstants.BACKEND_ERROR);
+                insertDataInTempTableResp.setLogRefId(logRefID);
+                
+                PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "insertBulkOrderDataInTempTable", logRefID, sql,orderUpdateData, e);
+            }
+        }
+        
+        insertDataInTempTableResp.setTempTableName(tempTableName);
+        return insertDataInTempTableResp;
+    }
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.dao.UpdateOrderManagerDAO#getBulkOrderDataFromTempTable(java.lang.String)
+     */
+    @Override
+    public ArrayList<OrderUpdateInputData> getBulkOrderDataFromTempTable(String tempTableName)
+    {
+        ArrayList<OrderUpdateInputData> tempTableDataList = new ArrayList<OrderUpdateInputData>();
+        OrderUpdateInputData orderData = null;
+        
+        String sql = OrderQueries.getReadTempTableforBulkOrderSQL();
+        sql = sql.replace("<TABLE_NAME>", tempTableName);
+        
+        try
+        {
+            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next())
+            {
+                orderData = new OrderUpdateInputData();
+                orderData.setImei(rs.getString("IMEI"));
+                orderData.setLineId(rs.getString("LINE_ID"));
+                orderData.setOrderId(rs.getString("ORDER_ID"));
+                orderData.setRetryCount(rs.getString("RETRY"));
+                orderData.setSim(rs.getString("SIM"));
+                orderData.setStatus(rs.getString("STATUS"));
+                tempTableDataList.add(orderData);
+            }
+
+        }
+        catch (SQLException e)
+        {
+            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "getBulkOrderDataFromTempTable", e);
+        }
+        
+        return tempTableDataList;
     }
 
 }

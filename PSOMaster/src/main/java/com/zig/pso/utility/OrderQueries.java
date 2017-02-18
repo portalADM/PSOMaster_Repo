@@ -149,4 +149,19 @@ public class OrderQueries
         return orderProp.getProperty("order.getOrderLineSIMandIMEIDetails");
     }
     
+    public static String getCreateTempTableForBulkUpdateSQL()
+    {
+        return orderProp.getProperty("order.createTempTableForBulkUpdate");
+    }
+    
+    public static String getInsertBulkOrderInTempTableSQL()
+    {
+        return orderProp.getProperty("order.insertBulkOrderInTempTable");
+    }
+    
+    public static String getReadTempTableforBulkOrderSQL()
+    {
+        return orderProp.getProperty("order.readTempTableforBulkOrder");
+    }
+    
 }

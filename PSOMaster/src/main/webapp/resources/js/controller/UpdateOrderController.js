@@ -32,6 +32,7 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 	  * This method will upload the file to update orders in bulk.
 	  */
 	 $scope.uploadFile = function(){
+		 
 		 var updateType = $scope.updateType;
 		 if(undefined == $scope.myFile){
 			 MessageService.showError('Please upload File to update Orders',5000);
@@ -40,7 +41,7 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 		 var file = $scope.myFile;
 		 var uploadUrl = "upload/"+$scope.updateType;
 	      
-	     updateBulkOrder(file,uploadUrl);
+	     uploadAndReviewOrders(file,uploadUrl);
 	 };
 	 
 	 /*
@@ -156,14 +157,17 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 	 }
 	 
 	 /*
-	  * This method will update bulk orders 
+	  * This method will upload and review bulk orders 
 	  */
-	 function updateBulkOrder(file,uploadUrl){
+	 function uploadAndReviewOrders(file,uploadUrl){
 	      
-	      FileUploadService.uploadFileToUrl(file, uploadUrl).then(
+	     FileUploadService.uploadFileToUrl(file, uploadUrl).then(
 				function(response) {
 					if(response.errorCode == 0){
+						$scope.tempTblUpdateType = response.updateType;
+						$scope.tempTableDataList = response.tempTableDataList;
 						MessageService.showSuccess(response.errorMsg,5000);
+						$("#UpdateResponse-modal").modal();
 					}
 					else if(response.errorCode == 1){
 						MessageService.showInfo(response.errorMsg,5000);
@@ -182,6 +186,10 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 	       			MessageService.showError(errResponse,5000);
 		        }
 		  );
+	 }
+	 
+	 function updateBulkOrders(){
+		 
 	 }
 	 
 	 /*

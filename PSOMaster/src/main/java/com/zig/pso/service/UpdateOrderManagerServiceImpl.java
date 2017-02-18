@@ -7,7 +7,6 @@
  */
 package com.zig.pso.service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -28,6 +27,7 @@ import com.zig.pso.rest.bean.AllowedUpdatesResponseBean;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.BulkUpdateInputBean;
 import com.zig.pso.rest.bean.OrderUpdateInputData;
+import com.zig.pso.rest.bean.TempInsertBUResponse;
 import com.zig.pso.rest.bean.UpdateOrderRequestBean;
 import com.zig.pso.rest.bean.ValidatedBulkUpdateOrderDetailsBean;
 import com.zig.pso.utility.PropertyReader;
@@ -176,7 +176,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
     @Override
     public BulkUpdateInputBean getUploadedFileData(MultipartFile file, String updateType)
     {
-        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "updateBulkOrderRetryCount", "updateType: "+ updateType);
+        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "getUploadedFileData", "updateType: "+ updateType);
         BulkUpdateInputBean orderBulkData = new BulkUpdateInputBean();
         ArrayList<OrderUpdateInputData> orderUpdateData = new ArrayList<OrderUpdateInputData>();
 
@@ -280,7 +280,16 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
         PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "validateUploadedData", debugMsg);
         
         validatedOrderData.setInvalidOrders(invalidOrderIDs);
-        validatedOrderData.setOrderUpdateData(validOerderData);
+        
+        
+        /* Insert Valid records in to temporary table for further Bulk update process */
+        TempInsertBUResponse insertTempDataResp = updateDAO.insertBulkOrderDataInTempTable(validOerderData, orderBulkData.getUpdateType());
+        if(insertTempDataResp.getErrorCode() == PSOConstants.SUCCESS_CODE)
+        {
+            ArrayList<OrderUpdateInputData> tempTableDataList = updateDAO.getBulkOrderDataFromTempTable(insertTempDataResp.getTempTableName());
+            validatedOrderData.setOrderUpdateData(tempTableDataList);
+        }
+        
         return validatedOrderData;
     }
 
