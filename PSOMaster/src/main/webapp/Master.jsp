@@ -62,10 +62,18 @@
 	<script src="resources/js/libs/bootstrap/bootstrap.min.js"></script>
 	<script src="resources/js/libs/bootstrap/bootswatch.js"></script>
 	<script src="resources/js/libs/jquery/jquery-ui.js"></script>
-	<script src="resources/js/libs/charts/Chart.js"></script>
-	<script src="resources/js/libs/charts/angular-chart.js"></script>
+	<!-- <script src="resources/js/libs/charts/Chart.js"></script>
+	<script src="resources/js/libs/charts/angular-chart.js"></script> -->
+	<script src="resources/js/libs/charts/fusionChart/fusioncharts.js"></script>
+	<script src="resources/js/libs/charts/fusionChart/fusioncharts.charts.js"></script>
+	<script src="resources/js/libs/charts/fusionChart/angular-fusioncharts.min.js"></script>
 	<script src="resources/js/libs/utils/xml2json.js"></script>
 	<script src="resources/js/libs/loadMask/treasure-overlay-spinner.js"></script>
+	
+	<script src="resources/js/libs/charts/fusionChart/themes/fusioncharts.theme.carbon.js"></script>
+	<script src="resources/js/libs/charts/fusionChart/themes/fusioncharts.theme.fint.js"></script>
+	<script src="resources/js/libs/charts/fusionChart/themes/fusioncharts.theme.ocean.js"></script>
+	<script src="resources/js/libs/charts/fusionChart/themes/fusioncharts.theme.zune.js"></script>
 	
 	<!-- Application Modules Controller Import -->
 	<script src="resources/js/app.js"></script>

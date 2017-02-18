@@ -49,9 +49,97 @@ module.controller("DashboardController", function($scope, $routeParams,$http,Das
 	  $scope.seriesColors = ["#72B3D4","#D5D5D5","#FF1F22","#1ECCC9","#FFA940","#A4B1C7","#E151B6"]
 	  
 	  
+	  $scope.myDataSource = {
+			    chart: {
+			        caption: "Stuck Order backlogs in last 10 Days",
+			        subCaption: "Stuck Order backlogs in last 10 Days",
+			        numberPrefix: "",
+			        theme: "ocean"
+			    },
+			    data:[{
+			        label: "OSHF",
+			        value: "34"
+			    },
+			    {
+			        label: "ORFI",
+			        value: "54"
+			    },
+			    {
+			        label: "ORLF",
+			        value: "65"
+			    },
+			    {
+			        label: "ACTF",
+			        value: "78"
+			    },
+			    {
+			        label: "OURF",
+			        value: "89"
+			    }]
+			};
+	  
+	  $scope.myDataSource2 = {
+			    chart: {
+			        caption: "Stuck Order backlogs in last 10 Days",
+			        subCaption: "Stuck Order backlogs in last 10 Days",
+			        numberPrefix: "",
+			        theme: "ocean"
+			    },
+			    data:[{
+			        label: "OSHF1",
+			        value: "55"
+			    },
+			    {
+			        label: "ORFI1",
+			        value: "66"
+			    },
+			    {
+			        label: "ORLF1",
+			        value: "77"
+			    },
+			    {
+			        label: "ACTF1",
+			        value: "88"
+			    },
+			    {
+			        label: "OURF1",
+			        value: "99"
+			    }]
+			};
+	  
+	  $scope.myDataSource3 = {
+			    chart: {
+			        caption: "Test 3",
+			        subCaption: "Test 3",
+			        numberPrefix: "",
+			        theme: "ocean"
+			    },
+			    data:[{
+			        label: "OSHF",
+			        value: "34"
+			    },
+			    {
+			        label: "ORFI",
+			        value: "54"
+			    },
+			    {
+			        label: "ORLF",
+			        value: "65"
+			    },
+			    {
+			        label: "ACTF",
+			        value: "78"
+			    },
+			    {
+			        label: "OURF",
+			        value: "89"
+			    }]
+			};
+	  
+	  
 	$scope.init=function()
 	{
-		$rootScope.spinner.on();
+		//$rootScope.spinner.on();
 		DashboardService.getStuckOrderCount().then(
 				function(data) {
 					$rootScope.spinner.off()

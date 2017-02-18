@@ -1,4 +1,4 @@
-var module = angular.module("PSOMaster", [ 'ngRoute','ngSanitize','chart.js','ngFlash','ngAnimate', 'ui.bootstrap','treasure-overlay-spinner']);
+var module = angular.module("PSOMaster", [ 'ngRoute','ngSanitize','ng-fusioncharts','ngFlash','ngAnimate', 'ui.bootstrap','treasure-overlay-spinner']);//,'chart.js'
 
 module.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/dashboard', {
@@ -23,6 +23,10 @@ module.config([ '$routeProvider', function($routeProvider) {
 	})
 	.when('/sendEmail', {
 		templateUrl : 'views/sendEmail.jsp',
+		controller : 'SendEmailController'
+	})
+	.when('/demo', {
+		templateUrl : 'views/demo.jsp',
 		controller : 'SendEmailController'
 	})
 	.when('/StuckOrderDetails/:orderStatus', {
