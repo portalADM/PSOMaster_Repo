@@ -16,6 +16,9 @@ body{
 .marLeft8{
 	margin-left: 8px;
 }
+.marLeft10{
+	margin-left: 8px;
+}
 .marLeft25{
 	margin-left: 25px;
 }
@@ -191,7 +194,6 @@ body{
 }
 
 .clrBlue{
-	color: #317eac;
 	font-size: 18px;
 }
 

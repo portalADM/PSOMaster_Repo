@@ -455,16 +455,16 @@
 							<tbody  ng-repeat=" api in apiOrderDetails | filter: apiName">
 								<tr ng-class="(api.errorInResponse=='Y') ? ['highlightRowRed'] : []">
 									<td>
-						              <span class="glyphicon glyphicon-minus-sign cursorPointer" ng-if="api.expanded" ng-click="api.expanded = false"></span>
-						              <span class="glyphicon glyphicon-plus-sign cursorPointer" ng-if="!api.expanded" ng-click="api.expanded = true"></span>
+						              <span class="glyphicon glyphicon-minus-sign cursorPointer clrBlue" ng-if="api.expanded" ng-click="api.expanded = false"></span>
+						              <span class="glyphicon glyphicon-plus-sign cursorPointer clrBlue" ng-if="!api.expanded" ng-click="api.expanded = true"></span>
 						            </td>
 									<td>{{api.source}}</td>
 									<td>{{api.apiname}}</td>
 									<td>{{api.sysCreationDate}}</td>
 									<td>{{api.originatorID}}</td>
 									<td>
-										<span class="glyphicon glyphicon-arrow-up  cursorPointer clrBlue" ng-click="getAPIRequestResponse(api.seqNumber,'request')"></span>
-										<span class="glyphicon glyphicon-arrow-down marLeft25 cursorPointer clrBlue" ng-click="getAPIRequestResponse(api.seqNumber,'response')"></span>
+										<span class="glyphicon glyphicon-upload marLeft10 cursorPointer clrBlue" ng-click="getAPIRequestResponse(api.seqNumber,'request')"></span>
+										<span class="glyphicon glyphicon-download marLeft10 cursorPointer clrBlue" ng-click="getAPIRequestResponse(api.seqNumber,'response')"></span>
 									</td>
 								</tr>
 								<tr ng-if="api.expanded" ng-repeat-end="">
