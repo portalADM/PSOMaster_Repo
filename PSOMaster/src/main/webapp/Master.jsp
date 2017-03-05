@@ -14,7 +14,7 @@
 </head>
 <body ng-app="PSOMaster">
 	<div class="navbar navbar-default navbar-fixed-top">
-		<div class="container">
+		<div class="container menuBgClr ">
 			<div class="navbar-header">
 				<a href="#dashboard" class="navbar-brand"> <span
 					class="glyphicon glyphicon-briefcase marRight8"></span>PSO Master
@@ -46,7 +46,7 @@
 	</div>
 
 	<treasure-overlay-spinner active='spinner.active'>
-	<div class="container">
+	<div class="container minContainerHeight">
 		<div ng-view></div>
 	</div>
     </treasure-overlay-spinner> 

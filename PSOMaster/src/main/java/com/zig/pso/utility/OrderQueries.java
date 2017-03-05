@@ -83,6 +83,11 @@ public class OrderQueries
     {
         return orderProp.getProperty("order.getAPIRequest");
     }
+    
+    public static String getAPIResponse()
+    {
+        return orderProp.getProperty("order.getAPIResponse");
+    }
 
     public static String getOrderHandled()
     {

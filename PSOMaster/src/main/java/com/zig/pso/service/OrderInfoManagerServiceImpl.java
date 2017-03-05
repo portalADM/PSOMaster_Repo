@@ -265,11 +265,11 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
      * @see com.zig.pso.service.OrderInfoManagerService#getAPIRequestBody(java.lang.String)
      */
     @Override
-    public String getAPIRequestBody(String seq_number)
+    public String getAPIRequestResponseBody(String seq_number,String callType)
     {
         PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getAPIRequestBody", "Seq_number : " + seq_number);
 
-        return orderDAO.getAPIRequestBody(seq_number);
+        return orderDAO.getAPIRequestResponseBody(seq_number,callType);
     }
 
     /* (non-Javadoc)

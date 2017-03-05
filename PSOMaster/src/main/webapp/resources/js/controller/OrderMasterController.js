@@ -173,8 +173,8 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	
 	
 	$scope.orderAPIReqBody = null;
-	$scope.getAPIRequest = function(seq_number){
-		OrderService.getOrderAPIRequest(seq_number).then(
+	$scope.getAPIRequestResponse = function(seq_number,callType){
+		OrderService.getOrderAPIRequestResponse(seq_number,callType).then(
 				function(response) {
 					document.getElementById("myApiReqBody").innerHTML=response;
 					$scope.orderAPIReqBody  = JSON.stringify(response, undefined, 4);

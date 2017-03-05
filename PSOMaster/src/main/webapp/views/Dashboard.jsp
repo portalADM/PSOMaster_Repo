@@ -57,8 +57,8 @@
 	          </div>
 	          <div class="panel-body panelMinHeight">
 		       	<h3 id="navbar">
-					<a class="glyphicon glyphicon-chevron-left cursorPointer marRight40" ng-click="showGraph('prev')"></a>{{curDate}}
-					<a class="glyphicon glyphicon-chevron-right cursorPointer marLeft40" ng-click="showGraph('next')"></a>
+					<a class="glyphicon glyphicon-chevron-left cursorPointer marRight40 noTextDeco" ng-click="showGraph('prev')"></a>{{curDate}}
+					<a class="glyphicon glyphicon-chevron-right cursorPointer marLeft40 noTextDeco" ng-click="showGraph('next')"></a>
 				</h3>
 	              <div id="myTabContent" class="tab-content">
 	              			<div fusioncharts id="test3"

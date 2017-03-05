@@ -34,7 +34,7 @@ public interface OrderInfoManagerDAO
 
     public ArrayList<PortalShipmentInfo> getPortalShipmentInfoFromDB(String orderId);
 
-    public String getAPIRequestBody(String seq_number);
+    public String getAPIRequestResponseBody(String seq_number,String callType);
 
     public PortalOrderMasterResponseBean getZigAutoMasterData(String orderId);
 

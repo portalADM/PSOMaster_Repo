@@ -57,11 +57,11 @@ module.service('OrderService', function($http,$q) {
 	 *Service Method that will fetch Order API Request Body  
 	 * 
 	 */
-	this.getOrderAPIRequest=function(seq_number){
+	this.getOrderAPIRequestResponse=function(seq_number,CallType){
 		
 		return  $http({
 			  method: 'GET',
-			  url: 'getAPIRequest/'+seq_number,
+			  url: 'getAPIRequestResponse/'+seq_number+'/CallType/'+CallType,
               transformResponse : function(data) {
             	  var x2js = new X2JS();  
                   var aftCnv = x2js.xml_str2json(data);  
@@ -69,7 +69,6 @@ module.service('OrderService', function($http,$q) {
                 //return $.parseXML(data);
               }
 			  }).then(function successCallback(response) {
-				console.log(response);
 				return response.data;
 			  }, function errorCallback(response) {
 				  console.log(response);

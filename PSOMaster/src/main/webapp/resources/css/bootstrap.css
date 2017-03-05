@@ -1594,7 +1594,10 @@ pre code {
 }
 @media (min-width: 768px) {
   .container {
-    width: 750px;
+    /* width: 750px; */
+        width: 1350px !important;
+    background-color: white;
+    padding: 0px 50px 0px 50px;
   }
 }
 @media (min-width: 992px) {

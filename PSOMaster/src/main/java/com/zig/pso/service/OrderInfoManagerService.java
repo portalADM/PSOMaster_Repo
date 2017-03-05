@@ -48,7 +48,7 @@ public interface OrderInfoManagerService
      * @param seq_number
      * @return String
      */
-    public String getAPIRequestBody(String seq_number);
+    public String getAPIRequestResponseBody(String seq_number,String callType);
     
     /**
      * @param OrderId

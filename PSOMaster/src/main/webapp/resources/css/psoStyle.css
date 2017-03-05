@@ -1,4 +1,4 @@
-/*body {
+body{
 	font-family: 'Open Sans', sans-serif;
 	background: url(../images/5.jpg) no-repeat center fixed;
 	-webkit-background-size: cover;
@@ -6,7 +6,7 @@
 	-o-background-size: cover;
 	background-size: cover;
 	background-size: 100% 100%;
-}*/
+}
 
 
 .marRight8{
@@ -15,6 +15,9 @@
 
 .marLeft8{
 	margin-left: 8px;
+}
+.marLeft25{
+	margin-left: 25px;
 }
 
 .marLeft40{
@@ -140,6 +143,10 @@
 	    width: 60%;
 }
 
+.noTextDeco{
+	text-decoration: none !important
+}
+
 
 
 /*File Upload Button CSS Start*/
@@ -181,4 +188,21 @@
 
 .clrGREEN{
 	color: green;
+}
+
+.clrBlue{
+	color: #317eac;
+	font-size: 18px;
+}
+
+.highlightRowRed{
+	background-color: #efafaf !important;
+}
+
+.menuBgClr{
+	background-color: #022a50 !important;
+}
+
+.minContainerHeight{
+	min-height: 920px !important;
 }

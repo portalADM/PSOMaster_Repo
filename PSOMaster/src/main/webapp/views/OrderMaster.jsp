@@ -438,32 +438,38 @@
 				</div>
 				<div class="panel-body">
 					<div class="bs-component">
+						<div class="form-group">
+							<input type="text" class="form-control" ng-model="apiName" placeholder="Filter by API Name">
+						</div>
 						<table class="table table-striped table-hover ">
 							<thead>
 								<tr>
 									<th></th>
 									<th>Source</th>
-									<!-- <th>Error Message</th> -->
 									<th>API Name</th>
 									<th>Creation Date</th>
 									<th>Originator ID</th>
+									<th>Req / Res</th>
 								</tr>
 							</thead>
-							<tbody  ng-repeat=" api in apiOrderDetails">
-								<tr >
+							<tbody  ng-repeat=" api in apiOrderDetails | filter: apiName">
+								<tr ng-class="(api.errorInResponse=='Y') ? ['highlightRowRed'] : []">
 									<td>
 						              <span class="glyphicon glyphicon-minus-sign cursorPointer" ng-if="api.expanded" ng-click="api.expanded = false"></span>
 						              <span class="glyphicon glyphicon-plus-sign cursorPointer" ng-if="!api.expanded" ng-click="api.expanded = true"></span>
 						            </td>
 									<td>{{api.source}}</td>
-									<!-- <td>{{api.errorMessage}}</td> -->
-									<td><a class="cursorPointer" ng-click="getAPIRequest(api.seqNumber)">{{api.apiname}}</a></td>
+									<td>{{api.apiname}}</td>
 									<td>{{api.sysCreationDate}}</td>
 									<td>{{api.originatorID}}</td>
+									<td>
+										<span class="glyphicon glyphicon-arrow-up  cursorPointer clrBlue" ng-click="getAPIRequestResponse(api.seqNumber,'request')"></span>
+										<span class="glyphicon glyphicon-arrow-down marLeft25 cursorPointer clrBlue" ng-click="getAPIRequestResponse(api.seqNumber,'response')"></span>
+									</td>
 								</tr>
 								<tr ng-if="api.expanded" ng-repeat-end="">
 									<th colspan="2">Error Message</th>
-					            	<td colspan="3">{{api.errorMessage}}</td>
+					            	<td colspan="4">{{api.errorMessage}}</td>
 					            </tr>
 							</tbody>
 						</table> 
@@ -477,8 +483,7 @@
 				<div class="modal-dialog modal-lg">
 					<div class="modal-content">
 						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-hidden="true">&times;</button>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 							<h4 class="modal-title">API Request Body</h4>
 						</div>
 						<div class="modal-body " id="myApiReqBody">
@@ -518,8 +523,7 @@
 				<div class="modal-dialog modal-lg">
 					<div class="modal-content">
 						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-hidden="true">&times;</button>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 							<h4 class="modal-title">Portin Details</h4>
 						</div>
 						<div class="modal-body ">
@@ -560,7 +564,6 @@
 				                  <h3 class="panel-title">Ensemble Portin Details</h3>
 				                </div>
 				                <div class="panel-body">
-				                  	
 				                  	<div class="row">
 									 	<table class="table table-striped table-hover ">
 											<thead>

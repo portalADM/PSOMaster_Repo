@@ -238,7 +238,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 apiOutput.setSysCreationDate(rs.getString("SYS_CREATION_DATE"));
                 apiOutput.setOriginatorID(rs.getString("ORIGINATOR_ID"));
                 apiOutput.setSeqNumber(rs.getString("SEQ_NUM"));
-
+                apiOutput.setErrorInResponse(rs.getString("HASERROR"));
                 apiList.add(apiOutput);
             }
             orderApiRsponse.setOrderAPIList(apiList);
@@ -259,9 +259,9 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
      * @see com.zig.pso.dao.OrderInfoManagerDAO#getAPIRequestBody(java.lang.String)
      */
     @Override
-    public String getAPIRequestBody(String seq_number)
+    public String getAPIRequestResponseBody(String seq_number,String callType)
     {
-        String sql = OrderQueries.getAPIRequest();
+        String sql = ("request".equals(callType))?OrderQueries.getAPIRequest():OrderQueries.getAPIResponse();
 
         String apiReqBody = null;
 
@@ -273,7 +273,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
             while (rs.next())
             {
-                apiReqBody = rs.getString("REQUEST");
+                apiReqBody = rs.getString(1);
             }
 
         }
