@@ -125,8 +125,6 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 	 function updateOrderStatusAndRetryCount(updatetype){
 		 	var newValue='';
 		 	
-		 	updateData.retryCntOrderID
-			
 			if(updatetype=='status')
 				newValue=$scope.newStatus;
 			else if(updatetype=='retry')

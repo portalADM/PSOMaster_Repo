@@ -2,7 +2,7 @@ module.service('DashboardService', function($http,$q) {
 	
 	/*
 	 *Service Method that will fetch Stuck Order list   stuckOrderList
-	 * 
+	 *Stuck Order counts for Table	 * 
 	 */
 	this.getStuckOrderCount = function(){
 		
@@ -18,21 +18,7 @@ module.service('DashboardService', function($http,$q) {
 		);
 	}
 	
-	
-this.getStuckOrderForStatus = function(status){
-		
-		return $http.get('stuckOrderList/'+status)
-		.then(
-				function(response){
-					return response.data;
-				}, 
-				function(errResponse){
-					console.error('Error while fetching orders');
-					return $q.reject(errResponse);
-				}
-		);
-	}
-
+/*Stuck Orders handled in Last 10 Days*/
 this.getStuckOrderHandled = function(status){
 	
 	return $http.get('stuckOrderHandled/')
@@ -47,6 +33,7 @@ this.getStuckOrderHandled = function(status){
 	);
 }
 
+/*Orders stuck in different statuses*/
 this.getStuckOrderallStatus = function(status){
 	
 	return $http.get('stuckOrderallStatus/')
@@ -75,4 +62,21 @@ this.getStuckOrderBacklog = function(status){
 			}
 	);
 }
+
+
+this.getStuckOrderForStatus = function(status){
+		
+		return $http.get('stuckOrderList/'+status)
+		.then(
+				function(response){
+					return response.data;
+				}, 
+				function(errResponse){
+					console.error('Error while fetching orders');
+					return $q.reject(errResponse);
+				}
+		);
+	}
+
+
 });

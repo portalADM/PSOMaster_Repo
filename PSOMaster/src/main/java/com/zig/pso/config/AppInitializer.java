@@ -9,8 +9,10 @@
 
 package com.zig.pso.config;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+@Component
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer
 {
 

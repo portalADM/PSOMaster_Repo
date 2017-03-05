@@ -122,8 +122,8 @@ public class DashboardDAOImpl implements DashboardDAO
             while (rs.next())
             {
                 stuckOrderCount = new StuckOrdersCount();
-                stuckOrderCount.setCount(rs.getInt("count"));
-                stuckOrderCount.setOrderStatus(rs.getString("new_value"));
+                stuckOrderCount.setDateOfHandlingl(rs.getString(1));
+                stuckOrderCount.setCount(rs.getInt(2));
                 stuckOrderList.add(stuckOrderCount);
             }
 

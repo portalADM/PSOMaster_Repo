@@ -24,7 +24,6 @@ import com.zig.pso.rest.bean.EnsembleLineItemInfoBean;
 import com.zig.pso.rest.bean.OrderAPIDetailsBean;
 import com.zig.pso.rest.bean.PortalEnrollmentInfo;
 import com.zig.pso.rest.bean.PortalLineItemInfoBean;
-import com.zig.pso.rest.bean.PortalOrderLineSIMandIMEIDetailsBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
 import com.zig.pso.rest.bean.PortalOrderPortRequestBean;
 import com.zig.pso.rest.bean.PortalShipmentInfo;
@@ -674,4 +673,52 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
         return portLineList;
 	}
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.dao.OrderInfoManagerDAO#getOrderCurrentValue(java.lang.String, java.lang.String, java.lang.String)
+     */
+    @Override
+    public String getOrderCurrentValue(String orderId, String lineId, String updateType)
+    {
+        String currentValue = null;
+        String sql = null;
+        
+        if("sim".equalsIgnoreCase(updateType))
+        {
+            sql = OrderQueries.getCurrentSIMSQL();
+        }
+        else if("imei".equalsIgnoreCase(updateType))
+        {
+            sql = OrderQueries.getCurrentIMEISQL();
+        }
+        else if("status".equalsIgnoreCase(updateType))
+        {
+            sql = OrderQueries.getCurrentStatusSQL();
+        }
+        else if("retry".equalsIgnoreCase(updateType)){
+            sql = OrderQueries.getCurrentRetrySQL();
+        }
+        
+        try
+        {
+            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm.setString(1, orderId);
+            if("sim".equalsIgnoreCase(updateType) || "imei".equalsIgnoreCase(updateType)){
+                pstm.setString(2, lineId);
+            }
+            
+            
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next())
+            {
+                currentValue = rs.getString(1);
+            }
+        }
+        catch (SQLException e)
+        {
+            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getOrderCurrentValue", e);
+        }
+        
+        return currentValue;
+    }
 }

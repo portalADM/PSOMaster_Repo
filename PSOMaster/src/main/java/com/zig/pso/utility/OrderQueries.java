@@ -164,4 +164,21 @@ public class OrderQueries
         return orderProp.getProperty("order.readTempTableforBulkOrder");
     }
     
+    public static String getCurrentStatusSQL()
+    {
+        return orderProp.getProperty("order.getCurrentStatus");
+    }
+    public static String getCurrentSIMSQL()
+    {
+        return orderProp.getProperty("order.getCurrentSIMValue");
+    }
+    public static String getCurrentIMEISQL()
+    {
+        return orderProp.getProperty("order.getCurrentIMEIValue");
+    }
+    public static String getCurrentRetrySQL()
+    {
+        return orderProp.getProperty("order.getCurrentRetryCount");
+    }
+    
 }

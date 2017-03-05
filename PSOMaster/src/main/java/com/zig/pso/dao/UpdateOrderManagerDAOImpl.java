@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.zig.pso.constants.PSOConstants;
@@ -32,6 +33,9 @@ import com.zig.pso.utility.OrderQueries;
 public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
 {
     private Connection portalDBConnection = null;
+    
+    @Autowired
+    OrderInfoManagerDAO orderDAO;
 
     /**
      * @param portalDBConnection
@@ -56,6 +60,9 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         
         try
         {
+            
+            String currentStatus = orderDAO.getOrderCurrentValue(updateOrderRequest.getOrderId(), updateOrderRequest.getLineId(), updateOrderRequest.getType());
+            
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getNewValue());
             pstm.setString(2, updateOrderRequest.getOrderId());
@@ -69,7 +76,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             }
             else
             {
-                updateOrderRes = updateOrderTrack(updateOrderRequest, "ZIG_AUTO_MASTER",logRefID);
+                updateOrderRes = updateOrderTrack(updateOrderRequest, "ZIG_AUTO_MASTER",logRefID,currentStatus);
                 updateOrderRes.setErrorCode(PSOConstants.SUCCESS_CODE);
                 updateOrderRes.setErrorMsg(PSOConstants.ORDER_UPDATE_SUCCESSFULL);
                 updateOrderRes.setLogRefId(logRefID);
@@ -103,6 +110,8 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         
         try
         {
+            String currentSIMValue = orderDAO.getOrderCurrentValue(updateOrderRequest.getOrderId(), updateOrderRequest.getLineId(), updateOrderRequest.getType());
+            
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getNewValue());
             pstm.setString(2, updateOrderRequest.getOrderId());
@@ -116,7 +125,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             }
             else
             {
-                updateOrderRes = updateOrderTrack(updateOrderRequest, "ZIG_ORDER_SHIPMENT_INFO",logRefID);
+                updateOrderRes = updateOrderTrack(updateOrderRequest, "ZIG_ORDER_SHIPMENT_INFO",logRefID,currentSIMValue);
                 updateOrderRes.setErrorCode(PSOConstants.SUCCESS_CODE);
                 updateOrderRes.setErrorMsg(PSOConstants.ORDER_UPDATE_SUCCESSFULL);
                 updateOrderRes.setLogRefId(logRefID);
@@ -152,6 +161,8 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         
         try
         {
+            String currentIMEIValue = orderDAO.getOrderCurrentValue(updateOrderRequest.getOrderId(), updateOrderRequest.getLineId(), updateOrderRequest.getType());
+            
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getNewValue());
             pstm.setString(2, updateOrderRequest.getOrderId());
@@ -165,7 +176,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             }
             else
             {
-                updateOrderRes = updateOrderTrack(updateOrderRequest, "ZIG_ORDER_SHIPMENT_INFO",logRefID);
+                updateOrderRes = updateOrderTrack(updateOrderRequest, "ZIG_ORDER_SHIPMENT_INFO",logRefID,currentIMEIValue);
                 updateOrderRes.setErrorCode(PSOConstants.SUCCESS_CODE);
                 updateOrderRes.setErrorMsg(PSOConstants.ORDER_UPDATE_SUCCESSFULL);
                 updateOrderRes.setLogRefId(logRefID);
@@ -200,6 +211,8 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         
         try
         {
+            String currentRetryCount = orderDAO.getOrderCurrentValue(updateOrderRequest.getOrderId(), updateOrderRequest.getLineId(), updateOrderRequest.getType());
+            
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getNewValue());
             pstm.setString(2, updateOrderRequest.getOrderId());
@@ -212,7 +225,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             }
             else
             {
-                updateOrderRes = updateOrderTrack(updateOrderRequest, "ZIG_AUTO_MASTER",logRefID);
+                updateOrderRes = updateOrderTrack(updateOrderRequest, "ZIG_AUTO_MASTER",logRefID,currentRetryCount);
                 updateOrderRes.setErrorCode(PSOConstants.SUCCESS_CODE);
                 updateOrderRes.setErrorMsg(PSOConstants.ORDER_UPDATE_SUCCESSFULL);
                 updateOrderRes.setLogRefId(logRefID);
@@ -236,7 +249,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
      * 
      * @see com.zig.pso.dao.UpdateOrderManagerDAO#updateOrderTrack(com.zig.pso.rest.bean.UpdateOrderRequestBean)
      */
-    public BaseResponseBean updateOrderTrack(UpdateOrderRequestBean updateOrderRequest, String tablename, String logRefId)
+    public BaseResponseBean updateOrderTrack(UpdateOrderRequestBean updateOrderRequest, String tablename, String logRefId,String currentValue)
     {
         BaseResponseBean updateOrderRes = new BaseResponseBean();
         String sql = OrderQueries.updateOrderTrack();
@@ -246,10 +259,11 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getOrderId());
             pstm.setString(2, updateOrderRequest.getType());
-            pstm.setString(3, updateOrderRequest.getNewValue());
-            pstm.setString(4, logRefId);
-            pstm.setString(5, "admin");
-            pstm.setString(6, tablename);
+            pstm.setString(3, currentValue);
+            pstm.setString(4, updateOrderRequest.getNewValue());
+            pstm.setString(5, logRefId);
+            pstm.setString(6, "admin");
+            pstm.setString(7, tablename);
             int i = pstm.executeUpdate();
             if (i < 1)
             {

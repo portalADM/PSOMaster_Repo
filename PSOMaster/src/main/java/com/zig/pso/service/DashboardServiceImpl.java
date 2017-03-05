@@ -8,15 +8,14 @@
 package com.zig.pso.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zig.pso.dao.DashboardDAO;
 import com.zig.pso.logging.PSOLoggerSrv;
-import com.zig.pso.rest.bean.BasicDataBean;
 import com.zig.pso.rest.bean.StuckOrderBacklogDBResultsBean;
 import com.zig.pso.rest.bean.StuckOrderBacklogUiResponseBean;
 import com.zig.pso.rest.bean.StuckOrdersCount;
@@ -79,60 +78,29 @@ public class DashboardServiceImpl implements DashboardService
 	 */
 	@Override
 	public StuckOrderBacklogUiResponseBean getStuckOrderBacklogData() {
-		
+	    
+	    StuckOrderBacklogUiResponseBean response = new StuckOrderBacklogUiResponseBean(); 
 		ArrayList<StuckOrderBacklogDBResultsBean> stuckOrderDbResults = dashboardDAO.getStuckOrderBackloagDetails();
 		
 		if(stuckOrderDbResults.size()>0){
-			
-			String[] dateList = null;
-			String[] statusCodes = null;
-			String[][] stuckOrderCounts = null;
-			Map<String, ArrayList<BasicDataBean>> statusDayWiseCountMap = new HashMap<String, ArrayList<BasicDataBean>>();
-			
-			ArrayList<String> dateListTemp = new ArrayList<String>();
-			ArrayList<String> statusCodeListTemp = new ArrayList<String>();
-			statusCodeListTemp.add("OSHF");
-			statusCodeListTemp.add("ORFI");
-			statusCodeListTemp.add("ORLF");
-			statusCodeListTemp.add("ACTF");
-			statusCodeListTemp.add("OURF");
-			statusCodeListTemp.add("PDRF");
-			statusCodeListTemp.add("PRTF");
-			
-			for(StuckOrderBacklogDBResultsBean st : stuckOrderDbResults)
-			{
-				if(!dateListTemp.contains(st.getOrderCreationDate()) && statusDayWiseCountMap.get(st.getOrderCreationDate())==null)
-				{
-					dateListTemp.add(st.getOrderCreationDate());
-					ArrayList<BasicDataBean> statusList = new ArrayList<BasicDataBean>();
-					statusList.add( new BasicDataBean(st.getStatusCode(), String.valueOf(st.getCount())));
-					statusDayWiseCountMap.put(st.getOrderCreationDate(),statusList);
-				}
-				else
-				{
-					ArrayList<BasicDataBean> statusList = statusDayWiseCountMap.get(st.getOrderCreationDate());
-					statusList.add( new BasicDataBean(st.getStatusCode(), String.valueOf(st.getCount())));
-				}
-			}
-			
-			ArrayList<ArrayList<String>> finalDataList = new ArrayList<ArrayList<String>>();
-			
-			for(Map.Entry<String, ArrayList<BasicDataBean>> stMap :statusDayWiseCountMap.entrySet())
-			{
-				ArrayList<BasicDataBean> statusList = stMap.getValue();
-				for(String stCode : statusCodeListTemp)
-				{
-					for(BasicDataBean countList : statusList)
-					{
-							
-					}
-					ArrayList<String> statusCountList = new ArrayList<String>();
-				}
-			}
-			
+		    LinkedHashMap<String, List<StuckOrderBacklogDBResultsBean>> hashMap = new LinkedHashMap<String, List<StuckOrderBacklogDBResultsBean>>();
+		    List<String> dateList = new ArrayList<String>();
+		    for(StuckOrderBacklogDBResultsBean st : stuckOrderDbResults)
+		    {
+		        if(hashMap.containsKey(st.getOrderCreationDate()))
+		            hashMap.get(st.getOrderCreationDate()).add(st);
+		        else{
+		            List<StuckOrderBacklogDBResultsBean> listOfStatuses = new ArrayList<StuckOrderBacklogDBResultsBean>();
+		            listOfStatuses.add(st);
+		            dateList.add(st.getOrderCreationDate());
+		            hashMap.put(st.getOrderCreationDate(), listOfStatuses);
+		        }    
+		    }
+		    response.setBackLogList(hashMap);
+		    response.setDateList(dateList);
 		}
 		
-		return null;
+		return response;
 	}
 
 }

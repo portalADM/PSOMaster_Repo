@@ -83,8 +83,6 @@ public class DashBoardController
     {
         PSOLoggerSrv.printDEBUG("DashBoardController", "getStuckOrderallStatus", "");
 
-        StuckOrderDetailResponse stuckOrdersList = new StuckOrderDetailResponse();
-
         StuckOrderBacklogUiResponseBean data = dashboardService.getStuckOrderBacklogData();
         return new ResponseEntity<StuckOrderBacklogUiResponseBean>(data, HttpStatus.OK);
     }
