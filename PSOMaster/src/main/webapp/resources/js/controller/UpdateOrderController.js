@@ -1,4 +1,4 @@
-module.controller("UpdateOrderController", function($scope, $routeParams,$http,FileUploadService,MessageService,UpdateOrderService,OrderService,$rootScope) {
+module.controller("UpdateOrderController", function($scope, $routeParams,$http,FileUploadService,MessageService,UpdateOrderService,OrderService,$rootScope,AppDataService) {
 	
 	$scope.title = "Update Order";
 	
@@ -19,6 +19,7 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 	
 	$scope.init = function(){
 		getAvailableUpdates();
+		getMultiOrderUpdateConfiguration();
 	}
 	
 	$scope.init();
@@ -27,6 +28,100 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 		updateOrderStatusAndRetryCount(updatetype);
 	}
 	
+	/*MY Changes START */
+	
+	$scope.multiUpdateData=[];
+	
+	function getMultiOrderUpdateConfiguration(){
+		AppDataService.getOrderMultiUpdateConfiguration().then(function(response){
+					$scope.multiUpdateData = response.data;
+				}, 
+				function(errResponse){
+					return $q.reject(errResponse);
+				}
+		);
+	}
+	
+	
+	/*var multiUpdateData = {
+			"ZIG_AUTO_MASTER" :[{
+									"name" : "STATUS_CODE",
+									"type":"text",
+									"length":"4"
+								},{
+									"name" : "RETRY",
+									"type" : "text",
+									"length" : "1"
+								}],
+			"ZIG_ORDER_SHIPMENT_INFO" : [{
+									"name" : "SIM",
+									"type":"text",
+									"length":"19"
+								},{
+									"name" : "IMEI",
+									"type" : "text",
+									"length" : "15"
+								}]
+	}*/
+	
+	$scope.multiUpdateMessage = '';
+	$scope.multiTblDisabled = false;
+	$scope.tableSelect = null;
+	$scope.tableCloumnList = [];
+	$scope.populateColumnList = function(){
+		console.log($scope.tableSelect);
+		if($scope.tableSelect!==''){
+			$scope.multiTblDisabled = true;
+			$scope.tableCloumnList = [];
+			angular.forEach(multiUpdateData,function(value, key) {
+				if($scope.tableSelect == key){
+					$scope.tableCloumnList = value;
+				}
+			});
+		}
+	}
+	
+	$scope.tableColName =null;
+	$scope.populateUpdateTable = function(){
+		$scope.multiUpdateMessage = '';
+		if($scope.tableColName != null){
+			var selectedColName = $scope.tableColName.name;
+			var isPresent = false;
+			angular.forEach($scope.multiUpdateData,function(value, key) {
+				if(value.colName == selectedColName){
+					isPresent = true;
+				}
+			});
+			
+			if(!isPresent){
+				var obj = {
+						'colName' : selectedColName,
+						'colValue' :  ''
+				}
+				$scope.multiUpdateData.push(obj);
+			}
+		}
+		else{
+			$scope.multiUpdateMessage = 'Please select Column first.';
+		}
+	}
+	
+	$scope.resetMultiUpdatePanel = function(){
+		$scope.multiTblDisabled = false;
+		$scope.multiUpdateData = [];
+		$scope.tableCloumnList = [];
+	}
+	
+	$scope.removeMultiUpdateData = function(index){
+		console.log(index);
+		$scope.multiUpdateData.splice(index,1);
+	}
+	
+	$scope.updateMultiOrderData = function(){
+		console.log($scope.multiUpdateData);
+	}
+	
+	/*MY Changes END */
 	
 	 /*
 	  * This method will upload the file to update orders in bulk.
@@ -76,9 +171,6 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 	  * This method will update the order SIM and IMEI
 	  */
 	 $scope.updateSimAndImei = function(lineObj,newValue,updateType){
-		 console.log(lineObj);
-		 console.log(newValue);
-		 
 		 $rootScope.spinner.on();
 		 
 		 var lineID = lineObj.lineItemNo;

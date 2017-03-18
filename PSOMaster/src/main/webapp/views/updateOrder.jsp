@@ -20,50 +20,9 @@
 		</div>
 	
 		<flash-message></flash-message> 
+		
 		<div ng-init="accordion=0">
 		
-			<!-- Update Order Status Panel Start -->
-			<div ng-show="restrictedUpdates.indexOf('UPDATE_STATUS')===-1"  class="panel panel-info ">
-				<div class="panel-heading accordion cursorPointer" ng-class="{active:accordion==1}">
-					<h3 class="panel-title" ng-click="accordion = 1" >Update Order Status
-					</h3>
-				</div>
-				<div class="panel-body accordion-content" ng-show="accordion==1">
-					<div class="">
-						<div class="">
-							<div class="well" id="">
-								<form class="form-horizontal">
-									<div class="form-group">
-										<label class="col-lg-4 control-label textAlgnInit">Order</label>
-										<div class="col-lg-8">
-											<label ng-if="orderID.length>0" class="col-lg-12 control-label textAlgnInit noPadLeft">{{orderID}}</label>
-											<input ng-if="orderID===undefined" type="text" id="orderNUmber" class="form-control" ng-model="updateData.statusOrderId" placeholder="Order ID">
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="select" class="col-lg-4 control-label textAlgnInit">New Status</label>
-										<div class="col-lg-8">
-											<select class="form-control" ng-model="newStatus" id="select">
-												<option value="OPEN">OPEN</option>
-												<option value="PDRS">PDRS</option>
-												<option value="ORFI">ORFI</option>
-											</select>
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="col-lg-4"></div>
-										<div class="col-lg-8">
-											<button type="reset" class="btn btn-default" ng-click="updateOrder('status')">Submit</button>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- Update Order Status Panel End -->
-			
 			<!-- Update Order SIM Panel Start -->
 			<div ng-show="restrictedUpdates.indexOf('UPDATE_SIM')===-1" class="panel panel-info">
 				<div class="panel-heading accordion cursorPointer" ng-click="accordion = 2" ng-class="{active:accordion==2}">
@@ -217,6 +176,48 @@
 			</div>
 			<!-- Update Order IMEI Panel End -->
 			
+			<!-- Update Order Status Panel Start -->
+			<div ng-show="restrictedUpdates.indexOf('UPDATE_STATUS')===-1"  class="panel panel-info ">
+				<div class="panel-heading accordion cursorPointer" ng-class="{active:accordion==1}">
+					<h3 class="panel-title" ng-click="accordion = 1" >Update Order Status
+					</h3>
+				</div>
+				<div class="panel-body accordion-content" ng-show="accordion==1">
+					<div class="">
+						<div class="">
+							<div class="well" id="">
+								<form class="form-horizontal">
+									<div class="form-group">
+										<label class="col-lg-4 control-label textAlgnInit">Order</label>
+										<div class="col-lg-8">
+											<label ng-if="orderID.length>0" class="col-lg-12 control-label textAlgnInit noPadLeft">{{orderID}}</label>
+											<input ng-if="orderID===undefined" type="text" id="orderNUmber" class="form-control" ng-model="updateData.statusOrderId" placeholder="Order ID">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="select" class="col-lg-4 control-label textAlgnInit">New Status</label>
+										<div class="col-lg-8">
+											<select class="form-control" ng-model="newStatus" id="select">
+												<option value="OPEN">OPEN</option>
+												<option value="PDRS">PDRS</option>
+												<option value="ORFI">ORFI</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-lg-4"></div>
+										<div class="col-lg-8">
+											<button type="button" class="btn btn-default" ng-click="updateOrder('status')">Submit</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Update Order Status Panel End -->
+			
 			
 			<!-- Update Order RetryCount Panel Start -->
 			<div ng-show="restrictedUpdates.indexOf('UPDATE_RETRYCOUNT')===-1" class="panel panel-info">
@@ -242,15 +243,93 @@
                                                 </div>
                                                 <div class="form-group">
                                                        <div class="col-lg-4"></div>
-                                         <div class="col-lg-8 noPad">
-                                           <button type="reset" class="btn btn-default" ng-click="updateOrder('retry')">Submit</button>
-                                         </div>
-                                       </div>
+                                         				<div class="col-lg-8 noPad">
+				                                           <button type="button" class="btn btn-default" ng-click="updateOrder('retry')">Submit</button>
+				                                         </div>
+		                                       </div>
                                          </form>
                                   </div>
 				</div>
 			</div>
 			<!-- Update Order RetryCount Panel End -->
+			
+			<!-- Multi Update Order Panel Start -->
+			<div ng-show="restrictedUpdates.indexOf('UPDATE_STATUS')===-1"  class="panel panel-info ">
+				<div class="panel-heading accordion cursorPointer" ng-class="{active:accordion==6}">
+					<h3 class="panel-title" ng-click="accordion = 6" >Multi Updates
+					</h3>
+				</div>
+				<div class="panel-body accordion-content" ng-show="accordion==6">
+					<div class="">
+						<div class="">
+							<div class="well" id="">
+								<form class="form-horizontal">
+									<div class="alert alert-dismissible alert-info" ng-show="multiUpdateMessage.length>0">
+						                <button type="button" class="close" data-dismiss="alert">×</button>
+						                {{multiUpdateMessage}}
+						            </div>
+								
+									<div class="form-group">
+										<label class="col-lg-4 control-label textAlgnInit">Order</label>
+										<div class="col-lg-8">
+											<label ng-if="orderID.length>0" class="col-lg-12 control-label textAlgnInit noPadLeft">{{orderID}}</label>
+											<input ng-if="orderID===undefined" type="text" id="orderNUmber" class="form-control" ng-model="updateData.statusOrderId" placeholder="Order ID">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="select" class="col-lg-4 control-label textAlgnInit">Select Table & Column</label>
+										<div class="col-lg-2">
+											<select class="form-control" ng-change="populateColumnList()" ng-disabled="multiTblDisabled"  ng-model="tableSelect" id="select">
+												<option value="">Select Table</option>
+												<option value="ZIG_AUTO_MASTER">ZIG_AUTO_MASTER</option>
+												<option value="ZIG_ORDER_SHIPMENT_INFO">ZIG_ORDER_SHIPMENT_INFO</option>
+												<option value="ZIG_EXTRA_ORDER">ZIG_EXTRA_ORDER</option>
+							 				</select>
+										</div>
+										<div class="col-lg-2 noPadLeft marLeft75" ng-show="tableCloumnList.length>0">
+											<select class="form-control dpWidth" ng-model="tableColName" ng-options="col.name for col in tableCloumnList" >
+												<option value="">Select Column</option>
+											</select>
+										</div>
+										<div class="col-lg-2 " ng-show="tableCloumnList.length>0">
+											<span class="glyphicon glyphicon-plus-sign addMultiUpdateIcon cursorPointer" ng-click="populateUpdateTable()" tooltip-placement="bottom" uib-tooltip="Add"></span>
+											<span class="glyphicon glyphicon-remove-circle  addMultiUpdateIcon cursorPointer marLeft8"  ng-click="resetMultiUpdatePanel()" tooltip-placement="bottom" uib-tooltip="Reset"></span>
+										</div>
+									</div>
+									<div class="form-group" ng-show="multiUpdateData.length>0">
+										<div class="col-lg-4"></div>
+										<div class="col-lg-8">
+											<table class="table table-striped table-hover ">
+												<thead>
+													<tr>
+														<th>Column</th>
+														<th>Value</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr ng-repeat="multi in multiUpdateData">
+														<td class="multiUpdateTableData">{{multi.colName}}</td>
+														<td><input type="text" class="form-control" ng-model="multi.colValue" value=""></td>
+														<td class="multiUpdateTableData fontSize20"><span class="glyphicon glyphicon-trash cursorPointer" ng-click="removeMultiUpdateData($index)"></span></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-lg-4"></div>
+										<div class="col-lg-8">
+											<button type="button" class="btn btn-default" ng-click="updateMultiOrderData()">Update</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Multi Update Order Panel End -->
 			
 			
 		<!-- 	<a class="btn btn-warning btn-lg">Bulk Order Update <span class="glyphicon glyphicon-list-alt marLeft8"></span></a> -->
@@ -298,7 +377,7 @@
                                        <div class="form-group marTop30">
                                               <div class="col-lg-2"></div>
 			                                  <div class="col-lg-10 ">
-			                                      <button  type="reset" class="btn btn-defaul"  ng-click = "uploadFile()">Update</button>
+			                                      <button  type="button" class="btn btn-defaul"  ng-click = "uploadFile()">Update</button>
 			                                  </div>
 		                              </div>
                                 </form>

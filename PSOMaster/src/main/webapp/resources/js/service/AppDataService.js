@@ -8,4 +8,12 @@ module.service('AppDataService', function($http,$q) {
 		return $http.get('resources/js/data/OrderHelp.json');
 	}
 	
+	/*
+	 *Service Method that will get Order update Order configuration.
+	 * 
+	 */
+	this.getOrderMultiUpdateConfiguration = function(){
+		return $http.get('resources/js/data/OrderTableConfiguration.json');
+	}
+	
 });

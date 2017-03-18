@@ -6,7 +6,7 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	
 	$scope.portalOrderDetails = {};
 	$scope.ensembleOrderDetails = {};
-	$scope.apiOrderDetails= {};
+	$scope.apiOrderDetails= [];
 	
 	/*
 	 * Method that calls Order Service to get Portal and Ensemble Order Details 

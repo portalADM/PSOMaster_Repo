@@ -1,0 +1,20 @@
+{
+"ZIG_AUTO_MASTER" :[{
+						"name" : "STATUS_CODE",
+						"type":"text",
+						"length":"4"
+					},{
+						"name" : "RETRY",
+						"type" : "text",
+						"length" : "1"
+					}],
+"ZIG_ORDER_SHIPMENT_INFO" : [{
+						"name" : "SIM",
+						"type":"text",
+						"length":"19"
+					},{
+						"name" : "IMEI",
+						"type" : "text",
+						"length" : "15"
+					}]
+}
