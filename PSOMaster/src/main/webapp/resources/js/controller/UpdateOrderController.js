@@ -30,39 +30,17 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 	
 	/*MY Changes START */
 	
-	$scope.multiUpdateData=[];
+	$scope.multiUpdateTableList=[];
 	
 	function getMultiOrderUpdateConfiguration(){
 		AppDataService.getOrderMultiUpdateConfiguration().then(function(response){
-					$scope.multiUpdateData = response.data;
+					$scope.multiUpdateTableList = response.data;
 				}, 
 				function(errResponse){
 					return $q.reject(errResponse);
 				}
 		);
 	}
-	
-	
-	/*var multiUpdateData = {
-			"ZIG_AUTO_MASTER" :[{
-									"name" : "STATUS_CODE",
-									"type":"text",
-									"length":"4"
-								},{
-									"name" : "RETRY",
-									"type" : "text",
-									"length" : "1"
-								}],
-			"ZIG_ORDER_SHIPMENT_INFO" : [{
-									"name" : "SIM",
-									"type":"text",
-									"length":"19"
-								},{
-									"name" : "IMEI",
-									"type" : "text",
-									"length" : "15"
-								}]
-	}*/
 	
 	$scope.multiUpdateMessage = '';
 	$scope.multiTblDisabled = false;
@@ -73,7 +51,7 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 		if($scope.tableSelect!==''){
 			$scope.multiTblDisabled = true;
 			$scope.tableCloumnList = [];
-			angular.forEach(multiUpdateData,function(value, key) {
+			angular.forEach($scope.multiUpdateTableList,function(value, key) {
 				if($scope.tableSelect == key){
 					$scope.tableCloumnList = value;
 				}
@@ -81,6 +59,7 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 		}
 	}
 	
+	$scope.multiUpdateData = [];
 	$scope.tableColName =null;
 	$scope.populateUpdateTable = function(){
 		$scope.multiUpdateMessage = '';

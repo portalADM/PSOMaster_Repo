@@ -255,9 +255,8 @@
 			
 			<!-- Multi Update Order Panel Start -->
 			<div ng-show="restrictedUpdates.indexOf('UPDATE_STATUS')===-1"  class="panel panel-info ">
-				<div class="panel-heading accordion cursorPointer" ng-class="{active:accordion==6}">
-					<h3 class="panel-title" ng-click="accordion = 6" >Multi Updates
-					</h3>
+				<div class="panel-heading accordion cursorPointer" ng-class="{active:accordion==6}"  ng-click="accordion = 6">
+					<h3 class="panel-title">Multi Updates <span class="glyphicon glyphicon-th-list marLeft8"></span></h3>
 				</div>
 				<div class="panel-body accordion-content" ng-show="accordion==6">
 					<div class="">
@@ -280,7 +279,7 @@
 										<label for="select" class="col-lg-4 control-label textAlgnInit">Select Table & Column</label>
 										<div class="col-lg-2">
 											<select class="form-control" ng-change="populateColumnList()" ng-disabled="multiTblDisabled"  ng-model="tableSelect" id="select">
-												<option value="">Select Table</option>
+												<option value="">------- TABLE -------</option>
 												<option value="ZIG_AUTO_MASTER">ZIG_AUTO_MASTER</option>
 												<option value="ZIG_ORDER_SHIPMENT_INFO">ZIG_ORDER_SHIPMENT_INFO</option>
 												<option value="ZIG_EXTRA_ORDER">ZIG_EXTRA_ORDER</option>
@@ -288,7 +287,7 @@
 										</div>
 										<div class="col-lg-2 noPadLeft marLeft75" ng-show="tableCloumnList.length>0">
 											<select class="form-control dpWidth" ng-model="tableColName" ng-options="col.name for col in tableCloumnList" >
-												<option value="">Select Column</option>
+												<option value="">------- COLUMN -------</option>
 											</select>
 										</div>
 										<div class="col-lg-2 " ng-show="tableCloumnList.length>0">
@@ -338,7 +337,7 @@
 		<!-- Buld Order Update Panel Start -->	
 		 <div ng-show="restrictedUpdates.indexOf('BULK_UPDATE')===-1" class="panel panel-warning">
                <div class="panel-heading  accordion cursorPointer" ng-click="accordion = 5" ng-class="{active:accordion==5}">
-                 	<h3 class="panel-title">Bulk Order Update <span class="glyphicon glyphicon-list-alt marLeft8"></span></h3>
+                 	<h3 class="panel-title">Bulk Order Update <span class="glyphicon glyphicon-th marLeft8"></span></h3>
                </div>
                <div class="panel-body  accordion-content"  ng-show="accordion==5">
         	 			<div class="well" id="">
