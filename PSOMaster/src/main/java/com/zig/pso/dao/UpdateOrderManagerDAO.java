@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.OrderUpdateInputData;
 import com.zig.pso.rest.bean.TempInsertBUResponse;
+import com.zig.pso.rest.bean.UpdateMultiOrderDetailsRequestBean;
 import com.zig.pso.rest.bean.UpdateOrderRequestBean;
 
 /**
@@ -39,6 +40,8 @@ public interface UpdateOrderManagerDAO
     
     public TempInsertBUResponse insertBulkOrderDataInTempTable(ArrayList<OrderUpdateInputData> orderUpdateData,String updateType);
     
-    public ArrayList<OrderUpdateInputData> getBulkOrderDataFromTempTable(String tempTableName);
+    public ArrayList<OrderUpdateInputData> getBulkOrderDataFromTempTable(String bulkUpdateId);
+    
+    public BaseResponseBean updateMultiOrderDetails(UpdateMultiOrderDetailsRequestBean updateOrderRequest);
 
 }

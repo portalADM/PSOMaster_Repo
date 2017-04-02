@@ -345,26 +345,15 @@
                                 	 <div class="form-group">
 						                    <label class="col-lg-2 control-label textAlgnInit">Update Type</label>
 						                    <div class="col-lg-10">
-						                      <div class="radio">
-						                        <label class="col-lg-2">
-						                          <input type="radio" ng-model="updateType"  value="status"> Status
-						                        </label>
-						                        <label class="col-lg-2">
-						                           <input type="radio" ng-model="updateType" value="sim"> SIM
-						                        </label>
-						                        <label class="col-lg-2">
-						                           <input type="radio" ng-model="updateType" value="imei"> IMEI
-						                        </label>
-						                        <label class="col-lg-2">
-						                           <input type="radio" ng-model="updateType" value="retry"> Retry Count
-						                        </label>
-						                        <label class="col-lg-4">
+						                       <div class="checkbox">
+						                       	<label  class="col-lg-2"></label>
+							                     <label class="col-lg-4 floatRight">
 						                        		<a tooltip-placement="bottom" uib-tooltip="Help" ng-click='openHelpModel()'  class="glyphicon glyphicon-info-sign  helpIcon floatRight cursorPointer"></a>
-														<a href="downloadSampleExcel/{{updateType}}">
+														<a href="downloadSampleExcel">
 															<img class="excelIcon floatRight marRight8" tooltip-placement="left" uib-tooltip="Download Excel" src="resources/images/excel2.png">
 														</a> 
-						                        </label>
-						                      </div>
+						                        	</label>
+							                    </div>
 						                    </div>
 					                  </div>
                                        <div class="form-group marTop30">

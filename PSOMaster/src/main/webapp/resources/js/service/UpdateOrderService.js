@@ -46,6 +46,27 @@ module.service('UpdateOrderService',function($http,$q){
 		);
 		
 	}
+	
+	
+	this.updateMultiOrderDetails = function(dataObj){
+		
+		return $http({
+			method : "POST",
+			url : "updateMultiOrderDetails",
+			data : dataObj
+		}).then(
+				function(response){
+					console.log(response.data);
+					return response.data;
+				}, 
+				function(errResponse){
+					console.error('Error while updatinng Order');
+					return $q.reject(errResponse);
+				}
+			
+		);
+		
+	}
 
 			
 });

@@ -1,4 +1,4 @@
-module.controller("UpdateOrderController", function($scope, $routeParams,$http,FileUploadService,MessageService,UpdateOrderService,OrderService,$rootScope,AppDataService) {
+module.controller("UpdateOrderController", function($scope, $filter,$routeParams,$http,FileUploadService,MessageService,UpdateOrderService,OrderService,$rootScope,AppDataService) {
 	
 	$scope.title = "Update Order";
 	
@@ -45,6 +45,7 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 	$scope.multiUpdateMessage = '';
 	$scope.multiTblDisabled = false;
 	$scope.tableSelect = null;
+	$scope.isLineLevelUpdate = null;
 	$scope.tableCloumnList = [];
 	$scope.populateColumnList = function(){
 		console.log($scope.tableSelect);
@@ -52,8 +53,10 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 			$scope.multiTblDisabled = true;
 			$scope.tableCloumnList = [];
 			angular.forEach($scope.multiUpdateTableList,function(value, key) {
+				console.log(value);
 				if($scope.tableSelect == key){
-					$scope.tableCloumnList = value;
+					$scope.tableCloumnList = value.COL_DATA;
+					$scope.isLineLevelUpdate = value.isLineLevelUpdate;
 				}
 			});
 		}
@@ -98,9 +101,40 @@ module.controller("UpdateOrderController", function($scope, $routeParams,$http,F
 	
 	$scope.updateMultiOrderData = function(){
 		console.log($scope.multiUpdateData);
+		var dataObj = {
+				'orderId' : $scope.orderID,
+				'tabName' : $scope.tableSelect,
+				'colData' : $scope.multiUpdateData,
+				'isLineLevelUpdate' : ($scope.isLineLevelUpdate == 1) ? true : false
+		}
+		
+		console.log(dataObj);
+		
+		UpdateOrderService.updateMultiOrderDetails(dataObj).then(
+				function(response) {
+					
+	       		},
+		        function(errResponse){
+	       			
+		        }
+		);
 	}
 	
 	/*MY Changes END */
+	/*$scope.selectedTypes = '';
+	$scope.availableBulkUpdateType = [{'name':'SIM'},{'name':'IMEI'},{'name':'STATUS'},{'name':'RETRY_COUNT'}];
+	$scope.getSelectedBulkUpdatesTypes = function () {
+		$scope.selectedTypes = '';
+		$scope.selectedBulkUpdateTypes = $filter('filter')($scope.availableBulkUpdateType, {checked: true});
+		
+		angular.forEach($scope.selectedBulkUpdateTypes,function(obj,value){
+			if($scope.selectedTypes.indexOf(obj.name)==-1){
+				$scope.selectedTypes += obj.name + ",";
+			}
+        })
+	}*/
+	
+	
 	
 	 /*
 	  * This method will upload the file to update orders in bulk.

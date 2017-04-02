@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -28,6 +29,7 @@ import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.BulkUpdateInputBean;
 import com.zig.pso.rest.bean.OrderUpdateInputData;
 import com.zig.pso.rest.bean.TempInsertBUResponse;
+import com.zig.pso.rest.bean.UpdateMultiOrderDetailsRequestBean;
 import com.zig.pso.rest.bean.UpdateOrderRequestBean;
 import com.zig.pso.rest.bean.ValidatedBulkUpdateOrderDetailsBean;
 import com.zig.pso.utility.PropertyReader;
@@ -190,37 +192,52 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
                 XSSFRow row = worksheet.getRow(i++);
                 OrderUpdateInputData order = new OrderUpdateInputData();
                 Iterator cells = row.cellIterator();
-
                 int colNum = 0;
+                for(int y=0; y<row.getLastCellNum(); y++) {
+                    Cell cell = row.getCell(y, Row.CREATE_NULL_AS_BLANK);
+                    System.out.print(cell.toString()+" ");
+                    
+                    if (colNum == 0)
+                        order.setOrderId(cell.getStringCellValue()); // ORDER_ID
+                    else if(colNum == 1 && null!=cell.getStringCellValue() && !cell.getStringCellValue().isEmpty())
+                        order.setLineId(cell.getStringCellValue()); // LINE_ID
+                    else if(colNum == 2 && null!=cell.getStringCellValue() && !cell.getStringCellValue().isEmpty())
+                        order.setSim(cell.getStringCellValue()); // SIM NUMBER
+                    else if(colNum == 3 && null!=cell.getStringCellValue() && !cell.getStringCellValue().isEmpty())
+                        order.setImei(cell.getStringCellValue()); // IMEI NUMBER
+                    else if(colNum == 4 && null!=cell.getStringCellValue() && !cell.getStringCellValue().isEmpty())
+                        order.setStatus(cell.getStringCellValue()); // STATUS
+                    else if(colNum == 5 && null!=cell.getStringCellValue() && !cell.getStringCellValue().isEmpty())
+                        order.setRetryCount(cell.getStringCellValue()); // RETRY COUNT
+                    
+                    colNum++;
+                    
+                    
+                }
+                
+                /*
+                
+               
                 while (cells.hasNext())
                 {
                     Cell cell = (Cell) cells.next();
                     cell.setCellType(Cell.CELL_TYPE_STRING);
 
                     if (colNum == 0)
-                        order.setOrderId(cell.getStringCellValue());
-                    else
-                    {
-                        if (updateType.equalsIgnoreCase(STATUS))
-                        {
-                            order.setStatus(cell.getStringCellValue());
-                        }
-                        else if (updateType.equalsIgnoreCase(SIM))
-                        {
-                            order.setSim(cell.getStringCellValue());
-                        }
-                        else if (updateType.equalsIgnoreCase(IMEI))
-                        {
-                            order.setImei(cell.getStringCellValue());
-                        }
-                        else if (updateType.equalsIgnoreCase(RETRY_COUNT))
-                        {
-                            order.setRetryCount(cell.getStringCellValue());
-                        }
-                        colNum = 0;
-                    }
+                        order.setOrderId(cell.getStringCellValue()); // ORDER_ID
+                    else if(colNum == 1 && null!=cell.getStringCellValue() && !cell.getStringCellValue().isEmpty())
+                        order.setLineId(cell.getStringCellValue()); // LINE_ID
+                    else if(colNum == 2 && null!=cell.getStringCellValue() && !cell.getStringCellValue().isEmpty())
+                        order.setSim(cell.getStringCellValue()); // SIM NUMBER
+                    else if(colNum == 3 && null!=cell.getStringCellValue() && !cell.getStringCellValue().isEmpty())
+                        order.setImei(cell.getStringCellValue()); // IMEI NUMBER
+                    else if(colNum == 4 && null!=cell.getStringCellValue() && !cell.getStringCellValue().isEmpty())
+                        order.setStatus(cell.getStringCellValue()); // STATUS
+                    else if(colNum == 5 && null!=cell.getStringCellValue() && !cell.getStringCellValue().isEmpty())
+                        order.setRetryCount(cell.getStringCellValue()); // RETRY COUNT
+                    
                     colNum++;
-                }
+                }*/
                 orderUpdateData.add(order);
             }
             orderBulkData.setOrderUpdateData(orderUpdateData);
@@ -251,19 +268,20 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
         for (OrderUpdateInputData orders : orderBulkData.getOrderUpdateData())
         {
-            if (STATUS.equals(orderBulkData.getUpdateType()) && (null == orders.getStatus() || !orders.getStatus().matches(charOnlyRegex) || orders.getStatus().length() != 4))
+            
+            if (null != orders.getStatus() && (!orders.getStatus().matches(charOnlyRegex) || orders.getStatus().length() != 4))
             {
                 isValidOrder = false;
             }
-            else if (SIM.equals(orderBulkData.getUpdateType()) && (null == orders.getSim() || !orders.getSim().matches(numOnlyRegex) || orders.getSim().length() != 21))
+            else if (null != orders.getSim()  && ( !orders.getSim().matches(numOnlyRegex) || (orders.getSim().length()> 20 || orders.getSim().length() < 18)))
             {
                 isValidOrder = false;
             }
-            else if (IMEI.equals(orderBulkData.getUpdateType()) && (null == orders.getImei() || !orders.getImei().matches(numOnlyRegex) || orders.getImei().length() != 16))
+            else if (null != orders.getImei()  && ( !orders.getImei().matches(numOnlyRegex) || orders.getImei().length() != 15))
             {
                 isValidOrder = false;
             }
-            else if (RETRY_COUNT.equals(orderBulkData.getUpdateType()) && (null == orders.getRetryCount() || !orders.getRetryCount().matches(numOnlyRegex) || orders.getRetryCount().length() != 1))
+            else if (null != orders.getRetryCount()  && ( !orders.getRetryCount().matches(numOnlyRegex) || orders.getRetryCount().length() != 1))
             {
                 isValidOrder = false;
             }
@@ -286,7 +304,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
         TempInsertBUResponse insertTempDataResp = updateDAO.insertBulkOrderDataInTempTable(validOerderData, orderBulkData.getUpdateType());
         if(insertTempDataResp.getErrorCode() == PSOConstants.SUCCESS_CODE)
         {
-            ArrayList<OrderUpdateInputData> tempTableDataList = updateDAO.getBulkOrderDataFromTempTable(insertTempDataResp.getTempTableName());
+            ArrayList<OrderUpdateInputData> tempTableDataList = updateDAO.getBulkOrderDataFromTempTable(insertTempDataResp.getBulkUpdateId());
             validatedOrderData.setOrderUpdateData(tempTableDataList);
         }
         
@@ -316,4 +334,14 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 		return updatesList;
 
 	}
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.service.UpdateOrderManagerService#updateMultiOrderDetails(com.zig.pso.rest.bean.UpdateMultiOrderDetailsRequestBean)
+     */
+    @Override
+    public BaseResponseBean updateMultiOrderDetails(UpdateMultiOrderDetailsRequestBean updateOrderRequest)
+    {
+        // TODO Auto-generated method stub
+        return updateDAO.updateMultiOrderDetails(updateOrderRequest);
+    }
 }

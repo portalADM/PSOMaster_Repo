@@ -14,6 +14,7 @@ package com.zig.pso.rest.bean;
 public class TempInsertBUResponse extends BaseResponseBean
 {
     private String tempTableName;
+    private String bulkUpdateId;
 
     /**
      * @return the tempTableName
@@ -29,6 +30,22 @@ public class TempInsertBUResponse extends BaseResponseBean
     public void setTempTableName(String tempTableName)
     {
         this.tempTableName = tempTableName;
+    }
+
+    /**
+     * @return the bulkUpdateId
+     */
+    public String getBulkUpdateId()
+    {
+        return bulkUpdateId;
+    }
+
+    /**
+     * @param bulkUpdateId the bulkUpdateId to set
+     */
+    public void setBulkUpdateId(String bulkUpdateId)
+    {
+        this.bulkUpdateId = bulkUpdateId;
     }
 
 }

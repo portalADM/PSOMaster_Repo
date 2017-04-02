@@ -19,8 +19,10 @@ import org.springframework.stereotype.Repository;
 import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.BaseResponseBean;
+import com.zig.pso.rest.bean.ColumnDataListBean;
 import com.zig.pso.rest.bean.OrderUpdateInputData;
 import com.zig.pso.rest.bean.TempInsertBUResponse;
+import com.zig.pso.rest.bean.UpdateMultiOrderDetailsRequestBean;
 import com.zig.pso.rest.bean.UpdateOrderRequestBean;
 import com.zig.pso.utility.CommonUtility;
 import com.zig.pso.utility.DBConnection;
@@ -541,57 +543,53 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         TempInsertBUResponse insertDataInTempTableResp = new TempInsertBUResponse();
         String logRefID = CommonUtility.getLogRefID();
         
-        String tempTableName = CommonUtility.getTempTableName();
+        String bulkUpdateID = CommonUtility.getRandomBulkUpdateID();
         
-        BaseResponseBean createTempTableResp = createTempTableForBulkUpdate(tempTableName);
-        if(createTempTableResp.getErrorCode()==PSOConstants.SUCCESS_CODE)
+        String sql = OrderQueries.getInsertBulkOrderInTempTableSQL();
+        
+        try
         {
-            String sql = OrderQueries.getInsertBulkOrderInTempTableSQL();
-            sql = sql.replace("<TABLE_NAME>", tempTableName);
-            
-            try
+            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+
+            for (OrderUpdateInputData order : orderUpdateData)
             {
-                PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
-
-                for (OrderUpdateInputData order : orderUpdateData)
-                {
-                    pstm.setString(1, order.getOrderId());
-                    pstm.setLong(2, Long.parseLong((order.getLineId()!=null)?order.getLineId():"0"));
-                    pstm.setString(3, order.getStatus());
-                    pstm.setString(4, order.getSim());
-                    pstm.setString(5, order.getImei());
-                    pstm.setInt(6, Integer.parseInt((order.getRetryCount()!=null)?order.getRetryCount():"0"));
-                    pstm.setString(7, "ADMIN");
-                    pstm.addBatch();
-                }
-
-                int[] recordsInserted = pstm.executeBatch();
-                if (recordsInserted.length < 0)
-                {
-                    insertDataInTempTableResp.setErrorCode(PSOConstants.ERROR_CODE);
-                    insertDataInTempTableResp.setErrorMsg(PSOConstants.BACKEND_ERROR);
-                    insertDataInTempTableResp.setLogRefId(logRefID);
-                }
-                else
-                {
-                    insertDataInTempTableResp.setErrorCode(PSOConstants.SUCCESS_CODE);
-                    insertDataInTempTableResp.setErrorMsg(PSOConstants.BULK_TEMP_INSERT_SUCCESS);
-                    insertDataInTempTableResp.setLogRefId(logRefID);
-                }
-                
-                PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "insertBulkOrderDataInTempTable", logRefID,sql,orderUpdateData, insertDataInTempTableResp.getErrorMsg());
+                pstm.setString(1, bulkUpdateID);
+                pstm.setString(2, order.getOrderId());
+                pstm.setLong(3, Long.parseLong((order.getLineId()!=null)?order.getLineId():"0"));
+                pstm.setString(4, order.getSim());
+                pstm.setString(5, order.getImei());
+                pstm.setString(6, order.getStatus());
+                pstm.setString(7, order.getRetryCount());
+                pstm.setString(8, PSOConstants.PSO_ADMIN_USER);
+                pstm.addBatch();
             }
-            catch (SQLException e)
+
+            int[] recordsInserted = pstm.executeBatch();
+            if (recordsInserted.length < 0)
             {
                 insertDataInTempTableResp.setErrorCode(PSOConstants.ERROR_CODE);
                 insertDataInTempTableResp.setErrorMsg(PSOConstants.BACKEND_ERROR);
                 insertDataInTempTableResp.setLogRefId(logRefID);
-                
-                PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "insertBulkOrderDataInTempTable", logRefID, sql,orderUpdateData, e);
             }
+            else
+            {
+                insertDataInTempTableResp.setErrorCode(PSOConstants.SUCCESS_CODE);
+                insertDataInTempTableResp.setErrorMsg(PSOConstants.BULK_TEMP_INSERT_SUCCESS);
+                insertDataInTempTableResp.setLogRefId(logRefID);
+            }
+            
+            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "insertBulkOrderDataInTempTable", logRefID,sql,orderUpdateData, insertDataInTempTableResp.getErrorMsg());
+        }
+        catch (SQLException e)
+        {
+            insertDataInTempTableResp.setErrorCode(PSOConstants.ERROR_CODE);
+            insertDataInTempTableResp.setErrorMsg(PSOConstants.BACKEND_ERROR);
+            insertDataInTempTableResp.setLogRefId(logRefID);
+            
+            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "insertBulkOrderDataInTempTable", logRefID, sql,orderUpdateData, e);
         }
         
-        insertDataInTempTableResp.setTempTableName(tempTableName);
+        insertDataInTempTableResp.setBulkUpdateId(bulkUpdateID);
         return insertDataInTempTableResp;
     }
 
@@ -599,17 +597,17 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
      * @see com.zig.pso.dao.UpdateOrderManagerDAO#getBulkOrderDataFromTempTable(java.lang.String)
      */
     @Override
-    public ArrayList<OrderUpdateInputData> getBulkOrderDataFromTempTable(String tempTableName)
+    public ArrayList<OrderUpdateInputData> getBulkOrderDataFromTempTable(String bulkUpdateId)
     {
         ArrayList<OrderUpdateInputData> tempTableDataList = new ArrayList<OrderUpdateInputData>();
         OrderUpdateInputData orderData = null;
         
         String sql = OrderQueries.getReadTempTableforBulkOrderSQL();
-        sql = sql.replace("<TABLE_NAME>", tempTableName);
         
         try
         {
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm.setString(1, bulkUpdateId);
             ResultSet rs = pstm.executeQuery();
             while (rs.next())
             {
@@ -619,10 +617,10 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 orderData.setOrderId(rs.getString("ORDER_ID"));
                 orderData.setRetryCount(rs.getString("RETRY"));
                 orderData.setSim(rs.getString("SIM"));
-                orderData.setStatus(rs.getString("STATUS"));
+                orderData.setStatus(rs.getString("STATUS_CODE"));
+                orderData.setBulkUpdateId(rs.getString("BU_SES_ID"));
                 tempTableDataList.add(orderData);
             }
-
         }
         catch (SQLException e)
         {
@@ -630,6 +628,45 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         }
         
         return tempTableDataList;
+    }
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.dao.UpdateOrderManagerDAO#updateMultiOrderDetails(com.zig.pso.rest.bean.UpdateMultiOrderDetailsRequestBean)
+     */
+    @Override
+    public BaseResponseBean updateMultiOrderDetails(UpdateMultiOrderDetailsRequestBean updateOrderRequest)
+    {
+        String SQL = "UPDATE <TABLE_NAME> SET <UPDATE_COLUMN_DATA> WHERE <CONDITION_CLAUSE>";
+        SQL = SQL.replace("<TABLE_NAME>", updateOrderRequest.getTabName());
+        
+        String aaa = "";
+        for(ColumnDataListBean col : updateOrderRequest.getColData()){
+            aaa = aaa + col.getColName() + " = '" + col.getColValue() + "', ";
+        }
+        String bbb = aaa;
+        System.out.println(aaa);
+        System.out.println(aaa.substring(0, aaa.length()-1));
+        String finalcolData = bbb.substring(0, bbb.length()-1);
+        System.out.println(finalcolData);
+        SQL = SQL.replace("<UPDATE_COLUMN_DATA>", finalcolData);
+        
+        String aaa2 = "STATUS_CODE = 'PDRS', RETRY = '0',";
+        System.out.println(aaa2.substring(0, aaa2.length()-1));
+        
+        String conditionData = " ORDER_ID = " + updateOrderRequest.getOrderId();
+        SQL = SQL.replace("<CONDITION_CLAUSE>", conditionData);
+        
+        
+        System.out.println(SQL);
+        
+        return null;
+    }
+    
+    
+    public static void main(String[] args)
+    {
+        String aaa = "STATUS_CODE = 'PDRS', RETRY = '0',";
+        System.out.println(aaa.substring(0, aaa.length()-1));
     }
 
 }

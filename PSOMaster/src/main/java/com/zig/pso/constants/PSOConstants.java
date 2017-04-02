@@ -66,5 +66,7 @@ public class PSOConstants
 
     public final static String EXCEL_CONT_TYPE = "application/octet-stream";
     public final static String CONTENT_DISPOSITION = "Content-Disposition";
+    
+    public final static String PSO_ADMIN_USER = "ADMIN";
 
 }

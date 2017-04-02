@@ -68,4 +68,14 @@ public class CommonUtility
         String tempTableName = "TEMP_BU_" + new SimpleDateFormat("yyyyMMddhhmm").format(new Date());
         return tempTableName;
     }
+    
+    /*
+     * This method returns auto generated random numeric ID for Bulk update data. 
+     * Reference ID is 10 char String combination of Numbers.
+     */
+    public static String getRandomBulkUpdateID()
+    {
+        return RandomStringUtils.random(10, false, true);
+    }
+    
 }

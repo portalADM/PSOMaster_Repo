@@ -41,6 +41,7 @@ import com.zig.pso.rest.bean.AllowedUpdatesResponseBean;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.BulkUpdateInputBean;
 import com.zig.pso.rest.bean.BulkUpdateOrderResponseBean;
+import com.zig.pso.rest.bean.UpdateMultiOrderDetailsRequestBean;
 import com.zig.pso.rest.bean.UpdateOrderRequestBean;
 import com.zig.pso.rest.bean.ValidatedBulkUpdateOrderDetailsBean;
 import com.zig.pso.service.UpdateOrderManagerService;
@@ -118,32 +119,34 @@ public class UpdateOrderController
         return new ResponseEntity<BaseResponseBean>(bulkUpdateResponse, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/downloadSampleExcel/{orderType}", method = RequestMethod.GET)
+    @RequestMapping(value = "/downloadSampleExcel", method = RequestMethod.GET)
     @ResponseBody
-    public void exportExcel(HttpServletResponse response, @PathVariable("orderType") String orderType) throws IOException
+    public void exportExcel(HttpServletResponse response) throws IOException
     {
-        PSOLoggerSrv.printDEBUG("UpdateOrderController", "exportExcel", "updateType : "+orderType);
+        PSOLoggerSrv.printDEBUG("UpdateOrderController", "exportExcel", null);
         
         String fileName = PSOConstants.UPDATE_STATUS_EXCEL;
-        if (orderType.equalsIgnoreCase(PSOConstants.STATUS))
-        {
-            fileName = PSOConstants.UPDATE_STATUS_EXCEL;
-        }
-        else if (orderType.equalsIgnoreCase(PSOConstants.SIM))
-        {
-            fileName = PSOConstants.UPDATE_SIM_EXCEL;
-        }
-        else if (orderType.equalsIgnoreCase(PSOConstants.IMEI))
-        {
-            fileName = PSOConstants.UPDATE_IMEI_EXCEL;
-        }
-        else if (orderType.equalsIgnoreCase(PSOConstants.RETRY_COUNT))
-        {
-            fileName = PSOConstants.UPDATE_RETRY_EXCEL;
-        }
+//        if (orderType.equalsIgnoreCase(PSOConstants.STATUS))
+//        {
+//            fileName = PSOConstants.UPDATE_STATUS_EXCEL;
+//        }
+//        else if (orderType.equalsIgnoreCase(PSOConstants.SIM))
+//        {
+//            fileName = PSOConstants.UPDATE_SIM_EXCEL;
+//        }
+//        else if (orderType.equalsIgnoreCase(PSOConstants.IMEI))
+//        {
+//            fileName = PSOConstants.UPDATE_IMEI_EXCEL;
+//        }
+//        else if (orderType.equalsIgnoreCase(PSOConstants.RETRY_COUNT))
+//        {
+//            fileName = PSOConstants.UPDATE_RETRY_EXCEL;
+//        }
 
         try
         {
+            
+            fileName = "BULK_UPDATE.xlsx";
             File file = null;
             ClassLoader classloader = Thread.currentThread().getContextClassLoader();
             file = new File(classloader.getResource("sampleExcels/" + fileName).getFile());
@@ -197,5 +200,12 @@ public class UpdateOrderController
         AllowedUpdatesResponseBean allowdedUpdatelist = new AllowedUpdatesResponseBean();
         allowdedUpdatelist = updateService.getAllowdedUpdates();
         return new ResponseEntity<AllowedUpdatesResponseBean>(allowdedUpdatelist, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/updateMultiOrderDetails", method = RequestMethod.POST)
+    public ResponseEntity<BaseResponseBean> updateMultiOrderDetails(@RequestBody UpdateMultiOrderDetailsRequestBean updateOrderRequest)
+    {
+        updateService.updateMultiOrderDetails(updateOrderRequest);
+        return new ResponseEntity<BaseResponseBean>(new BaseResponseBean(), HttpStatus.OK);
     }
 }

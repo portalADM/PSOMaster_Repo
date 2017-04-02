@@ -23,11 +23,17 @@ public class OrderUpdateInputData implements Serializable
     private String sim;
     private String imei;
     private String retryCount;
-   
+    private String bulkUpdateId;
+    
+    /**
+     * 
+     */
     public OrderUpdateInputData()
     {
         super();
+        // TODO Auto-generated constructor stub
     }
+    
     /**
      * @param orderId
      * @param lineId
@@ -35,8 +41,9 @@ public class OrderUpdateInputData implements Serializable
      * @param sim
      * @param imei
      * @param retryCount
+     * @param bulkUpdateId
      */
-    public OrderUpdateInputData(String orderId, String lineId, String status, String sim, String imei, String retryCount)
+    public OrderUpdateInputData(String orderId, String lineId, String status, String sim, String imei, String retryCount, String bulkUpdateId)
     {
         super();
         this.orderId = orderId;
@@ -45,7 +52,9 @@ public class OrderUpdateInputData implements Serializable
         this.sim = sim;
         this.imei = imei;
         this.retryCount = retryCount;
+        this.bulkUpdateId = bulkUpdateId;
     }
+    
     /**
      * @return the orderId
      */
@@ -130,6 +139,20 @@ public class OrderUpdateInputData implements Serializable
     {
         this.retryCount = retryCount;
     }
+    /**
+     * @return the bulkUpdateId
+     */
+    public String getBulkUpdateId()
+    {
+        return bulkUpdateId;
+    }
+    /**
+     * @param bulkUpdateId the bulkUpdateId to set
+     */
+    public void setBulkUpdateId(String bulkUpdateId)
+    {
+        this.bulkUpdateId = bulkUpdateId;
+    }
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
@@ -138,6 +161,7 @@ public class OrderUpdateInputData implements Serializable
     {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ((bulkUpdateId == null) ? 0 : bulkUpdateId.hashCode());
         result = prime * result + ((imei == null) ? 0 : imei.hashCode());
         result = prime * result + ((lineId == null) ? 0 : lineId.hashCode());
         result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
@@ -159,6 +183,13 @@ public class OrderUpdateInputData implements Serializable
         if (getClass() != obj.getClass())
             return false;
         OrderUpdateInputData other = (OrderUpdateInputData) obj;
+        if (bulkUpdateId == null)
+        {
+            if (other.bulkUpdateId != null)
+                return false;
+        }
+        else if (!bulkUpdateId.equals(other.bulkUpdateId))
+            return false;
         if (imei == null)
         {
             if (other.imei != null)
@@ -203,16 +234,15 @@ public class OrderUpdateInputData implements Serializable
             return false;
         return true;
     }
+    
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString()
     {
-        return "OrderUpdateInputData [orderId=" + orderId + ", lineId=" + lineId + ", status=" + status + ", sim=" + sim + ", imei=" + imei + ", retryCount=" + retryCount + "]";
+        return "OrderUpdateInputData [orderId=" + orderId + ", lineId=" + lineId + ", status=" + status + ", sim=" + sim + ", imei=" + imei + ", retryCount=" + retryCount + ", bulkUpdateId="
+                + bulkUpdateId + "]";
     }
-
-    
-    
     
 }
