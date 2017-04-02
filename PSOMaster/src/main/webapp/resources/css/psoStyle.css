@@ -31,6 +31,10 @@ body{
 	margin-left: 75px;
 }
 
+.marRight20{
+	margin-right: 20px;
+}
+
 .marRight40{
 	margin-right: 40px;
 }
@@ -49,6 +53,10 @@ body{
 
 .textAignLeft{
 	text-align: left !important;
+}
+
+.textAignCentral{
+	text-align: center !important;
 }
 
 .floatRight{
@@ -228,4 +236,8 @@ body{
 
 .fontSize20{
 	font-size: 20px; 
+}
+
+.dynGrphIcon{
+	padding: 3px 5px;
 }

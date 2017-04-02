@@ -22,12 +22,14 @@
 
         <div class="row">
           <div class="col-lg-12">
+          
+           <div class="col-lg-4">
             <div class="">
               <h3 id="tables">Stuck Orders</h3>
             </div>
 
             <div class="bs-component">
-              <table class="table table-striped table-hover Width30Per">
+             <!--  <table class="table table-striped table-hover">
                 <thead>
                   <tr>
                     <th>Orders</th>
@@ -40,8 +42,77 @@
                     <td>{{status.count}}</td>
                   </tr>
                 </tbody>
-              </table> 
+              </table> --> 
+              
+              <ul class="list-group">
+	                <li class="list-group-item" ng-repeat="status in stuckOrderDetails">
+	                  <span class="badge">{{status.count}}</span>
+	                  <a href="#StuckOrderDetails/{{status.orderStatus}}" class="cursorPointer">{{status.orderStatus}}</a>
+	                </li>
+	              </ul>
+              
             </div><!-- /example -->
+            </div>
+            
+             <div class="col-lg-8">
+	            <div class="">
+	              <h3 id="tables">Regular Orders
+	              	<a class=" btn btn-default glyphicon glyphicon-align-center floatRight marRight20 dynGrphIcon" ng-click="showDynamicGraphPopup()"></a>
+	              </h3>
+	            </div>
+	
+	            <div class="bs-component  col-lg-3 noPadLeft">
+	              <ul class="list-group">
+	                <li class="list-group-item">
+	                  <span class="badge">14</span> ACTIVATION
+	                </li>
+	                <li class="list-group-item">
+	                  <span class="badge">2</span> CANCELLATION
+	                </li>
+	              </ul>
+	            </div><!-- /example -->
+	            <div class="bs-component  col-lg-3">
+	              <ul class="list-group">
+	                <li class="list-group-item">
+	                  <span class="badge">14</span> PORTIN
+	                </li>
+	                <li class="list-group-item">
+	                  <span class="badge">2</span> REGULAR
+	                </li>
+	                <li class="list-group-item">
+	                  <span class="badge">1</span> ACCESSORY
+	                </li>
+	              </ul>
+	            </div><!-- /example -->
+	             <div class="bs-component  col-lg-3">
+	              <ul class="list-group">
+	                <li class="list-group-item">
+	                  <span class="badge">14</span> PRE-PURCHASE
+	                </li>
+	                <li class="list-group-item">
+	                  <span class="badge">2</span> BYOD
+	                </li>
+	                <li class="list-group-item">
+	                  <span class="badge">1</span>SAVEDESK 
+	                </li>
+	              </ul>
+	            </div><!-- /example -->
+	             <div class="bs-component  col-lg-3">
+	              <ul class="list-group">
+	                <li class="list-group-item">
+	                  <span class="badge">14</span>SIM_SWAP
+	                </li>
+	                <li class="list-group-item">
+	                  <span class="badge">2</span>UPGRADE
+	                </li>
+	                <li class="list-group-item">
+	                  <span class="badge">1</span>ADDLINE
+	                </li>
+	              </ul> 
+	            </div><!-- /example -->
+	            
+	            
+	            </div>
           </div>
         </div>
       </div>
@@ -100,6 +171,25 @@
 	          </div>
         </div>
       </div>
+      
+      
+      
+      <!--Dynamic Graph Panel start -->
+		 <div id="DynamicGraph-modal" class="modal fade">
+	        <div class="modal-dialog modal-lg">
+	          <div class="modal-content">
+	            <div class="modal-header">
+	              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	              <h4 class="modal-title">Customize Statistics</h4>
+	            </div>
+	            <div class="modal-body">
+	            
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+		
+		<!-- Dynamic Graph Panel End -->
       
 </body>
 </html>

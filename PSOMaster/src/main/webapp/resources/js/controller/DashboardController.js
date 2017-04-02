@@ -165,5 +165,13 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 		});
 		
 	}
+	
+	
+	
+	/*Show Dynamic Graph Code Start*/
+	$scope.showDynamicGraphPopup = function(){
+		$("#DynamicGraph-modal").modal();
+	}
+	/*Show Dynamic Graph Code End*/
 
 });
