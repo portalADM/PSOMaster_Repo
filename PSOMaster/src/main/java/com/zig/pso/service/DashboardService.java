@@ -1,14 +1,14 @@
 /************************************************************************************************************
- * Class Name : DashboardService.java 
- * Description: This interface contains methods for order related statistics for Dashboard page. 
- * Author : Nilesh Patil
- * Date : July 31, 2016
+ * Class Name : DashboardService.java Description: This interface contains methods for order related statistics for Dashboard page. Author : Nilesh Patil Date : July 31, 2016
  ************************************************************************************************************/
 
 package com.zig.pso.service;
 
 import java.util.ArrayList;
 
+import com.zig.pso.rest.bean.DynamicGraphRequestBean;
+import com.zig.pso.rest.bean.RegularOrdersCount;
+import com.zig.pso.rest.bean.RegularOrdersCountList;
 import com.zig.pso.rest.bean.StuckOrderBacklogUiResponseBean;
 import com.zig.pso.rest.bean.StuckOrdersCount;
 
@@ -34,7 +34,11 @@ public interface DashboardService
      * @return
      */
     ArrayList<StuckOrdersCount> getStuckOrderallStatus();
-    
+
     public StuckOrderBacklogUiResponseBean getStuckOrderBacklogData();
+
+    public ArrayList<RegularOrdersCount> getRegularOrderListData();
+
+    public RegularOrdersCountList getDynamicOrderListData(DynamicGraphRequestBean dynamicGraphRequest);
 
 }

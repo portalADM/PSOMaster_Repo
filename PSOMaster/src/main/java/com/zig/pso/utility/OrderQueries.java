@@ -83,7 +83,7 @@ public class OrderQueries
     {
         return orderProp.getProperty("order.getAPIRequest");
     }
-    
+
     public static String getAPIResponse()
     {
         return orderProp.getProperty("order.getAPIResponse");
@@ -118,72 +118,135 @@ public class OrderQueries
     {
         return orderProp.getProperty("order.getEnrollmentDetails");
     }
-    
+
     public static String getPortalLineItemInfoSQL()
     {
         return orderProp.getProperty("order.getPortalLineItemInfo");
     }
-    
+
     public static String getEnsLineItemInfoSQL()
     {
         return orderProp.getProperty("order.getEnsLineItemInfo");
     }
-    
+
     public static String getPortalPortinInfoSQL()
     {
         return orderProp.getProperty("order.getPortalPortinDetails");
     }
-    
+
     public static String getEnsPortinInfoSQL()
     {
         return orderProp.getProperty("order.getEnsPortinDetails");
     }
-    
+
     public static String getPortalShipmentInfoSQL()
     {
         return orderProp.getProperty("order.getPortalShipmentDetails");
     }
-    
+
     public static String getPortalStuckOrderBacklogInfoSQL()
     {
         return orderProp.getProperty("order.stuckOrderBacklogInLast10Days");
     }
-    
+
     public static String getOrderLineSIMandIMEIDetailsSQL()
     {
         return orderProp.getProperty("order.getOrderLineSIMandIMEIDetails");
     }
-    
+
     public static String getCreateTempTableForBulkUpdateSQL()
     {
         return orderProp.getProperty("order.createTempTableForBulkUpdate");
     }
-    
+
     public static String getInsertBulkOrderInTempTableSQL()
     {
         return orderProp.getProperty("order.insertBulkOrderInTempTable");
     }
-    
+
     public static String getReadTempTableforBulkOrderSQL()
     {
         return orderProp.getProperty("order.readTempTableforBulkOrder");
     }
-    
+
     public static String getCurrentStatusSQL()
     {
         return orderProp.getProperty("order.getCurrentStatus");
     }
+
     public static String getCurrentSIMSQL()
     {
         return orderProp.getProperty("order.getCurrentSIMValue");
     }
+
     public static String getCurrentIMEISQL()
     {
         return orderProp.getProperty("order.getCurrentIMEIValue");
     }
+
     public static String getCurrentRetrySQL()
     {
         return orderProp.getProperty("order.getCurrentRetryCount");
     }
-    
+
+    public static String getRegisteredOrderCount()
+    {
+        return orderProp.getProperty("order.registeredOrderCount");
+    }
+
+    public static String getPortinOrderCount()
+    {
+        return orderProp.getProperty("order.regPortinOrderCount");
+    }
+
+    public static String getPrepurchaseOrderCount()
+    {
+        return orderProp.getProperty("order.regPrepurchaseOrderCount");
+    }
+
+    public static String getByodOrderCount()
+    {
+        return orderProp.getProperty("order.regByodOrderCount");
+    }
+
+    public static String getSaveDeskOrderCount()
+    {
+        return orderProp.getProperty("order.regSaveDeskOrderCount");
+    }
+
+    public static String getACTIorCNCLOrderCount()
+    {
+        return orderProp.getProperty("order.getACTIorCNCLOrderCount");
+    }
+
+    public static String getDynRegisteredOrderCount()
+    {
+        return orderProp.getProperty("order.dynRegOrderCount");
+    }
+
+    public static String getDynPortinOrderCount()
+    {
+        return orderProp.getProperty("order.dynPortinOrderCount");
+    }
+
+    public static String getDynPrepurchaseOrderCount()
+    {
+        return orderProp.getProperty("order.dynPrepurchaseOrderCount");
+    }
+
+    public static String getDynByodOrderCount()
+    {
+        return orderProp.getProperty("order.dynByodOrderCount");
+    }
+
+    public static String getDynSaveDeskOrderCount()
+    {
+        return orderProp.getProperty("order.dynSaveDeskOrderCount");
+    }
+
+    public static String getDynACTIorCNCLOrderCount()
+    {
+        return orderProp.getProperty("order.dynACTIorCNCLOrderCount");
+    }
+
 }
