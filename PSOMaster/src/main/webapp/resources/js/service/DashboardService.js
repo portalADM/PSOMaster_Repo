@@ -78,5 +78,35 @@ this.getStuckOrderForStatus = function(status){
 		);
 	}
 
+/*Dynamic graph for regular orders count*/
+this.getDynRegOrderCount = function(){
+	
+	return $http.get('dynamicRegOrderList/')
+	.then(
+			function(response){
+				return response.data;
+			}, 
+			function(errResponse){
+				console.error('Error while fetching orders');
+				return $q.reject(errResponse);
+			}
+	);
+}
+
+/*Static count for regular orders created today*/
+this.getRegOrderCount = function(){
+	
+	return $http.get('regularOrderList/')
+	.then(
+			function(response){
+				return response.data;
+			}, 
+			function(errResponse){
+				console.error('Error while fetching orders');
+				return $q.reject(errResponse);
+			}
+	);
+}
+
 
 });
