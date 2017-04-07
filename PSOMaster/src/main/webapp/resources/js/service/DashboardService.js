@@ -79,11 +79,15 @@ this.getStuckOrderForStatus = function(status){
 	}
 
 /*Dynamic graph for regular orders count*/
-this.getDynRegOrderCount = function(){
+this.getDynRegOrderCount = function(DynGraphRequestObj){
 	
-	return $http.get('dynamicRegOrderList/')
+	return $http({
+		method:"POST",
+		url:'dynamicRegOrderList',
+		data:DynGraphRequestObj})
 	.then(
 			function(response){
+				console.log(response.data);
 				return response.data;
 			}, 
 			function(errResponse){
@@ -92,6 +96,8 @@ this.getDynRegOrderCount = function(){
 			}
 	);
 }
+
+
 
 /*Static count for regular orders created today*/
 this.getRegOrderCount = function(){

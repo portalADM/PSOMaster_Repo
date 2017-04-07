@@ -118,31 +118,31 @@ public class DashboardServiceImpl implements DashboardService
         ArrayList<RegularOrdersCount> regOrderCountList = new ArrayList<RegularOrdersCount>();
 
         int portInCount = dashboardDAO.getPortinOrdersCount();
-        regOrderCountList.add(new RegularOrdersCount("PORTIN", portInCount));
+        regOrderCountList.add(new RegularOrdersCount("PORTIN", portInCount, "Order_Type"));
 
         int byodCount = dashboardDAO.getByodOrdersCount();
-        regOrderCountList.add(new RegularOrdersCount("BYOD", byodCount));
+        regOrderCountList.add(new RegularOrdersCount("BYOD", byodCount, "FLOW_Type"));
 
         int prepurchaseCount = dashboardDAO.getPrepurchaseOrdersCount();
-        regOrderCountList.add(new RegularOrdersCount("PRE-PURCHASE", prepurchaseCount));
+        regOrderCountList.add(new RegularOrdersCount("PRE-PURCHASE", prepurchaseCount, "FLOW_Type"));
 
         int saveDeskCount = dashboardDAO.getSaveDeskOrdersCount();
-        regOrderCountList.add(new RegularOrdersCount("SAVEDESK", saveDeskCount));
+        regOrderCountList.add(new RegularOrdersCount("SAVEDESK", saveDeskCount, "FLOW_Type"));
 
         int activeCount = dashboardDAO.getACTIorCNCLOrdersCount("ACTIVE");
-        regOrderCountList.add(new RegularOrdersCount("ACTIVATION", activeCount));
+        regOrderCountList.add(new RegularOrdersCount("ACTIVATION", activeCount, "STATUS"));
 
         int cancelCount = dashboardDAO.getACTIorCNCLOrdersCount("CANCEL");
-        regOrderCountList.add(new RegularOrdersCount("CANCELLATION", cancelCount));
+        regOrderCountList.add(new RegularOrdersCount("CANCELLATION", cancelCount, "STATUS"));
 
         int addlineCount = dashboardDAO.getRegisteredOrdersCount("ADDLINE");
-        regOrderCountList.add(new RegularOrdersCount("ADDLINE", addlineCount));
+        regOrderCountList.add(new RegularOrdersCount("ADDLINE", addlineCount, "SUB_FLOW"));
 
         int upgradeCount = dashboardDAO.getRegisteredOrdersCount("UPGRADE");
-        regOrderCountList.add(new RegularOrdersCount("UPGRADE", upgradeCount));
+        regOrderCountList.add(new RegularOrdersCount("UPGRADE", upgradeCount, "SUB_FLOW"));
 
         int simSwapCount = dashboardDAO.getRegisteredOrdersCount("SIMSWAP");
-        regOrderCountList.add(new RegularOrdersCount("SIM_SWAP", simSwapCount));
+        regOrderCountList.add(new RegularOrdersCount("SIM_SWAP", simSwapCount, "SUB_FLOW"));
         return regOrderCountList;
     }
 

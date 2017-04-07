@@ -55,63 +55,40 @@
             </div>
             
              <div class="col-lg-8">
-	            <div class="">
-	              <h3 id="tables">Regular Orders
-	              	<a class=" btn btn-default glyphicon glyphicon-align-center floatRight marRight20 dynGrphIcon" ng-click="showDynamicGraphPopup()"></a>
-	              </h3>
-	            </div>
-	
-	            <div class="bs-component  col-lg-3 noPadLeft">
-	              <ul class="list-group">
-	                <li class="list-group-item">
-	                  <span class="badge">14</span> ACTIVATION
-	                </li>
-	                <li class="list-group-item">
-	                  <span class="badge">2</span> CANCELLATION
-	                </li>
-	              </ul>
-	            </div><!-- /example -->
-	            <div class="bs-component  col-lg-3">
-	              <ul class="list-group">
-	                <li class="list-group-item">
-	                  <span class="badge">14</span> PORTIN
-	                </li>
-	                <li class="list-group-item">
-	                  <span class="badge">2</span> REGULAR
-	                </li>
-	                <li class="list-group-item">
-	                  <span class="badge">1</span> ACCESSORY
-	                </li>
-	              </ul>
-	            </div><!-- /example -->
-	             <div class="bs-component  col-lg-3">
-	              <ul class="list-group">
-	                <li class="list-group-item">
-	                  <span class="badge">14</span> PRE-PURCHASE
-	                </li>
-	                <li class="list-group-item">
-	                  <span class="badge">2</span> BYOD
-	                </li>
-	                <li class="list-group-item">
-	                  <span class="badge">1</span>SAVEDESK 
-	                </li>
-	              </ul>
-	            </div><!-- /example -->
-	             <div class="bs-component  col-lg-3">
-	              <ul class="list-group">
-	                <li class="list-group-item">
-	                  <span class="badge">14</span>SIM_SWAP
-	                </li>
-	                <li class="list-group-item">
-	                  <span class="badge">2</span>UPGRADE
-	                </li>
-	                <li class="list-group-item">
-	                  <span class="badge">1</span>ADDLINE
-	                </li>
-	              </ul> 
-	            </div><!-- /example -->
-	            
-	            
+		            <div class="">
+		              <h3 id="tables">Regular Orders
+		              	<a class=" btn btn-default glyphicon glyphicon-align-center floatRight marRight20 dynGrphIcon" ng-click="showDynamicGraphPopup()"></a>
+		              </h3>
+		            </div>
+		
+		            <div class="bs-component  col-lg-3 noPadLeft" >
+		              <ul class="list-group">
+		                <li class="list-group-item" ng-repeat="reg in regularOrderStatistics | filter : {group : 'STATUS'}">
+		                  <span class="badge">{{reg.count}}</span> {{reg.typeOfOrder}}
+		                </li>
+		              </ul>
+		            </div><!-- /example -->
+		            <div class="bs-component  col-lg-3">
+		               <ul class="list-group">
+		                <li class="list-group-item" ng-repeat="reg in regularOrderStatistics | filter : {group : 'Order_Type'}">
+		                  <span class="badge">{{reg.count}}</span> {{reg.typeOfOrder}}
+		                </li>
+		              </ul>
+		            </div><!-- /example -->
+		             <div class="bs-component  col-lg-3">
+		               <ul class="list-group">
+		                <li class="list-group-item" ng-repeat="reg in regularOrderStatistics | filter : {group : 'FLOW_Type'}">
+		                  <span class="badge">{{reg.count}}</span> {{reg.typeOfOrder}}
+		                </li>
+		              </ul>
+		            </div><!-- /example -->
+		             <div class="bs-component  col-lg-3">
+		               <ul class="list-group">
+		                <li class="list-group-item" ng-repeat="reg in regularOrderStatistics | filter : {group : 'SUB_FLOW'}">
+		                  <span class="badge">{{reg.count}}</span> {{reg.typeOfOrder}}
+		                </li>
+		              </ul>
+		            </div><!-- /example -->
 	            </div>
           </div>
         </div>
@@ -184,6 +161,99 @@
 	            </div>
 	            <div class="modal-body">
 	            
+	            	<form class="navbar-form navbar-left noPad" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control" ng-model="fromDate" placeholder="Enter From Date">
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" ng-model="toDate" placeholder="Enter To Date">
+						</div>
+						<div class="form-group">
+							<select class="form-control ng-pristine ng-valid ng-empty ng-touched"  ng-disabled="multiTblDisabled" ng-model="typeSelect" id="select">
+												<option value="">Select Type</option>
+												<option value="ACTIVATION">ACTIVATION</option>
+												<option value="CANCELLATION">CANCELLATION</option>
+												<option value="PORTIN">PORTIN</option>
+												<option value="BYOD">BYOD</option>
+												<option value="PRE-PURCHASE">PRE-PURCHASE</option>
+												<option value="SAVEDESK">SAVEDESK</option>
+												<option value="ADDLINE">ADDLINE</option>
+												<option value="UPGRADE">UPGRADE</option>
+												<option value="SIMSWAP">SIMSWAP</option>
+							 				</select>
+						</div>
+						<button type="button" class="btn btn-default" ng-click="getDynamicGraphData()">Submit</button>
+					</form>
+					
+					<div>
+						<div class="col-lg-6">
+						<fusioncharts 
+								    width="500" 
+								    height="400"
+								    type="pie3d"
+								    datasource="{{myOrdersCreatedSourcePie}}"></fusioncharts>
+						</div>
+							
+							
+						<div class="col-lg-6">
+						<table  class="table table-striped table-hover col-lg-6">
+								<thead>
+									<tr>
+										<th>DATE</th>
+										<th>Count</th>
+									</tr>
+								</thead>
+				              	<tbody>
+				              		<tr  ng-repeat="reg in myOrdersCreatedSourcePie.data">
+				              			<td>{{reg.label}}</td>
+				              			<td>{{reg.value}}</td>
+				              		</tr>
+				              	</tbody>    
+			              </table>
+						</div>	
+							
+					</div>
+	            
+	            <!--  <table cellpadding="10px" cellspacing="10px">
+	              	<tbody>
+	              		<tr>
+	              			<td><input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" ng-model="fromDate" placeholder="Enter From Date"></td>
+	              		</tr>
+	              		<tr>
+	              			<td> </td>
+	              		</tr>
+	              		<tr>
+	              			<td><input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" ng-model="toDate" placeholder="Enter To Date"></td>
+	              		</tr>
+	              		<tr>
+	              			<td> </td>
+	              		</tr>
+	              		<tr>
+	              			<td><select class="form-control ng-pristine ng-valid ng-empty ng-touched"  ng-disabled="multiTblDisabled" ng-model="typeSelect" id="select">
+												<option value="">------- TABLE -------</option>
+												<option value="ACTIVATION">ACTIVATION</option>
+												<option value="CANCELLATION">CANCELLATION</option>
+												<option value="PORTIN">PORTIN</option>
+												<option value="BYOD">BYOD</option>
+												<option value="PRE-PURCHASE">PRE-PURCHASE</option>
+												<option value="SAVEDESK">SAVEDESK</option>
+												<option value="ADDLINE">ADDLINE</option>
+												<option value="UPGRADE">UPGRADE</option>
+												<option value="SIMSWAP">SIMSWAP</option>
+							 				</select></td>
+	              		</tr>
+	              		<tr>
+	              			<td><button type="button" class="btn btn-default" ng-click="getDynamicGraphData()">Submit</button> </td>
+	              		</tr>
+	              		<tr><td><fusioncharts 
+						    width="500" 
+						    height="400"
+						    type="pie3d"
+						    datasource="{{myOrdersCreatedSourcePie}}"></fusioncharts></td>
+	              		</tr>
+	              	
+	              	</tbody>    
+	              </table> -->
 	            </div>
 	          </div>
 	        </div>
