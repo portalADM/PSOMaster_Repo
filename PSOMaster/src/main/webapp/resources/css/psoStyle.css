@@ -241,3 +241,12 @@ body{
 .dynGrphIcon{
 	padding: 3px 5px;
 }
+
+.dynGrphPopupMinHeight{
+	    min-height: 500px;
+	    max-height: 1500px;
+}
+
+.table-responsive222 {
+    max-height:300px;
+}

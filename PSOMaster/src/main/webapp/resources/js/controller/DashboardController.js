@@ -180,9 +180,6 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 		DashboardService.getDynRegOrderCount(DynGraphRequest).then(function(data){
 			$scope.ordertype=data.type;
 			$scope.regOrderList=data.regularOrderList
-			console.log("DynGraph Controller");
-			console.log($scope.regOrderList);
-			console.log($scope.ordertype);
 			$scope.myOrdersCreatedSourcePie.data = [];
 			$scope.totalDynCount = 0;
 			if (data.regularOrderList != undefined && data.regularOrderList.length > 0) {
@@ -193,7 +190,6 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 										value : value.count
 									}
 									Data.push(obj);
-									
 									$scope.totalDynCount = $scope.totalDynCount +value.count;
 				});
 			$scope.myOrdersCreatedSourcePie.data = Data;

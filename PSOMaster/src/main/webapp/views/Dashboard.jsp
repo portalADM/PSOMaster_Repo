@@ -159,7 +159,7 @@
 	              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 	              <h4 class="modal-title">Customize Statistics</h4>
 	            </div>
-	            <div class="modal-body">
+	            <div class="modal-body dynGrphPopupMinHeight">
 	            
 	            	<form class="navbar-form navbar-left noPad" role="search">
 						<div class="form-group">
@@ -184,76 +184,38 @@
 						</div>
 						<button type="button" class="btn btn-default" ng-click="getDynamicGraphData()">Submit</button>
 					</form>
-					
-					<div>
-						<div class="col-lg-6">
-						<fusioncharts 
-								    width="500" 
-								    height="400"
-								    type="pie3d"
-								    datasource="{{myOrdersCreatedSourcePie}}"></fusioncharts>
+						
+					<div class="col-lg-12 marTop20">
+						<div class="col-lg-8">
+							<fusioncharts 
+									    width="500" 
+									    height="400"
+									    type="pie3d"
+									    datasource="{{myOrdersCreatedSourcePie}}"></fusioncharts>
 						</div>
-							
-							
-						<div class="col-lg-6">
-						<table  class="table table-striped table-hover col-lg-6">
-								<thead>
-									<tr>
-										<th>DATE</th>
-										<th>Count</th>
-									</tr>
-								</thead>
-				              	<tbody>
-				              		<tr  ng-repeat="reg in myOrdersCreatedSourcePie.data">
-				              			<td>{{reg.label}}</td>
-				              			<td>{{reg.value}}</td>
-				              		</tr>
-				              	</tbody>    
-			              </table>
+						<div class="col-lg-4 table-responsive222">
+							<table  class="table table-striped table-hover col-lg-6">
+									<thead>
+										<tr>
+											<th>DATE</th>
+											<th>Count</th>
+										</tr>
+									</thead>
+					              	<tbody>
+					              		<tr  ng-repeat="reg in myOrdersCreatedSourcePie.data">
+					              			<td>{{reg.label}}</td>
+					              			<td>{{reg.value}}</td>
+					              		</tr>
+					              		<tr>
+					              			<td>Total</td>
+					              			<td>{{totalDynCount}}</td>
+					              		</tr>
+					              	</tbody>    
+				              </table>
 						</div>	
-							
 					</div>
-	            
-	            <!--  <table cellpadding="10px" cellspacing="10px">
-	              	<tbody>
-	              		<tr>
-	              			<td><input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" ng-model="fromDate" placeholder="Enter From Date"></td>
-	              		</tr>
-	              		<tr>
-	              			<td> </td>
-	              		</tr>
-	              		<tr>
-	              			<td><input type="text" class="form-control ng-pristine ng-valid ng-empty ng-touched" ng-model="toDate" placeholder="Enter To Date"></td>
-	              		</tr>
-	              		<tr>
-	              			<td> </td>
-	              		</tr>
-	              		<tr>
-	              			<td><select class="form-control ng-pristine ng-valid ng-empty ng-touched"  ng-disabled="multiTblDisabled" ng-model="typeSelect" id="select">
-												<option value="">------- TABLE -------</option>
-												<option value="ACTIVATION">ACTIVATION</option>
-												<option value="CANCELLATION">CANCELLATION</option>
-												<option value="PORTIN">PORTIN</option>
-												<option value="BYOD">BYOD</option>
-												<option value="PRE-PURCHASE">PRE-PURCHASE</option>
-												<option value="SAVEDESK">SAVEDESK</option>
-												<option value="ADDLINE">ADDLINE</option>
-												<option value="UPGRADE">UPGRADE</option>
-												<option value="SIMSWAP">SIMSWAP</option>
-							 				</select></td>
-	              		</tr>
-	              		<tr>
-	              			<td><button type="button" class="btn btn-default" ng-click="getDynamicGraphData()">Submit</button> </td>
-	              		</tr>
-	              		<tr><td><fusioncharts 
-						    width="500" 
-						    height="400"
-						    type="pie3d"
-						    datasource="{{myOrdersCreatedSourcePie}}"></fusioncharts></td>
-	              		</tr>
-	              	
-	              	</tbody>    
-	              </table> -->
+					
+					
 	            </div>
 	          </div>
 	        </div>
