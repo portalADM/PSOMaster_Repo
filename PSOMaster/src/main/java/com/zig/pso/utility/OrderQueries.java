@@ -194,9 +194,9 @@ public class OrderQueries
         return orderProp.getProperty("order.registeredOrderCount");
     }
 
-    public static String getPortinOrderCount()
+    public static String getRegOrderCount()
     {
-        return orderProp.getProperty("order.regPortinOrderCount");
+        return orderProp.getProperty("order.regOrderCount");
     }
 
     public static String getPrepurchaseOrderCount()
@@ -224,9 +224,9 @@ public class OrderQueries
         return orderProp.getProperty("order.dynRegOrderCount");
     }
 
-    public static String getDynPortinOrderCount()
+    public static String getDynOrderCount()
     {
-        return orderProp.getProperty("order.dynPortinOrderCount");
+        return orderProp.getProperty("order.dynOrderCount");
     }
 
     public static String getDynPrepurchaseOrderCount()

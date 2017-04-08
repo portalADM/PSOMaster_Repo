@@ -48,7 +48,7 @@ public interface DashboardDAO
 
     public int getACTIorCNCLOrdersCount(String type);
 
-    public int getPortinOrdersCount();
+    public int getOrdersCount(String type);
 
     public int getPrepurchaseOrdersCount();
 
@@ -66,5 +66,5 @@ public interface DashboardDAO
 
     public ArrayList<RegularOrdersCount> getByodOrdersCount(String fromDate, String toDate);
 
-    public ArrayList<RegularOrdersCount> getPortinOrdersCount(String fromDate, String toDate);
+    public ArrayList<RegularOrdersCount> getOrdersCount(String fromDate, String toDate, String type);
 }

@@ -265,15 +265,21 @@ public class DashboardDAOImpl implements DashboardDAO
     }
 
     @Override
-    public int getPortinOrdersCount()
+    public int getOrdersCount(String type)
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getRegisteredOrdersCount", "");
+        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getOrdersCount", "");
 
-        String sql = OrderQueries.getPortinOrderCount();
+        String sql = OrderQueries.getRegOrderCount();
         int count = 0;
         try
         {
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            if (type == "PORTIN")
+                pstm.setString(1, "100");
+            else if (type == "REGULAR")
+                pstm.setString(1, "200");
+            else if (type == "ACCESSORY")
+                pstm.setString(1, "300");
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next())
@@ -365,18 +371,19 @@ public class DashboardDAOImpl implements DashboardDAO
     // **************************************************************************************
     // Dynamic Graphs Methods
     @Override
-    public ArrayList<RegularOrdersCount> getPortinOrdersCount(String fromDate, String toDate)
+    public ArrayList<RegularOrdersCount> getOrdersCount(String fromDate, String toDate, String type)
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getPortinOrdersCount ", "");
+        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getOrdersCount ", "");
 
         ArrayList<RegularOrdersCount> dynamicOrdersCountList = new ArrayList<RegularOrdersCount>();
 
-        String sql = OrderQueries.getDynPortinOrderCount();
+        String sql = OrderQueries.getDynOrderCount();
         try
         {
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
             pstm.setString(1, fromDate);
             pstm.setString(2, toDate);
+            pstm.setString(3, type);
             ResultSet rs = pstm.executeQuery();
             while (rs.next())
             {

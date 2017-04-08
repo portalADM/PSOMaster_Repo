@@ -1,6 +1,8 @@
 /************************************************************************************************************
  * Class Name : DashboardServiceImpl.java Description: This service provided response for Dashboard REST calls Author : Pankaj Chaudhary Date : Aug 2, 2016
- * **********************************************************************************************************
+ * *****************************************************************************************************************************************************************************************************
+ * Description: added regular order count and dynamic graph Author : Ankita Mishra Date : Apr 08, 2017
+ * *************************************************************************************************************************************************************
  */
 package com.zig.pso.service;
 
@@ -117,8 +119,14 @@ public class DashboardServiceImpl implements DashboardService
         PSOLoggerSrv.printDEBUG("DashboardServiceImpl", "getRegularOrderListData", "");
         ArrayList<RegularOrdersCount> regOrderCountList = new ArrayList<RegularOrdersCount>();
 
-        int portInCount = dashboardDAO.getPortinOrdersCount();
+        int portInCount = dashboardDAO.getOrdersCount("PORTIN");
         regOrderCountList.add(new RegularOrdersCount("PORTIN", portInCount, "Order_Type"));
+
+        int regularCount = dashboardDAO.getOrdersCount("REGULAR");
+        regOrderCountList.add(new RegularOrdersCount("REGULAR", regularCount, "Order_Type"));
+
+        int AccessoryCount = dashboardDAO.getOrdersCount("ACCESSORY");
+        regOrderCountList.add(new RegularOrdersCount("ACCESSORY", AccessoryCount, "Order_Type"));
 
         int byodCount = dashboardDAO.getByodOrdersCount();
         regOrderCountList.add(new RegularOrdersCount("BYOD", byodCount, "FLOW_Type"));
@@ -159,7 +167,19 @@ public class DashboardServiceImpl implements DashboardService
 
         if ("PORTIN".equals(dynamicGraphRequest.getType()))
         {
-            dynamicOrdersCountList = dashboardDAO.getPortinOrdersCount(dynamicGraphRequest.getFromDate(), dynamicGraphRequest.getToDate());
+            dynamicOrdersCountList = dashboardDAO.getOrdersCount(dynamicGraphRequest.getFromDate(), dynamicGraphRequest.getToDate(), "100");
+            dynOrderCountList.setRegularOrderList(dynamicOrdersCountList); // (new RegularOrdersCount("PORTIN", portInCount));
+            dynOrderCountList.setType(dynamicGraphRequest.getType());
+        }
+        else if ("REGULAR".equals(dynamicGraphRequest.getType()))
+        {
+            dynamicOrdersCountList = dashboardDAO.getOrdersCount(dynamicGraphRequest.getFromDate(), dynamicGraphRequest.getToDate(), "200");
+            dynOrderCountList.setRegularOrderList(dynamicOrdersCountList); // (new RegularOrdersCount("PORTIN", portInCount));
+            dynOrderCountList.setType(dynamicGraphRequest.getType());
+        }
+        else if ("ACCESSORY".equals(dynamicGraphRequest.getType()))
+        {
+            dynamicOrdersCountList = dashboardDAO.getOrdersCount(dynamicGraphRequest.getFromDate(), dynamicGraphRequest.getToDate(), "300");
             dynOrderCountList.setRegularOrderList(dynamicOrdersCountList); // (new RegularOrdersCount("PORTIN", portInCount));
             dynOrderCountList.setType(dynamicGraphRequest.getType());
         }
