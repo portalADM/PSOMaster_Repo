@@ -82,6 +82,7 @@
 	<script src="resources/js/controller/UpdateOrderController.js"></script>
 	<script src="resources/js/controller/StuckOrderDetailsController.js"></script>
 	<script src="resources/js/controller/SendEmailController.js"></script>
+	<script src="resources/js/controller/LoginController.js"></script>
 
 	<!-- Application Modules Services Import -->
 	<script src="resources/js/service/OrderService.js"></script>

@@ -21,6 +21,8 @@ public class BulkUpdateOrderResponseBean extends BaseResponseBean
     private List<String> invalidOrders;
     
     private String updateType;
+    
+    private String bulkUpdateId;
 
     /**
      * @return the tempTableDataList
@@ -69,8 +71,21 @@ public class BulkUpdateOrderResponseBean extends BaseResponseBean
     {
         this.updateType = updateType;
     }
-    
-    
-    
+
+    /**
+     * @return the bulkUpdateId
+     */
+    public String getBulkUpdateId()
+    {
+        return bulkUpdateId;
+    }
+
+    /**
+     * @param bulkUpdateId the bulkUpdateId to set
+     */
+    public void setBulkUpdateId(String bulkUpdateId)
+    {
+        this.bulkUpdateId = bulkUpdateId;
+    }
     
 }

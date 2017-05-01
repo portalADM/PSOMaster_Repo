@@ -43,5 +43,7 @@ public interface UpdateOrderManagerDAO
     public ArrayList<OrderUpdateInputData> getBulkOrderDataFromTempTable(String bulkUpdateId);
     
     public BaseResponseBean updateMultiOrderDetails(UpdateMultiOrderDetailsRequestBean updateOrderRequest);
+    
+    public BaseResponseBean updateBulkOrderDetails(String bulkUpdateId);
 
 }

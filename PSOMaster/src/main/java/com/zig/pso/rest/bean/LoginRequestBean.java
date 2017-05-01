@@ -15,12 +15,9 @@ import java.io.Serializable;
 public class LoginRequestBean implements Serializable
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -7471045337689570704L;
-    String Username;
-    String Password;
+    private String Username;
+    private String Password;
 
     
     public String getUsername()

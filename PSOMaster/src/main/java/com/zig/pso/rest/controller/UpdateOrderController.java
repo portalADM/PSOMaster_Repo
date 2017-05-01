@@ -85,6 +85,7 @@ public class UpdateOrderController
             {
                 
                 bulkUpdateResponse.setTempTableDataList(validatedOrders.getValidOrderData());
+                bulkUpdateResponse.setBulkUpdateId(validatedOrders.getValidOrderData().get(0).getBulkUpdateId());
                 
 //                if (updateType.equalsIgnoreCase(PSOConstants.STATUS))
 //                {
@@ -114,7 +115,6 @@ public class UpdateOrderController
             }
 
             bulkUpdateResponse.setInvalidOrders(validatedOrders.getInvalidOrders());
-            bulkUpdateResponse.setUpdateType(updateType);
         }
         return new ResponseEntity<BaseResponseBean>(bulkUpdateResponse, HttpStatus.OK);
     }
@@ -208,4 +208,12 @@ public class UpdateOrderController
         updateService.updateMultiOrderDetails(updateOrderRequest);
         return new ResponseEntity<BaseResponseBean>(new BaseResponseBean(), HttpStatus.OK);
     }
+    
+    @RequestMapping(value = "/updateBulkOrderDetails/{bulkUpdateId}", method = RequestMethod.POST)
+    public ResponseEntity<BaseResponseBean> updateBulkOrderDetails(HttpServletRequest request, @RequestParam Map<String, Object> params, @PathVariable("bulkUpdateId") String bulkUpdateId)
+    {
+        updateService.updateBulkOrderDetails(bulkUpdateId);
+        return new ResponseEntity<BaseResponseBean>(new BaseResponseBean(), HttpStatus.OK);
+    }
+    
 }

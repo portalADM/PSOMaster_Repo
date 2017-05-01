@@ -44,5 +44,6 @@ public interface UpdateOrderManagerService
     public AllowedUpdatesResponseBean getAllowdedUpdates();
     
     public BaseResponseBean updateMultiOrderDetails(UpdateMultiOrderDetailsRequestBean updateOrderRequest);
-
+    
+    public BaseResponseBean updateBulkOrderDetails(String bulkUpdateId);
 }

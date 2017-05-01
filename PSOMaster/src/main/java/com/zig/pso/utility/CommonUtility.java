@@ -75,7 +75,13 @@ public class CommonUtility
      */
     public static String getRandomBulkUpdateID()
     {
-        return RandomStringUtils.random(10, false, true);
+        //return RandomStringUtils.random(10, false, true);
+        return RandomStringUtils.random(15, false, true);
+    }
+    
+    public static void main(String[] args)
+    {
+        System.out.println(CommonUtility.getRandomBulkUpdateID());
     }
     
 }

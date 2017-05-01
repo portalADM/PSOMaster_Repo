@@ -12,7 +12,7 @@ public class IndexController
     @RequestMapping(method = RequestMethod.GET)
     public String getIndexPage()
     {
-        return "Master";
+        return "Login";
     }
 
 }

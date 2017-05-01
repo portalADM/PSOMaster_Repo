@@ -9,17 +9,16 @@ package com.zig.pso.service;
 
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.LoginRequestBean;
-import com.zig.pso.rest.bean.UpdateOrderRequestBean;
 
 
 public interface LoginService
 {
 	
-/**
- * @param loginRequest 
- * @param OrderId
- * @return
- */
-public BaseResponseBean doLogin(LoginRequestBean loginRequest);
+    /**
+     * @param loginRequest 
+     * @param OrderId
+     * @return
+     */
+    public BaseResponseBean authenticateUser(LoginRequestBean loginRequest);
 	
 }

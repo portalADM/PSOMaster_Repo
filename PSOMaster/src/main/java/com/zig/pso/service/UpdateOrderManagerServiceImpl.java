@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -193,26 +194,27 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
                 OrderUpdateInputData order = new OrderUpdateInputData();
                 Iterator cells = row.cellIterator();
                 int colNum = 0;
+                DataFormatter formatter = new DataFormatter(); //creating formatter using the default locale
+                String cellValue = "";
                 for(int y=0; y<row.getLastCellNum(); y++) {
                     Cell cell = row.getCell(y, Row.CREATE_NULL_AS_BLANK);
-                    System.out.print(cell.toString()+" ");
+                    cellValue = formatter.formatCellValue(cell); 
+                    System.out.print(cellValue+" ");
                     
                     if (colNum == 0)
-                        order.setOrderId(cell.getStringCellValue()); // ORDER_ID
-                    else if(colNum == 1 && null!=cell.getStringCellValue() && !cell.getStringCellValue().isEmpty())
-                        order.setLineId(cell.getStringCellValue()); // LINE_ID
-                    else if(colNum == 2 && null!=cell.getStringCellValue() && !cell.getStringCellValue().isEmpty())
-                        order.setSim(cell.getStringCellValue()); // SIM NUMBER
-                    else if(colNum == 3 && null!=cell.getStringCellValue() && !cell.getStringCellValue().isEmpty())
-                        order.setImei(cell.getStringCellValue()); // IMEI NUMBER
-                    else if(colNum == 4 && null!=cell.getStringCellValue() && !cell.getStringCellValue().isEmpty())
-                        order.setStatus(cell.getStringCellValue()); // STATUS
-                    else if(colNum == 5 && null!=cell.getStringCellValue() && !cell.getStringCellValue().isEmpty())
-                        order.setRetryCount(cell.getStringCellValue()); // RETRY COUNT
+                        order.setOrderId(cellValue); // ORDER_ID
+                    else if(colNum == 1 && null!=cellValue && !cellValue.isEmpty())
+                        order.setLineId(cellValue); // LINE_ID
+                    else if(colNum == 2 && null!=cellValue && !cellValue.isEmpty())
+                        order.setSim(cellValue); // SIM NUMBER
+                    else if(colNum == 3 && null!=cellValue && !cellValue.isEmpty())
+                        order.setImei(cellValue); // IMEI NUMBER
+                    else if(colNum == 4 && null!=cellValue && !cellValue.isEmpty())
+                        order.setStatus(cellValue); // STATUS
+                    else if(colNum == 5 && null!=cellValue && !cellValue.isEmpty())
+                        order.setRetryCount(cellValue); // RETRY COUNT
                     
                     colNum++;
-                    
-                    
                 }
                 
                 /*
@@ -341,7 +343,15 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
     @Override
     public BaseResponseBean updateMultiOrderDetails(UpdateMultiOrderDetailsRequestBean updateOrderRequest)
     {
-        // TODO Auto-generated method stub
         return updateDAO.updateMultiOrderDetails(updateOrderRequest);
+    }
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderDetails(java.lang.String)
+     */
+    @Override
+    public BaseResponseBean updateBulkOrderDetails(String bulkUpdateId)
+    {
+        return updateDAO.updateBulkOrderDetails(bulkUpdateId);
     }
 }

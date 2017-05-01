@@ -8,14 +8,13 @@
 package com.zig.pso.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.zig.pso.logging.PSOLoggerSrv;
+import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.LoginRequestBean;
 import com.zig.pso.service.LoginService;
@@ -30,13 +29,28 @@ public class LoginController
     @Autowired
     LoginService loginService;
 
-    @RequestMapping(value = "/Login", method = RequestMethod.POST)
-    public ResponseEntity<BaseResponseBean>  doLogin(@RequestBody LoginRequestBean loginRequest)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ModelAndView  doLogin(@RequestParam("username") String userName,@RequestParam("password") String password)
     {
-    	BaseResponseBean AuthConfirm = new BaseResponseBean();
-        PSOLoggerSrv.printINFO("############### Login Flow ###########################");
-        AuthConfirm = loginService.doLogin(loginRequest);
-        return new ResponseEntity<BaseResponseBean>(AuthConfirm, HttpStatus.OK);
+        LoginRequestBean loginRequest = new LoginRequestBean();
+        loginRequest.setUsername(userName);
+        loginRequest.setPassword(password);
+        
+        String routeToPage = "";
+        ModelAndView model = new ModelAndView();
+        
+        BaseResponseBean authConfirm = loginService.authenticateUser(loginRequest);
+        if(authConfirm.getErrorCode()==PSOConstants.SUCCESS_CODE){
+            routeToPage = "../Master";
+            model.setViewName(routeToPage);
+        }
+        else{
+            routeToPage = "../Login";
+            model.setViewName(routeToPage);
+            model.addObject("message_login", authConfirm.getErrorMsg());
+        }
+        
+        return model;
     }
 
 }

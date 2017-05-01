@@ -1,7 +1,13 @@
 /************************************************************************************************************
- * Class Name : DashBoardController.java Description: This controller is responsible for serving all the Dashboard REST calls. Author : Pankaj Chaudhary Date : July 31, 2016
- * ********************************************************************************************************** Description: Adding dynamic graph and static graphs for regular orders Author : Ankita
- * Mishra Date : April 04, 2017 **********************************************************************************************************
+ * Class Name : DashBoardController.java 
+ * Description: This controller is responsible for serving all the Dashboard REST calls. 
+ * Author : Pankaj Chaudhary 
+ * Date : July 31, 2016
+ * ********************************************************************************************************** 
+ * Description: Adding dynamic graph and static graphs for regular orders 
+ * Author : Ankita
+ * Mishra Date : April 04, 2017 
+ * **********************************************************************************************************
  */
 
 package com.zig.pso.rest.controller;
@@ -25,12 +31,16 @@ import com.zig.pso.rest.bean.StuckOrderBacklogUiResponseBean;
 import com.zig.pso.rest.bean.StuckOrderDetailResponse;
 import com.zig.pso.rest.bean.StuckOrdersCount;
 import com.zig.pso.service.DashboardService;
+import com.zig.pso.service.UserSessionBean;
 
 @RestController
 public class DashBoardController
 {
     @Autowired
     DashboardService dashboardService;
+    
+    @Autowired
+    UserSessionBean userSession;
 
     /*
      * This REST provides count of Stuck orders
@@ -41,6 +51,8 @@ public class DashBoardController
         PSOLoggerSrv.printDEBUG("DashBoardController", "getStuckOrdersCount", "");
 
         StuckOrderDetailResponse stuckOrdersList = new StuckOrderDetailResponse();
+        
+        System.out.println(userSession.getLoggedInUserDetail());
 
         ArrayList<StuckOrdersCount> stuckOrderCountList = dashboardService.getStuckOrderList();
         stuckOrdersList.setStuckOrderList(stuckOrderCountList);
@@ -109,7 +121,6 @@ public class DashBoardController
         RegularOrdersCountList dynamicOrdersCountList = new RegularOrdersCountList();
 
         dynamicOrdersCountList = dashboardService.getDynamicOrderListData(dynamicGraphRequest);
-        // dynamicOrdersCountList.setRegularOrderList(dynamicOrderList);
         return new ResponseEntity<RegularOrdersCountList>(dynamicOrdersCountList, HttpStatus.OK);
     }
 

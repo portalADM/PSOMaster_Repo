@@ -343,8 +343,8 @@
         	 			<div class="well" id="">
                                 <form class="form-horizontal">
                                 	 <div class="form-group">
-						                    <label class="col-lg-2 control-label textAlgnInit">Update Type</label>
-						                    <div class="col-lg-10">
+						                 <!--    <label class="col-lg-2 control-label textAlgnInit">Update Type</label> -->
+						                    <div class="col-lg-12">
 						                       <div class="checkbox">
 						                       	<label  class="col-lg-2"></label>
 							                     <label class="col-lg-4 floatRight">
@@ -436,25 +436,25 @@
 							 	<thead>
 							 		<tr>
 								 		<th>Order ID</th>
-								 		<th ng-show="tempTblUpdateType=='sim' || tempTblUpdateType=='imei'">Line ID</th>
-								 		<th ng-show="tempTblUpdateType=='status'">Status</th>
-								 		<th ng-show="tempTblUpdateType=='sim'">SIM</th>
-								 		<th ng-show="tempTblUpdateType=='imei'">IMEI</th>
-								 		<th ng-show="tempTblUpdateType=='retry'">Retry Count</th>
+								 		<th>Line ID</th>
+								 		<th>Status</th>
+								 		<th>SIM</th>
+								 		<th>IMEI</th>
+								 		<th>Retry Count</th>
 								 	</tr>
 							 	</thead>
 				              	<tbody>
 				              		<tr ng-repeat="data in tempTableDataList">
 				              			<td>{{data.orderId}}</td>
-				              			<td ng-show="tempTblUpdateType=='sim' || tempTblUpdateType=='imei'">{{data.lineId}}</td>
-				              			<td ng-show="tempTblUpdateType=='status'">{{data.status}}</td>
-				              			<td ng-show="tempTblUpdateType=='sim'">{{data.sim}}</td>
-				              			<td ng-show="tempTblUpdateType=='imei'">{{data.imei}}</td>
-				              			<td ng-show="tempTblUpdateType=='retry'">{{data.retryCount}}</td>
+				              			<td>{{data.lineId}}</td>
+				              			<td>{{data.status}}</td>
+				              			<td>{{data.sim}}</td>
+				              			<td>{{data.imei}}</td>
+				              			<td>{{data.retryCount}}</td>
 				              		</tr>
 				              	</tbody>    
 				              </table>
-				              <button type="submit" class="btn btn-default" ng-click="searchOrderDetails()">Update</button>
+				              <button type="submit" class="btn btn-default" ng-click="updateBulkOrders()">Update</button>
 		                </div>
 		                <div class="tab-pane fade active in" id="profile" ng-show="accordion=='InValid'">
 							 <table cellpadding="10px" cellspacing="10px">

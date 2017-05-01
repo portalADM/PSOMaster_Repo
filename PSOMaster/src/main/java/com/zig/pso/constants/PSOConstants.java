@@ -49,6 +49,7 @@ public class PSOConstants
 
     public final static String BACKEND_ERROR = "There is a backend Error. Please try after some time.";
     public final static String BULK_UPDATE_SUCCESS = "Bulk Updates done successfully";
+    public final static String BULK_UPDATE_FAILURE = "Bulk Order Update failed";
     public final static String BULK_TEMP_INSERT_SUCCESS = "Bulk data insert done successfully";
 
     /*
@@ -68,5 +69,16 @@ public class PSOConstants
     public final static String CONTENT_DISPOSITION = "Content-Disposition";
     
     public final static String PSO_ADMIN_USER = "ADMIN";
-
+    
+    
+    /*
+     * Authentication and Authorization constants 
+     * 
+     */
+    public final static int AUTH_FAILED = 401;
+    public final static String AUTH_FAILED_MSG = "Authentication Failed";
+    public final static String AUTH_SUCCESS_MSG = "Authentication Successfull";
+    
+    public final static String BULK_UPDATE_SUCCESS_CODE = "0";
+    public final static String BULK_UPDATE_FAILURE_CODE = "-1";
 }

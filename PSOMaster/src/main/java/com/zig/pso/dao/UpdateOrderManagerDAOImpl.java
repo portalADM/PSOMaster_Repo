@@ -7,6 +7,7 @@
  */
 package com.zig.pso.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -260,12 +261,13 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         {
             PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getOrderId());
-            pstm.setString(2, updateOrderRequest.getType());
-            pstm.setString(3, currentValue);
-            pstm.setString(4, updateOrderRequest.getNewValue());
-            pstm.setString(5, logRefId);
-            pstm.setString(6, "admin");
-            pstm.setString(7, tablename);
+            pstm.setString(2, updateOrderRequest.getLineId());
+            pstm.setString(3, updateOrderRequest.getType());
+            pstm.setString(4, currentValue);
+            pstm.setString(5, updateOrderRequest.getNewValue());
+            pstm.setString(6, logRefId);
+            pstm.setString(7, "admin");
+            pstm.setString(8, tablename);
             int i = pstm.executeUpdate();
             if (i < 1)
             {
@@ -667,6 +669,52 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
     {
         String aaa = "STATUS_CODE = 'PDRS', RETRY = '0',";
         System.out.println(aaa.substring(0, aaa.length()-1));
+    }
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.dao.UpdateOrderManagerDAO#updateBulkOrderDetails(java.lang.String)
+     */
+    @Override
+    public BaseResponseBean updateBulkOrderDetails(String bulkUpdateId)
+    {
+        BaseResponseBean response = new BaseResponseBean();
+        CallableStatement callableStatement = null;
+        
+        String logRefID = CommonUtility.getLogRefID();
+        
+        String sql = "{call PORTAL_BULK_UPDATE(?,?,?,?,?)}";
+        
+        try
+        {
+            
+            callableStatement = portalDBConnection.prepareCall(sql);
+            callableStatement.setString(1, bulkUpdateId);
+            callableStatement.setString(2, "Admin");
+            callableStatement.setString(3, logRefID);
+            callableStatement.registerOutParameter(4, java.sql.Types.VARCHAR);
+            callableStatement.registerOutParameter(5, java.sql.Types.VARCHAR);
+            
+            callableStatement.executeUpdate();
+            
+            String errorCode = callableStatement.getString(4);
+            String errorMessage = callableStatement.getString(5);
+            
+            if(PSOConstants.BULK_UPDATE_SUCCESS_CODE.equals(errorCode)){
+                response.setErrorCode(PSOConstants.SUCCESS_CODE);
+                response.setErrorMsg(PSOConstants.BULK_UPDATE_SUCCESS);
+            }
+            else{
+                response.setErrorCode(PSOConstants.ERROR_CODE);
+                response.setErrorMsg(PSOConstants.BULK_UPDATE_FAILURE);
+            }
+            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateBulkOrderDetails", logRefID,sql,bulkUpdateId, errorMessage);
+        }
+        catch (SQLException e)
+        {
+            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateBulkOrderDetails", logRefID,sql,bulkUpdateId, e);
+        }
+        
+        return response;
     }
 
 }

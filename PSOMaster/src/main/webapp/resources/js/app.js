@@ -1,7 +1,11 @@
 var module = angular.module("PSOMaster", [ 'ngRoute','ngSanitize','ng-fusioncharts','ngFlash','ngAnimate', 'ui.bootstrap','treasure-overlay-spinner']);//,'chart.js'
 
 module.config([ '$routeProvider', function($routeProvider) {
-	$routeProvider.when('/dashboard', {
+	$routeProvider.when('/login', {
+		templateUrl : 'views/Login.jsp',
+		controller : 'LoginController'
+	})
+	.when('/dashboard', {
 		templateUrl : 'views/Dashboard.jsp',
 		controller : 'DashboardController'
 	})

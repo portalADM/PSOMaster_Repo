@@ -10,6 +10,8 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 	
 	$scope.updateData={};
 	
+	$scope.bulkUpdateID = null;
+	
 	$scope.openHelpModel = function(){
         $("#UpdateHelp-modal").modal();
 	}
@@ -267,8 +269,8 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 	     FileUploadService.uploadFileToUrl(file, uploadUrl).then(
 				function(response) {
 					if(response.errorCode == 0){
-						$scope.tempTblUpdateType = response.updateType;
 						$scope.tempTableDataList = response.tempTableDataList;
+						$scope.bulkUpdateID = response.bulkUpdateId;
 						MessageService.showSuccess(response.errorMsg,5000);
 						$("#UpdateResponse-modal").modal();
 					}
@@ -291,7 +293,20 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 		  );
 	 }
 	 
-	 function updateBulkOrders(){
+	 /*
+	  * This method will update the Valid bulk orders
+	  */
+	 $scope.updateBulkOrders = function(){
+		 alert($scope.bulkUpdateID);
+		 
+		 UpdateOrderService.updateBulkOrderDetails($scope.bulkUpdateID).then(
+					function(response) {
+						console.log(response);
+		       		},
+			       function(errResponse){
+						MessageService.showSuccess('Error occured while getting Updating Bulk Orders. Please try again later.',5000);
+			       }
+		 );
 		 
 	 }
 	 
