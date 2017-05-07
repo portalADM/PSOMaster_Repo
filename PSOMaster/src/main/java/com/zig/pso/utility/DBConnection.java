@@ -29,10 +29,6 @@ public class DBConnection
      */
     public static Connection getPortalDBConnection()
     {
-        if (portalDBConnection != null)
-            return portalDBConnection;
-        else
-        {
             try
             {
                 Properties prop = PropertyReader.getDbProperties();
@@ -56,7 +52,6 @@ public class DBConnection
                 PSOLoggerSrv.printERROR(e.getMessage());
             }
             return portalDBConnection;
-        }
     }
 
     /*
@@ -64,10 +59,6 @@ public class DBConnection
      */
     public static Connection getENSDBConnection()
     {
-        if (ensDBConnection != null)
-            return ensDBConnection;
-        else
-        {
             try
             {
                 Properties prop = PropertyReader.getDbProperties();
@@ -92,5 +83,4 @@ public class DBConnection
             }
             return ensDBConnection;
         }
-    }
 }

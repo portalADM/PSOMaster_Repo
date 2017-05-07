@@ -35,7 +35,6 @@ import com.zig.pso.utility.OrderQueries;
 @Repository
 public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
 {
-    private Connection portalDBConnection = null;
     
     @Autowired
     OrderInfoManagerDAO orderDAO;
@@ -45,7 +44,12 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
      */
     public UpdateOrderManagerDAOImpl()
     {
-        portalDBConnection = DBConnection.getPortalDBConnection();
+        super();
+    }
+
+    private Connection getPortalDbConnction()
+    {
+        return DBConnection.getPortalDBConnection();
     }
 
     /*
@@ -61,12 +65,15 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         
         String sql = OrderQueries.updateOrderStatus();
         
+        PreparedStatement pstm = null;
+        Connection con = this.getPortalDbConnction();
+        
         try
         {
             
             String currentStatus = orderDAO.getOrderCurrentValue(updateOrderRequest.getOrderId(), updateOrderRequest.getLineId(), updateOrderRequest.getType());
             
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getNewValue());
             pstm.setString(2, updateOrderRequest.getOrderId());
             int i = pstm.executeUpdate();
@@ -94,6 +101,31 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             updateOrderRes.setLogRefId(logRefID);
             PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateOrderStatus", logRefID, sql,updateOrderRequest, e);
         }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderStatus", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderStatus", e);
+                }
+            }
+        }
 
         return updateOrderRes;
     }
@@ -111,11 +143,14 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         
         String sql = OrderQueries.updateOrderSim();
         
+        PreparedStatement pstm = null;
+        Connection con = this.getPortalDbConnction();
+        
         try
         {
             String currentSIMValue = orderDAO.getOrderCurrentValue(updateOrderRequest.getOrderId(), updateOrderRequest.getLineId(), updateOrderRequest.getType());
             
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getNewValue());
             pstm.setString(2, updateOrderRequest.getOrderId());
             pstm.setString(3, updateOrderRequest.getLineId());
@@ -144,6 +179,31 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             updateOrderRes.setLogRefId(logRefID);
             PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateOrderSim", logRefID, sql,updateOrderRequest, e);
         }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderSim", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderSim", e);
+                }
+            }
+        }
         
         return updateOrderRes;
 
@@ -162,11 +222,14 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         
         String sql = OrderQueries.updateOrderIMEI();
         
+        PreparedStatement pstm = null;
+        Connection con = this.getPortalDbConnction();
+        
         try
         {
             String currentIMEIValue = orderDAO.getOrderCurrentValue(updateOrderRequest.getOrderId(), updateOrderRequest.getLineId(), updateOrderRequest.getType());
             
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getNewValue());
             pstm.setString(2, updateOrderRequest.getOrderId());
             pstm.setString(3, updateOrderRequest.getLineId());
@@ -195,6 +258,31 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             
             PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateOrderImei", logRefID, sql,updateOrderRequest, e);
         }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderImei", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderImei", e);
+                }
+            }
+        }
         
         return updateOrderRes;
     }
@@ -212,11 +300,14 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         
         String sql = OrderQueries.updateOrderRetryCount();
         
+        PreparedStatement pstm = null;
+        Connection con = this.getPortalDbConnction();
+        
         try
         {
             String currentRetryCount = orderDAO.getOrderCurrentValue(updateOrderRequest.getOrderId(), updateOrderRequest.getLineId(), updateOrderRequest.getType());
             
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getNewValue());
             pstm.setString(2, updateOrderRequest.getOrderId());
             int i = pstm.executeUpdate();
@@ -244,6 +335,31 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             
             PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateOrderRetryCount", logRefID, sql,updateOrderRequest, e);
         }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderRetryCount", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderRetryCount", e);
+                }
+            }
+        }
         return updateOrderRes;
     }
 
@@ -257,9 +373,12 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         BaseResponseBean updateOrderRes = new BaseResponseBean();
         String sql = OrderQueries.updateOrderTrack();
         
+        PreparedStatement pstm = null;
+        Connection con = this.getPortalDbConnction();
+        
         try
         {
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, updateOrderRequest.getOrderId());
             pstm.setString(2, updateOrderRequest.getLineId());
             pstm.setString(3, updateOrderRequest.getType());
@@ -288,6 +407,31 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         {
             PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateOrderTrack", logRefId, sql,updateOrderRequest, e);
         }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderTrack", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderTrack", e);
+                }
+            }
+        }
         
         
         return updateOrderRes;
@@ -307,9 +451,12 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         
         String sql = OrderQueries.updateOrderStatus();
         
+        PreparedStatement pstm = null;
+        Connection con = this.getPortalDbConnction();
+        
         try
         {
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
 
             for (OrderUpdateInputData order : orderUpdateData)
             {
@@ -342,6 +489,31 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             
             PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateBulkOrderStatus", logRefID, sql,orderUpdateData, e);
         }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderStatus", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderStatus", e);
+                }
+            }
+        }
 
         return updateOrderRes;
     }
@@ -359,9 +531,12 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         
         String sql = OrderQueries.updateOrderSim();
         
+        PreparedStatement pstm = null;
+        Connection con = this.getPortalDbConnction();
+        
         try
         {
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
 
             for (OrderUpdateInputData order : orderUpdateData)
             {
@@ -394,6 +569,31 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             
             PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateBulkOrderSim", logRefID, sql,orderUpdateData, e);
         }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderSim", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderSim", e);
+                }
+            }
+        }
 
         return updateOrderRes;
     }
@@ -411,10 +611,13 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         
         String sql = OrderQueries.updateOrderIMEI();
         
+        PreparedStatement pstm = null;
+        Connection con = this.getPortalDbConnction();
+        
         try
         {
             
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
 
             for (OrderUpdateInputData order : orderUpdateData)
             {
@@ -447,6 +650,31 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             
             PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateBulkOrderImei", logRefID, sql,orderUpdateData, e);
         }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderImei", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderImei", e);
+                }
+            }
+        }
 
         return updateOrderRes;
     }
@@ -464,10 +692,13 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         
         String sql = OrderQueries.updateOrderRetryCount();
         
+        PreparedStatement pstm = null;
+        Connection con = this.getPortalDbConnction();
+        
         try
         {
             
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
 
             for (OrderUpdateInputData order : orderUpdateData)
             {
@@ -500,6 +731,31 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             
             PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateBulkOrderRetryCount", logRefID, sql,orderUpdateData, e);
         }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderRetryCount", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderRetryCount", e);
+                }
+            }
+        }
 
         return updateOrderRes;
     }
@@ -511,11 +767,14 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         
         String sql = OrderQueries.getCreateTempTableForBulkUpdateSQL();
         
+        PreparedStatement pstm = null;
+        Connection con = this.getPortalDbConnction();
+        
         try
         {
             sql = sql.replace("<TABLE_NAME>", tempTableName);
             
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.execute();
             
             createTempTableResp.setErrorCode(PSOConstants.SUCCESS_CODE);
@@ -531,6 +790,31 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             createTempTableResp.setLogRefId(logRefID);
             
             PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "createTempTableForBulkUpdate", logRefID, sql,"Creating Temp table for Bulk update", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "createTempTableForBulkUpdate", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "createTempTableForBulkUpdate", e);
+                }
+            }
         }
 
         return createTempTableResp;
@@ -549,9 +833,12 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         
         String sql = OrderQueries.getInsertBulkOrderInTempTableSQL();
         
+        PreparedStatement pstm = null;
+        Connection con = this.getPortalDbConnction();
+        
         try
         {
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
 
             for (OrderUpdateInputData order : orderUpdateData)
             {
@@ -590,6 +877,31 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             
             PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "insertBulkOrderDataInTempTable", logRefID, sql,orderUpdateData, e);
         }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "insertBulkOrderDataInTempTable", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "insertBulkOrderDataInTempTable", e);
+                }
+            }
+        }
         
         insertDataInTempTableResp.setBulkUpdateId(bulkUpdateID);
         return insertDataInTempTableResp;
@@ -606,11 +918,15 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         
         String sql = OrderQueries.getReadTempTableforBulkOrderSQL();
         
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getPortalDbConnction();
+        
         try
         {
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, bulkUpdateId);
-            ResultSet rs = pstm.executeQuery();
+            rs = pstm.executeQuery();
             while (rs.next())
             {
                 orderData = new OrderUpdateInputData();
@@ -627,6 +943,42 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         catch (SQLException e)
         {
             PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "getBulkOrderDataFromTempTable", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getBulkOrderDataFromTempTable", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getBulkOrderDataFromTempTable", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getBulkOrderDataFromTempTable", e);
+                }
+            }
         }
         
         return tempTableDataList;
@@ -678,16 +1030,17 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
     public BaseResponseBean updateBulkOrderDetails(String bulkUpdateId)
     {
         BaseResponseBean response = new BaseResponseBean();
-        CallableStatement callableStatement = null;
         
         String logRefID = CommonUtility.getLogRefID();
         
         String sql = "{call PORTAL_BULK_UPDATE(?,?,?,?,?)}";
         
+        CallableStatement callableStatement = null;
+        Connection con = this.getPortalDbConnction();
+        
         try
         {
-            
-            callableStatement = portalDBConnection.prepareCall(sql);
+            callableStatement = con.prepareCall(sql);
             callableStatement.setString(1, bulkUpdateId);
             callableStatement.setString(2, "Admin");
             callableStatement.setString(3, logRefID);
@@ -712,6 +1065,31 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         catch (SQLException e)
         {
             PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateBulkOrderDetails", logRefID,sql,bulkUpdateId, e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderDetails", e);
+                }
+            }
+            if (callableStatement != null)
+            {
+                try
+                {
+                    callableStatement.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderDetails", e);
+                }
+            }
         }
         
         return response;

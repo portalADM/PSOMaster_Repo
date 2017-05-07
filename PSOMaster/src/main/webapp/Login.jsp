@@ -18,12 +18,6 @@
         <button type="submit" class="btn btn-primary btn-block btn-large">Login</button>
     </form>
     <br>
-    
-    <h3>${message_login}</h3>
-    <c:if test="${message_login!=null}">
-	  <h3>${message_login}</h3>
-	</c:if>
-    
 </div>
 </body>
 </html>

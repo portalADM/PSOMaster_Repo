@@ -33,15 +33,19 @@ import com.zig.pso.utility.OrderQueries;
 @Repository
 public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 {
-
-    private Connection portalDBConnection = null;
-
-    private Connection ensDBConnection = null;
-
     public OrderInfoManagerDAOImpl()
     {
-        portalDBConnection = DBConnection.getPortalDBConnection();
-        ensDBConnection = DBConnection.getENSDBConnection();
+        super();
+    }
+
+    private Connection getPortalDbConnction()
+    {
+        return DBConnection.getPortalDBConnection();
+    }
+    
+    private Connection getENSDbConnction()
+    {
+        return DBConnection.getENSDBConnection();
     }
 
     /*
@@ -54,10 +58,14 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         ArrayList<String> orderlist = new ArrayList<String>();
         String sql = OrderQueries.getOrderList();
 
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getPortalDbConnction();
+        
         try
         {
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
-            ResultSet rs = pstm.executeQuery();
+            pstm = con.prepareStatement(sql);
+            rs = pstm.executeQuery();
             while (rs.next())
             {
                 orderlist.add(rs.getString("USERNAME"));
@@ -66,6 +74,42 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         catch (SQLException e)
         {
             PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getOrderIds", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrderIds", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrderIds", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrderIds", e);
+                }
+            }
         }
 
         return orderlist;
@@ -80,39 +124,43 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
     {
         PortalOrderMasterResponseBean portalOrderlist = null;
         String sql = OrderQueries.getPortalOrderData();
+        
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getPortalDbConnction();
 
         try
         {
             portalOrderlist = new PortalOrderMasterResponseBean();
 
-            PreparedStatement pstm2 = portalDBConnection.prepareStatement(sql);
-            pstm2.setString(1, OrderId);
-            ResultSet rs2 = pstm2.executeQuery();
-            while (rs2.next())
+            pstm = con.prepareStatement(sql);
+            pstm.setString(1, OrderId);
+            rs = pstm.executeQuery();
+            while (rs.next())
             {
                 PortalEnrollmentInfo enrollInfo = new PortalEnrollmentInfo();
 
-                enrollInfo.setFirst_name(rs2.getString("first_name"));
-                enrollInfo.setLast_name(rs2.getString("last_name"));
-                enrollInfo.setEmail(rs2.getString("email"));
-                enrollInfo.setPhone_number(rs2.getString("phone_number"));
-                enrollInfo.setAddress1(rs2.getString("address1"));
-                enrollInfo.setAddress2(rs2.getString("address2"));
-                enrollInfo.setCity(rs2.getString("city"));
-                enrollInfo.setState(rs2.getString("state"));
-                enrollInfo.setZip_code(rs2.getString("zip_code"));
+                enrollInfo.setFirst_name(rs.getString("first_name"));
+                enrollInfo.setLast_name(rs.getString("last_name"));
+                enrollInfo.setEmail(rs.getString("email"));
+                enrollInfo.setPhone_number(rs.getString("phone_number"));
+                enrollInfo.setAddress1(rs.getString("address1"));
+                enrollInfo.setAddress2(rs.getString("address2"));
+                enrollInfo.setCity(rs.getString("city"));
+                enrollInfo.setState(rs.getString("state"));
+                enrollInfo.setZip_code(rs.getString("zip_code"));
 
                 portalOrderlist.setEnrollInfo(enrollInfo);
 
-                portalOrderlist.setOrderId(rs2.getString("order_id"));
-                portalOrderlist.setStatus(rs2.getString("status_code"));
-                portalOrderlist.setRetry(rs2.getString("retry"));
-                portalOrderlist.setSys_creation_date(rs2.getString("sys_creation_date"));
-                portalOrderlist.setSys_update_date(rs2.getString("sys_update_date"));
-                portalOrderlist.setOriginatorId(rs2.getString("Originator_id"));
-                portalOrderlist.setOrderType(rs2.getString("ORDER_TYPE"));
-                portalOrderlist.setBan(rs2.getString("BAN_NUMBER"));
-                portalOrderlist.setPtn(rs2.getString("CTN_NUMBER"));
+                portalOrderlist.setOrderId(rs.getString("order_id"));
+                portalOrderlist.setStatus(rs.getString("status_code"));
+                portalOrderlist.setRetry(rs.getString("retry"));
+                portalOrderlist.setSys_creation_date(rs.getString("sys_creation_date"));
+                portalOrderlist.setSys_update_date(rs.getString("sys_update_date"));
+                portalOrderlist.setOriginatorId(rs.getString("Originator_id"));
+                portalOrderlist.setOrderType(rs.getString("ORDER_TYPE"));
+                portalOrderlist.setBan(rs.getString("BAN_NUMBER"));
+                portalOrderlist.setPtn(rs.getString("CTN_NUMBER"));
                 portalOrderlist.setErrorCode(0);
                 portalOrderlist.setErrorMsg("Success");
             }
@@ -123,6 +171,42 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             portalOrderlist.setErrorMsg(e.getMessage());
 
             PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getPortalDataInfo", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPortalDataInfo", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPortalDataInfo", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPortalDataInfo", e);
+                }
+            }
         }
 
         if (portalOrderlist.getOrderId() == null)
@@ -145,13 +229,17 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         EnsOrderMasterResponseBean ensOrderlist = null;
 
         String sql = OrderQueries.getEnsembleOrderData();
+        
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getENSDbConnction();
 
         try
         {
             ensOrderlist = new EnsOrderMasterResponseBean();
-            PreparedStatement pstm = ensDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, orderId);
-            ResultSet rs = pstm.executeQuery();
+            rs = pstm.executeQuery();
             while (rs.next())
             {
                 ensOrderlist.setensOrderId(rs.getString("ENS_ORDER_OID"));
@@ -170,6 +258,42 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             ensOrderlist.setErrorMsg(PSOConstants.BACKEND_ERROR);
             PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getEnsembleDataInfo", e);
         }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getEnsembleDataInfo", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getEnsembleDataInfo", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getEnsembleDataInfo", e);
+                }
+            }
+        }
 
         return ensOrderlist;
     }
@@ -184,12 +308,16 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         ArrayList<PortalShipmentInfo> portalShipArrlist = new ArrayList<PortalShipmentInfo>();
 
         String shipSql = OrderQueries.getPortalShipmentInfoSQL();
+        
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getPortalDbConnction();
 
         try
         {
-            PreparedStatement pstm = portalDBConnection.prepareStatement(shipSql);
+            pstm = con.prepareStatement(shipSql);
             pstm.setString(1, orderId);
-            ResultSet rs = pstm.executeQuery();
+            rs = pstm.executeQuery();
             while (rs.next())
             {
                 PortalShipmentInfo portalShiplist = new PortalShipmentInfo();
@@ -208,6 +336,42 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         {
             PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getPortalShipmentInfoFromDB", e);
         }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPortalShipmentInfoFromDB", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPortalShipmentInfoFromDB", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPortalShipmentInfoFromDB", e);
+                }
+            }
+        }
 
         return portalShipArrlist;
     }
@@ -221,12 +385,16 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         String sql = OrderQueries.getApiOrderData();
         ApiOrderMasterResponseBean orderApiRsponse = new ApiOrderMasterResponseBean();
         ArrayList<OrderAPIDetailsBean> apiList = new ArrayList<OrderAPIDetailsBean>();
+        
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getPortalDbConnction();
 
         try
         {
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, orderId);
-            ResultSet rs = pstm.executeQuery();
+            rs = pstm.executeQuery();
 
             while (rs.next())
             {
@@ -250,6 +418,42 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             orderApiRsponse.setErrorMsg(PSOConstants.BACKEND_ERROR);;
             PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getAPIDataInfo", e);
         }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getAPIDataInfo", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getAPIDataInfo", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getAPIDataInfo", e);
+                }
+            }
+        }
 
         return orderApiRsponse;
     }
@@ -264,12 +468,16 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         String sql = ("request".equals(callType))?OrderQueries.getAPIRequest():OrderQueries.getAPIResponse();
 
         String apiReqBody = null;
+        
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getPortalDbConnction();
 
         try
         {
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, seq_number);
-            ResultSet rs = pstm.executeQuery();
+            rs = pstm.executeQuery();
 
             while (rs.next())
             {
@@ -280,6 +488,42 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         catch (Exception e)
         {
             PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getAPIRequestBody", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getAPIRequestResponseBody", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getAPIRequestResponseBody", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getAPIRequestResponseBody", e);
+                }
+            }
         }
 
         return apiReqBody;
@@ -295,22 +539,26 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         PortalOrderMasterResponseBean portalOrderlist = null;
 
         String sql = OrderQueries.getPortalOrderDetails();
+        
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getPortalDbConnction();
 
         try
         {
             portalOrderlist = new PortalOrderMasterResponseBean();
 
-            PreparedStatement pstm2 = portalDBConnection.prepareStatement(sql);
-            pstm2.setString(1, orderId);
-            ResultSet rs2 = pstm2.executeQuery();
-            while (rs2.next())
+            pstm = con.prepareStatement(sql);
+            pstm.setString(1, orderId);
+            rs = pstm.executeQuery();
+            while (rs.next())
             {
-                portalOrderlist.setOrderId(rs2.getString("order_id"));
-                portalOrderlist.setStatus(rs2.getString("status_code"));
-                portalOrderlist.setRetry(rs2.getString("retry"));
-                portalOrderlist.setSys_creation_date(rs2.getString("sys_creation_date"));
-                portalOrderlist.setSys_update_date(rs2.getString("sys_update_date"));
-                portalOrderlist.setOriginatorId(rs2.getString("Originator_id"));
+                portalOrderlist.setOrderId(rs.getString("order_id"));
+                portalOrderlist.setStatus(rs.getString("status_code"));
+                portalOrderlist.setRetry(rs.getString("retry"));
+                portalOrderlist.setSys_creation_date(rs.getString("sys_creation_date"));
+                portalOrderlist.setSys_update_date(rs.getString("sys_update_date"));
+                portalOrderlist.setOriginatorId(rs.getString("Originator_id"));
                 portalOrderlist.setErrorCode(0);
                 portalOrderlist.setErrorMsg("Success");
             }
@@ -320,6 +568,42 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             portalOrderlist.setErrorCode(PSOConstants.ERROR_CODE);
             portalOrderlist.setErrorMsg(e.getMessage());
             PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getZigAutoMasterData", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getZigAutoMasterData", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getZigAutoMasterData", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getZigAutoMasterData", e);
+                }
+            }
         }
 
         if (portalOrderlist.getOrderId() == null)
@@ -341,22 +625,62 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getOrderTypeFromExtraOrder", "Order ID : " + orderId);
 
         String sql = OrderQueries.getOrderType();
+        
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getPortalDbConnction();
 
         String orderStatus = null;
         try
         {
 
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, orderId);
-            ResultSet rs2 = pstm.executeQuery();
-            while (rs2.next())
+            rs = pstm.executeQuery();
+            while (rs.next())
             {
-                orderStatus = rs2.getString("order_type");
+                orderStatus = rs.getString("order_type");
             }
         }
         catch (SQLException e)
         {
             PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getOrderTypeFromExtraOrder", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrderTypeFromExtraOrder", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrderTypeFromExtraOrder", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrderTypeFromExtraOrder", e);
+                }
+            }
         }
 
         if (orderStatus == null)
@@ -377,18 +701,22 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         PortalOrderMasterResponseBean portalOrderlist = null;
 
         String sql = OrderQueries.getOrderBANandCTN();
+        
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getPortalDbConnction();
 
         try
         {
             portalOrderlist = new PortalOrderMasterResponseBean();
 
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, orderId);
-            ResultSet rs2 = pstm.executeQuery();
-            while (rs2.next())
+            rs = pstm.executeQuery();
+            while (rs.next())
             {
-                portalOrderlist.setBan(rs2.getString("BAN_NUMBER"));
-                portalOrderlist.setPtn(rs2.getString("CTN_NUMBER"));
+                portalOrderlist.setBan(rs.getString("BAN_NUMBER"));
+                portalOrderlist.setPtn(rs.getString("CTN_NUMBER"));
             }
         }
         catch (SQLException e)
@@ -396,6 +724,42 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             portalOrderlist.setErrorCode(PSOConstants.ERROR_CODE);
             portalOrderlist.setErrorMsg(e.getMessage());
             PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getCustomerBANandCTN", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getCustomerBANandCTN", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getCustomerBANandCTN", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getCustomerBANandCTN", e);
+                }
+            }
         }
 
         return portalOrderlist;
@@ -411,30 +775,70 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         PortalEnrollmentInfo enrollInfo = null;
 
         String sql = OrderQueries.getEnrollment();
+        
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getPortalDbConnction();
 
         try
         {
             enrollInfo = new PortalEnrollmentInfo();
 
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, orderId);
-            ResultSet rs2 = pstm.executeQuery();
-            while (rs2.next())
+            rs = pstm.executeQuery();
+            while (rs.next())
             {
-                enrollInfo.setFirst_name(rs2.getString("first_name"));
-                enrollInfo.setLast_name(rs2.getString("last_name"));
-                enrollInfo.setEmail(rs2.getString("email"));
-                enrollInfo.setPhone_number(rs2.getString("phone_number"));
-                enrollInfo.setAddress1(rs2.getString("address1"));
-                enrollInfo.setAddress2(rs2.getString("address2"));
-                enrollInfo.setCity(rs2.getString("city"));
-                enrollInfo.setState(rs2.getString("state"));
-                enrollInfo.setZip_code(rs2.getString("zip_code"));
+                enrollInfo.setFirst_name(rs.getString("first_name"));
+                enrollInfo.setLast_name(rs.getString("last_name"));
+                enrollInfo.setEmail(rs.getString("email"));
+                enrollInfo.setPhone_number(rs.getString("phone_number"));
+                enrollInfo.setAddress1(rs.getString("address1"));
+                enrollInfo.setAddress2(rs.getString("address2"));
+                enrollInfo.setCity(rs.getString("city"));
+                enrollInfo.setState(rs.getString("state"));
+                enrollInfo.setZip_code(rs.getString("zip_code"));
             }
         }
         catch (SQLException e)
         {
             PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getOrderEnrollmentInfo", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrderEnrollmentInfo", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrderEnrollmentInfo", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrderEnrollmentInfo", e);
+                }
+            }
         }
 
         if (enrollInfo == null)
@@ -457,12 +861,16 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         PortalLineItemInfoBean lineItem = null;
 
         String sql = OrderQueries.getPortalLineItemInfoSQL();
+        
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getPortalDbConnction();
 
         try
         {
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, orderId);
-            ResultSet rs = pstm.executeQuery();
+            rs = pstm.executeQuery();
             while (rs.next())
             {
                 lineItem = new PortalLineItemInfoBean();
@@ -482,6 +890,42 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         catch (SQLException e)
         {
             PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getPortalLineItemInfo", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPortalLineItemInfo", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPortalLineItemInfo", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPortalLineItemInfo", e);
+                }
+            }
         }
 
         if (lineItemsList == null || lineItemsList.size()==0)
@@ -514,11 +958,15 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
         String sql = OrderQueries.getEnsLineItemInfoSQL();
         
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getENSDbConnction();
+        
         try
         {
-            PreparedStatement pstm = ensDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, orderId);
-            ResultSet rs = pstm.executeQuery();
+            rs = pstm.executeQuery();
             while (rs.next())
             {
                 lineItem = new EnsembleLineItemInfoBean();
@@ -538,11 +986,48 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         {
             PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getEnsLineItemInfo", e);
         }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getEnsLineItemInfo", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getEnsLineItemInfo", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getEnsLineItemInfo", e);
+                }
+            }
+        }
 
         if (enslineItemsList == null || enslineItemsList.size()==0)
         {
             PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getEnsLineItemInfo", PSOConstants.NO_DATA);
         }
+        
 
         return enslineItemsList;
     }
@@ -559,12 +1044,16 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         PortalOrderPortRequestBean portLine = null;
 
         String sql = OrderQueries.getPortalPortinInfoSQL();
+        
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getPortalDbConnction();
 
         try
         {
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, orderId);
-            ResultSet rs = pstm.executeQuery();
+            rs = pstm.executeQuery();
             while (rs.next())
             {
                 portLine = new PortalOrderPortRequestBean();
@@ -579,6 +1068,42 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         catch (SQLException e)
         {
             PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getPortalOrderPortDetails", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPortalOrderPortDetails", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPortalOrderPortDetails", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPortalOrderPortDetails", e);
+                }
+            }
         }
 
         if (portItemList == null || portItemList.size()==0)
@@ -601,12 +1126,16 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         EnsOrderPortRequestBean portLine = null;
 
         String sql = OrderQueries.getEnsPortinInfoSQL();
+        
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getENSDbConnction();
 
         try
         {
-            PreparedStatement pstm = ensDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, orderId);
-            ResultSet rs = pstm.executeQuery();
+            rs = pstm.executeQuery();
             while (rs.next())
             {
                 portLine = new EnsOrderPortRequestBean();
@@ -623,6 +1152,42 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         catch (SQLException e)
         {
             PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getEnsOrderPortDetails", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getEnsOrderPortDetails", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getEnsOrderPortDetails", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getEnsOrderPortDetails", e);
+                }
+            }
         }
 
         if (portItemList == null || portItemList.size()==0)
@@ -644,11 +1209,16 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         PortalShipmentInfo portLine = null;
 
         String sql = OrderQueries.getOrderLineSIMandIMEIDetailsSQL();
+        
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getPortalDbConnction();
+        
         try
         {
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, orderId);
-            ResultSet rs = pstm.executeQuery();
+            rs = pstm.executeQuery();
             while (rs.next())
             {
                 portLine = new PortalShipmentInfo();
@@ -664,6 +1234,42 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         catch (SQLException e)
         {
             PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getPortalLineSimAndImeiDetails", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPortalLineSimAndImeiDetails", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPortalLineSimAndImeiDetails", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPortalLineSimAndImeiDetails", e);
+                }
+            }
         }
 
         if (portLineList == null || portLineList.size()==0)
@@ -699,16 +1305,19 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             sql = OrderQueries.getCurrentRetrySQL();
         }
         
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getPortalDbConnction();
+        
         try
         {
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
+            pstm = con.prepareStatement(sql);
             pstm.setString(1, orderId);
             if("sim".equalsIgnoreCase(updateType) || "imei".equalsIgnoreCase(updateType)){
                 pstm.setString(2, lineId);
             }
             
-            
-            ResultSet rs = pstm.executeQuery();
+            rs = pstm.executeQuery();
             while (rs.next())
             {
                 currentValue = rs.getString(1);
@@ -717,6 +1326,42 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         catch (SQLException e)
         {
             PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getOrderCurrentValue", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrderCurrentValue", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrderCurrentValue", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrderCurrentValue", e);
+                }
+            }
         }
         
         return currentValue;
