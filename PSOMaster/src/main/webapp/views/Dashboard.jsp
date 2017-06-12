@@ -174,6 +174,8 @@
 												<option value="ACTIVATION">ACTIVATION</option>
 												<option value="CANCELLATION">CANCELLATION</option>
 												<option value="PORTIN">PORTIN</option>
+												<option value="REGULAR">REGULAR</option>
+												<option value="ACCESSORY">ACCESSORY</option>
 												<option value="BYOD">BYOD</option>
 												<option value="PRE-PURCHASE">PRE-PURCHASE</option>
 												<option value="SAVEDESK">SAVEDESK</option>

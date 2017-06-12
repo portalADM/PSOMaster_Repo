@@ -249,4 +249,9 @@ public class OrderQueries
         return orderProp.getProperty("order.dynACTIorCNCLOrderCount");
     }
 
+    public static String getInsertRemediationStep()
+    {
+        return orderProp.getProperty("order.insertRemediationStep");
+    }
+
 }
