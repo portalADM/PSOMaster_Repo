@@ -5,13 +5,11 @@
  */
 package com.zig.pso.rest.bean;
 
-import java.util.ArrayList;
-
 public class RemediationStepRequest
 {
     String orderStatus;
     String type;
-    ArrayList<String> remediationSteps;
+    String remediationSteps;
 
     public String getType()
     {
@@ -33,12 +31,12 @@ public class RemediationStepRequest
         this.orderStatus = orderStatus;
     }
 
-    public ArrayList<String> getRemediationSteps()
+    public String getRemediationSteps()
     {
         return remediationSteps;
     }
 
-    public void setRemediationSteps(ArrayList<String> remediationSteps)
+    public void setRemediationSteps(String remediationSteps)
     {
         this.remediationSteps = remediationSteps;
     }

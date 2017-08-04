@@ -249,6 +249,11 @@ public class OrderQueries
         return orderProp.getProperty("order.dynACTIorCNCLOrderCount");
     }
 
+    public static String getDeleteRemediationStep()
+    {
+        return orderProp.getProperty("order.deleteRemediationStep");
+    }
+
     public static String getInsertRemediationStep()
     {
         return orderProp.getProperty("order.insertRemediationStep");

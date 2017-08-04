@@ -38,37 +38,49 @@ public class AdminPanelDAOImpl implements AdminPanelDAO
     {
         BaseResponseBean remediationStepRes = new BaseResponseBean();
         String logRefID = CommonUtility.getLogRefID();
-        String sql = null;
+        String addSQL = null;
+        String updateSQL = null;
+        String deleteSQL = null;
+
         if ("ADD".equals(remediationRequest.getType()))
-
-            sql = OrderQueries.getInsertRemediationStep();
-
-        else if ("UPDATE".equals(remediationRequest.getType()))
-
-            sql = OrderQueries.updateOrderSim();
-
+        {
+            deleteSQL = OrderQueries.getDeleteRemediationStep();
+            addSQL = OrderQueries.getInsertRemediationStep();
+        }
+        /*
+         * else if ("UPDATE".equals(remediationRequest.getType())) { deleteSQL = OrderQueries.getDeleteRemediationStep(); updateSQL = OrderQueries.updateOrderSim(); }
+         */
         else if ("DELETE".equals(remediationRequest.getType()))
-
-            sql = OrderQueries.updateOrderSim();
+            deleteSQL = OrderQueries.getDeleteRemediationStep();
 
         try
         {
 
-            PreparedStatement pstm = portalDBConnection.prepareStatement(sql);
-            int stepSize = remediationRequest.getRemediationSteps().size();
-            for (int k = 0; k <= stepSize - 1; k++)
-            {
-                pstm.setString(1, remediationRequest.getOrderStatus());
-                pstm.setString(2, remediationRequest.getRemediationSteps().get(k));
-                pstm.addBatch();
-            }
-            int[] i = pstm.executeBatch();
-            System.out.println(i[0]);
+            PreparedStatement pstm = portalDBConnection.prepareStatement(deleteSQL);
+            PreparedStatement pstm2 = portalDBConnection.prepareStatement(addSQL);
+            /*
+             * int stepSize = remediationRequest.getRemediationSteps().size(); String abc = "";
+             */
+            /*
+             * for (int k = 0; k <= stepSize - 1; k++) { abc = abc + remediationRequest.getRemediationSteps().get(k) + "@1"; pstm.setString(1, remediationRequest.getOrderStatus()); pstm.setString(2,
+             * remediationRequest.getRemediationSteps().get(k)); pstm.addBatch(); } int[] i = pstm.executeBatch(); System.out.println(i[0]); remediationStepRes.setErrorCode(PSOConstants.SUCCESS_CODE);
+             * remediationStepRes.setErrorMsg(PSOConstants.ORDER_UPDATE_SUCCESSFULL); remediationStepRes.setLogRefId(logRefID); PSOLoggerSrv.printSQL_DEBUG("AdminPanelDAOImpl", "addRemediationStep",
+             * logRefID, sql, remediationRequest, remediationStepRes.getErrorMsg());
+             */
 
-            remediationStepRes.setErrorCode(PSOConstants.SUCCESS_CODE);
-            remediationStepRes.setErrorMsg(PSOConstants.ORDER_UPDATE_SUCCESSFULL);
-            remediationStepRes.setLogRefId(logRefID);
-            PSOLoggerSrv.printSQL_DEBUG("AdminPanelDAOImpl", "addRemediationStep", logRefID, sql, remediationRequest, remediationStepRes.getErrorMsg());
+            pstm.setString(1, remediationRequest.getOrderStatus());
+            pstm.execute();
+            pstm2.setString(1, remediationRequest.getOrderStatus());
+            pstm2.setString(2, remediationRequest.getRemediationSteps());
+            int i = pstm2.executeUpdate();
+            System.out.println(i);
+            if (i >= 0)
+            {
+                remediationStepRes.setErrorCode(PSOConstants.SUCCESS_CODE);
+                remediationStepRes.setErrorMsg(PSOConstants.ORDER_UPDATE_SUCCESSFULL);
+                remediationStepRes.setLogRefId(logRefID);
+                PSOLoggerSrv.printSQL_DEBUG("AdminPanelDAOImpl", "addRemediationStep", logRefID, addSQL, remediationRequest, remediationStepRes.getErrorMsg());
+            }
 
         }
         catch (SQLException e)
@@ -78,7 +90,7 @@ public class AdminPanelDAOImpl implements AdminPanelDAO
             remediationStepRes.setLogRefId(logRefID);
             System.out.println(e);
             e.printStackTrace();
-            PSOLoggerSrv.printERROR("AdminPanelDAOImpl", "addRemediationSteps", logRefID, sql, remediationRequest, e);
+            PSOLoggerSrv.printERROR("AdminPanelDAOImpl", "addRemediationSteps", logRefID, addSQL, remediationRequest, e);
         }
 
         return remediationStepRes;
