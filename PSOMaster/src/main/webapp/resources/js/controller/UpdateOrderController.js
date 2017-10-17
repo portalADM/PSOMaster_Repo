@@ -1,4 +1,4 @@
-module.controller("UpdateOrderController", function($scope, $filter,$routeParams,$http,FileUploadService,MessageService,UpdateOrderService,OrderService,$rootScope,AppDataService) {
+module.controller("UpdateOrderController", function($scope, $filter,$routeParams,$http,FileUploadService,MessageService,UpdateOrderService,OrderService,$rootScope,AppDataService,CommonUtils) {
 	
 	$scope.title = "Update Order";
 	
@@ -22,6 +22,7 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 	$scope.init = function(){
 		getAvailableUpdates();
 		getMultiOrderUpdateConfiguration();
+		getOrderStatusesForUpdate();
 	}
 	
 	$scope.init();
@@ -137,6 +138,19 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 	}*/
 	
 	
+	function getOrderStatusesForUpdate(){
+		$scope.orderStatusList = [];
+		OrderService.getOrderStatusList().then(
+				function(response) {
+					$scope.orderStatusList = response;
+					$scope.newStatus = $scope.orderStatusList[0];
+	       		},
+		        function(errResponse){
+	       			MessageService.showError(errResponse,5000);
+		        }
+		);
+	}
+	
 	
 	 /*
 	  * This method will upload the file to update orders in bulk.
@@ -173,7 +187,10 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 					function(response) {
 						$rootScope.spinner.off();
 						console.log(response.portalLineSimandImeiList);
-						$scope.PortalLineSimAndImeiDetails = response.portalLineSimandImeiList;
+						if(response.portalLineSimandImeiList.length>0)
+							$scope.PortalLineSimAndImeiDetails = response.portalLineSimandImeiList;
+						else
+							MessageService.showInfo('No details found for this order',5000);
 		       		},
 			        function(errResponse){
 		       			$rootScope.spinner.off();
@@ -191,13 +208,18 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 		 var lineID = lineObj.lineItemNo;
 		 
 		 var orderID = null;
+		 var isValidValue = false;
 		 
-		 if(updateType==='sim')
+		 if(updateType==='sim'){
 			 orderID = ($scope.orderID===undefined || $scope.orderID===null) ? $scope.updateData.simOrderId : $scope.orderID;
-		 else if(updateType ==='imei')
+			 isValidValue = CommonUtils.checkIfValidSim(newValue);
+		 }
+		 else if(updateType ==='imei'){
 			 orderID = ($scope.orderID===undefined || $scope.orderID===null) ? $scope.updateData.imeiOrderId : $scope.orderID;
+			 isValidValue = CommonUtils.checkIfValidIMEI(newValue);
+		 }
 		 
-		 if(newValue!==null && newValue!==undefined){
+		 if(newValue!==null && newValue!==undefined && isValidValue && orderID!=null){
 			 UpdateOrderService.updateOrderDetails(updateType,newValue,orderID,lineID).then(
 						function(response) {
 							$rootScope.spinner.off();
@@ -230,6 +252,7 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 	  * This method will update the order status and retry count 
 	  */
 	 function updateOrderStatusAndRetryCount(updatetype){
+		 $rootScope.spinner.on();
 		 	var newValue='';
 		 	
 			if(updatetype=='status')
@@ -244,21 +267,30 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 			 else if(updatetype ==='retry')
 				 orderID = ($scope.orderID===undefined || $scope.orderID===null) ? $scope.updateData.retryCntOrderID : $scope.orderID;
 			
-			UpdateOrderService.updateOrderDetails(updatetype,newValue,orderID,null).then(
-					function(response) {
-						if(response!=undefined && response.errorCode == 0){
-							$scope.updateOrderRes = response;
-							MessageService.showSuccess(response.errorMsg,5000);
-						}
-						else{
-							var errorMessage = response.errorMsg + "\n Log Reference ID : " + response.logRefId;
-							MessageService.showError(errorMessage,null);
-						}
-		       		},
-			       function(errResponse){
-						MessageService.showSuccess('Error occured while updating order. Please try again later.',5000);
-			       }
-			);
+			 if(newValue!==null && newValue!==undefined && orderID!==null){
+				 UpdateOrderService.updateOrderDetails(updatetype,newValue,orderID,null).then(
+							function(response) {
+								$rootScope.spinner.off();
+								if(response!=undefined && response.errorCode == 0){
+									$scope.updateOrderRes = response;
+									MessageService.showSuccess(response.errorMsg,5000);
+								}
+								else{
+									var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+									MessageService.showError(errorMessage,10000);
+								}
+				       		},
+					       function(errResponse){
+				       			$rootScope.spinner.off();
+								MessageService.showSuccess('Error occured while updating order. Please try again later.',5000);
+					       }
+					);
+			 }
+			 else{
+				 $rootScope.spinner.off();
+				 MessageService.showInfo('Please provide valid Order Status or Retry count',10000);
+			 }
+			
 	 }
 	 
 	 /*
@@ -266,12 +298,16 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 	  */
 	 function uploadAndReviewOrders(file,uploadUrl){
 	      
+		 $rootScope.spinner.on();
 	     FileUploadService.uploadFileToUrl(file, uploadUrl).then(
 				function(response) {
+					$rootScope.spinner.off();
 					if(response.errorCode == 0){
 						$scope.tempTableDataList = response.tempTableDataList;
 						$scope.bulkUpdateID = response.bulkUpdateId;
 						MessageService.showSuccess(response.errorMsg,5000);
+						
+						$scope.accordion='Valid';
 						$("#UpdateResponse-modal").modal();
 					}
 					else if(response.errorCode == 1){
@@ -297,14 +333,16 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 	  * This method will update the Valid bulk orders
 	  */
 	 $scope.updateBulkOrders = function(){
-		 alert($scope.bulkUpdateID);
-		 
+		 $("#UpdateResponse-modal").modal('hide');
+		 $rootScope.spinner.on();
 		 UpdateOrderService.updateBulkOrderDetails($scope.bulkUpdateID).then(
 					function(response) {
-						console.log(response);
+						$rootScope.spinner.off();
+						MessageService.showInfo(response.errorMsg,10000);
 		       		},
 			       function(errResponse){
-						MessageService.showSuccess('Error occured while getting Updating Bulk Orders. Please try again later.',5000);
+		       			$rootScope.spinner.off();
+						MessageService.showSuccess('Error occured while Updating Bulk Orders. Please try again later.',5000);
 			       }
 		 );
 		 

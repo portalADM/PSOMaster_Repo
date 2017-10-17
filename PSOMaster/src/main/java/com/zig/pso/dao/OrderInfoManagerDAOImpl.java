@@ -1366,4 +1366,71 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         
         return currentValue;
     }
+
+	/* (non-Javadoc)
+	 * @see com.zig.pso.dao.OrderInfoManagerDAO#orderStatusList()
+	 */
+	@Override
+	public ArrayList<String> getOrderStatusList() {
+		
+		ArrayList<String> statusList = new ArrayList<String>();
+		
+        String sql = OrderQueries.getOrderStatusList();
+        
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getPortalDbConnction();
+        
+        try
+        {
+            pstm = con.prepareStatement(sql);
+            rs = pstm.executeQuery();
+            while (rs.next())
+            {
+            	statusList.add(rs.getString(1));
+            }
+        }
+        catch (SQLException e)
+        {
+            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "orderStatusList", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "orderStatusList", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "orderStatusList", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "orderStatusList", e);
+                }
+            }
+        }
+        
+        return statusList;
+    }
 }

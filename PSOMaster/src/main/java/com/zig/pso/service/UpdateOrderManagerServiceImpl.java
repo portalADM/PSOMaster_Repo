@@ -81,7 +81,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
             String regex = "[0-9]+";
             Boolean isNumeric = value.matches(regex);
             System.out.println(value.length());
-            if (value.length() == 19 && isNumeric)
+            if (value.length() == 20 && isNumeric)
             {
                 updateOrderRes = updateDAO.updateOrderSim(updateOrderRequest);
             }
@@ -199,7 +199,6 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
                 for(int y=0; y<row.getLastCellNum(); y++) {
                     Cell cell = row.getCell(y, Row.CREATE_NULL_AS_BLANK);
                     cellValue = formatter.formatCellValue(cell); 
-                    System.out.print(cellValue+" ");
                     
                     if (colNum == 0)
                         order.setOrderId(cellValue); // ORDER_ID

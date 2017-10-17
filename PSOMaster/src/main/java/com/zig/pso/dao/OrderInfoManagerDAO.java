@@ -55,4 +55,6 @@ public interface OrderInfoManagerDAO
     public ArrayList<PortalShipmentInfo>  getPortalLineSimAndImeiDetails(String orderId);
     
     public String getOrderCurrentValue(String orderId,String lineId,String updateType);
+    
+    public ArrayList<String> getOrderStatusList();
 }

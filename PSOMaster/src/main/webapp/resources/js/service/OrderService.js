@@ -111,4 +111,22 @@ module.service('OrderService', function($http,$q) {
 		);
 	}
 	
+	
+	/*
+	 *Service Method that will fetch the list of Order status from AUTO_REF_DATA table
+	 * 
+	 */
+	this.getOrderStatusList = function(orderID){
+		
+		return $http.get('getOrderStatusList')
+		.then(
+				function(response){
+					return response.data;
+				}, 
+				function(errResponse){
+					return $q.reject(errResponse);
+				}
+		);
+	}
+	
 });

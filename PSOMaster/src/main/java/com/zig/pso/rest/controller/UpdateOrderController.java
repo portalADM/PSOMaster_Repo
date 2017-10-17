@@ -212,8 +212,9 @@ public class UpdateOrderController
     @RequestMapping(value = "/updateBulkOrderDetails/{bulkUpdateId}", method = RequestMethod.POST)
     public ResponseEntity<BaseResponseBean> updateBulkOrderDetails(HttpServletRequest request, @RequestParam Map<String, Object> params, @PathVariable("bulkUpdateId") String bulkUpdateId)
     {
-        updateService.updateBulkOrderDetails(bulkUpdateId);
-        return new ResponseEntity<BaseResponseBean>(new BaseResponseBean(), HttpStatus.OK);
+    	BaseResponseBean resp =  new BaseResponseBean();
+    	resp = updateService.updateBulkOrderDetails(bulkUpdateId);
+        return new ResponseEntity<BaseResponseBean>(resp, HttpStatus.OK);
     }
     
 }

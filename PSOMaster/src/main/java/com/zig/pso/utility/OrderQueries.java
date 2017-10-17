@@ -259,4 +259,8 @@ public class OrderQueries
         return orderProp.getProperty("order.insertRemediationStep");
     }
 
+    public static String getOrderStatusList()
+    {
+        return orderProp.getProperty("order.getOrderStatusList");
+    }
 }

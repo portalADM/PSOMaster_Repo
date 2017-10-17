@@ -39,7 +39,7 @@
                                                             <label ng-if="orderID.length>0" class="col-lg-12 control-label textAlgnInit noPadLeft">{{orderID}}</label>
 															<input ng-if="orderID==undefined" type="text" class="form-control" ng-model="updateData.simOrderId" placeholder="Order ID">
                                                        </div>
-                                                       <h3  ng-click="getPortalLineSimandImeiDetails('sim')" type="reset"  class=""><span tooltip-placement="bottom" uib-tooltip="Get Line Details"  class="glyphicon glyphicon-list-alt getLineBtn"></span></h3>
+                                                       <h3 ng-if="orderID.length>0 || updateData.simOrderId"  ng-click="getPortalLineSimandImeiDetails('sim')" type="reset"  class=""><span tooltip-placement="bottom" uib-tooltip="Get Line Details"  class="glyphicon glyphicon-list-alt getLineBtn"></span></h3>
                                                 </div>
                                                 <div class="form-group">
                                                        <!-- <label for="select" class="col-lg-4 control-label textAlgnInit">New SIM</label>
@@ -114,7 +114,7 @@
                                                             <label ng-if="orderID.length>0" class="col-lg-12 control-label textAlgnInit noPadLeft">{{orderID}}</label>
 															<input ng-if="orderID==undefined" type="text" class="form-control" ng-model="updateData.imeiOrderId" placeholder="Order ID">
                                                        </div>
-                                                       <h3  ng-click="getPortalLineSimandImeiDetails('imei')" type="reset"  class=""><span tooltip-placement="bottom" uib-tooltip="Get Line Details"  class="glyphicon glyphicon-list-alt getLineBtn"></span></h3>
+                                                       <h3 ng-if="orderID.length>0 || updateData.imeiOrderId" ng-click="getPortalLineSimandImeiDetails('imei')" type="reset"  class=""><span tooltip-placement="bottom" uib-tooltip="Get Line Details"  class="glyphicon glyphicon-list-alt getLineBtn"></span></h3>
                                                 </div>
                                                <!--  <div class="form-group">
                                                        <label for="select" class="col-lg-4 control-label textAlgnInit">New IMEI</label>
@@ -179,12 +179,11 @@
 			<!-- Update Order Status Panel Start -->
 			<div ng-show="restrictedUpdates.indexOf('UPDATE_STATUS')===-1"  class="panel panel-info ">
 				<div class="panel-heading accordion cursorPointer" ng-class="{active:accordion==1}">
-					<h3 class="panel-title" ng-click="accordion = 1" >Update Order Status
-					</h3>
+					<h3 class="panel-title" ng-click="accordion = 1" >Update Order Status</h3>
 				</div>
 				<div class="panel-body accordion-content" ng-show="accordion==1">
-					<div class="">
-						<div class="">
+					<!-- <div class="">
+						<div class=""> -->
 							<div class="well" id="">
 								<form class="form-horizontal">
 									<div class="form-group">
@@ -197,10 +196,10 @@
 									<div class="form-group">
 										<label for="select" class="col-lg-4 control-label textAlgnInit">New Status</label>
 										<div class="col-lg-8">
-											<select class="form-control" ng-model="newStatus" id="select">
-												<option value="OPEN">OPEN</option>
-												<option value="PDRS">PDRS</option>
-												<option value="ORFI">ORFI</option>
+											<select class="form-control" ng-model="newStatus">
+												<option ng-repeat="st in orderStatusList"  value="{{st}}">{{st}}</option>
+												<!-- <option value="PDRS">PDRS</option>
+												<option value="ORFI">ORFI</option> -->
 											</select>
 										</div>
 									</div>
@@ -212,8 +211,8 @@
 									</div>
 								</form>
 							</div>
-						</div>
-					</div>
+					<!-- 	</div>
+					</div> -->
 				</div>
 			</div>
 			<!-- Update Order Status Panel End -->
@@ -254,7 +253,7 @@
 			<!-- Update Order RetryCount Panel End -->
 			
 			<!-- Multi Update Order Panel Start -->
-			<div ng-show="restrictedUpdates.indexOf('UPDATE_STATUS')===-1"  class="panel panel-info ">
+			<div ng-show="restrictedUpdates.indexOf('MULTI_UPDATE')===-1"  class="panel panel-info ">
 				<div class="panel-heading accordion cursorPointer" ng-class="{active:accordion==6}"  ng-click="accordion = 6">
 					<h3 class="panel-title">Multi Updates <span class="glyphicon glyphicon-th-list marLeft8"></span></h3>
 				</div>
@@ -393,21 +392,21 @@
 	              			<td>Please follow below steps to update multiple orders:</td>
 	              		</tr>
 	              		<tr>
-	              			<td>1) Select Order Update type.</td>
+	              			<td>1) Click on Download Icon to download sample excel sheet.</td>
 	              		</tr>
 	              		<tr>
-	              			<td>2) Click on Download Icon to download sample excel sheet.</td>
+	              			<td>3) Add order details in downloaded Excel sheet whichever ou want to update.</td>
 	              		</tr>
 	              		<tr>
-	              			<td>3) Add order details in downloaded Excel sheet and the type of data you want to update [i.e. Status, SIM, IMEI, Retry Count]</td>
+	              			<td>Note : LINEID is mandatory for SIM and IMEI update.</td>
 	              		</tr>
 	              	</tbody>    
 	              </table>
 	              
-	              <img src="resources/images/Capture3.jpg" class="helpPopupImage">
+	              <img src="resources/images/BulkUpdatePanel.jpg" class="helpPopupImage">
 	              
 	              <div class="col-lg-12">
-		              <img class="helpExcelImage" src="resources/images/HelpExcelImage.PNG" >
+		              <img class="helpExcelImage" src="resources/images/BulkUpdateExcel.PNG" >
 	              </div>
 	            </div>
 	          </div>

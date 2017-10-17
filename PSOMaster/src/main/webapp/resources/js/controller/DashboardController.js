@@ -7,6 +7,108 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 	$scope.regOrderList=[];
 	
 	
+	/*===== START ================= */
+	
+	$scope.fromDate = '';
+	$scope.toDate = '';
+	
+	/* $scope.today = function() {
+		    $scope.dt = new Date();
+		  };
+		  $scope.today();*/
+
+		  $scope.clear = function() {
+		    $scope.dt = null;
+		  };
+
+		  $scope.inlineOptions = {
+		    customClass: getDayClass,
+		    minDate: new Date(),
+		    showWeeks: true
+		  };
+
+		  $scope.dateOptions = {
+		    dateDisabled: disabled,
+		    formatYear: 'yy',
+		    maxDate: new Date(new Date().getTime() - (1 * 24 * 60 * 60 * 1000)),
+		    minDate: new Date(new Date().getTime() - (11 * 24 * 60 * 60 * 1000)),
+		    startingDay: 1
+		  };
+
+		  // Disable weekend selection
+		  function disabled(data) {
+		   /* var date = data.date,
+		      mode = data.mode;
+		    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);*/
+		  }
+
+		  $scope.toggleMin = function() {
+		    $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+		    $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+		  };
+
+		  $scope.toggleMin();
+
+		  $scope.open1 = function() {
+		    $scope.popup1.opened = true;
+		  };
+
+		  $scope.open2 = function() {
+		    $scope.popup2.opened = true;
+		  };
+
+		  $scope.setDate = function(year, month, day) {
+		    $scope.dt = new Date(year, month, day);
+		  };
+
+		  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd/MM/yyyy', 'shortDate'];
+		  $scope.format = $scope.formats[2];
+		  $scope.altInputFormats = ['M!/d!/yyyy'];
+
+		  $scope.popup1 = {
+		    opened: false
+		  };
+
+		  $scope.popup2 = {
+		    opened: false
+		  };
+
+		  var tomorrow = new Date();
+		  tomorrow.setDate(tomorrow.getDate() + 1);
+		  var afterTomorrow = new Date();
+		  afterTomorrow.setDate(tomorrow.getDate() + 1);
+		  $scope.events = [
+		    {
+		      date: tomorrow,
+		      status: 'full'
+		    },
+		    {
+		      date: afterTomorrow,
+		      status: 'partially'
+		    }
+		  ];
+
+		  function getDayClass(data) {
+		    var date = data.date,
+		      mode = data.mode;
+		    if (mode === 'day') {
+		      var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+		      for (var i = 0; i < $scope.events.length; i++) {
+		        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+		        if (dayToCheck === currentDay) {
+		          return $scope.events[i].status;
+		        }
+		      }
+		    }
+
+		    return '';
+		  }
+		  
+	/*====== END ====*/
+	
+	
 
 	$scope.myDataSourcePie = {
 		chart : {
@@ -96,7 +198,7 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 						console.error('Error while fetching Currencies');
 					});
 
-		/* Stuck Orders handled in Last 10 Days */
+		/* Stuck Orders handled in Last 10 Days*/ 
 		DashboardService.getStuckOrderHandled().then(function(data) {
 						var Data = [];
 						angular.forEach(data.stuckOrderList,function(value, key) {
@@ -169,9 +271,11 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 	/* Regular Order count for dynamic graph */
 	$scope.getDynamicGraphData=function(){
 		
+		$rootScope.spinner.on();
+		
 		var DynGraphRequest={
-				"fromDate": $scope.fromDate,
-				"toDate"  : $scope.toDate,
+				"fromDate": formatDateInAppFormat($scope.fromDate),
+				"toDate"  : formatDateInAppFormat($scope.toDate),
 				"type"    : $scope.typeSelect
 		}
 		
@@ -195,12 +299,22 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 			$scope.myOrdersCreatedSourcePie.data = Data;
 			$scope.myOrdersCreatedSourcePie.chart.caption = $scope.typeSelect;
 			
+			$rootScope.spinner.off();
 			}},
 		function(errResponse){
 			console.error('Error while fetching dynamicRegular Order response')
 		
 		});
 	}
+	
+	function formatDateInAppFormat(inputDate){
+		var day = inputDate.getDate();
+		var month = inputDate.getMonth()+1; 
+		var year = 	inputDate.getFullYear();
+		
+		return year+'/'+month+'/'+day ;
+	}
+	
 
 	$scope.init();
 	
@@ -238,8 +352,8 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 	
 	/*Show Dynamic Graph Code Start*/
 	$scope.showDynamicGraphPopup = function(){
-		$scope.fromDate = '2017-JAN-20';
-		$scope.toDate = '2017-MAR-20';
+		/*$scope.fromDate = '2017-JAN-20';
+		$scope.toDate = '2017-MAR-20';*/
 		
 		$("#DynamicGraph-modal").modal();
 	}

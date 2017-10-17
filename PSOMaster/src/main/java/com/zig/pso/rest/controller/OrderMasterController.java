@@ -7,6 +7,8 @@
  */
 package com.zig.pso.rest.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -111,6 +113,19 @@ public class OrderMasterController
         PortalOrderLineSIMandIMEIDetailsBean nameList = new PortalOrderLineSIMandIMEIDetailsBean();
         nameList = orderService.getPortalLineSimAndImeiDetails(id);
         return new ResponseEntity<PortalOrderLineSIMandIMEIDetailsBean>(nameList, HttpStatus.OK);
+    }
+    
+    
+    /**
+     * This Method provides the list of Order statuses
+     */
+    @RequestMapping(value = "/getOrderStatusList", method = RequestMethod.GET)
+    public ResponseEntity<ArrayList<String>> getOrderStatusList()
+    {
+        PSOLoggerSrv.printDEBUG("OrderMasterController", "getOrderStatusList", null);
+
+        ArrayList<String> orderStatusList = orderService.getOrderStatusList();
+        return new ResponseEntity<ArrayList<String>>(orderStatusList, HttpStatus.OK);
     }
 
 }

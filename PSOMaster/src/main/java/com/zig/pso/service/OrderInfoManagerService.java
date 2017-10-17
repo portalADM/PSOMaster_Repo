@@ -57,4 +57,7 @@ public interface OrderInfoManagerService
     public OrderPortInDetailsResponseBean getPortalOrderPortDetails(String OrderId);
     
     public PortalOrderLineSIMandIMEIDetailsBean getPortalLineSimAndImeiDetails(String OrderId);
+    
+    
+    public ArrayList<String> getOrderStatusList();
 }

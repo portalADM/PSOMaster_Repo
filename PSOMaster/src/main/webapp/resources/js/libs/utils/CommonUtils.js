@@ -24,5 +24,24 @@ module.service('CommonUtils', function($http) {
 		});
 		return grouppedList;
 	}
+	
+	
+	this.checkIfValidSim = function(sim){
+		var simPatern = /^[0-9]{1,20}$/;
+		
+		if (simPatern.test(+sim) && sim.length==20) 
+			return true;
+		else
+			return false;
+	}
+	
+	this.checkIfValidIMEI = function(imei){
+		var imeiPatern = /^[0-9]{1,15}$/;
+		
+		if (imeiPatern.test(+imei) && imei.length==15) 
+			return true;
+		else
+			return false;
+	}
 
 });

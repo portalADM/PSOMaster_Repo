@@ -325,4 +325,12 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
 		
 		return portalLineListResponse;
 	}
+
+	/* (non-Javadoc)
+	 * @see com.zig.pso.service.OrderInfoManagerService#orderStatusList()
+	 */
+	@Override
+	public ArrayList<String> getOrderStatusList() {
+		return orderDAO.getOrderStatusList();
+	}
 }
