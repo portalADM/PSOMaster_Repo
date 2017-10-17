@@ -35,6 +35,7 @@ public class PSOConstants
     public final static String ORDER_UPDATE_SUCCESSFULL = "Order updated successfully.";
     public final static String ORDER_UPDATE_FAIL = "Order Updated fail.";
     public final static String NO_ORDER_UPDATED = "No Order updated.";
+    public final static String NO_VALID_ORDERS = "No valid orders.";
     public final static String ORDER_INSERT_SUCCESSFULL = "Order inserted successfully.";
     public final static String ORDER_INSERT_FAIL = "Order insert fail.";
     public final static String NO_ORDER_INSERTED = "No Order inserted.";

@@ -261,7 +261,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
         
         ValidatedBulkUpdateOrderDetailsBean validatedOrderData = new ValidatedBulkUpdateOrderDetailsBean();
         List<String> invalidOrderIDs = new ArrayList<String>();
-        ArrayList<OrderUpdateInputData> validOerderData = new ArrayList<OrderUpdateInputData>();
+        ArrayList<OrderUpdateInputData> validOrderData = new ArrayList<OrderUpdateInputData>();
         String numOnlyRegex = "[0-9]+";
         String charOnlyRegex = "[a-zA-Z]+";
 
@@ -269,16 +269,19 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
         for (OrderUpdateInputData orders : orderBulkData.getOrderUpdateData())
         {
-            
-            if (null != orders.getStatus() && (!orders.getStatus().matches(charOnlyRegex) || orders.getStatus().length() != 4))
+            if(null == orders.getOrderId())
+            {
+            	isValidOrder = false;
+            }	
+            else if (null != orders.getStatus() && (!orders.getStatus().matches(charOnlyRegex) || orders.getStatus().length() != 4))
             {
                 isValidOrder = false;
             }
-            else if (null != orders.getSim()  && ( !orders.getSim().matches(numOnlyRegex) || (orders.getSim().length()> 20 || orders.getSim().length() < 18)))
+            else if (null != orders.getSim()  && ( !orders.getSim().matches(numOnlyRegex) || (orders.getSim().length()> 20 || orders.getSim().length() < 18)) || null==orders.getLineId())
             {
                 isValidOrder = false;
             }
-            else if (null != orders.getImei()  && ( !orders.getImei().matches(numOnlyRegex) || orders.getImei().length() != 15))
+            else if (null != orders.getImei()  && ( !orders.getImei().matches(numOnlyRegex) || orders.getImei().length() != 15) || null==orders.getLineId())
             {
                 isValidOrder = false;
             }
@@ -288,27 +291,29 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
             }
 
             if (isValidOrder)
-                validOerderData.add(orders);
+            	validOrderData.add(orders);
             else
                 invalidOrderIDs.add(orders.getOrderId());
 
             isValidOrder = true;
         }
 
-        String debugMsg = "Num of Valid Orders : "+validOerderData.size()+" \nNum of Invalid Orders : "+invalidOrderIDs.size();
+        String debugMsg = "Num of Valid Orders : "+validOrderData.size()+" \nNum of Invalid Orders : "+invalidOrderIDs.size();
         PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "validateUploadedData", debugMsg);
         
         validatedOrderData.setInvalidOrders(invalidOrderIDs);
         
         
         /* Insert Valid records in to temporary table for further Bulk update process */
-        TempInsertBUResponse insertTempDataResp = updateDAO.insertBulkOrderDataInTempTable(validOerderData, orderBulkData.getUpdateType());
-        if(insertTempDataResp.getErrorCode() == PSOConstants.SUCCESS_CODE)
+        if(validOrderData.size()>0)
         {
-            ArrayList<OrderUpdateInputData> tempTableDataList = updateDAO.getBulkOrderDataFromTempTable(insertTempDataResp.getBulkUpdateId());
-            validatedOrderData.setOrderUpdateData(tempTableDataList);
+            TempInsertBUResponse insertTempDataResp = updateDAO.insertBulkOrderDataInTempTable(validOrderData);
+            if(insertTempDataResp.getErrorCode() == PSOConstants.SUCCESS_CODE)
+            {
+                ArrayList<OrderUpdateInputData> tempTableDataList = updateDAO.getBulkOrderDataFromTempTable(insertTempDataResp.getBulkUpdateId());
+                validatedOrderData.setOrderUpdateData(tempTableDataList);
+            }
         }
-        
         return validatedOrderData;
     }
 

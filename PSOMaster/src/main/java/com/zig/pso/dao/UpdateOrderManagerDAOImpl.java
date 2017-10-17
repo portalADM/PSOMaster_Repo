@@ -824,7 +824,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
      * @see com.zig.pso.dao.UpdateOrderManagerDAO#insertBulkOrderDataInTempTable(java.util.ArrayList)
      */
     @Override
-    public TempInsertBUResponse insertBulkOrderDataInTempTable(ArrayList<OrderUpdateInputData> orderUpdateData, String updateType)
+    public TempInsertBUResponse insertBulkOrderDataInTempTable(ArrayList<OrderUpdateInputData> orderUpdateData)
     {
         TempInsertBUResponse insertDataInTempTableResp = new TempInsertBUResponse();
         String logRefID = CommonUtility.getLogRefID();

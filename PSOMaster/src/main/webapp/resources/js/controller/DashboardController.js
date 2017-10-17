@@ -1,4 +1,4 @@
-module.controller("DashboardController",function($scope, $routeParams, $http, DashboardService,$rootScope) {
+module.controller("DashboardController",function($scope, $routeParams, $http, DashboardService,$rootScope,MessageService) {
 
 	$scope.title = "Dashboard";
 	$scope.dateList = [];
@@ -271,40 +271,44 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 	/* Regular Order count for dynamic graph */
 	$scope.getDynamicGraphData=function(){
 		
-		$rootScope.spinner.on();
-		
-		var DynGraphRequest={
-				"fromDate": formatDateInAppFormat($scope.fromDate),
-				"toDate"  : formatDateInAppFormat($scope.toDate),
-				"type"    : $scope.typeSelect
+		if(($scope.fromDate!=='' && $scope.fromDate!==undefined) && ($scope.toDate!='' && $scope.toDate!=undefined) && ($scope.typeSelect!=='' && $scope.typeSelect!==undefined) ){
+			$rootScope.spinner.on();
+			
+			var DynGraphRequest={
+					"fromDate": formatDateInAppFormat($scope.fromDate),
+					"toDate"  : formatDateInAppFormat($scope.toDate),
+					"type"    : $scope.typeSelect
+			}
+			
+			DashboardService.getDynRegOrderCount(DynGraphRequest).then(function(data){
+				$scope.ordertype=data.type;
+				$scope.regOrderList=data.regularOrderList
+				$scope.myOrdersCreatedSourcePie.data = [];
+				$scope.totalDynCount = 0;
+				if (data.regularOrderList != undefined && data.regularOrderList.length > 0) {
+					var Data = [];
+					angular.forEach(data.regularOrderList,function(value,key) {
+										var obj = {
+											label : value.date,
+											value : value.count
+										}
+										Data.push(obj);
+										$scope.totalDynCount = $scope.totalDynCount +value.count;
+					});
+				$scope.myOrdersCreatedSourcePie.data = Data;
+				$scope.myOrdersCreatedSourcePie.chart.caption = $scope.typeSelect;
+				
+				$rootScope.spinner.off();
+				}},
+			function(errResponse){
+				console.error('Error while fetching dynamicRegular Order response')
+			});
+		}
+		else{
+			MessageService.showInfo("Please select Dates and Type.",5000);
 		}
 		
-		console.log(DynGraphRequest);
 		
-		DashboardService.getDynRegOrderCount(DynGraphRequest).then(function(data){
-			$scope.ordertype=data.type;
-			$scope.regOrderList=data.regularOrderList
-			$scope.myOrdersCreatedSourcePie.data = [];
-			$scope.totalDynCount = 0;
-			if (data.regularOrderList != undefined && data.regularOrderList.length > 0) {
-				var Data = [];
-				angular.forEach(data.regularOrderList,function(value,key) {
-									var obj = {
-										label : value.date,
-										value : value.count
-									}
-									Data.push(obj);
-									$scope.totalDynCount = $scope.totalDynCount +value.count;
-				});
-			$scope.myOrdersCreatedSourcePie.data = Data;
-			$scope.myOrdersCreatedSourcePie.chart.caption = $scope.typeSelect;
-			
-			$rootScope.spinner.off();
-			}},
-		function(errResponse){
-			console.error('Error while fetching dynamicRegular Order response')
-		
-		});
 	}
 	
 	function formatDateInAppFormat(inputDate){

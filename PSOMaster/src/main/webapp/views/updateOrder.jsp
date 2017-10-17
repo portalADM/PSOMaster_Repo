@@ -443,7 +443,7 @@
 								 	</tr>
 							 	</thead>
 				              	<tbody>
-				              		<tr ng-repeat="data in tempTableDataList">
+				              		<tr ng-repeat="data in validOrderList">
 				              			<td>{{data.orderId}}</td>
 				              			<td>{{data.lineId}}</td>
 				              			<td>{{data.status}}</td>
@@ -453,7 +453,7 @@
 				              		</tr>
 				              	</tbody>    
 				              </table>
-				              <button type="submit" class="btn btn-default" ng-click="updateBulkOrders()">Update</button>
+				              <button type="button" class="btn btn-default" ng-hide="validOrderList==null" ng-click="updateBulkOrders()">Update</button>
 		                </div>
 		                <div class="tab-pane fade active in" id="profile" ng-show="accordion=='InValid'">
 							 <table cellpadding="10px" cellspacing="10px">

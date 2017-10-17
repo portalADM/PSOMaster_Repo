@@ -38,7 +38,7 @@ public interface UpdateOrderManagerDAO
 
     public BaseResponseBean updateBulkOrderRetryCount(ArrayList<OrderUpdateInputData> orderUpdateData);
     
-    public TempInsertBUResponse insertBulkOrderDataInTempTable(ArrayList<OrderUpdateInputData> orderUpdateData,String updateType);
+    public TempInsertBUResponse insertBulkOrderDataInTempTable(ArrayList<OrderUpdateInputData> orderUpdateData);
     
     public ArrayList<OrderUpdateInputData> getBulkOrderDataFromTempTable(String bulkUpdateId);
     

@@ -267,7 +267,7 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 			 else if(updatetype ==='retry')
 				 orderID = ($scope.orderID===undefined || $scope.orderID===null) ? $scope.updateData.retryCntOrderID : $scope.orderID;
 			
-			 if(newValue!==null && newValue!==undefined && orderID!==null){
+			 if(newValue!==null && newValue!==undefined && (orderID!==null && orderID!=="")){
 				 UpdateOrderService.updateOrderDetails(updatetype,newValue,orderID,null).then(
 							function(response) {
 								$rootScope.spinner.off();
@@ -303,7 +303,7 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 				function(response) {
 					$rootScope.spinner.off();
 					if(response.errorCode == 0){
-						$scope.tempTableDataList = response.tempTableDataList;
+						$scope.validOrderList = response.tempTableDataList;
 						$scope.bulkUpdateID = response.bulkUpdateId;
 						MessageService.showSuccess(response.errorMsg,5000);
 						

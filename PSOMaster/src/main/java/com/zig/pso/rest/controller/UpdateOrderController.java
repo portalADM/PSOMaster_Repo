@@ -81,28 +81,11 @@ public class UpdateOrderController
             BulkUpdateInputBean orderBulkData = updateService.getUploadedFileData(file, updateType);
 
             ValidatedBulkUpdateOrderDetailsBean validatedOrders = updateService.validateUploadedData(orderBulkData);
-            if(validatedOrders.getValidOrderData().size()>0)
+            if(null!=validatedOrders.getValidOrderData())
             {
                 
                 bulkUpdateResponse.setTempTableDataList(validatedOrders.getValidOrderData());
                 bulkUpdateResponse.setBulkUpdateId(validatedOrders.getValidOrderData().get(0).getBulkUpdateId());
-                
-//                if (updateType.equalsIgnoreCase(PSOConstants.STATUS))
-//                {
-//                    response = updateService.updateBulkOrderStatus(validatedOrders.getValidOrderData());
-//                }
-//                else if (updateType.equalsIgnoreCase(PSOConstants.SIM))
-//                {
-//                    response = updateService.updateBulkOrderSim(validatedOrders.getValidOrderData());
-//                }
-//                else if (updateType.equalsIgnoreCase(PSOConstants.IMEI))
-//                {
-//                    response = updateService.updateBulkOrderImei(validatedOrders.getValidOrderData());
-//                }
-//                else if (updateType.equalsIgnoreCase(PSOConstants.RETRY_COUNT))
-//                {
-//                    response = updateService.updateBulkOrderRetryCount(validatedOrders.getValidOrderData());
-//                }
                 
                 bulkUpdateResponse.setErrorCode(response.getErrorCode());
                 bulkUpdateResponse.setErrorMsg(response.getErrorMsg());
@@ -110,8 +93,8 @@ public class UpdateOrderController
             }
             else
             {
-                bulkUpdateResponse.setErrorCode(PSOConstants.INFO_CODE);
-                bulkUpdateResponse.setErrorMsg(PSOConstants.NO_ORDER_UPDATED);
+                bulkUpdateResponse.setErrorCode(PSOConstants.SUCCESS_CODE);
+                bulkUpdateResponse.setErrorMsg(PSOConstants.NO_VALID_ORDERS);
             }
 
             bulkUpdateResponse.setInvalidOrders(validatedOrders.getInvalidOrders());

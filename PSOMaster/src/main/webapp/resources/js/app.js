@@ -2,7 +2,7 @@ var module = angular.module("PSOMaster", [ 'ngRoute','ngSanitize','ng-fusionchar
 
 module.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/login', {
-		templateUrl : 'views/Login.jsp',
+		templateUrl : '/Login.jsp',
 		controller : 'LoginController'
 	})
 	.when('/dashboard', {

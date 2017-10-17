@@ -34,10 +34,10 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#" id="themes"><span
-							class="glyphicon glyphicon-user marRight8"></span>Hi John Snow <span
+							class="glyphicon glyphicon-user marRight8"></span>Hi User<span
 							class="caret"></span></a>
 						<ul class="dropdown-menu" aria-labelledby="themes">
-							<li><a href="../default/">Logout</a></li>
+							<li><a href="#/login">Logout</a></li>
 						</ul></li>
 				</ul>
 

@@ -201,6 +201,7 @@
 	              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 	              <h4 class="modal-title">Customize Statistics</h4>
 	            </div>
+	            <flash-message></flash-message>
 	            <div class="modal-body dynGrphPopupMinHeight">
 	            
 	            	<form class="navbar-form navbar-left noPad" role="search">

@@ -4,6 +4,8 @@
 package com.zig.pso.logging;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.log4j.DailyRollingFileAppender;
 
@@ -17,7 +19,7 @@ public class ImplDailyRollingFileAppender extends DailyRollingFileAppender
     /** Holds the path of the log file */
     public static final String FILEPATH = System.getProperty(FILE_APPENDER_PATH_SYSTEM_PROPERTY);
     /** Holds the name of the log file */
-    public static final String SLA_LOG_FILE_NAME = "/SLAMessage.log";
+    public static final String SLA_LOG_FILE_NAME = "/PSOMaster.";
 
     /**
      * Overwrites the way the path for the log4j log file calculated.<br>
@@ -33,9 +35,9 @@ public class ImplDailyRollingFileAppender extends DailyRollingFileAppender
 
     public synchronized void setFile(String fileName, boolean append, boolean bufferedIO, int bufferSize) throws IOException
     {
-        super.setFile(FILEPATH + SLA_LOG_FILE_NAME, append, bufferedIO, bufferSize);
-        // super.setFile("E:\\Softwares\\JAVA SOFTWARES\\eclipse-jee-luna-SR1-win32\\eclipse\\logs\\" + SLA_LOG_FILE_NAME, append, bufferedIO, bufferSize);
-
+    	String logFileName = new SimpleDateFormat("yyyyMMdd_HHmmss'.log'").format(new Date());
+    	
+        super.setFile(FILEPATH + SLA_LOG_FILE_NAME+logFileName, append, bufferedIO, bufferSize);
     }
-
+    
 }
