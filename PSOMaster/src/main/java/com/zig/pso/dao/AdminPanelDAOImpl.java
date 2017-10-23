@@ -39,7 +39,6 @@ public class AdminPanelDAOImpl implements AdminPanelDAO
         BaseResponseBean remediationStepRes = new BaseResponseBean();
         String logRefID = CommonUtility.getLogRefID();
         String addSQL = null;
-        String updateSQL = null;
         String deleteSQL = null;
 
         if ("ADD".equals(remediationRequest.getType()))

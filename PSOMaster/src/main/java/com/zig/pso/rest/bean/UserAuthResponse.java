@@ -21,7 +21,6 @@ public class UserAuthResponse extends BaseResponseBean{
 	 */
 	public UserAuthResponse() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**

@@ -13,6 +13,10 @@ import java.io.Serializable;
 public class EmailRequestBean implements Serializable
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1761003378500769205L;
     private String fromEmailId;
     private String toEmailIdList;
     private String ccEmailIdList;

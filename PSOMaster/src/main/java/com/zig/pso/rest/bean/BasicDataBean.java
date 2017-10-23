@@ -20,7 +20,6 @@ public class BasicDataBean {
 	 */
 	public BasicDataBean() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	/**
 	 * @param code

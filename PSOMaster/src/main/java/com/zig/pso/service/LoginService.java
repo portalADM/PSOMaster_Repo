@@ -7,7 +7,6 @@
 
 package com.zig.pso.service;
 
-import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.LoginRequestBean;
 import com.zig.pso.rest.bean.UserAuthResponse;
 

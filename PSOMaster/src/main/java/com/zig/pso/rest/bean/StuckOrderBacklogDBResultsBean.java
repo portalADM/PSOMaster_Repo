@@ -21,7 +21,6 @@ public class StuckOrderBacklogDBResultsBean{
 	 */
 	public StuckOrderBacklogDBResultsBean() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	/**
 	 * @param orderCreationDate

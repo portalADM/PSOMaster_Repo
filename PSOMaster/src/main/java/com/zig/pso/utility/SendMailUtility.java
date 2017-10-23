@@ -5,10 +5,6 @@
  */
 package com.zig.pso.utility;
 
-import java.util.Properties;
-
-
-import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.EmailRequestBean;
 

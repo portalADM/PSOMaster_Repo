@@ -31,7 +31,6 @@ public class OrderUpdateInputData implements Serializable
     public OrderUpdateInputData()
     {
         super();
-        // TODO Auto-generated constructor stub
     }
     
     /**

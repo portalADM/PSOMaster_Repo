@@ -20,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.LoginRequestBean;
-import com.zig.pso.rest.bean.UpdateOrderRequestBean;
 import com.zig.pso.rest.bean.UserAuthResponse;
 import com.zig.pso.service.LoginService;
 

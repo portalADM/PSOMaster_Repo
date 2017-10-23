@@ -63,7 +63,6 @@ public class RegularOrdersCountList implements Serializable
     public RegularOrdersCountList()
     {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 }
