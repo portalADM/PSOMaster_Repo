@@ -79,9 +79,13 @@ public class CommonUtility
         return RandomStringUtils.random(15, false, true);
     }
     
-    public static void main(String[] args)
-    {
-        System.out.println(CommonUtility.getRandomBulkUpdateID());
-    }
+    /*
+   	 * This method returns PSO_SESSION_TOKEN for Logs. 
+   	 * PSO_SESSION_TOKEN is 25 char String combination of Numbers and Characters.
+   	 */
+       public static String getPSOSessionToken()
+       {
+       	return RandomStringUtils.random(25, true, true);
+       }
     
 }

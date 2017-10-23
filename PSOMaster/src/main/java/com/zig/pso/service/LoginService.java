@@ -9,6 +9,7 @@ package com.zig.pso.service;
 
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.LoginRequestBean;
+import com.zig.pso.rest.bean.UserAuthResponse;
 
 
 public interface LoginService
@@ -19,6 +20,6 @@ public interface LoginService
      * @param OrderId
      * @return
      */
-    public BaseResponseBean authenticateUser(LoginRequestBean loginRequest);
+    public UserAuthResponse authenticateUser(LoginRequestBean loginRequest);
 	
 }

@@ -1,13 +1,16 @@
 /************************************************************************************************************
  * Class Name : LoginController.java 
  * Description:
- * Author : Aniket Limaye 
+ * Author : Nilesh Patil
  * Date : Aug 26, 2016 
  * **********************************************************************************************************
  */
 package com.zig.pso.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.LoginRequestBean;
+import com.zig.pso.rest.bean.UpdateOrderRequestBean;
+import com.zig.pso.rest.bean.UserAuthResponse;
 import com.zig.pso.service.LoginService;
 
 
@@ -29,7 +34,7 @@ public class LoginController
     @Autowired
     LoginService loginService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/loginTest", method = RequestMethod.POST)
     public ModelAndView  doLogin(@RequestParam("username") String userName,@RequestParam("password") String password)
     {
         LoginRequestBean loginRequest = new LoginRequestBean();
@@ -51,6 +56,18 @@ public class LoginController
         }
         
         return model;
+    }
+    
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<UserAuthResponse> authenticateUser(@RequestBody LoginRequestBean loginRequest)
+    {
+      /*  LoginRequestBean loginRequest = new LoginRequestBean();
+        loginRequest.setUsername(userName);
+        loginRequest.setPassword(password);*/
+        
+        UserAuthResponse authConfirm = loginService.authenticateUser(loginRequest);
+        
+        return new ResponseEntity<UserAuthResponse>(authConfirm, HttpStatus.OK);
     }
 
 }

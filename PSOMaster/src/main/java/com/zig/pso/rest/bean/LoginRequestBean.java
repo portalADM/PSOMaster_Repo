@@ -16,28 +16,28 @@ public class LoginRequestBean implements Serializable
 {
 
     private static final long serialVersionUID = -7471045337689570704L;
-    private String Username;
-    private String Password;
+    private String username;
+    private String password;
 
     
     public String getUsername()
     {
-        return Username;
+        return username;
     }
 
     public void setUsername(String Username)
     {
-        this.Username = Username;
+        this.username = Username;
     }
 
     public String getPassword()
     {
-        return Password;
+        return password;
     }
 
     public void setPassword(String Password)
     {
-        this.Password = Password;
+        this.password = Password;
     }
 
     public static long getSerialversionuid()
@@ -53,9 +53,9 @@ public class LoginRequestBean implements Serializable
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((Password == null) ? 0 : Password.hashCode());
+				+ ((password == null) ? 0 : password.hashCode());
 		result = prime * result
-				+ ((Username == null) ? 0 : Username.hashCode());
+				+ ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -71,15 +71,15 @@ public class LoginRequestBean implements Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		LoginRequestBean other = (LoginRequestBean) obj;
-		if (Password == null) {
-			if (other.Password != null)
+		if (password == null) {
+			if (other.password != null)
 				return false;
-		} else if (!Password.equals(other.Password))
+		} else if (!password.equals(other.password))
 			return false;
-		if (Username == null) {
-			if (other.Username != null)
+		if (username == null) {
+			if (other.username != null)
 				return false;
-		} else if (!Username.equals(other.Username))
+		} else if (!username.equals(other.username))
 			return false;
 		return true;
 	}
@@ -89,8 +89,8 @@ public class LoginRequestBean implements Serializable
 	 */
 	@Override
 	public String toString() {
-		return "LoginRequestBean [Username=" + Username + ", Password="
-				+ Password + "]";
+		return "LoginRequestBean [Username=" + username + ", Password="
+				+ password + "]";
 	}
     
     

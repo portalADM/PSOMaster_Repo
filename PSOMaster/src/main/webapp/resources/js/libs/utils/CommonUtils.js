@@ -25,7 +25,10 @@ module.service('CommonUtils', function($http) {
 		return grouppedList;
 	}
 	
-	
+	/*
+	 * Service Method that will check if it is valid SIM or not
+	 * 
+	 */
 	this.checkIfValidSim = function(sim){
 		var simPatern = /^[0-9]{1,20}$/;
 		
@@ -35,6 +38,10 @@ module.service('CommonUtils', function($http) {
 			return false;
 	}
 	
+	/*
+	 * Service Method that will check if it is valid IMEI or not
+	 * 
+	 */
 	this.checkIfValidIMEI = function(imei){
 		var imeiPatern = /^[0-9]{1,15}$/;
 		
@@ -42,6 +49,18 @@ module.service('CommonUtils', function($http) {
 			return true;
 		else
 			return false;
+	}
+	
+	/*
+	 * Service Method that will return the difference between two dates
+	 */
+	this.getDayDifference = function(fromDate, toDate) {
+		return Math.round((parseDate(toDate) - parseDate(fromDate))/(1000*60*60*24));
+	}
+	
+	function parseDate(str) {
+	    var mdy = str.split('/');
+	    return new Date(mdy[0], mdy[1]-1, mdy[2]);
 	}
 
 });

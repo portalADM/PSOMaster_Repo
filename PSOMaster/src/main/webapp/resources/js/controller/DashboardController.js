@@ -1,4 +1,4 @@
-module.controller("DashboardController",function($scope, $routeParams, $http, DashboardService,$rootScope,MessageService) {
+module.controller("DashboardController",function($scope, $routeParams, $http, DashboardService,$rootScope,MessageService,CommonUtils) {
 
 	$scope.title = "Dashboard";
 	$scope.dateList = [];
@@ -259,7 +259,6 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 		/* Regular Orders */
 		DashboardService.getRegOrderCount().then(function(data) {
 					$scope.regularOrderStatistics = data.regularOrderList;
-					console.log($scope.regularOrderStatistics);
 					},
 					function(errResponse) {
 						console.error('Error while fetching Currencies');
@@ -272,6 +271,19 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 	$scope.getDynamicGraphData=function(){
 		
 		if(($scope.fromDate!=='' && $scope.fromDate!==undefined) && ($scope.toDate!='' && $scope.toDate!=undefined) && ($scope.typeSelect!=='' && $scope.typeSelect!==undefined) ){
+			
+			var dayDiff = CommonUtils.getDayDifference(formatDateInAppFormat($scope.fromDate),formatDateInAppFormat($scope.toDate));
+			
+			if(dayDiff<0){
+				MessageService.showInfo("From Date can not be greater than To Date.",5000);
+				return false;
+			}
+			else if(dayDiff>10){
+				MessageService.showInfo("Please select Dates in the range of 10 days.",5000);
+				return false;
+			}
+			
+			
 			$rootScope.spinner.on();
 			
 			var DynGraphRequest={
@@ -299,9 +311,17 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 				$scope.myOrdersCreatedSourcePie.chart.caption = $scope.typeSelect;
 				
 				$rootScope.spinner.off();
-				}},
+				
+				/* Hide Chart label */
+				$("tspan").filter(function(idx) {
+						if (this.innerHTML.indexOf('FusionCharts XT Trial') == 0) {
+							$(this).css("display","none")
+						}
+				});
+				
+			}},
 			function(errResponse){
-				console.error('Error while fetching dynamicRegular Order response')
+				MessageService.showInfo(errResponse,5000);
 			});
 		}
 		else{

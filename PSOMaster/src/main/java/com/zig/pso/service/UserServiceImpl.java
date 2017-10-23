@@ -17,6 +17,8 @@ import com.zig.pso.rest.bean.UserMaster;
 @Service
 public class UserServiceImpl implements IUserService
 {
+	
+	private static final boolean isLoginSimulated = true;
     
     @Autowired(required = true)
     private UserSessionBean sessionBean;
@@ -36,9 +38,11 @@ public class UserServiceImpl implements IUserService
     
     public UserMaster getUserByUsername(String username)
     {
-        UserMaster user = new UserMaster();
-        user.setUsername("admin");
-        user.setUserRole("ADMIN");
+    	UserMaster user = new UserMaster();
+    	if(isLoginSimulated){
+    		 user.setUsername(username);
+    	     user.setUserRole("admin".equals(username)?"ADMIN":"TEST");
+    	}
         
         return user;
     }
@@ -55,8 +59,23 @@ public class UserServiceImpl implements IUserService
         
         if("admin".equals(loginRequest.getUsername()) && "admin".equals(loginRequest.getPassword())){
             return true;
-        }        
+        }
+        else if("test".equals(loginRequest.getUsername()) && "test".equals(loginRequest.getPassword())){
+            return true;
+        }
+        
         return false;
     }
+
+	/* (non-Javadoc)
+	 * @see com.zig.pso.service.IUserService#getLoggedInUserDetails()
+	 */
+	@Override
+	public UserMaster getLoggedInUserDetails() 
+	{
+		return sessionBean.getLoggedInUserDetail();
+	}
+    
+   
 
 }

@@ -28,7 +28,7 @@
 			<div class="navbar-collapse collapse" id="navbar-main">
 				<ul class="nav navbar-nav">
 					<li><a href="#/dashboard">Dashboard</a></li>
-					<li><a href="#/orderMaster">Order Master</a></li>
+					<li permission="['ADMIN']"><a href="#/orderMaster">Order Master</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
@@ -54,6 +54,8 @@
 	<!-- Application Libreries Import -->
 	<script src="resources/js/libs/jquery/jquery-1.10.2.min.js"></script>
 	<script src="resources/js/libs/angularjs/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.3.0/angular-resource.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.js"></script>
 	<script src="resources/js/libs/angularjs/angular-animate.js"></script>
 	<script src="resources/js/libs/angularjs/angular-route.min.js"></script>
 	<script src="resources/js/libs/angularjs/angular-sanitize.min.js"></script>
@@ -77,6 +79,7 @@
 	
 	<!-- Application Modules Controller Import -->
 	<script src="resources/js/app.js"></script>
+	<script src="resources/js/service/AuthServices.js"></script>
 	<script src="resources/js/controller/DashboardController.js"></script>
 	<script src="resources/js/controller/OrderMasterController.js"></script>
 	<script src="resources/js/controller/UpdateOrderController.js"></script>

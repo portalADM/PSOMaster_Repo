@@ -9,6 +9,7 @@
 package com.zig.pso.service;
 
 import com.zig.pso.rest.bean.LoginRequestBean;
+import com.zig.pso.rest.bean.UserMaster;
 
 /**
  * 
@@ -18,5 +19,7 @@ public interface IUserService
     public void buildUserDetail(String userLoginId) throws Exception;
     
     public boolean authenticateUser(LoginRequestBean loginRequest);
+    
+    public UserMaster getLoggedInUserDetails();
     
 }

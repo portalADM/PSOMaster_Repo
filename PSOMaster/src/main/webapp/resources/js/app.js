@@ -1,33 +1,43 @@
-var module = angular.module("PSOMaster", [ 'ngRoute','ngSanitize','ng-fusioncharts','ngFlash','ngAnimate', 'ui.bootstrap','treasure-overlay-spinner']);//,'chart.js'
+var module = angular.module("PSOMaster", ['ngResource','ngRoute', 'ngSanitize','ng-fusioncharts','ngFlash','ngAnimate', 'ui.bootstrap','treasure-overlay-spinner','AuthServices']);//,'chart.js'
 
 module.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/login', {
-		templateUrl : '/Login.jsp',
+		templateUrl : 'views/Login.jsp',
 		controller : 'LoginController'
 	})
 	.when('/dashboard', {
 		templateUrl : 'views/Dashboard.jsp',
-		controller : 'DashboardController'
+		controller : 'DashboardController',
+        requiresAuthentication: true,
+        permissions: ["ADMIN","TEST"]
 	})
 	.when('/orderMaster', {
 		templateUrl : 'views/OrderMaster.jsp',
-		controller : 'OrderMasterController'
+		controller : 'OrderMasterController',
+        requiresAuthentication: true,
+        permissions: ["ADMIN"]
 	})
 	.when('/getOrder/:orderID', {
 		templateUrl : 'views/OrderMaster.jsp',
-		controller : 'OrderMasterController'
+		controller : 'OrderMasterController',
+        requiresAuthentication: true
 	})
 	.when('/updateOrder', {
 		templateUrl : 'views/updateOrder.jsp',
-		controller : 'UpdateOrderController'
+		controller : 'UpdateOrderController',
+        requiresAuthentication: true,
+        permissions: ["ADMIN"]
 	})
 	.when('/updateOrder/:orderID', {
 		templateUrl : 'views/updateOrder.jsp',
-		controller : 'UpdateOrderController'
+		controller : 'UpdateOrderController',
+        requiresAuthentication: true,
+        permissions: ["ADMIN"]
 	})
 	.when('/sendEmail', {
 		templateUrl : 'views/sendEmail.jsp',
-		controller : 'SendEmailController'
+		controller : 'SendEmailController',
+        requiresAuthentication: true
 	})
 	.when('/demo', {
 		templateUrl : 'views/demo.jsp',
@@ -35,18 +45,19 @@ module.config([ '$routeProvider', function($routeProvider) {
 	})
 	.when('/StuckOrderDetails/:orderStatus', {
 		templateUrl : 'views/StuckOrderDetails.jsp',
-		controller : 'StuckOrderDetailsController'
+		controller : 'StuckOrderDetailsController',
+        requiresAuthentication: true
 	})
 	.otherwise({
-		redirectTo : '/dashboard'
+		redirectTo : '/login'
 	});
 } ]);
 
 
 module.run(run);
 
-run.$inject = ['$rootScope'];
-function run ($rootScope) {
+run.$inject = ['$rootScope', '$location', 'Auth'];
+function run ($rootScope, $location, Auth) {
 	 $rootScope.spinner = {
 		        active: false,
 		        on: function () {
@@ -56,4 +67,34 @@ function run ($rootScope) {
 		          this.active = false;
 		        }
 		      };
+	 
+	 Auth.init();
+     
+    $rootScope.$on('$routeChangeStart', function (event, next) {
+        if (!Auth.checkPermissionForView(next)){
+            event.preventDefault();
+            $location.path("/login");
+        }
+    });
 }
+
+
+
+module.directive('permission', ['Auth', function(Auth) {
+   return {
+       restrict: 'A',
+       scope: {
+          permission: '='
+       },
+ 
+       link: function (scope, elem, attrs) {
+            scope.$watch(Auth.isLoggedIn, function() {
+                if (Auth.userHasPermission(scope.permission)) {
+                    elem.show();
+                } else {
+                    elem.hide();
+                }
+            });                
+       }
+   }
+}]);

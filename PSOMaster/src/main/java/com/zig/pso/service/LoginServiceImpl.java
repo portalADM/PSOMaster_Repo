@@ -1,7 +1,7 @@
 /************************************************************************************************************
  * Class Name :  LoginServiceImpl.java
  * Description:  
- * Author     :  Aniket Limaye
+ * Author     :  Nilesh Patil
  * Date       :  Aug 25, 2016
  * **********************************************************************************************************
  */
@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.LoginRequestBean;
+import com.zig.pso.rest.bean.UserAuthResponse;
+import com.zig.pso.utility.CommonUtility;
 
 /**
  * 
@@ -24,9 +26,9 @@ public class LoginServiceImpl implements LoginService
     IUserService userService;
 	
 	@Override
-	public BaseResponseBean authenticateUser(LoginRequestBean loginRequest) 
+	public UserAuthResponse authenticateUser(LoginRequestBean loginRequest) 
 	{
-	    BaseResponseBean authResponse = new BaseResponseBean();
+		UserAuthResponse authResponse = new UserAuthResponse();
 	    boolean isUserAuthenticated = userService.authenticateUser(loginRequest);
 	    
 	    if(isUserAuthenticated)
@@ -35,6 +37,8 @@ public class LoginServiceImpl implements LoginService
             {
 	            /*Save USER in session*/
                 userService.buildUserDetail(loginRequest.getUsername());
+                authResponse.setPSO_SESSION_TOKEN(CommonUtility.getPSOSessionToken());
+                authResponse.setUser(userService.getLoggedInUserDetails());
                 authResponse.setErrorCode(PSOConstants.SUCCESS_CODE);
                 authResponse.setErrorMsg(PSOConstants.AUTH_SUCCESS_MSG);
             }
