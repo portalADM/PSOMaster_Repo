@@ -251,3 +251,7 @@ body{
 .table-responsive222 {
     max-height:300px;
 }
+
+.wordWrapString {
+	overflow-wrap: break-word;
+}

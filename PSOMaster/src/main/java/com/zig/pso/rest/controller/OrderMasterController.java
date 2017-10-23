@@ -78,7 +78,7 @@ public class OrderMasterController
     /**
      * This Method provides order API Request XML
      */
-    @RequestMapping(value = "/getAPIRequestResponse/{seq_number}/CallType/{CallType}", method = RequestMethod.GET)
+    @RequestMapping(value = "/getAPIRequestResponse/{seq_number}/CallType/{CallType}", method = RequestMethod.GET,produces = {"application/xml"})
     public ResponseEntity<String> getOrderAPIRequest(@PathVariable("seq_number") String seq_number,@PathVariable("CallType") String callType)
     {
         PSOLoggerSrv.printDEBUG("OrderMasterController", "getOrderAPIRequest", "seq_number : " + seq_number);

@@ -1,4 +1,4 @@
-module.controller("OrderMasterController", function($scope, $routeParams,$http,OrderService,MessageService,AppDataService,$rootScope) {
+module.controller("OrderMasterController", function($scope, $routeParams,$http,OrderService,MessageService,AppDataService,$rootScope,CommonUtils) {
 	
 	$scope.title = "Order Master";
 	
@@ -173,11 +173,25 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 	
 	
 	$scope.orderAPIReqBody = null;
+	$scope.orderAPIReqPanelTitle = null;
 	$scope.getAPIRequestResponse = function(seq_number,callType){
+		$rootScope.spinner.on();
 		OrderService.getOrderAPIRequestResponse(seq_number,callType).then(
 				function(response) {
-					//document.getElementById("myApiReqBody").innerHTML=response;
-					$scope.orderAPIReqBody  = JSON.stringify(response, undefined, 4);
+					$rootScope.spinner.off();
+					//$scope.orderAPIReqBody  = JSON.stringify(response, undefined, 4);
+					var final_XML = '';
+					var isValidXml = CommonUtils.isValidXML(response);
+					if(isValidXml){
+						var xml_formatted = CommonUtils.formatXml(response);
+						var final_XML = xml_formatted.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/ /g, '&nbsp;').replace(/\n/g,'<br />');
+					}
+					else
+						final_XML = JSON.stringify(response, undefined, 4);
+
+					$scope.orderAPIReqPanelTitle = 'API ' + callType;
+					document.getElementById("apiReqResBody").innerHTML = final_XML;
+					//$scope.orderAPIReqBody = response;
 					$("#orderApiReqBody-modal").modal();
 	       		},
 		        function(errResponse){
@@ -185,7 +199,6 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 		        }
 		);
 	}
-	
 	
 	$scope.orderHelpData = null;
 	$scope.getHelp = function(){

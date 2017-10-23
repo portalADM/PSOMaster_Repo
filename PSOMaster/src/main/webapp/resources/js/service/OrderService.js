@@ -61,13 +61,13 @@ module.service('OrderService', function($http,$q) {
 		
 		return  $http({
 			  method: 'GET',
-			  url: 'getAPIRequestResponse/'+seq_number+'/CallType/'+CallType,
+			  url: 'getAPIRequestResponse/'+seq_number+'/CallType/'+CallType/*,
               transformResponse : function(data) {
             	  var x2js = new X2JS();  
                   var aftCnv = x2js.xml_str2json(data);  
                   return aftCnv;  
-                //return $.parseXML(data);
-              }
+            	  return $.parseXML(data);
+              }*/
 			  }).then(function successCallback(response) {
 				return response.data;
 			  }, function errorCallback(response) {
