@@ -48,6 +48,14 @@ module.config([ '$routeProvider', function($routeProvider) {
 		controller : 'StuckOrderDetailsController',
         requiresAuthentication: true
 	})
+	.when('/manageGroup', {
+		templateUrl : 'views/admin/ManageGroup.jsp',
+		controller : 'ManageGroupController'
+	})
+	.when('/manageUser', {
+		templateUrl : 'views/admin/ManageUser.jsp',
+		controller : 'ManageUserController'
+	})
 	.otherwise({
 		redirectTo : '/login'
 	});

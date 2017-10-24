@@ -214,6 +214,10 @@ body{
 	font-size: 18px;
 }
 
+.font21{
+	font-size: 21px;
+}
+
 .highlightRowRed{
 	background-color: #efafaf !important;
 }
@@ -254,4 +258,14 @@ body{
 
 .wordWrapString {
 	overflow-wrap: break-word;
+}
+
+.addGroupIcon{
+	font-size: 25px;
+    padding-top: 5px;
+}
+
+.searchUserIcon {
+    font-size: 25px;
+    padding-top: 30px;
 }

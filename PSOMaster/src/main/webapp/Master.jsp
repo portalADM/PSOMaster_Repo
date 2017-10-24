@@ -29,6 +29,16 @@
 				<ul class="nav navbar-nav">
 					<li><a href="#/dashboard">Dashboard</a></li>
 					<li permission="['ADMIN']"><a href="#/orderMaster">Order Master</a></li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">
+							Admin<span class="caret marLeft8"></span>
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="themes">
+							<li><a href="#/login">Manage Help</a></li>
+							<li><a href="#/manageGroup">Manage Group</a></li>
+							<li><a href="#/manageUser">Manage User</a></li>
+						</ul>
+					</li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
@@ -86,6 +96,8 @@
 	<script src="resources/js/controller/StuckOrderDetailsController.js"></script>
 	<script src="resources/js/controller/SendEmailController.js"></script>
 	<script src="resources/js/controller/LoginController.js"></script>
+	<script src="resources/js/controller/admin/ManageGroupController.js"></script>
+	<script src="resources/js/controller/admin/ManageUserController.js"></script>
 
 	<!-- Application Modules Services Import -->
 	<script src="resources/js/service/OrderService.js"></script>
