@@ -108,6 +108,7 @@
 	<script src="resources/js/service/FileUploadService.js"></script>
 	<script src="resources/js/service/AppDataService.js"></script>
 	<script src="resources/js/service/SendEmailService.js"></script>
+	<script src="resources/js/service/ManageGroupService.js"></script>
 	
 	<!-- Application Modules Directives Import -->
 	<script src="resources/js/directive/fileModel.js"></script>

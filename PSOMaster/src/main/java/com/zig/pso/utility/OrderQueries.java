@@ -263,4 +263,29 @@ public class OrderQueries
     {
         return orderProp.getProperty("order.getOrderStatusList");
     }
+    
+    public static String getRoleList()
+    {
+        return orderProp.getProperty("order.getRoleList");
+    }
+    
+    public static String getGroupList()
+    {
+        return orderProp.getProperty("order.getGroupList");
+    }
+    
+    public static String addNewGroup()
+    {
+        return orderProp.getProperty("order.addGroup");
+    }
+    
+    public static String updateGroup()
+    {
+        return orderProp.getProperty("order.updateGroup");
+    }
+    
+    public static String deleteGroup()
+    {
+        return orderProp.getProperty("order.deleteGroup");
+    }
 }

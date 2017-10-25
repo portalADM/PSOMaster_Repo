@@ -52,6 +52,13 @@ public class PSOConstants
     public final static String BULK_UPDATE_SUCCESS = "Bulk Updates done successfully";
     public final static String BULK_UPDATE_FAILURE = "Bulk Order Update failed";
     public final static String BULK_TEMP_INSERT_SUCCESS = "Bulk data insert done successfully";
+    
+    public final static String NO_DATA_INSERTED = "No data added.";
+    public final static String NO_DATA_UPDATED = "No data updated.";
+    public final static String NO_DATA_DELETED = "No data deleted.";
+    public final static String GROUP_INSERT_SUCCESSFULL = "Group created successfully.";
+    public final static String GROUP_UPDATE_SUCCESSFULL = "Group updated successfully.";
+    public final static String GROUP_DELETE_SUCCESSFULL = "Group deleted successfully.";
 
     /*
      * Update Order Contants

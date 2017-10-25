@@ -18,6 +18,8 @@
 			</div>
 		</div>
 		
+		<flash-message></flash-message> 
+		
 		
 		<div class="panel panel-info">
 				<div class="panel-heading">
@@ -44,12 +46,12 @@
 							<tbody  ng-repeat=" grp in groupList | filter: groupName">
 								<tr>
 									<td></td>
-									<td>{{grp.name}}</td>
-									<td>{{grp.desc}}</td>
-									<td>{{grp.role}}</td>
+									<td>{{grp.groupName}}</td>
+									<td>{{grp.groupDesc}}</td>
+									<td>{{grp.roleName}}</td>
 									<td>
-										<span class="glyphicon glyphicon-edit  cursorPointer clrBlue" tooltip-placement="bottom" uib-tooltip="Edit Group" ng-click="opneEditGroupPopup()"></span>
-										<span class="glyphicon glyphicon-trash marLeft25 cursorPointer clrBlue" tooltip-placement="bottom" uib-tooltip="Delete Group" ng-click="deleteGroup()"></span>
+										<span class="glyphicon glyphicon-edit  cursorPointer clrBlue" tooltip-placement="bottom" uib-tooltip="Edit Group" ng-click="opneEditGroupPopup(grp)"></span>
+										<span class="glyphicon glyphicon-trash marLeft25 cursorPointer clrBlue" tooltip-placement="bottom" uib-tooltip="Delete Group" ng-click="opneDeleteGroupConfirmationPopup(grp)"></span>
 									</td>
 								</tr>
 							</tbody>
@@ -63,12 +65,12 @@
 			
 			
 			<!-- Create Group Popup Panel Start -->
-			<div id="CreateGroup-modal" class="modal fade">
+			<div id="CreateEditGroup-modal" class="modal fade">
 				<div class="modal-dialog modal-lg">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title">Create Group</h4>
+							<h4 class="modal-title">{{CreateEditGroupPopupTitle}}</h4>
 						</div>
 						<div class="modal-body ">
 		                   <div class="row">
@@ -76,20 +78,21 @@
 									<div class="form-group">
 										<label class="col-lg-2 control-label textAlgnInit">Group Name</label>
 										<div class="col-lg-8">
-											<input type="text" class="form-control" ng-model="groupData.name" placeholder="Group Name">
+											<input type="text" class="form-control" ng-model="groupData.groupName" placeholder="Group Name">
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="col-lg-2 control-label textAlgnInit">Description</label>
 										<div class="col-lg-8">
-											<input type="text" class="form-control" ng-model="groupData.desc" placeholder="Group Description">
+											<input type="text" class="form-control" ng-model="groupData.groupDesc" placeholder="Group Description">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="select" class="col-lg-2 control-label textAlgnInit">Role</label>
 										<div class="col-lg-8">
-											<select class="form-control" ng-model="groupData.role">
-												<option ng-repeat="role in roleList"  value="{{role}}">{{role}}</option>
+											<select class="form-control" ng-model="groupData.roleId">
+												<option value="">Select Role</option>
+												<option ng-repeat="role in roleList"  value="{{role.roleId}}">{{role.roleName}}</option>
 											</select>
 										</div>
 									</div>
@@ -97,8 +100,34 @@
 										<div class="col-lg-2">
 										</div>
 										<div class="col-lg-8">
-											<button type="button" class="btn btn-default" ng-click="createGroup()">Add</button>
+											<button type="button" class="btn btn-default" ng-click="createEditGroup()">{{CreateEditGroupButtonText}}</button>
 										</div>
+									</div>
+								</form>
+						   </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Create Group Popup Panel END -->
+			
+			
+			<!-- Create Group Popup Panel Start -->
+			<div id="DeleteGroupConfirmation-modal" class="modal fade">
+				<div class="modal-dialog modal-lg confirmPopupWidth">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title">Are you suare want to delete this Group?</h4>
+						</div>
+						<div class="modal-body ">
+		                   <div class="row">
+		                   		<form class="form-horizontal marLeft10">
+									<div class="form-group col-lg-2">
+											<button type="button" class="btn btn-default" ng-click="deleteGroup()">Yes</button>
+									</div>
+									<div class="form-group col-lg-2">
+											<button type="button" class="btn btn-default" ng-click="closeDeleteGroupConfirmationPopup()">Cancel</button>
 									</div>
 								</form>
 						   </div>
