@@ -7,6 +7,7 @@
  */
 package com.zig.pso.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,14 +29,14 @@ public class LoginServiceImpl implements LoginService
 	public UserAuthResponse authenticateUser(LoginRequestBean loginRequest) 
 	{
 		UserAuthResponse authResponse = new UserAuthResponse();
-	    boolean isUserAuthenticated = userService.authenticateUser(loginRequest);
+	    String authenticatedUserEmpId = userService.authenticateUser(loginRequest);
 	    
-	    if(isUserAuthenticated)
+	    if(StringUtils.isNoneEmpty(authenticatedUserEmpId))
 	    {
 	        try
             {
 	            /*Save USER in session*/
-                userService.buildUserDetail(loginRequest.getUsername());
+                userService.buildUserDetail(authenticatedUserEmpId);
                 authResponse.setPSO_SESSION_TOKEN(CommonUtility.getPSOSessionToken());
                 authResponse.setUser(userService.getLoggedInUserDetails());
                 authResponse.setErrorCode(PSOConstants.SUCCESS_CODE);

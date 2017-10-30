@@ -56,6 +56,9 @@ public class PSOConstants
     public final static String NO_DATA_INSERTED = "No data added.";
     public final static String NO_DATA_UPDATED = "No data updated.";
     public final static String NO_DATA_DELETED = "No data deleted.";
+    public final static String DATA_INSERT_SUCCESSFULL = "Data added successfully.";
+    public final static String DATA_UPDATE_SUCCESSFULL = "Data updated successfully.";
+    public final static String DATA_DELETE_SUCCESSFULL = "Data deleted successfully.";
     public final static String GROUP_INSERT_SUCCESSFULL = "Group created successfully.";
     public final static String GROUP_UPDATE_SUCCESSFULL = "Group updated successfully.";
     public final static String GROUP_DELETE_SUCCESSFULL = "Group deleted successfully.";
@@ -89,4 +92,10 @@ public class PSOConstants
     
     public final static String BULK_UPDATE_SUCCESS_CODE = "0";
     public final static String BULK_UPDATE_FAILURE_CODE = "-1";
+    
+    
+    /* User Sign-up Request Status */
+    public final static String OPEN = "O";
+    public final static String ACTIVE = "A";
+    public final static String REJECTED = "R";
 }

@@ -112,7 +112,7 @@
 			<!-- Create Group Popup Panel END -->
 			
 			
-			<!-- Create Group Popup Panel Start -->
+			<!-- Delete group confirmation Popup Panel Start -->
 			<div id="DeleteGroupConfirmation-modal" class="modal fade">
 				<div class="modal-dialog modal-lg confirmPopupWidth">
 					<div class="modal-content">
@@ -135,7 +135,7 @@
 					</div>
 				</div>
 			</div>
-			<!-- Create Group Popup Panel END -->
+			<!-- Delete group confirmation Popup Panel END -->
 
 
 	</div>

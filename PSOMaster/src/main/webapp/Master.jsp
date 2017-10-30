@@ -27,11 +27,10 @@
 			</div>
 			<div class="navbar-collapse collapse" id="navbar-main">
 				<ul class="nav navbar-nav">
-					<li><a href="#/dashboard">Dashboard</a></li>
-					<li permission="['ADMIN']"><a href="#/orderMaster">Order Master</a></li>
-					<li class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">
-							Admin<span class="caret marLeft8"></span>
+					<li permission="['ADMINISTRATOR','REMIDIATOR','GUEST']"><a href="#/dashboard">Dashboard</a></li>
+					<li permission="['ADMINISTRATOR','REMIDIATOR','GUEST']"><a href="#/orderMaster">Order Master</a></li>
+					<li class="dropdown" permission="['ADMINISTRATOR']">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Admin<span class="caret marLeft8"></span>
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="themes">
 							<li><a href="#/login">Manage Help</a></li>
@@ -98,6 +97,8 @@
 	<script src="resources/js/controller/LoginController.js"></script>
 	<script src="resources/js/controller/admin/ManageGroupController.js"></script>
 	<script src="resources/js/controller/admin/ManageUserController.js"></script>
+	<script src="resources/js/controller/SignupController.js"></script>
+	<script src="resources/js/controller/UserAssignmentController.js"></script>
 
 	<!-- Application Modules Services Import -->
 	<script src="resources/js/service/OrderService.js"></script>
@@ -109,6 +110,8 @@
 	<script src="resources/js/service/AppDataService.js"></script>
 	<script src="resources/js/service/SendEmailService.js"></script>
 	<script src="resources/js/service/ManageGroupService.js"></script>
+	<script src="resources/js/service/SignupService.js"></script>
+	<script src="resources/js/service/UserService.js"></script>
 	
 	<!-- Application Modules Directives Import -->
 	<script src="resources/js/directive/fileModel.js"></script>

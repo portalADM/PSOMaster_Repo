@@ -38,6 +38,16 @@
 			</form>
 		</div>
 	</div>
+	
+	<div class="row">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<div class="col-lg-2">
+						<a href="#signUp" type="button" class="btn btn-primary btn-block btn-large" ">Sign Up</a>
+					</div>
+				</div>
+			</form>
+		</div>
 
 
 

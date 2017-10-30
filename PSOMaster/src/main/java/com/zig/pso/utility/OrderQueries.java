@@ -288,4 +288,54 @@ public class OrderQueries
     {
         return orderProp.getProperty("order.deleteGroup");
     }
+    
+    public static String addNewUserSignUpQuery()
+    {
+        return orderProp.getProperty("user.addNewUserSignUpRequest");
+    }
+    
+    public static String pendingUserList()
+    {
+        return orderProp.getProperty("user.pendingUserList");
+    }
+    
+    public static String rejectUser()
+    {
+        return orderProp.getProperty("user.rejectUserRequest");
+    }
+    
+    public static String getPendingUserDataByEmpId()
+    {
+        return orderProp.getProperty("user.getPendingUserDataByEmpId");
+    }
+    
+    public static String doUserAssignmentsQuery()
+    {
+        return orderProp.getProperty("user.doUserAssigment");
+    }
+    
+    public static String updateUserAssignmentsQuery()
+    {
+        return orderProp.getProperty("user.updateUserAssignment");
+    }
+    
+    public static String getUserListQuery()
+    {
+        return orderProp.getProperty("user.getUserList");
+    }
+    
+    public static String getUserDataByEmpId()
+    {
+        return orderProp.getProperty("user.getUserDataByEmpId");
+    }
+    
+    public static String getDeletePendingUserReqQuery()
+    {
+        return orderProp.getProperty("user.deletePendingUserReqQuery");
+    }
+    
+    public static String getauthenticateUserQuery()
+    {
+        return orderProp.getProperty("user.authenticateUser");
+    }
 }

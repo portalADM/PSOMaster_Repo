@@ -1,54 +1,141 @@
-module.controller("ManageUserController", function($scope, $routeParams,$http,$location,$rootScope,Auth) 
+module.controller("ManageUserController", function($scope, $routeParams,$http,UserService,$rootScope,Auth,MessageService,ManageGroupService) 
 {
 	$scope.title = "Manage User";
 	
-	$scope.userList = [ {
-							name : 'Gaurav Patel',email : 'gav.patel@amdocs.com',role : 'ADMIN',group : 'ADMINISTRATOR',company : 'AMDOCS'
-						},{
-							name : 'Shaista Shaikh',email : 'sha.sha@amdocs.com',role : 'REMIDIATOR',group : 'APP SUPPORT',company : 'AMDOCS'
-						},{
-							name : 'Nilesh Patil',email : 'nilesh.patil@amdocs.com',role : 'GUEST',group : 'ADM',company : 'AMDOCS'
-						},{
-							name : 'Chris Morris',email : 'chris.morris@Cricket.com',role : 'ADMIN',group : 'ADMINISTRATOR',company : 'Cricket'
-						}];
+	$scope.userList = [];
 	
-	$scope.groupList = [ {
-							name : 'ADMINISTRATOR',desc : 'Admin group',role : 'ADMIN'
-						},{
-							name : 'ADM',desc : 'ADM Group',role : 'GUEST'
-						},{
-							name : 'APP Support',desc : 'App Support group',role : 'REMIDIATOR'
-						},{
-							name : 'RT',desc : 'Reference table group',role : 'GUEST'
-						}];
+	$scope.groupList = [];
 	
-	$scope.roleList = ['ADMIN','REMIDIATOR','GUEST'];
+	$scope.roleList = [];
 	
-	$scope.companyList = ['Cricket','AMDOCS'];
+	$scope.companyList = ['CRICKET','AMDOCS'];
 	
-	$scope.groupData = {};
+	$scope.userData = {};
 	
+	$scope.userSearch = {};
 	
-	$scope.opneCreateGroupPopup = function(){
-		$("#CreateGroup-modal").modal();
+	$scope.pendingUserList = [];
+	
+	$scope.init = function(){
+		getPendingUserList();
+		getGroupList();
+		getRoleList()
+		getUserList();
 	}
 	
-	$scope.opneEditGroupPopup = function(){
-		$("#CreateGroup-modal").modal();
+	$scope.init();
+	
+	$scope.rejectUserConfirm = function(empData){
+		$scope.userData = empData;
+		console.log(empData.empId);
+		$("#RejectUserConfirmation-modal").modal();
+	}
+	
+	$scope.closeRejectUserConfirmationPopup = function(deleteGroupData){
+		$("#RejectUserConfirmation-modal").modal('hide');
+	}
+	
+	$scope.rejectUserRequest = function(){
+		var empdata= {
+				empId : $scope.userData.empId,
+				rejectComments : $scope.reject.comments
+		}
+		rejectUser(empdata);
+	}
+	
+	$scope.searchUser = function(){
+		getUserList($scope.userSearch);
+	}
+	
+	function getPendingUserList(){
+		$rootScope.spinner.on();
+		UserService.getPendingApprovalUserList().then(
+				function(response) {
+					$rootScope.spinner.off();
+					if(response!=undefined && response.length>0){
+						$scope.pendingUserList = response;
+					}
+					else{
+						$rootScope.spinner.off();
+						var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+						MessageService.showError(errorMessage,10000);
+					}
+	       		},
+		       function(errResponse){
+	       			$rootScope.spinner.off();
+					MessageService.showSuccess('Error occured while getting pending User list. Please try again later.',5000);
+		       }
+		);
+	}
+	
+	function rejectUser(empdata){
+		$rootScope.spinner.on();
+		
+		UserService.rejectUserRequest(empdata).then(
+				function(response) {
+					$rootScope.spinner.off();
+					if(response!=undefined && response.errorCode == '0'){
+						MessageService.showSuccess(response.errorMessage,10000);
+						$("#RejectUserConfirmation-modal").modal('hide');
+						getPendingUserList();
+					}
+					else{
+						$rootScope.spinner.off();
+						var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+						MessageService.showError(errorMessage,10000);
+					}
+	       		},
+		       function(errResponse){
+	       			$rootScope.spinner.off();
+					MessageService.showSuccess('Error occured while getting pending User list. Please try again later.',5000);
+		       }
+		);
+	}
+	
+	function getGroupList()
+	{
+		ManageGroupService.getGroupList().then(function(data) {
+			$scope.groupList = data;
+		},
+		function(errResponse) {
+			console.error('Error while fetching Currencies');
+		});
+	}
+	
+	function getRoleList()
+	{
+		ManageGroupService.getRoleList().then(function(data) {
+			if(data.length>0){
+				$scope.roleList = data;
+			}
+		},
+		function(errResponse) {
+			console.error('Error while fetching Currencies');
+		});
 	}
 	
 	
-	$scope.createGroup = function(){
-		alert('createGroup');
+	function getUserList(searchData){
+		$rootScope.spinner.on();
+		UserService.getUserList(searchData).then(
+				function(response) {
+					$rootScope.spinner.off();
+					if(response!=undefined){
+						$scope.userList = response;
+						if(response.length==0)
+							MessageService.showInfo('No data found.',5000);
+					}
+					else{
+						$rootScope.spinner.off();
+						var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+						MessageService.showError(errorMessage,10000);
+					}
+	       		},
+		       function(errResponse){
+	       			$rootScope.spinner.off();
+					MessageService.showSuccess('Error occured while getting User list. Please try again later.',5000);
+		       }
+		);
 	}
-	
-	$scope.editGroup = function(){
-		alert('editGroup');
-	}
-	
-	$scope.deleteGroup = function(){
-		alert('deleteGroup');
-	}
-	
 	
 });
