@@ -48,7 +48,16 @@ public class OrderQueries
     {
         return orderProp.getProperty("order.stuckOrdersbyStatus");
     }
-
+//segregationOfOrders
+    public static String getstuckOrdersbySingleLine()
+    {
+        return orderProp.getProperty("order.stuckOrdersbySingleLine");
+    }
+    public static String getstuckOrdersbyMultiLine()
+    {
+        return orderProp.getProperty("order.stuckOrdersbyMultiLine");
+    }
+    
     public static String updateOrderStatus()
     {
         return orderProp.getProperty("order.updateOrderStatusQuerry");

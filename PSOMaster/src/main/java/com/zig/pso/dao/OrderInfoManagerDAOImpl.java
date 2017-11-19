@@ -841,10 +841,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
         }
 
-        if (enrollInfo == null)
-        {
-            PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getOrderEnrollmentInfo", PSOConstants.NO_DATA);
-        }
+        
 
         return enrollInfo;
     }
