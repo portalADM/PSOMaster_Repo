@@ -29,29 +29,29 @@ public class DBConnection
      */
     public static Connection getPortalDBConnection()
     {
-            try
-            {
-                Properties prop = PropertyReader.getDbProperties();
-                String driver = prop.getProperty(PSOConstants.PORTAL_DB_DRIVER);
-                String url = prop.getProperty(PSOConstants.PORTAL_DB_URL);
-                String user = prop.getProperty(PSOConstants.PORTAL_DB_USER);
-                String password = prop.getProperty(PSOConstants.PORTAL_DB_PASSWORD);
-                Class.forName(driver);
-                portalDBConnection = DriverManager.getConnection(url, user, password);
-            }
-            catch (ClassNotFoundException e)
-            {
-                PSOLoggerSrv.printERROR(e.getMessage());
-            }
-            catch (SQLException e)
-            {
-                PSOLoggerSrv.printERROR(e.getMessage());
-            }
-            catch (Exception e)
-            {
-                PSOLoggerSrv.printERROR(e.getMessage());
-            }
-            return portalDBConnection;
+        try
+        {
+            Properties prop = PropertyReader.getDbProperties();
+            String driver = prop.getProperty(PSOConstants.PORTAL_DB_DRIVER);
+            String url = prop.getProperty(PSOConstants.PORTAL_DB_URL);
+            String user = prop.getProperty(PSOConstants.PORTAL_DB_USER);
+            String password = PSOPropertyEncryptDecryptUtil.decryptValue(prop.getProperty(PSOConstants.PORTAL_DB_PASSWORD));
+            Class.forName(driver);
+            portalDBConnection = DriverManager.getConnection(url, user, password);
+        }
+        catch (ClassNotFoundException e)
+        {
+            PSOLoggerSrv.printERROR(e.getMessage());
+        }
+        catch (SQLException e)
+        {
+            PSOLoggerSrv.printERROR(e.getMessage());
+        }
+        catch (Exception e)
+        {
+            PSOLoggerSrv.printERROR(e.getMessage());
+        }
+        return portalDBConnection;
     }
 
     /*
@@ -59,28 +59,28 @@ public class DBConnection
      */
     public static Connection getENSDBConnection()
     {
-            try
-            {
-                Properties prop = PropertyReader.getDbProperties();
-                String driver = prop.getProperty(PSOConstants.ENS_DB_DRIVER);
-                String url = prop.getProperty(PSOConstants.ENS_DB_URL);
-                String user = prop.getProperty(PSOConstants.ENS_DB_USER);
-                String password = prop.getProperty(PSOConstants.ENS_DB_PASSWORD);
-                Class.forName(driver);
-                ensDBConnection = DriverManager.getConnection(url, user, password);
-            }
-            catch (ClassNotFoundException e)
-            {
-                PSOLoggerSrv.printERROR(e.getMessage());
-            }
-            catch (SQLException e)
-            {
-                PSOLoggerSrv.printERROR(e.getMessage());
-            }
-            catch (Exception e)
-            {
-                PSOLoggerSrv.printERROR(e.getMessage());
-            }
-            return ensDBConnection;
+        try
+        {
+            Properties prop = PropertyReader.getDbProperties();
+            String driver = prop.getProperty(PSOConstants.ENS_DB_DRIVER);
+            String url = prop.getProperty(PSOConstants.ENS_DB_URL);
+            String user = prop.getProperty(PSOConstants.ENS_DB_USER);
+            String password = PSOPropertyEncryptDecryptUtil.decryptValue(prop.getProperty(PSOConstants.ENS_DB_PASSWORD));
+            Class.forName(driver);
+            ensDBConnection = DriverManager.getConnection(url, user, password);
         }
+        catch (ClassNotFoundException e)
+        {
+            PSOLoggerSrv.printERROR(e.getMessage());
+        }
+        catch (SQLException e)
+        {
+            PSOLoggerSrv.printERROR(e.getMessage());
+        }
+        catch (Exception e)
+        {
+            PSOLoggerSrv.printERROR(e.getMessage());
+        }
+        return ensDBConnection;
+    }
 }

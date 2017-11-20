@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.LoginRequestBean;
 import com.zig.pso.rest.bean.RejectPendingUserRequest;
+import com.zig.pso.rest.bean.SetupUserPasswordRequestBean;
 import com.zig.pso.rest.bean.UserMaster;
 import com.zig.pso.rest.bean.UserSearchRequestBean;
 
@@ -23,7 +24,7 @@ public interface IUserService
 {
     public void buildUserDetail(String userLoginId) throws Exception;
     
-    public String authenticateUser(LoginRequestBean loginRequest);
+    public UserMaster getUserByUsernameForAuthentication(LoginRequestBean loginRequest);
     
     public UserMaster getLoggedInUserDetails();
     
@@ -42,4 +43,6 @@ public interface IUserService
     public BaseResponseBean updateUserAssignments(UserMaster userData);
     
     public ArrayList<UserMaster> getUserList(UserSearchRequestBean userSearchReq);
+    
+    public BaseResponseBean setupPasswordForUser(SetupUserPasswordRequestBean userPassword, String urlForSetupPassword);
 }

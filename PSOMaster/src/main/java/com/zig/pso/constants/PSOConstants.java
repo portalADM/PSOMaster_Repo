@@ -62,6 +62,9 @@ public class PSOConstants
     public final static String GROUP_INSERT_SUCCESSFULL = "Group created successfully.";
     public final static String GROUP_UPDATE_SUCCESSFULL = "Group updated successfully.";
     public final static String GROUP_DELETE_SUCCESSFULL = "Group deleted successfully.";
+    
+    public final static String USER_PASSWORD_SETUP_SUCCESSFULL = "Your Password has been set. Please Login to continue.";
+    public final static String USER_PASSWORD_SETUP_FAILURE = "There is some issue while setting up your password. Please try again later.";
 
     /*
      * Update Order Contants
@@ -98,4 +101,20 @@ public class PSOConstants
     public final static String OPEN = "O";
     public final static String ACTIVE = "A";
     public final static String REJECTED = "R";
+    
+    /* User Status */
+    public final static String USER_IN_PROGRESS = "I";
+    public final static String USER_ACTIVE = "A";
+    
+    /* Encryption Logic Key */
+    public static final String encrypterPassValue = "Unix11!";
+    
+    
+    /*SEND Email Configurations*/
+    
+    public static final String EMAIL_SEND_FROM = "nilesh.patil@amdocs.com";
+    public static final String SETUP_PASSWORD_EMAIL_SUBJECT = "PSO | Setup Password";
+    
+    public static final String PSO_SETUP_PASSWORD_URL = "http://localhost:8081/PSOMaster/#/setupUserPassword";
+    public static final String SETUP_PASSWORD_EMAIL_CONTENT = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><meta name='viewport' content='width=device-width'><title></title></head><body> <span class='preheader'></span> <table class='body'>        <tr>            <td class='center' align='center' valign='top'>             <center data-parsed=''>                 <style type='text/css' align='center' class='float-center'>                 body, html, .body {                     background: #f3f3f3 !important;                 }                   </style>                    <table align='center' class='container float-center'>                       <tbody>                         <tr>                                <td>                                    <table class='spacer'>                                      <tbody>                                         <tr>                                                <td height='16px'                                                   style='font-size: 16px; line-height: 16px;'>&#xA0;</td>                                         </tr>                                       </tbody>                                    </table>                                    <table>                                     <tr>                                            <th>                                                <h1>PSO</h1>                                                <p>Congratulations! Your request has been approved. Please setup your                                                   password using below details which you used during                                                  Signup.</p>                                             <table class='spacer'>                                                  <tbody>                                                     <tr>                                                            <td height='16px'                                                               style='font-size: 16px; line-height: 16px;'>&#xA0;</td>                                                     </tr>                                                   </tbody>                                                </table>                                                <hr>                                            </th>                                       </tr>                                   </table>                                                                        <h4>User Details</h4>                                   <table>                                     <tbody>                                         <tr>                                                <td>Name : </td>                                                <td>#USER_NAME#</td>                                            </tr>                                           <tr>                                                <td>Employee ID : </td>                                             <td>#EMP_ID#</td>                                           </tr>                                           <tr>                                                <td>Email ID : </td>                                                <td>#EMAIL_ID#</td>                                         </tr>                                           <tr>                                                <td>Temporary Password : </td>                                              <td>#TEMP_PASSWORD#</td>                                            </tr>                                       </tbody>                                    </table>                                                                        <h4>User this link : <a href='#SETUP_PASSWORD_URL#' target='_blank'>Setup Password</a></h4>                             </td>                           </tr>                       </tbody>                    </table>                </center>           </td>       </tr>   </table>    </body></html>";
 }

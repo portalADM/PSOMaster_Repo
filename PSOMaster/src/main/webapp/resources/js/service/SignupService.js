@@ -22,6 +22,30 @@ module.service('SignupService', function($http,$q) {
 		);
 		
 	}
+	
+	
+	/*
+	 * Service Method that will setup User password
+	 */
+	this.setupUserPassword = function(userData){
+		
+		return $http({
+			method : "POST",
+			url : "setupPassword",
+			data : userData
+		}).then(
+				function(response){
+					console.log(response.data);
+					return response.data;
+				}, 
+				function(errResponse){
+					console.error('Error while setting user password');
+					return $q.reject(errResponse);
+				}
+			
+		);
+		
+	}
 
 
 });

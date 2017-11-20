@@ -22,6 +22,7 @@ import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.LoginRequestBean;
 import com.zig.pso.rest.bean.UserAuthResponse;
 import com.zig.pso.service.LoginService;
+import com.zig.pso.service.MailService;
 
 
 /**
@@ -32,6 +33,9 @@ public class LoginController
 {
     @Autowired
     LoginService loginService;
+    
+    @Autowired
+    MailService emailService;
 
     @RequestMapping(value = "/loginTest", method = RequestMethod.POST)
     public ModelAndView  doLogin(@RequestParam("username") String userName,@RequestParam("password") String password)

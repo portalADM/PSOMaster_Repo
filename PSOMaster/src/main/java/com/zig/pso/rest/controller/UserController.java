@@ -8,8 +8,12 @@
  */
 package com.zig.pso.rest.controller;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.RejectPendingUserRequest;
+import com.zig.pso.rest.bean.SetupUserPasswordRequestBean;
 import com.zig.pso.rest.bean.UserMaster;
 import com.zig.pso.rest.bean.UserSearchRequestBean;
 import com.zig.pso.service.IUserService;
@@ -144,6 +149,34 @@ public class UserController
         ArrayList<UserMaster> userList = new ArrayList<UserMaster>();
         userList = userService.getUserList(userSearchReq);
         return new ResponseEntity<ArrayList<UserMaster>>(userList, HttpStatus.OK);
+    }
+    
+    /**
+     * This Method will add get list of users list
+     */
+    @RequestMapping(value = "/setupPassword", method = RequestMethod.POST)
+    public ResponseEntity<BaseResponseBean> setupPassword(@RequestBody SetupUserPasswordRequestBean userPasswordSetup,HttpServletRequest request)
+    {
+       /* String updateDetails = "Order ID : "+updateOrderRequest.getOrderId()+" \nNew Value : "+updateOrderRequest.getNewValue()+" \nUpdate Type : "+updateOrderRequest.getType()+" \nLine Id : "+updateOrderRequest.getLineId();
+        PSOLoggerSrv.printDEBUG("UpdateOrderController", "updateSingleOrder", updateDetails);*/
+        
+        String urlForSetupPassword = StringUtils.EMPTY;
+        
+        try
+        {
+            StringBuffer asdasd = request.getRequestURL();
+            String protocolName = asdasd.substring(0, asdasd.indexOf(":"));
+            String hostName = java.net.InetAddress.getLocalHost().getHostName();
+            String contextPathName = request.getContextPath();
+            urlForSetupPassword = protocolName+"://"+hostName+":"+request.getServerPort()+contextPathName+"/#setupUserPassword";
+        }
+        catch (UnknownHostException e)
+        {
+            e.printStackTrace();
+        }
+        
+        BaseResponseBean response = userService.setupPasswordForUser(userPasswordSetup,urlForSetupPassword);
+        return new ResponseEntity<BaseResponseBean>(response, HttpStatus.OK);
     }
     
 }

@@ -30,6 +30,7 @@ public class UserMaster implements Serializable
     private int groupId;
     private String userGroup;
     private String status;
+    private String tempPassword;
     
     
     /**
@@ -332,6 +333,23 @@ public class UserMaster implements Serializable
         this.status = status;
     }
 
+    /**
+     * @return the tempPassword
+     */
+    public String getTempPassword()
+    {
+        return tempPassword;
+    }
+
+
+    /**
+     * @param tempPassword the tempPassword to set
+     */
+    public void setTempPassword(String tempPassword)
+    {
+        this.tempPassword = tempPassword;
+    }
+
 
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
@@ -351,6 +369,7 @@ public class UserMaster implements Serializable
         result = prime * result + ((password == null) ? 0 : password.hashCode());
         result = prime * result + roleId;
         result = prime * result + ((status == null) ? 0 : status.hashCode());
+        result = prime * result + ((tempPassword == null) ? 0 : tempPassword.hashCode());
         result = prime * result + ((userGroup == null) ? 0 : userGroup.hashCode());
         result = prime * result + ((userRole == null) ? 0 : userRole.hashCode());
         result = prime * result + ((username == null) ? 0 : username.hashCode());
@@ -431,6 +450,13 @@ public class UserMaster implements Serializable
         }
         else if (!status.equals(other.status))
             return false;
+        if (tempPassword == null)
+        {
+            if (other.tempPassword != null)
+                return false;
+        }
+        else if (!tempPassword.equals(other.tempPassword))
+            return false;
         if (userGroup == null)
         {
             if (other.userGroup != null)
@@ -463,7 +489,8 @@ public class UserMaster implements Serializable
     public String toString()
     {
         return "UserMaster [id=" + id + ", empId=" + empId + ", username=" + username + ", password=" + password + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
-                + ", company=" + company + ", roleId=" + roleId + ", userRole=" + userRole + ", groupId=" + groupId + ", userGroup=" + userGroup + ", status=" + status + "]";
+                + ", company=" + company + ", roleId=" + roleId + ", userRole=" + userRole + ", groupId=" + groupId + ", userGroup=" + userGroup + ", status=" + status + ", tempPassword="
+                + tempPassword + "]";
     }
 
 

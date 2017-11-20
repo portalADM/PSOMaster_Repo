@@ -66,6 +66,10 @@ module.config([ '$routeProvider', function($routeProvider) {
 		templateUrl : 'views/Signup.jsp',
 		controller : 'SignupController'
 	})
+	.when('/setupUserPassword', {
+		templateUrl : 'views/SetupPassword.jsp',
+		controller : 'SignupController'
+	})
 	.when('/userAssignments/:employeeId/:oprType', {
 		templateUrl : 'views/ManageUserAssignments.jsp',
 		controller : 'UserAssignmentController',

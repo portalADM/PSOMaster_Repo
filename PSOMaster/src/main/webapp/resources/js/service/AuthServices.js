@@ -1,5 +1,5 @@
 angular.module('AuthServices', ['ngResource', 'ngStorage'])
-.factory('Auth', function($resource, $rootScope, $sessionStorage, $q){
+.factory('Auth', function($resource, $rootScope, $sessionStorage, $q,$http){
      
     /**
      *  User profile resource
@@ -24,16 +24,21 @@ angular.module('AuthServices', ['ngResource', 'ngStorage'])
     };
          
     auth.login = function(username, password){
-        return $q(function(resolve, reject){
-            Profile.login({username:username, password:password}).$promise
-            .then(function(data) {                        
-                $sessionStorage.user = data.user;    
-                $rootScope.user = $sessionStorage.user;
-                resolve();
-            }, function() {
-                reject();
-            });
-        });
+        return $http({
+			method : "POST",
+			url : "login",
+			data :{username:username, password:password}
+		}).then(
+		function(response){
+			$sessionStorage.user = response.data.user;    
+            $rootScope.user = $sessionStorage.user;
+			return response.data;
+		}, 
+		function(errResponse){
+			console.error('Error while login');
+			return $q.reject(errResponse);
+		});
+        
     };
      
  

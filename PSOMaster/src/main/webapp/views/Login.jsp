@@ -17,9 +17,10 @@
 			</h3>
 		</div>
 	
+	<flash-message></flash-message> 
 	
 		<div class="row">
-			<form class="form-horizontal">
+			<form class="form-horizontal marLeft15">
 				<div class="form-group">
 					<div class="col-lg-12">
 						<input type="text" class="form-control" ng-model="username" placeholder="Username" required="required" />
@@ -35,12 +36,6 @@
 						<button type="button" class="btn btn-primary btn-block btn-large" ng-click="authenticateUser()">Sign In</button>
 					</div>
 				</div>
-			</form>
-		</div>
-	</div>
-	
-	<div class="row">
-			<form class="form-horizontal">
 				<div class="form-group">
 					<div class="col-lg-2">
 						<a href="#signUp" type="button" class="btn btn-primary btn-block btn-large" ">Sign Up</a>
@@ -48,6 +43,10 @@
 				</div>
 			</form>
 		</div>
+		
+	</div>
+	
+	
 
 
 

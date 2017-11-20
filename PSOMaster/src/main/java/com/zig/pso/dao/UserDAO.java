@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.LoginRequestBean;
 import com.zig.pso.rest.bean.RejectPendingUserRequest;
+import com.zig.pso.rest.bean.SetupUserPasswordRequestBean;
 import com.zig.pso.rest.bean.UserMaster;
 import com.zig.pso.rest.bean.UserSearchRequestBean;
 
@@ -39,5 +40,7 @@ public interface UserDAO
     
     public BaseResponseBean deletePendingUserRequest(String employeeId);
     
-    public String authenticateUser(LoginRequestBean loginRequest);
+    public UserMaster getUserByUsernameForAuthentication(LoginRequestBean loginRequest);
+    
+    public BaseResponseBean setupPasswordForUser(SetupUserPasswordRequestBean userPassword);
 }

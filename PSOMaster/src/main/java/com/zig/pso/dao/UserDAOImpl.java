@@ -23,6 +23,7 @@ import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.LoginRequestBean;
 import com.zig.pso.rest.bean.RejectPendingUserRequest;
+import com.zig.pso.rest.bean.SetupUserPasswordRequestBean;
 import com.zig.pso.rest.bean.UserMaster;
 import com.zig.pso.rest.bean.UserSearchRequestBean;
 import com.zig.pso.utility.CommonUtility;
@@ -46,11 +47,10 @@ public class UserDAOImpl implements UserDAO
         return DBConnection.getPortalDBConnection();
     }
     
-    public String authenticateUser(LoginRequestBean loginRequest)
+    public UserMaster getUserByUsernameForAuthentication(LoginRequestBean loginRequest)
     {
-        String empId = StringUtils.EMPTY;
-        
-        String sql = OrderQueries.getauthenticateUserQuery();
+        UserMaster user = new UserMaster();
+        String sql = OrderQueries.getUserByUsernameForAuthentication();
         PreparedStatement pstm = null;
         ResultSet rs = null;
         Connection con = this.getPortalDbConnction();
@@ -59,11 +59,11 @@ public class UserDAOImpl implements UserDAO
         {
             pstm = con.prepareStatement(sql);
             pstm.setString(1, loginRequest.getUsername());
-            pstm.setString(2, loginRequest.getPassword());
             rs = pstm.executeQuery();
             while (rs.next())
             {
-                empId = rs.getString("EMP_ID");
+                user.setEmpId(rs.getString("EMP_ID"));
+                user.setPassword(rs.getString("PASSWORD"));
             }
         }
         catch (SQLException e)
@@ -107,7 +107,7 @@ public class UserDAOImpl implements UserDAO
             }
         }
         
-        return empId;
+        return user;
     }
 
     /* (non-Javadoc)
@@ -413,13 +413,14 @@ public class UserDAOImpl implements UserDAO
             pstm = con.prepareStatement(sql);
             pstm.setString(1, userData.getEmpId());
             pstm.setString(2, userData.getUsername());
-            pstm.setString(3, "test12345");
+            pstm.setString(3, userData.getTempPassword());
             pstm.setString(4, userData.getFirstName());
             pstm.setString(5, userData.getLastName());
             pstm.setString(6, userData.getEmail());
             pstm.setString(7, userData.getCompany());
             pstm.setInt(8, userData.getGroupId());
             pstm.setString(9, "Admin");
+            pstm.setString(10, PSOConstants.USER_IN_PROGRESS); // I : User setup In Progress, A : Active
             int i = pstm.executeUpdate();
             if (i < 1)
             {
@@ -806,6 +807,80 @@ public class UserDAOImpl implements UserDAO
         }
 
         return deletePendingUserResponse;
+    }
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.dao.UserDAO#setupPasswordForUser(java.lang.String, java.lang.String)
+     */
+    @Override
+    public BaseResponseBean setupPasswordForUser(SetupUserPasswordRequestBean userPassword)
+    {
+        BaseResponseBean setupUserPasswordResponse = new BaseResponseBean();
+        String logRefID = CommonUtility.getLogRefID();
+        
+        String sql = OrderQueries.getSetupPasswordQuery();
+        
+        PreparedStatement pstm = null;
+        Connection con = this.getPortalDbConnction();
+        
+        try
+        {
+            pstm = con.prepareStatement(sql);
+            pstm.setString(1, userPassword.getPassword());
+            pstm.setString(2, userPassword.getEmpId());
+            pstm.setString(3, userPassword.getEmailId());
+            pstm.setString(4, userPassword.getTempPassword());
+            pstm.setString(5, PSOConstants.USER_ACTIVE);
+            int i = pstm.executeUpdate();
+            if (i < 1)
+            {
+                setupUserPasswordResponse.setErrorCode(PSOConstants.INFO_CODE);
+                setupUserPasswordResponse.setErrorMsg(PSOConstants.NO_DATA_UPDATED);
+                setupUserPasswordResponse.setLogRefId(logRefID);
+            }
+            else
+            {
+                setupUserPasswordResponse.setErrorCode(PSOConstants.SUCCESS_CODE);
+                setupUserPasswordResponse.setErrorMsg(PSOConstants.USER_PASSWORD_SETUP_SUCCESSFULL);
+                setupUserPasswordResponse.setLogRefId(logRefID);
+            }
+            
+            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "setupPasswordForUser", logRefID, sql, "Emp ID : "+userPassword.getEmpId()+", Email ID : "+userPassword.getEmailId(), setupUserPasswordResponse.getErrorMsg());
+        }
+        catch (SQLException e)
+        {
+            setupUserPasswordResponse.setErrorCode(PSOConstants.ERROR_CODE);
+            setupUserPasswordResponse.setErrorMsg(PSOConstants.BACKEND_ERROR);
+            setupUserPasswordResponse.setLogRefId(logRefID);
+            PSOLoggerSrv.printERROR("UserDAOImpl", "setupPasswordForUser", logRefID, sql,"Emp ID : "+userPassword.getEmpId()+", Email ID : "+userPassword.getEmailId(), e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("UserDAOImpl", "setupPasswordForUser", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("UserDAOImpl", "setupPasswordForUser", e);
+                }
+            }
+        }
+        
+        return setupUserPasswordResponse;
     }
     
     

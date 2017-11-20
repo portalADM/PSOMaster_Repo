@@ -1,7 +1,10 @@
 /************************************************************************************************************
- * Class Name : OrderQueries.java Description: This class provides the SQL queries for database operations.
+ * Class Name : OrderQueries.java 
+ * Description: This class provides the SQL queries for database operations.
  * 
- * Author : Nilesh Patil Date : Jun 26, 2016 **********************************************************************************************************
+ * Author : Nilesh Patil 
+ * Date : Jun 26, 2016 
+ * **********************************************************************************************************
  */
 package com.zig.pso.utility;
 
@@ -48,7 +51,7 @@ public class OrderQueries
     {
         return orderProp.getProperty("order.stuckOrdersbyStatus");
     }
-//segregationOfOrders
+    //segregationOfOrders
     public static String getstuckOrdersbySingleLine()
     {
         return orderProp.getProperty("order.stuckOrdersbySingleLine");
@@ -346,5 +349,15 @@ public class OrderQueries
     public static String getauthenticateUserQuery()
     {
         return orderProp.getProperty("user.authenticateUser");
+    }
+    
+    public static String getUserByUsernameForAuthentication()
+    {
+        return orderProp.getProperty("user.getUserByUsernameForAuthentication");
+    }
+    
+    public static String getSetupPasswordQuery()
+    {
+        return orderProp.getProperty("user.setupUserPassword");
     }
 }
