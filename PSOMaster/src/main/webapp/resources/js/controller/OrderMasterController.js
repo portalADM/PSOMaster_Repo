@@ -213,4 +213,67 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 			);
 	}
 	
+	$scope.getInventoryStatusDetails = function(){
+		getInventoryStatusDetails($scope.skuIDInvSearch);
+	}
+	
+	$scope.getInventory = function(){
+		$("#inventoryDetail-modal").modal();
+	}
+	
+	
+	/*
+	 * Method that calls Order Service to get Ensemble Order Details 
+	 */
+	function getInventoryStatusDetails(skuID){
+		$scope.inventoryStatusDetails = [];
+		OrderService.getInventoryStatusDetails(skuID).then(
+				function(response) {
+					if(response.errorCode==0){
+						$scope.inventoryStatusDetails = response;
+					}
+					else if(response.errorCode==1)
+						MessageService.showInfo('No Inventory details found',5000);
+					else if(response.errorCode==-1)
+						MessageService.showError(response.errorMsg,5000);
+	       		},
+		        function(errResponse){
+	       			MessageService.showError(errResponse,5000);
+		        }
+		);
+		
+	}
+	
+	$scope.getNameDetails = function(){
+		getNameDetails($scope.esnNameSearch);
+	}
+	
+	$scope.getName = function(){
+		$("#nameDetail-modal").modal();
+	}
+	
+	
+	/*
+	 * Method that calls Order Service to get Ensemble Order Details 
+	 */
+	function getNameDetails(esn){
+		$scope.nameDetails = [];
+		OrderService.getNameDetails(esn).then(
+				function(response) {
+					if(response.errorCode==0){
+						$scope.nameDetails = response;
+					}
+					else if(response.errorCode==1)
+						MessageService.showInfo('No Name details found',5000);
+					else if(response.errorCode==-1)
+						MessageService.showError(response.errorMsg,5000);
+	       		},
+		        function(errResponse){
+	       			MessageService.showError(errResponse,5000);
+		        }
+		);
+		
+	}
+	
+	
 });

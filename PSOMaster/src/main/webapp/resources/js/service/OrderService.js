@@ -129,4 +129,40 @@ module.service('OrderService', function($http,$q) {
 		);
 	}
 	
+	
+	/*
+	 *Service Method that will fetch Inventory Details  
+	 * 
+	 */
+	this.getInventoryStatusDetails = function(skuID){
+		
+		return $http.get('getInventoryStatusDetails/'+skuID)
+		.then(
+				function(response){
+					return response.data;
+				}, 
+				function(errResponse){
+					return $q.reject(errResponse);
+				}
+		);
+	}
+	
+	
+	/*
+	 *Service Method that will fetch Inventory Details  
+	 * 
+	 */
+	this.getNameDetails = function(esn){
+		
+		return $http.get('getESNReuseData/'+esn)
+		.then(
+				function(response){
+					return response.data;
+				}, 
+				function(errResponse){
+					return $q.reject(errResponse);
+				}
+		);
+	}
+	
 });

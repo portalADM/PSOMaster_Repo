@@ -34,6 +34,11 @@
 								<!-- <a href="#sendEmail"><span tooltip-placement="bottom" uib-tooltip="Send Email" class="glyphicon glyphicon-envelope floatRight panelHeaderIcon" aria-hidden="true"></a> -->
 								</span> 
 								<a class="cursorPointer" ng-click="getHelp()"><span tooltip-placement="bottom" uib-tooltip="Help" class="glyphicon glyphicon-info-sign floatRight panelHeaderIcon" aria-hidden="true"></span></a>
+								
+								<a class="cursorPointer" ng-click="getInventory()"><span tooltip-placement="bottom" uib-tooltip="Check Inventory" class="glyphicon glyphicon glyphicon-search floatRight panelHeaderIcon" aria-hidden="true"></span></a>
+								
+								<a class="cursorPointer" ng-click="getName()"><span tooltip-placement="bottom" uib-tooltip="Check Name using SIM/IMEI" class="glyphicon glyphicon-modal-window floatRight panelHeaderIcon" aria-hidden="true"></span></a>
+								
 						</h3>
 					</div>
 
@@ -516,6 +521,82 @@
 				</div>
 			</div>
 			<!-- Order Help Popup Panel start -->
+			
+			<!-- Order Inventory status Popup start -->
+			<div id="inventoryDetail-modal" class="modal fade">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<h4 class="modal-title">Inventory Status!</h4>
+						</div>
+						<div class="modal-body ">
+							<input type="input" ng-model="skuIDInvSearch" place-holder="SKU ID"/>
+							<button type="button" ng-click="getInventoryStatusDetails()"> Search!</button>
+							<div class="row">
+									 	<table class="table table-striped table-hover ">
+											<thead>
+												<tr>
+													<th>Display Name</th>
+													<th>Avail Status</th>
+													<th>Stock Level</th>
+													<th>Stock Thresh</th>
+													<th>Stock Status</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>{{inventoryStatusDetails.displayName}}</td>
+													<td>{{inventoryStatusDetails.availStatus}}</td>
+													<td>{{inventoryStatusDetails.stockLevel}}</td>
+													<td>{{inventoryStatusDetails.stockThresh}}</td>
+													<td>{{inventoryStatusDetails.stockStatus}}</td>
+												</tr>
+											</tbody>
+										</table>
+									 </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Order Inventory status Popup End -->
+			
+			<!-- Customer Name details Popup start -->
+			<div id="nameDetail-modal" class="modal fade">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<h4 class="modal-title">Name Details!</h4>
+						</div>
+						<div class="modal-body ">
+							<input type="input" ng-model="esnNameSearch" place-holder="SIM/IMEI"/>
+							<button type="button" ng-click="getNameDetails()"> Search!</button>
+							<div class="row">
+									 	<table class="table table-striped table-hover ">
+											<thead>
+												<tr>
+													<th>First Name</th>
+													<th>last Name</th>
+													<th>Customer Id</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>{{nameDetails.firstName}}</td>
+													<td>{{nameDetails.lastName}}</td>
+													<td>{{nameDetails.custId}}</td>
+												</tr>
+											</tbody>
+										</table>
+									 </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Customer Name details Popup End -->
 			
 			
 			<!-- Order Help Popup Panel start -->
