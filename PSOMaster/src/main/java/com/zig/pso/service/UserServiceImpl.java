@@ -110,7 +110,7 @@ public class UserServiceImpl implements IUserService
     @Override
     public BaseResponseBean registerUser(UserMaster user)
     {
-        user.setPassword(PSOUserAuthenticator.getHashedPassword(user.getPassword()));
+        //user.setPassword(PSOUserAuthenticator.getHashedPassword(user.getPassword()));
         return userDAO.registerUser(user);
     }
 
@@ -145,7 +145,7 @@ public class UserServiceImpl implements IUserService
      * @see com.zig.pso.service.IUserService#createUserAssignments(com.zig.pso.rest.bean.UserMaster)
      */
     @Override
-    public BaseResponseBean createUserAssignments(UserMaster userData)
+    public BaseResponseBean createUserAssignments(UserMaster userData,String urlToSetupPassword)
     {
         String tempPassword = CommonUtility.getTempPasswordForUsers();
         
@@ -155,7 +155,7 @@ public class UserServiceImpl implements IUserService
         if(response.getErrorCode()==PSOConstants.SUCCESS_CODE)
         {
             /* Send Email for Password setup */
-            Mail emailData = getEmailTemlateForSetupPassword(userData);
+            Mail emailData = getEmailTemlateForSetupPassword(userData,urlToSetupPassword);
             emailService.sendEmail(emailData);
             
             return userDAO.deletePendingUserRequest(userData.getEmpId());
@@ -194,14 +194,14 @@ public class UserServiceImpl implements IUserService
      * @see com.zig.pso.service.IUserService#setupPasswordForUser(com.zig.pso.rest.bean.UserMaster)
      */
     @Override
-    public BaseResponseBean setupPasswordForUser(SetupUserPasswordRequestBean userPassword,String urlToSetupPassword)
+    public BaseResponseBean setupPasswordForUser(SetupUserPasswordRequestBean userPassword)
     {
         String hashedPassword = PSOUserAuthenticator.getHashedPassword(userPassword.getPassword());
         userPassword.setPassword(hashedPassword);
         return userDAO.setupPasswordForUser(userPassword);
     }
     
-    public Mail getEmailTemlateForSetupPassword(UserMaster user)
+    public Mail getEmailTemlateForSetupPassword(UserMaster user,String urlToSetupPassword)
     {
         String emailContent = PSOConstants.SETUP_PASSWORD_EMAIL_CONTENT;
         
@@ -209,7 +209,7 @@ public class UserServiceImpl implements IUserService
         .replace("#EMP_ID#", user.getEmpId())
         .replace("#EMAIL_ID#", user.getEmail())
         .replace("#TEMP_PASSWORD#", user.getTempPassword())
-        .replace("#SETUP_PASSWORD_URL#", PSOConstants.PSO_SETUP_PASSWORD_URL);
+        .replace("#SETUP_PASSWORD_URL#", urlToSetupPassword);
         
         
         

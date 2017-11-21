@@ -3,6 +3,9 @@
  * Description: This class implements methods for order related operations. 
  * Author : Ankita Mishra 
  * Date : Jun 26, 2016
+  --------------------------------
+ * Modified by : Pankaj Chaudhary
+ * Date : Nov 21, 2017 
  * **********************************************************************************************************
  */
 package com.zig.pso.dao;
@@ -21,6 +24,8 @@ import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderPortRequestBean;
 import com.zig.pso.rest.bean.EnsembleLineItemInfoBean;
+import com.zig.pso.rest.bean.InventoryStatusofItemBean;
+import com.zig.pso.rest.bean.NameDataBean;
 import com.zig.pso.rest.bean.OrderAPIDetailsBean;
 import com.zig.pso.rest.bean.PortalEnrollmentInfo;
 import com.zig.pso.rest.bean.PortalLineItemInfoBean;
@@ -841,8 +846,6 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
         }
 
-        
-
         return enrollInfo;
     }
 
@@ -1430,4 +1433,270 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         
         return statusList;
     }
+	
+	
+	public InventoryStatusofItemBean getInventoryStatus(String skuId){
+		
+		PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getInventoryStatus", "SKU ID : " + skuId);
+		
+		InventoryStatusofItemBean inventoryDetails = null;
+		
+		 String sql = OrderQueries.getInventoryStatus();
+		 String sql1 = OrderQueries.getUpholdLevel();
+	        
+	        PreparedStatement pstm = null;
+	        PreparedStatement pstm1 = null;
+	        ResultSet rs = null;
+	        ResultSet rs1 = null;
+	        Connection con = this.getPortalDbConnction();
+	        
+	        try
+	        {
+	        	inventoryDetails = new InventoryStatusofItemBean();
+
+	            pstm = con.prepareStatement(sql);
+	            pstm.setString(1, skuId);
+	            rs = pstm.executeQuery();
+	            while (rs.next())
+	            {
+	            	inventoryDetails.setDisplayName(rs.getString("DISPLAY_NAME"));
+	            	inventoryDetails.setAvailStatus(rs.getString("AVAIL_STATUS"));
+	            	inventoryDetails.setStockLevel(rs.getString("STOCK_LEVEL"));
+	            	inventoryDetails.setStockThresh(rs.getString("STOCK_THRESH"));
+	            }
+	            
+	            pstm1 = con.prepareStatement(sql1);
+	            pstm1.setString(1, skuId);
+	            rs1 = pstm1.executeQuery();
+	            while (rs1.next())
+	            {
+	            	//inventoryDetails.setStockStatus(rs1.getString("UPHOLD_LEVEL"));
+	            	if (null!=rs1.getString("UPHOLD_LEVEL")){
+	            	int stockFlag=Integer.parseInt(inventoryDetails.getStockLevel())-Integer.parseInt(inventoryDetails.getStockThresh())-Integer.parseInt(rs1.getString("UPHOLD_LEVEL"));
+	            	if(stockFlag>0){
+	            		inventoryDetails.setStockStatus("SKU is in Stock");
+	            	}else{
+	            		inventoryDetails.setStockStatus("SKU is Out of Stock");
+	            	}
+	            	}
+	            }
+	            
+	            
+	            
+	            
+	        }
+	        catch (SQLException e)
+	        {
+	        	inventoryDetails.setErrorCode(PSOConstants.ERROR_CODE);
+	        	inventoryDetails.setErrorMsg(e.getMessage());
+	            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getInventoryStatus", e);
+	        }
+	        finally
+	        {
+	            if (con != null)
+	            {
+	                try
+	                {
+	                    con.close();
+	                }
+	                catch (SQLException e)
+	                {
+	                    PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getInventoryStatus", e);
+	                }
+	            }
+	            if (pstm != null)
+	            {
+	                try
+	                {
+	                    pstm.close();
+	                }
+	                catch (SQLException e)
+	                {
+	                    PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getInventoryStatus", e);
+	                }
+	            }
+	            if (rs != null)
+	            {
+	                try
+	                {
+	                    rs.close();
+	                }
+	                catch (SQLException e)
+	                {
+	                    PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getInventoryStatus", e);
+	                }
+	            }
+	            
+	            if (pstm1 != null)
+	            {
+	                try
+	                {
+	                    pstm1.close();
+	                }
+	                catch (SQLException e)
+	                {
+	                    PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getInventoryStatus", e);
+	                }
+	            }
+	            if (rs1 != null)
+	            {
+	                try
+	                {
+	                    rs1.close();
+	                }
+	                catch (SQLException e)
+	                {
+	                    PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getInventoryStatus", e);
+	                }
+	            }
+	        }
+	        
+		return inventoryDetails;
+		
+	}
+	
+public NameDataBean getESNReuseData(String ESN){
+		
+		PSOLoggerSrv.printDEBUG("OrderInfoManagerDAOImpl", "getESNReuseData", "ESN:" + ESN);
+		
+		NameDataBean nameData = null;
+		
+		 String sql = OrderQueries.getESNReuseData();
+	     String sql1="select name_id from address_name_link where CUSTOMER_ID=?" ; 
+	     String sql2="select FIRST_NAME,LAST_BUSINESS_NAME from NAME_DATA where name_id=?" ; 
+	        PreparedStatement pstm = null;
+	        PreparedStatement pstm1 = null;
+	        PreparedStatement pstm2 = null;
+	        ResultSet rs = null;
+	        ResultSet rs1 = null;
+	        ResultSet rs2 = null;
+	        Connection con = this.getENSDbConnction();
+	        
+	        try
+	        {
+	        	nameData = new NameDataBean();
+	            pstm = con.prepareStatement(sql);
+	            pstm.setString(1, ESN);
+	            rs = pstm.executeQuery();
+	            while (rs.next())
+	            {
+	            	nameData.setCustId(rs.getString("customer_id"));
+	            	
+	            }
+	            
+	            pstm1=con.prepareStatement(sql1);
+	            if (null!=nameData.getCustId()) {
+	            	 pstm1.setString(1, nameData.getCustId());
+	 	             rs1=pstm1.executeQuery();
+				}
+	            while (rs1.next())
+	            {
+	            	nameData.setNameId(rs1.getString("name_id"));
+	            	break;
+	            }
+	            
+	            pstm2=con.prepareStatement(sql2);
+	            if (null!=nameData.getNameId()) {
+	            	 pstm2.setString(1, nameData.getNameId());
+	 	             rs2=pstm2.executeQuery();
+				}
+	            while (rs2.next())
+	            {
+	            	nameData.setFirstName(rs2.getString("FIRST_NAME"));
+	            	nameData.setLastName(rs2.getString("LAST_BUSINESS_NAME"));
+	            }
+	            
+	        }
+	        catch (SQLException e)
+	        {
+	        	nameData.setErrorCode(PSOConstants.ERROR_CODE);
+	        	nameData.setErrorMsg(e.getMessage());
+	            PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getInventoryStatus", e);
+	        }
+	        finally
+	        {
+	            if (con != null)
+	            {
+	                try
+	                {
+	                    con.close();
+	                }
+	                catch (SQLException e)
+	                {
+	                    PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getESNReuseData", e);
+	                }
+	            }
+	            if (pstm != null)
+	            {
+	                try
+	                {
+	                    pstm.close();
+	                }
+	                catch (SQLException e)
+	                {
+	                    PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getESNReuseData", e);
+	                }
+	            }
+	            if (pstm1 != null)
+	            {
+	                try
+	                {
+	                    pstm1.close();
+	                }
+	                catch (SQLException e)
+	                {
+	                    PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getESNReuseData", e);
+	                }
+	            }
+	            if (pstm2 != null)
+	            {
+	                try
+	                {
+	                    pstm2.close();
+	                }
+	                catch (SQLException e)
+	                {
+	                    PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getESNReuseData", e);
+	                }
+	            }
+	            if (rs != null)
+	            {
+	                try
+	                {
+	                    rs.close();
+	                }
+	                catch (SQLException e)
+	                {
+	                    PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getESNReuseData", e);
+	                }
+	            }
+	            
+	            if (rs1 != null)
+	            {
+	                try
+	                {
+	                    rs1.close();
+	                }
+	                catch (SQLException e)
+	                {
+	                    PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getESNReuseData", e);
+	                }
+	            }
+	            if (rs2 != null)
+	            {
+	                try
+	                {
+	                    rs2.close();
+	                }
+	                catch (SQLException e)
+	                {
+	                    PSOLoggerSrv.printERROR("OrderInfoManagerDAOImpl", "getESNReuseData", e);
+	                }
+	            }
+	        }
+	        
+		return nameData;
+		
+	}
+	
 }

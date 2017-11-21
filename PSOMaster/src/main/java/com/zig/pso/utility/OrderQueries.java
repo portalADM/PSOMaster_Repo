@@ -4,6 +4,9 @@
  * 
  * Author : Nilesh Patil 
  * Date : Jun 26, 2016 
+ ---------------------------------
+ * Modified by : Pankaj Chaudhary
+ * Date : Nov 21, 2017 
  * **********************************************************************************************************
  */
 package com.zig.pso.utility;
@@ -359,5 +362,18 @@ public class OrderQueries
     public static String getSetupPasswordQuery()
     {
         return orderProp.getProperty("user.setupUserPassword");
+    }
+     public static String getInventoryStatus()
+    {
+        return orderProp.getProperty("order.getInventoryStatus");
+    }
+    
+    public static String getESNReuseData()
+    {
+        return orderProp.getProperty("order.getESNReuseData");
+    }
+     public static String getUpholdLevel()
+    {
+        return orderProp.getProperty("order.getUpholdLevel");
     }
 }

@@ -19,6 +19,8 @@ import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderPortRequestBean;
 import com.zig.pso.rest.bean.EnsembleLineItemInfoBean;
+import com.zig.pso.rest.bean.InventoryStatusofItemBean;
+import com.zig.pso.rest.bean.NameDataBean;
 import com.zig.pso.rest.bean.OrderPortInDetailsResponseBean;
 import com.zig.pso.rest.bean.PortalEnrollmentInfo;
 import com.zig.pso.rest.bean.PortalLineItemInfoBean;
@@ -332,5 +334,23 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
 	@Override
 	public ArrayList<String> getOrderStatusList() {
 		return orderDAO.getOrderStatusList();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.zig.pso.service.OrderInfoManagerService#getInventoryStatusDetails(java.lang.String)
+	 */
+	@Override
+	public InventoryStatusofItemBean getInventoryStatusDetails(String skuId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.zig.pso.service.OrderInfoManagerService#getESNReuseData(java.lang.String)
+	 */
+	@Override
+	public NameDataBean getESNReuseData(String esn) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -3,6 +3,9 @@
  * Description: This interface contains methods for order related operations. 
  * Author : Ankita Mishra 
  * Date : Jun 26, 2016 
+  --------------------------------
+ * Modified by : Pankaj Chaudhary
+ * Date : Nov 21, 2017 
  * **********************************************************************************************************
  */
 package com.zig.pso.service;
@@ -11,6 +14,8 @@ import java.util.ArrayList;
 
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
+import com.zig.pso.rest.bean.InventoryStatusofItemBean;
+import com.zig.pso.rest.bean.NameDataBean;
 import com.zig.pso.rest.bean.OrderPortInDetailsResponseBean;
 import com.zig.pso.rest.bean.PortalOrderLineSIMandIMEIDetailsBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
@@ -60,4 +65,8 @@ public interface OrderInfoManagerService
     
     
     public ArrayList<String> getOrderStatusList();
+    
+    public InventoryStatusofItemBean getInventoryStatusDetails(String skuId);
+    
+    public NameDataBean getESNReuseData(String esn);
 }

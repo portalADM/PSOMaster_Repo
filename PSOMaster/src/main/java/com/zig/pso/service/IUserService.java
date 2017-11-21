@@ -38,11 +38,11 @@ public interface IUserService
     
     public UserMaster getUserDetailsByEmpId(String employeeId);
     
-    public BaseResponseBean createUserAssignments(UserMaster userData);
+    public BaseResponseBean createUserAssignments(UserMaster userData,String urlForSetupPassword);
     
     public BaseResponseBean updateUserAssignments(UserMaster userData);
     
     public ArrayList<UserMaster> getUserList(UserSearchRequestBean userSearchReq);
     
-    public BaseResponseBean setupPasswordForUser(SetupUserPasswordRequestBean userPassword, String urlForSetupPassword);
+    public BaseResponseBean setupPasswordForUser(SetupUserPasswordRequestBean userPassword);
 }

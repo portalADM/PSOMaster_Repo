@@ -827,10 +827,10 @@ public class UserDAOImpl implements UserDAO
         {
             pstm = con.prepareStatement(sql);
             pstm.setString(1, userPassword.getPassword());
-            pstm.setString(2, userPassword.getEmpId());
-            pstm.setString(3, userPassword.getEmailId());
-            pstm.setString(4, userPassword.getTempPassword());
-            pstm.setString(5, PSOConstants.USER_ACTIVE);
+            pstm.setString(2, PSOConstants.USER_ACTIVE);
+            pstm.setString(3, userPassword.getEmpId());
+            pstm.setString(4, userPassword.getEmailId());
+            pstm.setString(5, userPassword.getTempPassword());
             int i = pstm.executeUpdate();
             if (i < 1)
             {

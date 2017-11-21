@@ -3,6 +3,9 @@
  * Description: This class is serving REST calls for Order Master Page.
  * Author : Ankita Mishra 
  * Date : Jun 29, 2016
+  --------------------------------
+ * Modified by : Pankaj Chaudhary
+ * Date : Nov 21, 2017 
  * **********************************************************************************************************
  */
 package com.zig.pso.rest.controller;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
+import com.zig.pso.rest.bean.InventoryStatusofItemBean;
+import com.zig.pso.rest.bean.NameDataBean;
 import com.zig.pso.rest.bean.OrderPortInDetailsResponseBean;
 import com.zig.pso.rest.bean.PortalOrderLineSIMandIMEIDetailsBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
@@ -127,5 +132,31 @@ public class OrderMasterController
         ArrayList<String> orderStatusList = orderService.getOrderStatusList();
         return new ResponseEntity<ArrayList<String>>(orderStatusList, HttpStatus.OK);
     }
+    
+    
+    /**
+     * This Method provides the Inventory details of Particular sku.
+     */
+    @RequestMapping(value="/getInventoryStatusDetails/{skuId}", method = RequestMethod.GET)
+    public ResponseEntity<InventoryStatusofItemBean> getInventoryStatusDetails(@PathVariable("skuId") String skuId)
+    {
+        PSOLoggerSrv.printDEBUG("OrderMasterController", "getInventoryStatusDetails", null);
+        InventoryStatusofItemBean details = new InventoryStatusofItemBean();
+        details=orderService.getInventoryStatusDetails(skuId);
+        return new ResponseEntity<InventoryStatusofItemBean>(details, HttpStatus.OK);
+    }
 
+    
+    /**
+     * This Method provides the Name details of Particular ESN if any.
+     */
+    @RequestMapping(value="/getESNReuseData/{esn}", method = RequestMethod.GET)
+    public ResponseEntity<NameDataBean> getESNReuseData(@PathVariable("esn") String esn)
+    {
+        PSOLoggerSrv.printDEBUG("OrderMasterController", "getESNReuseData", null);
+        NameDataBean details = new NameDataBean();
+        details=orderService.getESNReuseData(esn);
+        return new ResponseEntity<NameDataBean>(details, HttpStatus.OK);
+    }
+    
 }

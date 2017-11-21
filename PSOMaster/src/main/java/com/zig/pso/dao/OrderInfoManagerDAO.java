@@ -3,6 +3,9 @@
  * Description: This interface provides methods for order related operations. 
  * Author : Nilesh Patil 
  * Date : Jun 26, 2016 
+  --------------------------------
+ * Modified by : Pankaj Chaudhary
+ * Date : Nov 21, 2017 
  * **********************************************************************************************************
  */
 package com.zig.pso.dao;
@@ -13,6 +16,8 @@ import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderPortRequestBean;
 import com.zig.pso.rest.bean.EnsembleLineItemInfoBean;
+import com.zig.pso.rest.bean.InventoryStatusofItemBean;
+import com.zig.pso.rest.bean.NameDataBean;
 import com.zig.pso.rest.bean.PortalEnrollmentInfo;
 import com.zig.pso.rest.bean.PortalLineItemInfoBean;
 import com.zig.pso.rest.bean.PortalOrderMasterResponseBean;
@@ -41,6 +46,10 @@ public interface OrderInfoManagerDAO
     public PortalEnrollmentInfo getOrderEnrollmentInfo(String orderId);
 
     public PortalOrderMasterResponseBean getCustomerBANandCTN(String orderId);
+    
+    public InventoryStatusofItemBean getInventoryStatus(String skuId);
+    
+    public NameDataBean getESNReuseData(String esn);
 
     public String getOrderTypeFromExtraOrder(String orderId);
     

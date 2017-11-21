@@ -113,13 +113,29 @@ public class UserController
      * This Method will add User Assignment
      */
     @RequestMapping(value = "/createUserAssigments", method = RequestMethod.POST)
-    public ResponseEntity<BaseResponseBean> createUserAssigments(@RequestBody UserMaster user)
+    public ResponseEntity<BaseResponseBean> createUserAssigments(@RequestBody UserMaster user,HttpServletRequest request)
     {
        /* String updateDetails = "Order ID : "+updateOrderRequest.getOrderId()+" \nNew Value : "+updateOrderRequest.getNewValue()+" \nUpdate Type : "+updateOrderRequest.getType()+" \nLine Id : "+updateOrderRequest.getLineId();
         PSOLoggerSrv.printDEBUG("UpdateOrderController", "updateSingleOrder", updateDetails);*/
+    	
+    	  String urlForSetupPassword = StringUtils.EMPTY;
+          
+          try
+          {
+              StringBuffer asdasd = request.getRequestURL();
+              String protocolName = asdasd.substring(0, asdasd.indexOf(":"));
+              String hostName = java.net.InetAddress.getLocalHost().getHostName();
+              String contextPathName = request.getContextPath();
+              urlForSetupPassword = protocolName+"://"+hostName+":"+request.getServerPort()+contextPathName+"/#setupUserPassword";
+          }
+          catch (UnknownHostException e)
+          {
+              e.printStackTrace();
+          }
+          
 
         BaseResponseBean createUserAssignmentResponse = new BaseResponseBean();
-        createUserAssignmentResponse = userService.createUserAssignments(user);
+        createUserAssignmentResponse = userService.createUserAssignments(user,urlForSetupPassword);
         return new ResponseEntity<BaseResponseBean>(createUserAssignmentResponse, HttpStatus.OK);
     }
     
@@ -155,27 +171,13 @@ public class UserController
      * This Method will add get list of users list
      */
     @RequestMapping(value = "/setupPassword", method = RequestMethod.POST)
-    public ResponseEntity<BaseResponseBean> setupPassword(@RequestBody SetupUserPasswordRequestBean userPasswordSetup,HttpServletRequest request)
+    public ResponseEntity<BaseResponseBean> setupPassword(@RequestBody SetupUserPasswordRequestBean userPasswordSetup)
     {
        /* String updateDetails = "Order ID : "+updateOrderRequest.getOrderId()+" \nNew Value : "+updateOrderRequest.getNewValue()+" \nUpdate Type : "+updateOrderRequest.getType()+" \nLine Id : "+updateOrderRequest.getLineId();
         PSOLoggerSrv.printDEBUG("UpdateOrderController", "updateSingleOrder", updateDetails);*/
         
-        String urlForSetupPassword = StringUtils.EMPTY;
-        
-        try
-        {
-            StringBuffer asdasd = request.getRequestURL();
-            String protocolName = asdasd.substring(0, asdasd.indexOf(":"));
-            String hostName = java.net.InetAddress.getLocalHost().getHostName();
-            String contextPathName = request.getContextPath();
-            urlForSetupPassword = protocolName+"://"+hostName+":"+request.getServerPort()+contextPathName+"/#setupUserPassword";
-        }
-        catch (UnknownHostException e)
-        {
-            e.printStackTrace();
-        }
-        
-        BaseResponseBean response = userService.setupPasswordForUser(userPasswordSetup,urlForSetupPassword);
+      
+        BaseResponseBean response = userService.setupPasswordForUser(userPasswordSetup);
         return new ResponseEntity<BaseResponseBean>(response, HttpStatus.OK);
     }
     
