@@ -30,7 +30,6 @@ import com.zig.pso.utility.CommonUtility;
 import com.zig.pso.utility.DBConnection;
 import com.zig.pso.utility.OrderQueries;
 
-
 /**
  * 
  */
@@ -46,7 +45,7 @@ public class UserDAOImpl implements UserDAO
     {
         return DBConnection.getPortalDBConnection();
     }
-    
+
     public UserMaster getUserByUsernameForAuthentication(LoginRequestBean loginRequest)
     {
         UserMaster user = new UserMaster();
@@ -54,7 +53,7 @@ public class UserDAOImpl implements UserDAO
         PreparedStatement pstm = null;
         ResultSet rs = null;
         Connection con = this.getPortalDbConnction();
-        
+
         try
         {
             pstm = con.prepareStatement(sql);
@@ -106,11 +105,13 @@ public class UserDAOImpl implements UserDAO
                 }
             }
         }
-        
+
         return user;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.zig.pso.dao.UserDAO#addNewUserSignUpRequest(com.zig.pso.rest.bean.UserMaster)
      */
     @Override
@@ -118,12 +119,12 @@ public class UserDAOImpl implements UserDAO
     {
         BaseResponseBean newUserReq = new BaseResponseBean();
         String logRefID = CommonUtility.getLogRefID();
-        
+
         String sql = OrderQueries.addNewUserSignUpQuery();
-        
+
         PreparedStatement pstm = null;
         Connection con = this.getPortalDbConnction();
-        
+
         try
         {
             pstm = con.prepareStatement(sql);
@@ -147,15 +148,15 @@ public class UserDAOImpl implements UserDAO
                 newUserReq.setErrorMsg(PSOConstants.DATA_INSERT_SUCCESSFULL);
                 newUserReq.setLogRefId(logRefID);
             }
-            
-            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "addNewUserSignUpRequest", logRefID, sql,user, newUserReq.getErrorMsg());
+
+            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "addNewUserSignUpRequest", logRefID, sql, user, newUserReq.getErrorMsg());
         }
         catch (SQLException e)
         {
             newUserReq.setErrorCode(PSOConstants.ERROR_CODE);
             newUserReq.setErrorMsg(PSOConstants.BACKEND_ERROR);
             newUserReq.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR("UserDAOImpl", "addNewUserSignUpRequest", logRefID, sql,user, e);
+            PSOLoggerSrv.printERROR("UserDAOImpl", "addNewUserSignUpRequest", logRefID, sql, user, e);
         }
         finally
         {
@@ -186,7 +187,9 @@ public class UserDAOImpl implements UserDAO
         return newUserReq;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.zig.pso.dao.UserDAO#getUserPendingApprovalList()
      */
     @Override
@@ -197,14 +200,15 @@ public class UserDAOImpl implements UserDAO
         PreparedStatement pstm = null;
         ResultSet rs = null;
         Connection con = this.getPortalDbConnction();
-        
+
         try
         {
             pstm = con.prepareStatement(sql);
             rs = pstm.executeQuery();
             while (rs.next())
             {
-                pendingUserList.add(new UserMaster(rs.getString("EMP_ID"), rs.getString("USERNAME"), rs.getString("EMAIL"), rs.getString("FIRSTNAME"), rs.getString("LASTNAME"), rs.getString("COMPANY"),rs.getString("STATUS")));
+                pendingUserList.add(new UserMaster(rs.getString("EMP_ID"), rs.getString("USERNAME"), rs.getString("EMAIL"), rs.getString("FIRSTNAME"), rs.getString("LASTNAME"), rs
+                        .getString("COMPANY"), rs.getString("STATUS")));
             }
         }
         catch (SQLException e)
@@ -251,7 +255,9 @@ public class UserDAOImpl implements UserDAO
         return pendingUserList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.zig.pso.dao.UserDAO#rejectUser(java.lang.String)
      */
     @Override
@@ -259,12 +265,12 @@ public class UserDAOImpl implements UserDAO
     {
         BaseResponseBean rejectUserResponse = new BaseResponseBean();
         String logRefID = CommonUtility.getLogRefID();
-        
+
         String sql = OrderQueries.rejectUser();
-        
+
         PreparedStatement pstm = null;
         Connection con = this.getPortalDbConnction();
-        
+
         try
         {
             pstm = con.prepareStatement(sql);
@@ -283,15 +289,15 @@ public class UserDAOImpl implements UserDAO
                 rejectUserResponse.setErrorMsg(PSOConstants.DATA_UPDATE_SUCCESSFULL);
                 rejectUserResponse.setLogRefId(logRefID);
             }
-            
-            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "rejectUser", logRefID, sql,rejectUserreq, rejectUserResponse.getErrorMsg());
+
+            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "rejectUser", logRefID, sql, rejectUserreq, rejectUserResponse.getErrorMsg());
         }
         catch (SQLException e)
         {
             rejectUserResponse.setErrorCode(PSOConstants.ERROR_CODE);
             rejectUserResponse.setErrorMsg(PSOConstants.BACKEND_ERROR);
             rejectUserResponse.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR("UserDAOImpl", "rejectUser", logRefID, sql,rejectUserreq, e);
+            PSOLoggerSrv.printERROR("UserDAOImpl", "rejectUser", logRefID, sql, rejectUserreq, e);
         }
         finally
         {
@@ -322,7 +328,9 @@ public class UserDAOImpl implements UserDAO
         return rejectUserResponse;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.zig.pso.dao.UserDAO#getUserDataByEmpId(java.lang.String)
      */
     @Override
@@ -333,7 +341,7 @@ public class UserDAOImpl implements UserDAO
         PreparedStatement pstm = null;
         ResultSet rs = null;
         Connection con = this.getPortalDbConnction();
-        
+
         try
         {
             pstm = con.prepareStatement(sql);
@@ -394,7 +402,9 @@ public class UserDAOImpl implements UserDAO
         return userData;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.zig.pso.dao.UserDAO#createUserAssignments(com.zig.pso.rest.bean.UserMaster)
      */
     @Override
@@ -402,12 +412,12 @@ public class UserDAOImpl implements UserDAO
     {
         BaseResponseBean createUserAssignmentResponse = new BaseResponseBean();
         String logRefID = CommonUtility.getLogRefID();
-        
+
         String sql = OrderQueries.doUserAssignmentsQuery();
-        
+
         PreparedStatement pstm = null;
         Connection con = this.getPortalDbConnction();
-        
+
         try
         {
             pstm = con.prepareStatement(sql);
@@ -434,15 +444,15 @@ public class UserDAOImpl implements UserDAO
                 createUserAssignmentResponse.setErrorMsg(PSOConstants.DATA_INSERT_SUCCESSFULL);
                 createUserAssignmentResponse.setLogRefId(logRefID);
             }
-            
-            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "createUserAssignments", logRefID, sql,userData, createUserAssignmentResponse.getErrorMsg());
+
+            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "createUserAssignments", logRefID, sql, userData, createUserAssignmentResponse.getErrorMsg());
         }
         catch (SQLException e)
         {
             createUserAssignmentResponse.setErrorCode(PSOConstants.ERROR_CODE);
             createUserAssignmentResponse.setErrorMsg(PSOConstants.BACKEND_ERROR);
             createUserAssignmentResponse.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR("UserDAOImpl", "createUserAssignments", logRefID, sql,userData, e);
+            PSOLoggerSrv.printERROR("UserDAOImpl", "createUserAssignments", logRefID, sql, userData, e);
         }
         finally
         {
@@ -473,7 +483,9 @@ public class UserDAOImpl implements UserDAO
         return createUserAssignmentResponse;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.zig.pso.dao.UserDAO#updateUserAssignments(com.zig.pso.rest.bean.UserMaster)
      */
     @Override
@@ -481,12 +493,12 @@ public class UserDAOImpl implements UserDAO
     {
         BaseResponseBean updateUserAssignmentResponse = new BaseResponseBean();
         String logRefID = CommonUtility.getLogRefID();
-        
+
         String sql = OrderQueries.updateUserAssignmentsQuery();
-        
+
         PreparedStatement pstm = null;
         Connection con = this.getPortalDbConnction();
-        
+
         try
         {
             pstm = con.prepareStatement(sql);
@@ -510,15 +522,15 @@ public class UserDAOImpl implements UserDAO
                 updateUserAssignmentResponse.setErrorMsg(PSOConstants.DATA_INSERT_SUCCESSFULL);
                 updateUserAssignmentResponse.setLogRefId(logRefID);
             }
-            
-            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "updateUserAssignments", logRefID, sql,userData, updateUserAssignmentResponse.getErrorMsg());
+
+            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "updateUserAssignments", logRefID, sql, userData, updateUserAssignmentResponse.getErrorMsg());
         }
         catch (SQLException e)
         {
             updateUserAssignmentResponse.setErrorCode(PSOConstants.ERROR_CODE);
             updateUserAssignmentResponse.setErrorMsg(PSOConstants.BACKEND_ERROR);
             updateUserAssignmentResponse.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR("UserDAOImpl", "updateUserAssignments", logRefID, sql,userData, e);
+            PSOLoggerSrv.printERROR("UserDAOImpl", "updateUserAssignments", logRefID, sql, userData, e);
         }
         finally
         {
@@ -549,7 +561,9 @@ public class UserDAOImpl implements UserDAO
         return updateUserAssignmentResponse;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.zig.pso.dao.UserDAO#getUserList()
      */
     @Override
@@ -557,52 +571,58 @@ public class UserDAOImpl implements UserDAO
     {
         ArrayList<UserMaster> userList = new ArrayList<UserMaster>();
         StringBuilder sql = new StringBuilder(OrderQueries.getUserListQuery());
-        
+
         List<String> colList = new ArrayList<String>();
-        if(StringUtils.isNotEmpty(userSearchReq.getCompany())){
+        if (StringUtils.isNotEmpty(userSearchReq.getCompany()))
+        {
             colList.add("A.COMPANY");
         }
-        if(StringUtils.isNotEmpty(userSearchReq.getEmpId())){
+        if (StringUtils.isNotEmpty(userSearchReq.getEmpId()))
+        {
             colList.add("A.EMP_ID");
         }
-        if(userSearchReq.getGroupId()!=0){
+        if (userSearchReq.getGroupId() != 0)
+        {
             colList.add("A.GROUP_ID");
         }
-        if(userSearchReq.getRoleId()!=0){
+        if (userSearchReq.getRoleId() != 0)
+        {
             colList.add("C.ROLE_ID");
         }
-        
+
         StringBuilder whereClause = new StringBuilder(" ");
-        for(String s : colList){
+        for (String s : colList)
+        {
             whereClause.append(" AND ");
             whereClause.append(s);
             whereClause.append(" = ?");
         }
         sql.append(whereClause);
-        
+
         PreparedStatement pstm = null;
         ResultSet rs = null;
         Connection con = this.getPortalDbConnction();
-        
+
         UserMaster user = null;
-        
+
         try
         {
             pstm = con.prepareStatement(sql.toString());
             int paramPos = 1;
-            for(String s : colList){
-                if(s.equals("A.COMPANY"))
-                        pstm.setString(paramPos, userSearchReq.getCompany());
-                if(s.equals("A.EMP_ID"))
+            for (String s : colList)
+            {
+                if (s.equals("A.COMPANY"))
+                    pstm.setString(paramPos, userSearchReq.getCompany());
+                if (s.equals("A.EMP_ID"))
                     pstm.setString(paramPos, userSearchReq.getEmpId());
-                if(s.equals("A.GROUP_ID"))
+                if (s.equals("A.GROUP_ID"))
                     pstm.setInt(paramPos, userSearchReq.getGroupId());
-                if(s.equals("C.ROLE_ID"))
+                if (s.equals("C.ROLE_ID"))
                     pstm.setInt(paramPos, userSearchReq.getRoleId());
-                
+
                 paramPos++;
             }
-            
+
             rs = pstm.executeQuery();
             while (rs.next())
             {
@@ -664,7 +684,9 @@ public class UserDAOImpl implements UserDAO
         return userList;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.zig.pso.dao.UserDAO#getUserDetailsByEmpId(java.lang.String)
      */
     @Override
@@ -675,7 +697,7 @@ public class UserDAOImpl implements UserDAO
         PreparedStatement pstm = null;
         ResultSet rs = null;
         Connection con = this.getPortalDbConnction();
-        
+
         try
         {
             pstm = con.prepareStatement(sql);
@@ -739,7 +761,9 @@ public class UserDAOImpl implements UserDAO
         return user;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.zig.pso.dao.UserDAO#deletePendingUserRequest(java.lang.String)
      */
     @Override
@@ -747,12 +771,12 @@ public class UserDAOImpl implements UserDAO
     {
         BaseResponseBean deletePendingUserResponse = new BaseResponseBean();
         String logRefID = CommonUtility.getLogRefID();
-        
+
         String sql = OrderQueries.getDeletePendingUserReqQuery();
-        
+
         PreparedStatement pstm = null;
         Connection con = this.getPortalDbConnction();
-        
+
         try
         {
             pstm = con.prepareStatement(sql);
@@ -770,15 +794,15 @@ public class UserDAOImpl implements UserDAO
                 deletePendingUserResponse.setErrorMsg(PSOConstants.DATA_UPDATE_SUCCESSFULL);
                 deletePendingUserResponse.setLogRefId(logRefID);
             }
-            
-            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "deletePendingUserRequest", logRefID, sql,employeeId, deletePendingUserResponse.getErrorMsg());
+
+            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "deletePendingUserRequest", logRefID, sql, employeeId, deletePendingUserResponse.getErrorMsg());
         }
         catch (SQLException e)
         {
             deletePendingUserResponse.setErrorCode(PSOConstants.ERROR_CODE);
             deletePendingUserResponse.setErrorMsg(PSOConstants.BACKEND_ERROR);
             deletePendingUserResponse.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR("UserDAOImpl", "deletePendingUserRequest", logRefID, sql,employeeId, e);
+            PSOLoggerSrv.printERROR("UserDAOImpl", "deletePendingUserRequest", logRefID, sql, employeeId, e);
         }
         finally
         {
@@ -809,7 +833,9 @@ public class UserDAOImpl implements UserDAO
         return deletePendingUserResponse;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.zig.pso.dao.UserDAO#setupPasswordForUser(java.lang.String, java.lang.String)
      */
     @Override
@@ -817,12 +843,12 @@ public class UserDAOImpl implements UserDAO
     {
         BaseResponseBean setupUserPasswordResponse = new BaseResponseBean();
         String logRefID = CommonUtility.getLogRefID();
-        
+
         String sql = OrderQueries.getSetupPasswordQuery();
-        
+
         PreparedStatement pstm = null;
         Connection con = this.getPortalDbConnction();
-        
+
         try
         {
             pstm = con.prepareStatement(sql);
@@ -844,15 +870,16 @@ public class UserDAOImpl implements UserDAO
                 setupUserPasswordResponse.setErrorMsg(PSOConstants.USER_PASSWORD_SETUP_SUCCESSFULL);
                 setupUserPasswordResponse.setLogRefId(logRefID);
             }
-            
-            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "setupPasswordForUser", logRefID, sql, "Emp ID : "+userPassword.getEmpId()+", Email ID : "+userPassword.getEmailId(), setupUserPasswordResponse.getErrorMsg());
+
+            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "setupPasswordForUser", logRefID, sql, "Emp ID : " + userPassword.getEmpId() + ", Email ID : " + userPassword.getEmailId(),
+                    setupUserPasswordResponse.getErrorMsg());
         }
         catch (SQLException e)
         {
             setupUserPasswordResponse.setErrorCode(PSOConstants.ERROR_CODE);
             setupUserPasswordResponse.setErrorMsg(PSOConstants.BACKEND_ERROR);
             setupUserPasswordResponse.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR("UserDAOImpl", "setupPasswordForUser", logRefID, sql,"Emp ID : "+userPassword.getEmpId()+", Email ID : "+userPassword.getEmailId(), e);
+            PSOLoggerSrv.printERROR("UserDAOImpl", "setupPasswordForUser", logRefID, sql, "Emp ID : " + userPassword.getEmpId() + ", Email ID : " + userPassword.getEmailId(), e);
         }
         finally
         {
@@ -879,10 +906,215 @@ public class UserDAOImpl implements UserDAO
                 }
             }
         }
-        
+
         return setupUserPasswordResponse;
     }
-    
-    
+
+    public BaseResponseBean checkUsername(String userName)
+    {
+        BaseResponseBean user = new BaseResponseBean();
+        String sql = OrderQueries.getCheckUsername();
+        ResultSet rs;
+        int count;
+        rs = null;
+        count = 0;
+
+        PreparedStatement pstm = null;
+        Connection con = this.getPortalDbConnction();
+        try
+        {
+            pstm = con.prepareStatement(sql);
+            pstm.setString(1, userName);
+            rs = pstm.executeQuery();
+            while (rs.next())
+                count = rs.getInt("count");
+
+            if (count > 0)
+            {
+                user.setErrorCode(PSOConstants.ERROR_CODE);
+                user.setErrorMsg(PSOConstants.USERNAME_ALREADY_PRESENT);
+            }
+            else
+            {
+                user.setErrorCode(PSOConstants.SUCCESS_CODE);
+                user.setErrorMsg(PSOConstants.VALID_USERNAME);
+            }
+        }
+        catch (SQLException e)
+        {
+            PSOLoggerSrv.printERROR("UserDAOImpl", "getUserDetailsByEmpId", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserDetailsByEmpId", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserDetailsByEmpId", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserDetailsByEmpId", e);
+                }
+            }
+        }
+        return user;
+    }
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.dao.UserDAO#changeUserPassword(com.zig.pso.rest.bean.SetupUserPasswordRequestBean)
+     */
+    @Override
+    public BaseResponseBean changeUserPassword(SetupUserPasswordRequestBean setupuserpasswordrequestbean)
+    {
+        BaseResponseBean changeUserPasswordResponse = new BaseResponseBean();
+        String logRefID = CommonUtility.getLogRefID();
+        String sql;
+        sql = OrderQueries.getChangePasswordQuery();
+        
+        PreparedStatement pstm = null;
+        Connection con = this.getPortalDbConnction();
+        try
+        {
+            pstm = con.prepareStatement(sql);
+            pstm.setString(1, setupuserpasswordrequestbean.getPassword());
+            pstm.setString(2, setupuserpasswordrequestbean.getEmpId());
+            pstm.setString(3, setupuserpasswordrequestbean.getCurrentPassword());
+            int i = pstm.executeUpdate();
+            if(i < 1)
+            {
+                changeUserPasswordResponse.setErrorCode(PSOConstants.INFO_CODE);
+                changeUserPasswordResponse.setErrorMsg(PSOConstants.NO_DATA_UPDATED);
+                changeUserPasswordResponse.setLogRefId(logRefID);
+            } else
+            {
+                changeUserPasswordResponse.setErrorCode(PSOConstants.SUCCESS_CODE);
+                changeUserPasswordResponse.setErrorMsg(PSOConstants.USER_PASSWORD_CHANGE_SUCCESSFULL);
+                changeUserPasswordResponse.setLogRefId(logRefID);
+            }
+            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "changeUserPassword", logRefID, sql, (new StringBuilder()).append("Emp ID : ").append(setupuserpasswordrequestbean.getEmpId()).append(", Email ID : ").append(setupuserpasswordrequestbean.getEmailId()).toString(), changeUserPasswordResponse.getErrorMsg());
+
+        }
+        catch (SQLException e)
+        {
+            PSOLoggerSrv.printERROR("UserDAOImpl", "changeUserPassword", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("UserDAOImpl", "changeUserPassword", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("UserDAOImpl", "changeUserPassword", e);
+                }
+            }
+        }
+        
+        return changeUserPasswordResponse;
+    }
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.dao.UserDAO#getUserCurrentPassword(java.lang.String)
+     */
+    @Override
+    public String getUserCurrentPassword(String empId)
+    {
+        String sql;
+        ResultSet rs;
+        String currentPassword = StringUtils.EMPTY;
+        sql = OrderQueries.getCurrentPasswordQuery();
+        rs = null;
+        
+        PreparedStatement pstm = null;
+        Connection con = this.getPortalDbConnction();
+        try
+        {
+            pstm = con.prepareStatement(sql);
+            pstm.setString(1, empId);
+            rs = pstm.executeQuery();
+            while (rs.next())
+                currentPassword = rs.getString("PASSWORD");
+
+        }
+        catch (SQLException e)
+        {
+            PSOLoggerSrv.printERROR("UserDAOImpl", "getUserCurrentPassword", e);
+        }
+        finally
+        {
+            if (con != null)
+            {
+                try
+                {
+                    con.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserCurrentPassword", e);
+                }
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserCurrentPassword", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserCurrentPassword", e);
+                }
+            }
+        }
+
+        return currentPassword;
+    }
 
 }

@@ -66,6 +66,14 @@ module.config([ '$routeProvider', function($routeProvider) {
 		templateUrl : 'views/Signup.jsp',
 		controller : 'SignupController'
 	})
+	.when('/logout', {
+		templateUrl : 'views/Login.jsp',
+		controller : 'LogoutController'
+	})
+	.when('/changePassword', {
+		templateUrl : 'views/ChangePassword.jsp',
+		controller : 'ChangePasswordController'
+	})
 	.when('/setupUserPassword', {
 		templateUrl : 'views/SetupPassword.jsp',
 		controller : 'SignupController'
@@ -80,6 +88,10 @@ module.config([ '$routeProvider', function($routeProvider) {
 		redirectTo : '/login'
 	});
 } ]);
+
+/*module.config(['$httpProvider', function($httpProvider) {  
+    $httpProvider.interceptors.push('myInterceptor');
+}]);*/
 
 
 module.run(run);

@@ -129,7 +129,14 @@ public class UserServiceImpl implements IUserService
     @Override
     public BaseResponseBean rejectUser(RejectPendingUserRequest userReq)
     {
-        return userDAO.rejectUser(userReq);
+        BaseResponseBean response = userDAO.rejectUser(userReq);
+        if(response.getErrorCode() == 0)
+        {
+            Mail emailData = getEmailTemlateForRejectUser(userReq);
+            emailService.sendEmail(emailData);
+        }
+
+        return response;
     }
 
     /* (non-Javadoc)
@@ -154,11 +161,13 @@ public class UserServiceImpl implements IUserService
         BaseResponseBean response = userDAO.createUserAssignments(userData);
         if(response.getErrorCode()==PSOConstants.SUCCESS_CODE)
         {
-            /* Send Email for Password setup */
-            Mail emailData = getEmailTemlateForSetupPassword(userData,urlToSetupPassword);
-            emailService.sendEmail(emailData);
-            
-            return userDAO.deletePendingUserRequest(userData.getEmpId());
+            BaseResponseBean deletePendingReqResponse = userDAO.deletePendingUserRequest(userData.getEmpId());
+            if(deletePendingReqResponse.getErrorCode()==PSOConstants.SUCCESS_CODE)
+            {
+                /* Send Email for Password setup */
+                Mail emailData = getEmailTemlateForSetupPassword(userData,urlToSetupPassword);
+                emailService.sendEmail(emailData);
+            }
         }
         return response;
     }
@@ -205,11 +214,11 @@ public class UserServiceImpl implements IUserService
     {
         String emailContent = PSOConstants.SETUP_PASSWORD_EMAIL_CONTENT;
         
-        emailContent = emailContent.replace("#USER_NAME#", user.getFirstName() +" "+user.getLastName())
-        .replace("#EMP_ID#", user.getEmpId())
-        .replace("#EMAIL_ID#", user.getEmail())
-        .replace("#TEMP_PASSWORD#", user.getTempPassword())
-        .replace("#SETUP_PASSWORD_URL#", urlToSetupPassword);
+        emailContent = emailContent.replace(PSOConstants.EMAIL_TEMPLATE_USERNAME, user.getFirstName() +" "+user.getLastName())
+        .replace(PSOConstants.EMAIL_TEMPLATE_EMPID, user.getEmpId())
+        .replace(PSOConstants.EMAIL_TEMPLATE_EMAILID, user.getEmail())
+        .replace(PSOConstants.EMAIL_TEMPLATE_TEMP_PASSWORD, user.getTempPassword())
+        .replace(PSOConstants.EMAIL_TEMPLATE_SETUP_PW_URL, urlToSetupPassword);
         
         
         
@@ -224,4 +233,48 @@ public class UserServiceImpl implements IUserService
         
         return mail;
     }
+    
+    public Mail getEmailTemlateForRejectUser(RejectPendingUserRequest userReq)
+    {
+        String emailContent = PSOConstants.REJECT_USER_EMAIL_CONTENT;
+        UserMaster loggedInUserData = sessionBean.getLoggedInUserDetail();
+        emailContent = emailContent.replace(PSOConstants.EMAIL_TEMPLATE_USERNAME, (new StringBuilder()).append(loggedInUserData.getFirstName()).append(" ").append(loggedInUserData.getLastName()).toString()).replace("#REJECT_REASON#", userReq.getRejectComments());
+        List<String> mailList = new ArrayList<String>();
+        mailList.add(userReq.getEmailId());
+        Mail mail = new Mail();
+        mail.setMailFrom(PSOConstants.EMAIL_SEND_FROM);
+        mail.setMailTo(mailList);
+        mail.setMailSubject(PSOConstants.REJECT_USER_EMAIL_SUBJECT);
+        mail.setMailContent(emailContent);
+        return mail;
+    }
+    
+    @Override
+    public BaseResponseBean changeUserPassword(SetupUserPasswordRequestBean userPassword)
+    {
+        BaseResponseBean response = new BaseResponseBean();
+        String currentPasswordFromDB = userDAO.getUserCurrentPassword(userPassword.getEmpId());
+        if(PSOUserAuthenticator.checkIfPasswordIsSame(userPassword.getCurrentPassword(), currentPasswordFromDB))
+        {
+            userPassword.setPassword(PSOUserAuthenticator.getHashedPassword(userPassword.getPassword()));
+            userPassword.setCurrentPassword(currentPasswordFromDB);
+            return userDAO.changeUserPassword(userPassword);
+        } else
+        {
+            response.setErrorCode(PSOConstants.ERROR_CODE);
+            response.setErrorMsg(PSOConstants.CURRENT_PASSWORD_WRONG);
+            return response;
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.service.IUserService#checkUsername(java.lang.String)
+     */
+    @Override
+    public BaseResponseBean checkUsername(String userName)
+    {
+        return userDAO.checkUsername(userName);
+    }
+
+
 }

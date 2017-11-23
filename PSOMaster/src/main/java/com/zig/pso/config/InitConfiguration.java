@@ -27,16 +27,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.zig.pso.utility.PropertyReader;
+
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.zig.pso")
 @PropertySource("classpath:application.properties")
 public class InitConfiguration extends WebMvcConfigurerAdapter
 {
-
-    private static final String EMAIL_HOST = "punemail.corp.amdocs.com";
-    private static final String AUTH_FALSE = "false";
-    private static final String DEBUG_TRUE = "true";
+    private static final String EMAIL_HOST = "emailHost";
+    private static final String EMAIL_SMTP_AUTH = "emailSMTPauth";
+    private static final String MAIL_DEBUG = "false";
     private static final String TRANSPORT_PROTOCOL = "smtp";
     
     @Autowired
@@ -59,16 +60,18 @@ public class InitConfiguration extends WebMvcConfigurerAdapter
     public JavaMailSender getMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
  
-        mailSender.setHost(EMAIL_HOST);
+        Properties prop = PropertyReader.getAppProperties();
+        
+        mailSender.setHost(String.valueOf(prop.get(EMAIL_HOST)));
        /* mailSender.setPort(587);*/
         /*mailSender.setUsername("your-email");
         mailSender.setPassword("your-password");*/
  
         Properties javaMailProperties = new Properties();
         //javaMailProperties.put("mail.smtp.starttls.enable", "true");
-        javaMailProperties.put("mail.smtp.auth", AUTH_FALSE);
-        javaMailProperties.put("mail.transport.protocol", TRANSPORT_PROTOCOL);
-        javaMailProperties.put("mail.debug", DEBUG_TRUE);
+        javaMailProperties.put("mail.smtp.auth", prop.get(EMAIL_SMTP_AUTH));
+        javaMailProperties.put("mail.transport.protocol", prop.get(TRANSPORT_PROTOCOL));
+        javaMailProperties.put("mail.debug", prop.get(MAIL_DEBUG));
  
         mailSender.setJavaMailProperties(javaMailProperties);
         return mailSender;

@@ -395,7 +395,7 @@
 	              			<td>1) Click on Download Icon to download sample excel sheet.</td>
 	              		</tr>
 	              		<tr>
-	              			<td>3) Add order details in downloaded Excel sheet whichever ou want to update.</td>
+	              			<td>2) Add order details in downloaded Excel sheet whichever ou want to update.</td>
 	              		</tr>
 	              		<tr>
 	              			<td>Note : LINEID is mandatory for SIM and IMEI update.</td>

@@ -45,4 +45,9 @@ public interface IUserService
     public ArrayList<UserMaster> getUserList(UserSearchRequestBean userSearchReq);
     
     public BaseResponseBean setupPasswordForUser(SetupUserPasswordRequestBean userPassword);
+    
+    public abstract BaseResponseBean checkUsername(String s);
+
+    public abstract BaseResponseBean changeUserPassword(SetupUserPasswordRequestBean setupuserpasswordrequestbean);
+
 }

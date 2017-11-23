@@ -32,6 +32,12 @@ public class PSOUserAuthenticator
             return false;
     }
     
+    public static boolean checkIfPasswordIsSame(String password, String hashedDBPassword)
+    {
+        BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+        return bcrypt.matches(password, hashedDBPassword);
+    }
+    
     public static void main(String[] args)
     {
         System.out.println(PSOUserAuthenticator.getHashedPassword("test12345"));

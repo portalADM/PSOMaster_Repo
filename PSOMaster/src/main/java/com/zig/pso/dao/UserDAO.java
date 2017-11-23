@@ -43,4 +43,11 @@ public interface UserDAO
     public UserMaster getUserByUsernameForAuthentication(LoginRequestBean loginRequest);
     
     public BaseResponseBean setupPasswordForUser(SetupUserPasswordRequestBean userPassword);
+
+    public abstract BaseResponseBean checkUsername(String s);
+
+    public abstract BaseResponseBean changeUserPassword(SetupUserPasswordRequestBean setupuserpasswordrequestbean);
+
+    public abstract String getUserCurrentPassword(String s);
+
 }

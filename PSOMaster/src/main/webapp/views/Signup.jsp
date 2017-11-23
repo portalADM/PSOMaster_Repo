@@ -14,14 +14,27 @@
 		<div class="page-header noPadBtm">
 			<h3 id="navbar">
 				<span class="glyphicon glyphicon-user marRight8"></span>Sign Up
+				<a href="#login" tooltip-placement="bottom" uib-tooltip="Login" class="glyphicon glyphicon-chevron-left floatRight cursorPointer"></a>
 			</h3>
+			<h3 id="navbar">
+						
+					</h3>
 		</div>
 	
 	
 		<flash-message></flash-message> 
 	
 		<div class="row">
-			<form class="form-horizontal marLeft40">
+			<form class="form-horizontal marLeft40" name="signUpForm">
+				<div class="form-group">
+					<label class="col-lg-2 control-label textAlgnInit">Create Username</label>
+					<div class="col-lg-8">
+						<input type="text" class="form-control col-lg-3" ng-model="userData.username" ng-blur="checkUserName()">
+						<span class="glyphicon glyphicon-ok-circle col-lg-2 validUserIcon" ng-if="validUserName=='true' && userData.username!==''"></span>
+						<span class="glyphicon glyphicon-remove-circle col-lg-2 invalidUserIcon" ng-if="validUserName=='false' && userData.username!==''"></span>
+						<img src="resources/images/spinner.gif" class="img-fluid spinnerIcon " ng-if="validUserName=='' && userData.username!==''">
+					</div>
+				</div>
 				<div class="form-group">
 					<label class="col-lg-2 control-label textAlgnInit">First Name</label>
 					<div class="col-lg-8">
@@ -35,15 +48,16 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-2 control-label textAlgnInit">Employee / ATTUID</label>
+					<label class="col-lg-2 control-label textAlgnInit">Employee ID/ ATTUID</label>
 					<div class="col-lg-8">
-						<input type="text" class="form-control" ng-model="userData.empId">
+						<input type="text" class="form-control" ng-model="userData.empId" tooltip-placement="bottom" uib-tooltip="Your Employee ID or ATTUID" >
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-2 control-label textAlgnInit">Email ID</label>
+					<label class="col-lg-2 control-label textAlgnInit" >Email ID</label>
 					<div class="col-lg-8">
-						<input type="text" class="form-control" ng-model="userData.email">
+						<input type="text" class="form-control col-lg-3" name="signUpEmail" ng-model="userData.email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required>
+						<span class="col-lg-4"  style="color:Red" ng-show="signUpForm.signUpEmail.$dirty&&signUpForm.signUpEmail.$error.pattern">Please Enter Valid Email</span>
 					</div>
 				</div>
 				<div class="form-group">
@@ -57,12 +71,8 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-2 control-label textAlgnInit">Create Username</label>
-					<div class="col-lg-8">
-						<input type="text" class="form-control" ng-model="userData.username">
+					<div class="col-lg-2">
 					</div>
-				</div>
-				<div class="form-group">
 					<div class="col-lg-2">
 						<button type="button" ng-disabled="isSignUpSuccess" class="btn btn-primary btn-block btn-large" ng-click="signUp()">Sign Up</button>
 					</div>

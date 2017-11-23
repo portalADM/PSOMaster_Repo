@@ -159,5 +159,28 @@ module.service('UserService', function($http,$q) {
 		
 	}
 
+	
+	/*
+	 * Service Method that will change User password
+	 */
+	this.changeUserPassword = function(userData){
+		
+		return $http({
+			method : "POST",
+			url : "changePassword",
+			data : userData
+		}).then(
+				function(response){
+					console.log(response.data);
+					return response.data;
+				}, 
+				function(errResponse){
+					console.error('Error while changing user password');
+					return $q.reject(errResponse);
+				}
+			
+		);
+		
+	}
 
 });

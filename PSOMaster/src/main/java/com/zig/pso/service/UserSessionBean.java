@@ -10,6 +10,8 @@ package com.zig.pso.service;
 
 import java.io.Serializable;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -31,6 +33,8 @@ public class UserSessionBean implements Serializable
     
     @Autowired(required = true)
     public IUserService userService;
+    
+    private HttpServletRequest request;
 
     public UserSessionBean()
     {
@@ -66,5 +70,21 @@ public class UserSessionBean implements Serializable
     {
         this.loggedInUserDetail = loggedInUserDetail;
     }
+    
+    public void setUserLoginId(String userLoginId)
+    {
+        this.userLoginId = userLoginId;
+    }
+
+    public HttpServletRequest getRequest()
+    {
+        return request;
+    }
+
+    public void setRequest(HttpServletRequest request)
+    {
+        this.request = request;
+    }
+
     
 }

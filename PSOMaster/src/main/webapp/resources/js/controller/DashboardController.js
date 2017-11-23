@@ -184,11 +184,11 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 		filterDataByDate($scope.backLogList,$scope.curDate);
 
 	}
-
+	
 	$scope.init = function() {
 		
 		$rootScope.spinner.on();
-
+		
 		/* Stuck Order counts for Table */
 		DashboardService.getStuckOrderCount().then(function(data) {
 						$rootScope.spinner.off()
@@ -229,12 +229,12 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 			
 							$scope.myDataSourcePie.data = Data;
 			
-							/* Hide Chart label */
+							/* Hide Chart label 
 							$("tspan").filter(function(idx) {
 									if (this.innerHTML.indexOf('FusionCharts XT Trial') == 0) {
 										$(this).css("display","none")
 									}
-							});
+							});*/
 						}
 			
 					},
@@ -263,7 +263,6 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 					function(errResponse) {
 						console.error('Error while fetching Currencies');
 					});
-		
 		
 	}
 	
@@ -312,12 +311,12 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 				
 				$rootScope.spinner.off();
 				
-				/* Hide Chart label */
+				/* Hide Chart label 
 				$("tspan").filter(function(idx) {
 						if (this.innerHTML.indexOf('FusionCharts XT Trial') == 0) {
 							$(this).css("display","none")
 						}
-				});
+				});*/
 				
 			}},
 			function(errResponse){
@@ -376,11 +375,8 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 	
 	/*Show Dynamic Graph Code Start*/
 	$scope.showDynamicGraphPopup = function(){
-		/*$scope.fromDate = '2017-JAN-20';
-		$scope.toDate = '2017-MAR-20';*/
-		
 		$("#DynamicGraph-modal").modal();
 	}
 	/*Show Dynamic Graph Code End*/
-
+	
 });

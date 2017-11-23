@@ -31,6 +31,8 @@ public class PSOConstants
     public final static int ERROR_CODE = -1;
     public final static int INFO_CODE = 1;
     public final static int SUCCESS_CODE = 0;
+    public final static String BULK_UPDATE_SUCCESS_CODE = "0";
+    public final static String BULK_UPDATE_FAILURE_CODE = "-1";
     public final static String NO_DATA = "No Data Found.";
     public final static String ORDER_UPDATE_SUCCESSFULL = "Order updated successfully.";
     public final static String ORDER_UPDATE_FAIL = "Order Updated fail.";
@@ -65,6 +67,11 @@ public class PSOConstants
     
     public final static String USER_PASSWORD_SETUP_SUCCESSFULL = "Your Password has been set. Please Login to continue.";
     public final static String USER_PASSWORD_SETUP_FAILURE = "There is some issue while setting up your password. Please try again later.";
+    public static final String USER_PASSWORD_CHANGE_SUCCESSFULL = "Your Password has been changed.";
+    public static final String USERNAME_ALREADY_PRESENT = "Username already present. Please try different Username.";
+    public static final String VALID_USERNAME = "Username is valid";
+    public static final String ALL_DATA_MANDATORY = "All data are mandatory for registration.";
+    public static final String CURRENT_PASSWORD_WRONG = "Current Password does not match.";
 
     /*
      * Update Order Contants
@@ -87,15 +94,10 @@ public class PSOConstants
     
     /*
      * Authentication and Authorization constants 
-     * 
      */
     public final static int AUTH_FAILED = 401;
     public final static String AUTH_FAILED_MSG = "Authentication Failed";
     public final static String AUTH_SUCCESS_MSG = "Authentication Successfull";
-    
-    public final static String BULK_UPDATE_SUCCESS_CODE = "0";
-    public final static String BULK_UPDATE_FAILURE_CODE = "-1";
-    
     
     /* User Sign-up Request Status */
     public final static String OPEN = "O";
@@ -111,10 +113,19 @@ public class PSOConstants
     
     
     /*SEND Email Configurations*/
-    
-    public static final String EMAIL_SEND_FROM = "nilesh.patil@amdocs.com";
+    public static final String EMAIL_SEND_FROM = "CricketPortalDevOGS@amdocs.com";
     public static final String SETUP_PASSWORD_EMAIL_SUBJECT = "PSO | Setup Password";
-    
+    public static final String REJECT_USER_EMAIL_SUBJECT = "PSO | Registration request rejected.";
     public static final String PSO_SETUP_PASSWORD_URL = "http://localhost:8081/PSOMaster/#/setupUserPassword";
     public static final String SETUP_PASSWORD_EMAIL_CONTENT = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><meta name='viewport' content='width=device-width'><title></title></head><body> <span class='preheader'></span> <table class='body'>        <tr>            <td class='center' align='center' valign='top'>             <center data-parsed=''>                 <style type='text/css' align='center' class='float-center'>                 body, html, .body {                     background: #f3f3f3 !important;                 }                   </style>                    <table align='center' class='container float-center'>                       <tbody>                         <tr>                                <td>                                    <table class='spacer'>                                      <tbody>                                         <tr>                                                <td height='16px'                                                   style='font-size: 16px; line-height: 16px;'>&#xA0;</td>                                         </tr>                                       </tbody>                                    </table>                                    <table>                                     <tr>                                            <th>                                                <h1>PSO</h1>                                                <p>Congratulations! Your request has been approved. Please setup your                                                   password using below details which you used during                                                  Signup.</p>                                             <table class='spacer'>                                                  <tbody>                                                     <tr>                                                            <td height='16px'                                                               style='font-size: 16px; line-height: 16px;'>&#xA0;</td>                                                     </tr>                                                   </tbody>                                                </table>                                                <hr>                                            </th>                                       </tr>                                   </table>                                                                        <h4>User Details</h4>                                   <table>                                     <tbody>                                         <tr>                                                <td>Name : </td>                                                <td>#USER_NAME#</td>                                            </tr>                                           <tr>                                                <td>Employee ID : </td>                                             <td>#EMP_ID#</td>                                           </tr>                                           <tr>                                                <td>Email ID : </td>                                                <td>#EMAIL_ID#</td>                                         </tr>                                           <tr>                                                <td>Temporary Password : </td>                                              <td>#TEMP_PASSWORD#</td>                                            </tr>                                       </tbody>                                    </table>                                                                        <h4>User this link : <a href='#SETUP_PASSWORD_URL#' target='_blank'>Setup Password</a></h4>                             </td>                           </tr>                       </tbody>                    </table>                </center>           </td>       </tr>   </table>    </body></html>";
+    public static final String REJECT_USER_EMAIL_CONTENT = "<html><head>    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>    <meta name='viewport' content='width=device-width'>    <title></title></head><body> <span class='preheader'></span>    <table class='body'>        <tr>            <td class='center' align='center' valign='top'>                <center data-parsed=''>                    <style type='text/css' align='center' class='float-center'>                        body,                        html,                        .body {                            background: #f3f3f3 !important;                        }                    </style>                    <table align='center' class='container float-center'>                        <tbody>                            <tr>                                <td>                                    <table class='spacer'>                                        <tbody>                                            <tr>                                                <td height='16px' style='font-size: 16px; line-height: 16px;'>&#xA0;</td>                                            </tr>                                        </tbody>                                    </table>                                    <table>                                        <tr>                                            <th>                                                <h1>PSO</h1>                                                <p>Your request has been rejected by #USER_NAME#</p>                                                <table class='spacer'>                                                    <tbody>                                                        <tr>                                                            <td height='16px' style='font-size: 16px; line-height: 16px;'>&#xA0;</td>                                                        </tr>                                                    </tbody>                                                </table>                                              </th>                                        </tr>                                    </table>                                    <table>                                        <tbody>                                            <tr>                                                <td>Reject Reason : </td>                                                <td>#REJECT_REASON#</td>                                            </tr>                                        </tbody>                                    </table>                            </tr>                        </tbody>                    </table>                </center>            </td>        </tr>    </table></body></html>";
+    
+    
+    /*Email template Keys*/
+    public static final String EMAIL_TEMPLATE_EMPID = "#EMP_ID#";
+    public static final String EMAIL_TEMPLATE_EMAILID = "#EMAIL_ID#";
+    public static final String EMAIL_TEMPLATE_TEMP_PASSWORD = "#TEMP_PASSWORD#";
+    public static final String EMAIL_TEMPLATE_SETUP_PW_URL = "#SETUP_PASSWORD_URL#";
+    public static final String EMAIL_TEMPLATE_USERNAME = "##USER_NAME#";
+
 }

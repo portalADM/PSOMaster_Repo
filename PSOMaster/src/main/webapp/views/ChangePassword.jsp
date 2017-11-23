@@ -13,7 +13,7 @@
 	<div class=" clearfix">
 		<div class="page-header noPadBtm">
 			<h3 id="navbar">
-				<span class="glyphicon glyphicon-user marRight8"></span>Setup Password
+				<span class="glyphicon glyphicon-user marRight8"></span>Change Password
 			</h3>
 		</div>
 	
@@ -24,19 +24,13 @@
 				<div class="form-group">
 					<label class="col-lg-2 control-label textAlgnInit">Employee Id</label>
 					<div class="col-lg-8">
-						<input type="text" class="form-control" ng-model="userData.empId" required="required" />
+						<input type="text" class="form-control" ng-model="userData.empId" required="required" value="{{currentUserData.empId}}" ng-disabled="true"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-lg-2 control-label textAlgnInit">Email ID</label>
+					<label class="col-lg-2 control-label textAlgnInit">Current Password</label>
 					<div class="col-lg-8">
-						<input type="text" class="form-control" ng-model="userData.emailId" required="required" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-lg-2 control-label textAlgnInit">Temporary Password</label>
-					<div class="col-lg-8">
-						<input type="password" class="form-control" ng-model="userData.tempPassword" required="required" />
+						<input type="password" class="form-control" ng-model="userData.currentPassword" required="required" />
 					</div>
 				</div>
 				<div class="form-group">
@@ -55,37 +49,13 @@
 					<div class="col-lg-2">
 					</div>
 					<div class="col-lg-2">
-						<button type="button" class="btn btn-primary btn-block btn-large" ng-click="setupUserPassword()">Submit</button>
+						<button type="button" class="btn btn-primary btn-block btn-large" ng-click="changePassword()">Submit</button>
 					</div>
 				</div>
 			</form>
 		</div>
 		
-		
-		
-		<!-- Setup Password Popup Panel start -->
-			<div id="setuPassword-modal" class="modal fade">
-				<div class="modal-dialog modal-lg">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title">Setup Password</h4>
-						</div>
-						<div class="modal-body">
-							<div class="row">
-					          <div class="col-lg-12">
-					            <div class="">
-					                <p>{{setupMessage}}</p>
-					                <p><a class="btn btn-primary btn-lg" ng-click="redirectToLoginPage()">Login</a></p>
-					              </div>
-					          </div>
-					        </div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- Setup Password Popup Panel start -->
-		
+			
 	</div>
 </body>
 </html>

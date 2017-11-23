@@ -286,3 +286,21 @@ body{
 .basicIconColor{
 	color: #555555;
 }
+
+.validUserIcon{
+	font-size: 25px;
+    margin-top: 5px;
+    color: green;
+}
+
+.invalidUserIcon{
+	font-size: 25px;
+    margin-top: 5px;
+    color: red;
+}
+
+.spinnerIcon{
+	height: 30px;
+    margin-top: 5px;
+    margin-left: 5px;
+}

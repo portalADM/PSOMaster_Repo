@@ -40,13 +40,14 @@
 					</li>
 				</ul>
 
-				<ul class="nav navbar-nav navbar-right">
+				<ul permission="['ADMINISTRATOR','REMIDIATOR','GUEST']" class="nav navbar-nav navbar-right">
 					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#" id="themes"><span
 							class="glyphicon glyphicon-user marRight8"></span>Hi User<span
 							class="caret"></span></a>
 						<ul class="dropdown-menu" aria-labelledby="themes">
-							<li><a href="#/login">Logout</a></li>
+							<li><a href="#/changePassword">Change Password</a></li>
+							<li><a href="#/logout">Logout</a></li>
 						</ul></li>
 				</ul>
 
@@ -89,6 +90,7 @@
 	<!-- Application Modules Controller Import -->
 	<script src="resources/js/app.js"></script>
 	<script src="resources/js/service/AuthServices.js"></script>
+	<script src="resources/js/core/AuthInterceptor.js"></script>
 	<script src="resources/js/controller/DashboardController.js"></script>
 	<script src="resources/js/controller/OrderMasterController.js"></script>
 	<script src="resources/js/controller/UpdateOrderController.js"></script>
@@ -99,6 +101,8 @@
 	<script src="resources/js/controller/admin/ManageUserController.js"></script>
 	<script src="resources/js/controller/SignupController.js"></script>
 	<script src="resources/js/controller/UserAssignmentController.js"></script>
+	<script src="resources/js/controller/LogoutController.js"></script>
+	<script src="resources/js/controller/ChangePasswordController.js"></script>
 
 	<!-- Application Modules Services Import -->
 	<script src="resources/js/service/OrderService.js"></script>

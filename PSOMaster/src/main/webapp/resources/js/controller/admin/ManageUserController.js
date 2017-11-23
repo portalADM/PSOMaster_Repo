@@ -27,7 +27,7 @@ module.controller("ManageUserController", function($scope, $routeParams,$http,Us
 	
 	$scope.rejectUserConfirm = function(empData){
 		$scope.userData = empData;
-		console.log(empData.empId);
+		console.log(empData);
 		$("#RejectUserConfirmation-modal").modal();
 	}
 	
@@ -38,6 +38,7 @@ module.controller("ManageUserController", function($scope, $routeParams,$http,Us
 	$scope.rejectUserRequest = function(){
 		var empdata= {
 				empId : $scope.userData.empId,
+				emailId : $scope.userData.email,
 				rejectComments : $scope.reject.comments
 		}
 		rejectUser(empdata);

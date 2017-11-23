@@ -18,6 +18,8 @@ public class RejectPendingUserRequest implements Serializable
     private static final long serialVersionUID = 6128658710315519227L;
     private String empId;
     private String rejectComments;
+    private String emailId;
+
     
     /**
      * 
@@ -70,6 +72,16 @@ public class RejectPendingUserRequest implements Serializable
         this.rejectComments = rejectComments;
     }
     
+    public String getEmailId()
+    {
+        return emailId;
+    }
+
+    public void setEmailId(String emailId)
+    {
+        this.emailId = emailId;
+    }
+
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
@@ -78,11 +90,12 @@ public class RejectPendingUserRequest implements Serializable
     {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ((emailId == null) ? 0 : emailId.hashCode());
         result = prime * result + ((empId == null) ? 0 : empId.hashCode());
         result = prime * result + ((rejectComments == null) ? 0 : rejectComments.hashCode());
         return result;
     }
-    
+
     /* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
@@ -96,6 +109,13 @@ public class RejectPendingUserRequest implements Serializable
         if (getClass() != obj.getClass())
             return false;
         RejectPendingUserRequest other = (RejectPendingUserRequest) obj;
+        if (emailId == null)
+        {
+            if (other.emailId != null)
+                return false;
+        }
+        else if (!emailId.equals(other.emailId))
+            return false;
         if (empId == null)
         {
             if (other.empId != null)
@@ -112,14 +132,14 @@ public class RejectPendingUserRequest implements Serializable
             return false;
         return true;
     }
-    
+
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString()
     {
-        return "RejectPendingUserRequest [empId=" + empId + ", rejectComments=" + rejectComments + "]";
+        return "RejectPendingUserRequest [empId=" + empId + ", rejectComments=" + rejectComments + ", emailId=" + emailId + "]";
     }
     
     

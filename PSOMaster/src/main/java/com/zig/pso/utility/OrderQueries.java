@@ -54,16 +54,18 @@ public class OrderQueries
     {
         return orderProp.getProperty("order.stuckOrdersbyStatus");
     }
-    //segregationOfOrders
+
+    // segregationOfOrders
     public static String getstuckOrdersbySingleLine()
     {
         return orderProp.getProperty("order.stuckOrdersbySingleLine");
     }
+
     public static String getstuckOrdersbyMultiLine()
     {
         return orderProp.getProperty("order.stuckOrdersbyMultiLine");
     }
-    
+
     public static String updateOrderStatus()
     {
         return orderProp.getProperty("order.updateOrderStatusQuerry");
@@ -333,47 +335,65 @@ public class OrderQueries
     {
         return orderProp.getProperty("user.updateUserAssignment");
     }
-    
+
     public static String getUserListQuery()
     {
         return orderProp.getProperty("user.getUserList");
     }
-    
+
     public static String getUserDataByEmpId()
     {
         return orderProp.getProperty("user.getUserDataByEmpId");
     }
-    
+
     public static String getDeletePendingUserReqQuery()
     {
         return orderProp.getProperty("user.deletePendingUserReqQuery");
     }
-    
+
     public static String getauthenticateUserQuery()
     {
         return orderProp.getProperty("user.authenticateUser");
     }
-    
+
     public static String getUserByUsernameForAuthentication()
     {
         return orderProp.getProperty("user.getUserByUsernameForAuthentication");
     }
-    
+
     public static String getSetupPasswordQuery()
     {
         return orderProp.getProperty("user.setupUserPassword");
     }
-     public static String getInventoryStatus()
+
+    public static String getInventoryStatus()
     {
         return orderProp.getProperty("order.getInventoryStatus");
     }
-    
+
     public static String getESNReuseData()
     {
         return orderProp.getProperty("order.getESNReuseData");
     }
-     public static String getUpholdLevel()
+
+    public static String getUpholdLevel()
     {
         return orderProp.getProperty("order.getUpholdLevel");
     }
+
+    public static String getCheckUsername()
+    {
+        return orderProp.getProperty("user.checkUsername");
+    }
+
+    public static String getChangePasswordQuery()
+    {
+        return orderProp.getProperty("user.changePassword");
+    }
+
+    public static String getCurrentPasswordQuery()
+    {
+        return orderProp.getProperty("user.getCurrentPassword");
+    }
+
 }
