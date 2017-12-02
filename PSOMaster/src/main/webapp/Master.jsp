@@ -43,7 +43,7 @@
 				<ul permission="['ADMINISTRATOR','REMIDIATOR','GUEST']" class="nav navbar-nav navbar-right">
 					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#" id="themes"><span
-							class="glyphicon glyphicon-user marRight8"></span>Hi User<span
+							class="glyphicon glyphicon-user marRight8"></span>Hi {{user.firstName}}<span
 							class="caret"></span></a>
 						<ul class="dropdown-menu" aria-labelledby="themes">
 							<li><a href="#/changePassword">Change Password</a></li>

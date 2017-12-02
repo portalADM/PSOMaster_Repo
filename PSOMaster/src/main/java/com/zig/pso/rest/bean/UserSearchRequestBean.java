@@ -27,7 +27,6 @@ public class UserSearchRequestBean implements Serializable
     public UserSearchRequestBean()
     {
         super();
-        // TODO Auto-generated constructor stub
     }
     /**
      * @param groupId

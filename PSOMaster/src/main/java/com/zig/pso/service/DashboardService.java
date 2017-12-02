@@ -4,7 +4,7 @@
 
 package com.zig.pso.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.zig.pso.rest.bean.DynamicGraphRequestBean;
 import com.zig.pso.rest.bean.RegularOrdersCount;
@@ -19,25 +19,25 @@ public interface DashboardService
      * @param OrderId
      * @return
      */
-    public ArrayList<StuckOrdersCount> getStuckOrderList();
+    public List<StuckOrdersCount> getStuckOrderList();
 
-    public ArrayList<String> getStuckOrders(String status);
-
-    /**
-     * @param status
-     * @return
-     */
-    ArrayList<StuckOrdersCount> getStuckOrderhandled();
+    public List<String> getStuckOrders(String status);
 
     /**
      * @param status
      * @return
      */
-    ArrayList<StuckOrdersCount> getStuckOrderallStatus();
+    public List<StuckOrdersCount> getStuckOrderhandled();
+
+    /**
+     * @param status
+     * @return
+     */
+    public List<StuckOrdersCount> getStuckOrderallStatus();
 
     public StuckOrderBacklogUiResponseBean getStuckOrderBacklogData();
 
-    public ArrayList<RegularOrdersCount> getRegularOrderListData();
+    public List<RegularOrdersCount> getRegularOrderListData();
 
     public RegularOrdersCountList getDynamicOrderListData(DynamicGraphRequestBean dynamicGraphRequest);
 

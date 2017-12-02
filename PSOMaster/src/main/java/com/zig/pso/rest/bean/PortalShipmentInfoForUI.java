@@ -10,6 +10,7 @@ package com.zig.pso.rest.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -31,9 +32,9 @@ public class PortalShipmentInfoForUI implements Serializable
     private String shipmentDate;
     private boolean isPlanAvailable;
     private boolean isAccessoryAvailable;
-    private ArrayList<String> accessoryList = new ArrayList<String>();
+    private List<String> accessoryList = new ArrayList<String>();
     private boolean isAddonAvailable;
-    private ArrayList<String> addonList = new ArrayList<String>();
+    private List<String> addonList = new ArrayList<String>();
 
     /**
      * @return the epc_sku_id
@@ -198,7 +199,7 @@ public class PortalShipmentInfoForUI implements Serializable
     /**
      * @return the accessoryList
      */
-    public ArrayList<String> getAccessoryList()
+    public List<String> getAccessoryList()
     {
         return accessoryList;
     }
@@ -206,7 +207,7 @@ public class PortalShipmentInfoForUI implements Serializable
     /**
      * @param accessoryList the accessoryList to set
      */
-    public void setAccessoryList(ArrayList<String> accessoryList)
+    public void setAccessoryList(List<String> accessoryList)
     {
         this.accessoryList = accessoryList;
     }
@@ -214,7 +215,7 @@ public class PortalShipmentInfoForUI implements Serializable
     /**
      * @return the addonList
      */
-    public ArrayList<String> getAddonList()
+    public List<String> getAddonList()
     {
         return addonList;
     }
@@ -222,7 +223,7 @@ public class PortalShipmentInfoForUI implements Serializable
     /**
      * @param addonList the addonList to set
      */
-    public void setAddonList(ArrayList<String> addonList)
+    public void setAddonList(List<String> addonList)
     {
         this.addonList = addonList;
     }

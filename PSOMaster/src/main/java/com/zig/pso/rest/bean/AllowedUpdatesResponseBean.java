@@ -81,16 +81,16 @@ public class AllowedUpdatesResponseBean extends BaseResponseBean{
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (getClass() != obj.getClass())
+		if (null!=obj && getClass() != obj.getClass())
 			return false;
 		AllowedUpdatesResponseBean other = (AllowedUpdatesResponseBean) obj;
 		if (availableUpdates == null) {
-			if (other.availableUpdates != null)
+			if (null!=other && other.availableUpdates != null)
 				return false;
-		} else if (!availableUpdates.equals(other.availableUpdates))
+		} else if (null!=other && !availableUpdates.equals(other.availableUpdates))
 			return false;
 		if (restrictedUpdates == null) {
-			if (other.restrictedUpdates != null)
+			if (null!=other && other.restrictedUpdates != null)
 				return false;
 		} else if (!restrictedUpdates.equals(other.restrictedUpdates))
 			return false;

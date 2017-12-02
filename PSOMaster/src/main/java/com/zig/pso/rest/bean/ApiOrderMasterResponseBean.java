@@ -8,19 +8,19 @@
  */
 package com.zig.pso.rest.bean;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
  */
 public class ApiOrderMasterResponseBean extends BaseResponseBean 
 {
-    private ArrayList<OrderAPIDetailsBean> orderAPIList;
+    private List<OrderAPIDetailsBean> orderAPIList;
 
     /**
      * @return the orderAPIList
      */
-    public ArrayList<OrderAPIDetailsBean> getOrderAPIList()
+    public List<OrderAPIDetailsBean> getOrderAPIList()
     {
         return orderAPIList;
     }
@@ -28,7 +28,7 @@ public class ApiOrderMasterResponseBean extends BaseResponseBean
     /**
      * @param orderAPIList the orderAPIList to set
      */
-    public void setOrderAPIList(ArrayList<OrderAPIDetailsBean> orderAPIList)
+    public void setOrderAPIList(List<OrderAPIDetailsBean> orderAPIList)
     {
         this.orderAPIList = orderAPIList;
     }

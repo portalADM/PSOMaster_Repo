@@ -8,20 +8,20 @@
  */
 package com.zig.pso.rest.bean;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
  */
 public class BulkUpdateInputBean
 {
-    private ArrayList<OrderUpdateInputData> orderUpdateData;
+    private List<OrderUpdateInputData> orderUpdateData;
     private String updateType;
 
     /**
      * @return the orderUpdateData
      */
-    public ArrayList<OrderUpdateInputData> getOrderUpdateData()
+    public List<OrderUpdateInputData> getOrderUpdateData()
     {
         return orderUpdateData;
     }
@@ -29,7 +29,7 @@ public class BulkUpdateInputBean
     /**
      * @param orderUpdateData the orderUpdateData to set
      */
-    public void setOrderUpdateData(ArrayList<OrderUpdateInputData> orderUpdateData)
+    public void setOrderUpdateData(List<OrderUpdateInputData> orderUpdateData)
     {
         this.orderUpdateData = orderUpdateData;
     }

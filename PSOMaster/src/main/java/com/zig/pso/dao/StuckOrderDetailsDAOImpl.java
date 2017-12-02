@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -26,68 +27,62 @@ import com.zig.pso.utility.OrderQueries;
  * 
  */
 @Repository
-public class StuckOrderDetailsDAOImpl implements StuckOrderDetailsDAO{
-	
-	private static Connection portalDBConnection = null;
+public class StuckOrderDetailsDAOImpl implements StuckOrderDetailsDAO
+{
+    public static final String CLASS_NAME = "StuckOrderDetailsDAOImpl";
 
-	    public StuckOrderDetailsDAOImpl()
-	    {
-	        portalDBConnection = DBConnection.getPortalDBConnection();
-	    }
-	    
-	    private Connection getPortalDbConnction()
-	    {
-	        return DBConnection.getPortalDBConnection();
-	    }
+    private Connection getPortalDbConnction()
+    {
+        return DBConnection.getPortalDBConnection();
+    }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.zig.pso.dao.StuckOrderDetailsDAO#getOSHFSingleLineOrder()
+     */
+    @Override
+    public List<OSHFSingleLineResponse> getOSHFSingleLineOrder()
+    {
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getOSHFSingleLineOrder", "");
+        String sql = null;
 
-	/* (non-Javadoc)
-	 * @see com.zig.pso.dao.StuckOrderDetailsDAO#getOSHFSingleLineOrder()
-	 */
-	@Override
-	public ArrayList<OSHFSingleLineResponse> getOSHFSingleLineOrder() {
-		PSOLoggerSrv.printDEBUG("StuckOrderDetailsDAOImpl", "getOSHFSingleLineOrder","");
-		String sql= null;
-
-        ArrayList<OSHFSingleLineResponse> OSHFSingleLineResponseList= new ArrayList<OSHFSingleLineResponse>();
+        ArrayList<OSHFSingleLineResponse> oSHFSingleLineResponseList = new ArrayList<OSHFSingleLineResponse>();
         sql = OrderQueries.getstuckOrdersbySingleLine();
 
         PreparedStatement pstm = null;
         ResultSet rs = null;
         Connection con = this.getPortalDbConnction();
-        
+
         try
         {
             pstm = con.prepareStatement(sql);
             rs = pstm.executeQuery();
             while (rs.next())
             {
-            	OSHFSingleLineResponse OSHFSingleLineResponse=new OSHFSingleLineResponse();
-            	OSHFSingleLineResponse.setOrderId(rs.getString("ORDER_ID"));
-            	OSHFSingleLineResponse.setImei(rs.getString("IMEI"));
-            	OSHFSingleLineResponse.setSim(rs.getString("SIM"));
-            	OSHFSingleLineResponse.setBillOfLading(rs.getString("ORDER_TRACK_NO"));
-            	OSHFSingleLineResponse.setScac(rs.getString("SCAC_CODE"));
-            	OSHFSingleLineResponseList.add(OSHFSingleLineResponse);
+                OSHFSingleLineResponse oSHFSingleLineResponse = new OSHFSingleLineResponse();
+                oSHFSingleLineResponse.setOrderId(rs.getString("ORDER_ID"));
+                oSHFSingleLineResponse.setImei(rs.getString("IMEI"));
+                oSHFSingleLineResponse.setSim(rs.getString("SIM"));
+                oSHFSingleLineResponse.setBillOfLading(rs.getString("ORDER_TRACK_NO"));
+                oSHFSingleLineResponse.setScac(rs.getString("SCAC_CODE"));
+                oSHFSingleLineResponseList.add(oSHFSingleLineResponse);
             }
 
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("StuckOrderDetailsDAOImpl", "getOSHFSingleLineOrder", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getOSHFSingleLineOrder", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("StuckOrderDetailsDAOImpl", "getOSHFSingleLineOrder", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getOSHFSingleLineOrder", e);
             }
             if (pstm != null)
             {
@@ -97,7 +92,7 @@ public class StuckOrderDetailsDAOImpl implements StuckOrderDetailsDAO{
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("StuckOrderDetailsDAOImpl", "getOSHFSingleLineOrder", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOSHFSingleLineOrder", e);
                 }
             }
             if (rs != null)
@@ -108,64 +103,63 @@ public class StuckOrderDetailsDAOImpl implements StuckOrderDetailsDAO{
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("StuckOrderDetailsDAOImpl", "getOSHFSingleLineOrder", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOSHFSingleLineOrder", e);
                 }
             }
         }
 
-        return OSHFSingleLineResponseList;
-	}
+        return oSHFSingleLineResponseList;
+    }
 
-	/* (non-Javadoc)
-	 * @see com.zig.pso.dao.StuckOrderDetailsDAO#getOSHFMultiLineOrder()
-	 */
-	@Override
-	public ArrayList<OSHFMultiLineResponse> getOSHFMultiLineOrder() {
-		PSOLoggerSrv.printDEBUG("StuckOrderDetailsDAOImpl", "getOSHFMultiLineOrder","");
-		String sql= null;
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.zig.pso.dao.StuckOrderDetailsDAO#getOSHFMultiLineOrder()
+     */
+    @Override
+    public List<OSHFMultiLineResponse> getOSHFMultiLineOrder()
+    {
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getOSHFMultiLineOrder", "");
+        String sql = null;
 
-        ArrayList<OSHFMultiLineResponse> OSHFMultiLineResponseList= new ArrayList<OSHFMultiLineResponse>();
+        ArrayList<OSHFMultiLineResponse> oSHFMultiLineResponseList = new ArrayList<OSHFMultiLineResponse>();
         sql = OrderQueries.getstuckOrdersbyMultiLine();
 
         PreparedStatement pstm = null;
         ResultSet rs = null;
         Connection con = this.getPortalDbConnction();
-        
+
         try
         {
             pstm = con.prepareStatement(sql);
             rs = pstm.executeQuery();
             while (rs.next())
             {
-            	OSHFMultiLineResponse OSHFMultiLineResponse=new OSHFMultiLineResponse();
-            	OSHFMultiLineResponse.setOrderId(rs.getString("ORDER_ID"));
-            	OSHFMultiLineResponse.setImei(rs.getString("IMEI"));
-            	OSHFMultiLineResponse.setSim(rs.getString("SIM"));
-            	OSHFMultiLineResponse.setOrder_track_no(rs.getString("ORDER_TRACK_NO"));
-            	OSHFMultiLineResponse.setScac(rs.getString("SCAC_CODE"));
-            	OSHFMultiLineResponse.setEsn(rs.getString("ESN_NO"));
-            	
-            	
-            	OSHFMultiLineResponseList.add(OSHFMultiLineResponse);
+                OSHFMultiLineResponse oSHFMultiLineResponse = new OSHFMultiLineResponse();
+                oSHFMultiLineResponse.setOrderId(rs.getString("ORDER_ID"));
+                oSHFMultiLineResponse.setImei(rs.getString("IMEI"));
+                oSHFMultiLineResponse.setSim(rs.getString("SIM"));
+                oSHFMultiLineResponse.setOrderTrackNo(rs.getString("ORDER_TRACK_NO"));
+                oSHFMultiLineResponse.setScac(rs.getString("SCAC_CODE"));
+                oSHFMultiLineResponse.setEsn(rs.getString("ESN_NO"));
+
+                oSHFMultiLineResponseList.add(oSHFMultiLineResponse);
             }
 
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("StuckOrderDetailsDAOImpl", "getOSHFMultiLineOrder", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getOSHFMultiLineOrder", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("StuckOrderDetailsDAOImpl", "getOSHFMultiLineOrder", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getOSHFMultiLineOrder", e);
             }
             if (pstm != null)
             {
@@ -175,7 +169,7 @@ public class StuckOrderDetailsDAOImpl implements StuckOrderDetailsDAO{
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("StuckOrderDetailsDAOImpl", "getOSHFMultiLineOrder", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOSHFMultiLineOrder", e);
                 }
             }
             if (rs != null)
@@ -186,12 +180,12 @@ public class StuckOrderDetailsDAOImpl implements StuckOrderDetailsDAO{
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("StuckOrderDetailsDAOImpl", "getOSHFMultiLineOrder", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOSHFMultiLineOrder", e);
                 }
             }
         }
 
-        return OSHFMultiLineResponseList;
-	}
+        return oSHFMultiLineResponseList;
+    }
 
 }

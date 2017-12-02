@@ -24,7 +24,7 @@ public class OSHFMultiLineResponse implements Serializable {
 	private String sim;
 	private String scac;
 	private String esn;
-	private String order_track_no;
+	private String orderTrackNumber;
 	/**
 	 * @return the orderId
 	 */
@@ -89,13 +89,13 @@ public class OSHFMultiLineResponse implements Serializable {
 	 * @return the order_track_no
 	 */
 	public String getOrder_track_no() {
-		return order_track_no;
+		return orderTrackNumber;
 	}
 	/**
 	 * @param order_track_no the order_track_no to set
 	 */
-	public void setOrder_track_no(String order_track_no) {
-		this.order_track_no = order_track_no;
+	public void setOrderTrackNo(String orderTrackNumber) {
+		this.orderTrackNumber = orderTrackNumber;
 	}
 	
 	

@@ -8,7 +8,7 @@
  */
 package com.zig.pso.rest.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,24 +42,24 @@ public class ManageGroupController
      * This Method provides list of Roles
      */
     @RequestMapping(value = "/getRoleList", method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<RoleMaster>> getRoleList()
+    public ResponseEntity<List<RoleMaster>> getRoleList()
     {
         PSOLoggerSrv.printDEBUG("ManageGroupController", "getRoleList", "");
-        ArrayList<RoleMaster> roleList = groupService.getRoleList();
+        List<RoleMaster> roleList = groupService.getRoleList();
         
-        return new ResponseEntity<ArrayList<RoleMaster>>(roleList, HttpStatus.OK);
+        return new ResponseEntity<List<RoleMaster>>(roleList, HttpStatus.OK);
     }
     
     /**
      * This Method provides list of Groups
      */
     @RequestMapping(value = "/getGroupList", method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<GroupMaster>> getGroupList()
+    public ResponseEntity<List<GroupMaster>> getGroupList()
     {
         PSOLoggerSrv.printDEBUG("ManageGroupController", "getRoleList", "");
-        ArrayList<GroupMaster> groupList = groupService.getGroupList();
+        List<GroupMaster> groupList = groupService.getGroupList();
         
-        return new ResponseEntity<ArrayList<GroupMaster>>(groupList, HttpStatus.OK);
+        return new ResponseEntity<List<GroupMaster>>(groupList, HttpStatus.OK);
     }
     
     /**

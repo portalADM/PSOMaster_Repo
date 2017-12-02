@@ -15,12 +15,12 @@ import java.io.Serializable;
 public class OrderAPIDetailsBean implements Serializable
 {
     private static final long serialVersionUID = 5613472145643671406L;
-    private String OrderId;
-    private String Source;
-    private String APIName;
-    private String SysCreationDate;
-    private String OriginatorID;
-    private String ErrorMessage;
+    private String orderId;
+    private String source;
+    private String aPIName;
+    private String sysCreationDate;
+    private String originatorID;
+    private String errorMessage;
     private String seqNumber;
     private String errorInResponse;
     
@@ -31,7 +31,6 @@ public class OrderAPIDetailsBean implements Serializable
     {
         super();
     }
-
     /**
      * @param orderId
      * @param source
@@ -45,112 +44,99 @@ public class OrderAPIDetailsBean implements Serializable
     public OrderAPIDetailsBean(String orderId, String source, String aPIName, String sysCreationDate, String originatorID, String errorMessage, String seqNumber, String errorInResponse)
     {
         super();
-        OrderId = orderId;
-        Source = source;
-        APIName = aPIName;
-        SysCreationDate = sysCreationDate;
-        OriginatorID = originatorID;
-        ErrorMessage = errorMessage;
+        this.orderId = orderId;
+        this.source = source;
+        this.aPIName = aPIName;
+        this.sysCreationDate = sysCreationDate;
+        this.originatorID = originatorID;
+        this.errorMessage = errorMessage;
         this.seqNumber = seqNumber;
         this.errorInResponse = errorInResponse;
     }
-
     /**
      * @return the orderId
      */
     public String getOrderId()
     {
-        return OrderId;
+        return orderId;
     }
-
     /**
      * @param orderId the orderId to set
      */
     public void setOrderId(String orderId)
     {
-        OrderId = orderId;
+        this.orderId = orderId;
     }
-
     /**
      * @return the source
      */
     public String getSource()
     {
-        return Source;
+        return source;
     }
-
     /**
      * @param source the source to set
      */
     public void setSource(String source)
     {
-        Source = source;
+        this.source = source;
     }
-
     /**
      * @return the aPIName
      */
-    public String getAPIName()
+    public String getaPIName()
     {
-        return APIName;
+        return aPIName;
     }
-
     /**
      * @param aPIName the aPIName to set
      */
-    public void setAPIName(String aPIName)
+    public void setaPIName(String aPIName)
     {
-        APIName = aPIName;
+        this.aPIName = aPIName;
     }
-
     /**
      * @return the sysCreationDate
      */
     public String getSysCreationDate()
     {
-        return SysCreationDate;
+        return sysCreationDate;
     }
-
     /**
      * @param sysCreationDate the sysCreationDate to set
      */
     public void setSysCreationDate(String sysCreationDate)
     {
-        SysCreationDate = sysCreationDate;
+        this.sysCreationDate = sysCreationDate;
     }
-
     /**
      * @return the originatorID
      */
     public String getOriginatorID()
     {
-        return OriginatorID;
+        return originatorID;
     }
-
     /**
      * @param originatorID the originatorID to set
      */
     public void setOriginatorID(String originatorID)
     {
-        OriginatorID = originatorID;
+        this.originatorID = originatorID;
     }
-
     /**
      * @return the errorMessage
      */
     public String getErrorMessage()
     {
-        return ErrorMessage;
+        return errorMessage;
     }
-
     /**
      * @param errorMessage the errorMessage to set
      */
     public void setErrorMessage(String errorMessage)
     {
-        ErrorMessage = errorMessage;
+        this.errorMessage = errorMessage;
     }
-
     /**
      * @return the seqNumber
      */
@@ -158,7 +144,6 @@ public class OrderAPIDetailsBean implements Serializable
     {
         return seqNumber;
     }
-
     /**
      * @param seqNumber the seqNumber to set
      */
@@ -166,7 +151,6 @@ public class OrderAPIDetailsBean implements Serializable
     {
         this.seqNumber = seqNumber;
     }
-
     /**
      * @return the errorInResponse
      */
@@ -174,7 +158,6 @@ public class OrderAPIDetailsBean implements Serializable
     {
         return errorInResponse;
     }
-
     /**
      * @param errorInResponse the errorInResponse to set
      */
@@ -182,7 +165,6 @@ public class OrderAPIDetailsBean implements Serializable
     {
         this.errorInResponse = errorInResponse;
     }
-
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
@@ -191,17 +173,16 @@ public class OrderAPIDetailsBean implements Serializable
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((APIName == null) ? 0 : APIName.hashCode());
-        result = prime * result + ((ErrorMessage == null) ? 0 : ErrorMessage.hashCode());
-        result = prime * result + ((OrderId == null) ? 0 : OrderId.hashCode());
-        result = prime * result + ((OriginatorID == null) ? 0 : OriginatorID.hashCode());
-        result = prime * result + ((Source == null) ? 0 : Source.hashCode());
-        result = prime * result + ((SysCreationDate == null) ? 0 : SysCreationDate.hashCode());
+        result = prime * result + ((aPIName == null) ? 0 : aPIName.hashCode());
         result = prime * result + ((errorInResponse == null) ? 0 : errorInResponse.hashCode());
+        result = prime * result + ((errorMessage == null) ? 0 : errorMessage.hashCode());
+        result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
+        result = prime * result + ((originatorID == null) ? 0 : originatorID.hashCode());
         result = prime * result + ((seqNumber == null) ? 0 : seqNumber.hashCode());
+        result = prime * result + ((source == null) ? 0 : source.hashCode());
+        result = prime * result + ((sysCreationDate == null) ? 0 : sysCreationDate.hashCode());
         return result;
     }
-
     /* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
@@ -215,47 +196,12 @@ public class OrderAPIDetailsBean implements Serializable
         if (getClass() != obj.getClass())
             return false;
         OrderAPIDetailsBean other = (OrderAPIDetailsBean) obj;
-        if (APIName == null)
+        if (aPIName == null)
         {
-            if (other.APIName != null)
+            if (other.aPIName != null)
                 return false;
         }
-        else if (!APIName.equals(other.APIName))
-            return false;
-        if (ErrorMessage == null)
-        {
-            if (other.ErrorMessage != null)
-                return false;
-        }
-        else if (!ErrorMessage.equals(other.ErrorMessage))
-            return false;
-        if (OrderId == null)
-        {
-            if (other.OrderId != null)
-                return false;
-        }
-        else if (!OrderId.equals(other.OrderId))
-            return false;
-        if (OriginatorID == null)
-        {
-            if (other.OriginatorID != null)
-                return false;
-        }
-        else if (!OriginatorID.equals(other.OriginatorID))
-            return false;
-        if (Source == null)
-        {
-            if (other.Source != null)
-                return false;
-        }
-        else if (!Source.equals(other.Source))
-            return false;
-        if (SysCreationDate == null)
-        {
-            if (other.SysCreationDate != null)
-                return false;
-        }
-        else if (!SysCreationDate.equals(other.SysCreationDate))
+        else if (!aPIName.equals(other.aPIName))
             return false;
         if (errorInResponse == null)
         {
@@ -264,6 +210,27 @@ public class OrderAPIDetailsBean implements Serializable
         }
         else if (!errorInResponse.equals(other.errorInResponse))
             return false;
+        if (errorMessage == null)
+        {
+            if (other.errorMessage != null)
+                return false;
+        }
+        else if (!errorMessage.equals(other.errorMessage))
+            return false;
+        if (orderId == null)
+        {
+            if (other.orderId != null)
+                return false;
+        }
+        else if (!orderId.equals(other.orderId))
+            return false;
+        if (originatorID == null)
+        {
+            if (other.originatorID != null)
+                return false;
+        }
+        else if (!originatorID.equals(other.originatorID))
+            return false;
         if (seqNumber == null)
         {
             if (other.seqNumber != null)
@@ -271,20 +238,30 @@ public class OrderAPIDetailsBean implements Serializable
         }
         else if (!seqNumber.equals(other.seqNumber))
             return false;
+        if (source == null)
+        {
+            if (other.source != null)
+                return false;
+        }
+        else if (!source.equals(other.source))
+            return false;
+        if (sysCreationDate == null)
+        {
+            if (other.sysCreationDate != null)
+                return false;
+        }
+        else if (!sysCreationDate.equals(other.sysCreationDate))
+            return false;
         return true;
     }
-
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString()
     {
-        return "OrderAPIDetailsBean [OrderId=" + OrderId + ", Source=" + Source + ", APIName=" + APIName + ", SysCreationDate=" + SysCreationDate + ", OriginatorID=" + OriginatorID
-                + ", ErrorMessage=" + ErrorMessage + ", seqNumber=" + seqNumber + ", errorInResponse=" + errorInResponse + "]";
+        return "OrderAPIDetailsBean [orderId=" + orderId + ", source=" + source + ", aPIName=" + aPIName + ", sysCreationDate=" + sysCreationDate + ", originatorID=" + originatorID
+                + ", errorMessage=" + errorMessage + ", seqNumber=" + seqNumber + ", errorInResponse=" + errorInResponse + "]";
     }
     
-    
-    
-
 }

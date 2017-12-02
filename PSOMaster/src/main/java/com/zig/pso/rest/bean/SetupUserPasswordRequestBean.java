@@ -31,7 +31,6 @@ public class SetupUserPasswordRequestBean implements Serializable
     public SetupUserPasswordRequestBean()
     {
         super();
-        // TODO Auto-generated constructor stub
     }
     /**
      * @param empId

@@ -11,10 +11,10 @@ module.controller("UserAssignmentController", function($scope, $routeParams,$loc
 	
 	$scope.pendingUserList = [];
 	
-	$scope.init = function(){
+	$scope.init = function()
+	{
+		MessageService.hideMessage();
 		getGroupList();
-		console.log($scope.employeeId);
-		console.log($scope.oprType);
 		if($scope.oprType == 'create')
 			getPendingUserDetailsByEmpId($scope.employeeId);
 		else
@@ -24,16 +24,17 @@ module.controller("UserAssignmentController", function($scope, $routeParams,$loc
 	$scope.init();
 	
 	
-	$scope.getRoleNameForSelectedGroup = function(selectedGroupId){
+	$scope.getRoleNameForSelectedGroup = function(selectedGroupId)
+	{
 		angular.forEach($scope.groupList, function(value, key) {
 			  if(value.groupId === angular.fromJson(selectedGroupId))
 				  $scope.userGroupRoleName = value.roleName;
 		});
 	}
 	
-	$scope.doUserAssignments = function(){
-		console.log($scope.userData);
-		
+	$scope.doUserAssignments = function()
+	{
+		MessageService.hideMessage();
 		if($scope.oprType == 'create')
 			saveUserAssignments($scope.userData);
 		else
@@ -65,6 +66,7 @@ module.controller("UserAssignmentController", function($scope, $routeParams,$loc
 	 */
 	function getPendingUserDetailsByEmpId(employeeId)
 	{
+		MessageService.hideMessage();
 		$rootScope.spinner.on();
 		UserService.getPendingUserDetailsByEmpId(employeeId).then(function(data) {
 			if(data!=undefined && data!=null){
@@ -86,6 +88,7 @@ module.controller("UserAssignmentController", function($scope, $routeParams,$loc
 	 */
 	function getApprovedUserDetailsByEmpId(employeeId)
 	{
+		MessageService.hideMessage();
 		$rootScope.spinner.on();
 		UserService.getUserDetailsByEmpId(employeeId).then(function(data) {
 			if(data!=undefined && data!=null){
@@ -105,17 +108,22 @@ module.controller("UserAssignmentController", function($scope, $routeParams,$loc
 	/*
 	 * Saves user assignments in the DB
 	 */
-	function saveUserAssignments(userAssignmentData){
+	function saveUserAssignments(userAssignmentData)
+	{
+		MessageService.hideMessage();
 		$rootScope.spinner.on();
 		UserService.doUserAssignment(userAssignmentData).then(function(response) {
 			$rootScope.spinner.off();
-			if(response!=undefined && response.errorCode == 0){
-				MessageService.showSuccess(response.errorMsg,5000);
-				$location.path('/manageUser');
-			}
-			else{
-				var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
-				MessageService.showError(errorMessage,10000);
+			if(response!=undefined && response!=null)
+			{
+				if(response.errorCode == 0){
+					MessageService.showSuccess(response.errorMsg,5000);
+					$location.path('/manageUser');
+				}
+				else{
+					var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+					MessageService.showError(errorMessage,10000);
+				}
 			}
 		},
 		function(errResponse) {
@@ -127,17 +135,22 @@ module.controller("UserAssignmentController", function($scope, $routeParams,$loc
 	/*
 	 * Updates user assignments in the DB
 	 */
-	function updateUserAssignments(userAssignmentData){
+	function updateUserAssignments(userAssignmentData)
+	{
+		MessageService.hideMessage();
 		$rootScope.spinner.on();
 		UserService.updateUserAssignment(userAssignmentData).then(function(response) {
 			$rootScope.spinner.off();
-			if(response!=undefined && response.errorCode == 0){
-				MessageService.showSuccess(response.errorMsg,5000);
-				$location.path('/manageUser');
-			}
-			else{
-				var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
-				MessageService.showError(errorMessage,10000);
+			if(response!=undefined && response!=null)
+			{
+				if(response.errorCode == 0){
+					MessageService.showSuccess(response.errorMsg,5000);
+					$location.path('/manageUser');
+				}
+				else{
+					var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+					MessageService.showError(errorMessage,10000);
+				}
 			}
 		},
 		function(errResponse) {

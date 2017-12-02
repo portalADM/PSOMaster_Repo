@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -28,16 +29,7 @@ import com.zig.pso.utility.OrderQueries;
 @Repository
 public class DashboardDAOImpl implements DashboardDAO
 {
-
-    /**
-     * 
-     */
-    private static Connection portalDBConnection = null;
-
-    public DashboardDAOImpl()
-    {
-        portalDBConnection = DBConnection.getPortalDBConnection();
-    }
+    public static final String CLASS_NAME = "DashboardDAOImpl";
     
     private Connection getPortalDbConnction()
     {
@@ -49,9 +41,9 @@ public class DashboardDAOImpl implements DashboardDAO
      * @see com.zig.pso.dao.DashboardDAO#getStuckOrderList()
      */
     @Override
-    public ArrayList<StuckOrdersCount> getStuckOrderList()
+    public List<StuckOrdersCount> getStuckOrderList()
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getStuckOrderList", "");
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getStuckOrderList", "");
 
         ArrayList<StuckOrdersCount> stuckOrderList = new ArrayList<StuckOrdersCount>();
         String sql = OrderQueries.getstuckOrdersCount();
@@ -75,20 +67,17 @@ public class DashboardDAOImpl implements DashboardDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderList", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderList", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderList", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderList", e);
             }
             if (pstm != null)
             {
@@ -98,7 +87,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderList", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderList", e);
                 }
             }
             if (rs != null)
@@ -109,7 +98,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderList", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderList", e);
                 }
             }
         }
@@ -122,9 +111,9 @@ public class DashboardDAOImpl implements DashboardDAO
      * @see com.zig.pso.dao.DashboardDAO#getStuckOrderList1()
      */
     @Override
-    public ArrayList<String> getStuckOrderList1(String status)
+    public List<String> getStuckOrderList1(String status)
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getStuckOrderList1", "status : " + status);
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getStuckOrderList1", "status : " + status);
 
         ArrayList<String> stuckOrderList = new ArrayList<String>();
         String sql = OrderQueries.getstuckOrdersbyStatus();
@@ -146,20 +135,17 @@ public class DashboardDAOImpl implements DashboardDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderList1", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderList1", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderList1", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderList1", e);
             }
             if (pstm != null)
             {
@@ -169,7 +155,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderList1", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderList1", e);
                 }
             }
             if (rs != null)
@@ -180,7 +166,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderList1", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderList1", e);
                 }
             }
         }
@@ -194,9 +180,9 @@ public class DashboardDAOImpl implements DashboardDAO
      * @see com.zig.pso.dao.DashboardDAO#getStuckOrderhandled()
      */
     @Override
-    public ArrayList<StuckOrdersCount> getStuckOrderhandled()
+    public List<StuckOrdersCount> getStuckOrderhandled()
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getStuckOrderhandled", "");
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getStuckOrderhandled", "");
 
         ArrayList<StuckOrdersCount> stuckOrderList = new ArrayList<StuckOrdersCount>();
         String sql = OrderQueries.getOrderHandled();
@@ -220,20 +206,17 @@ public class DashboardDAOImpl implements DashboardDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderhandled", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderhandled", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderhandled", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderhandled", e);
             }
             if (pstm != null)
             {
@@ -243,7 +226,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderhandled", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderhandled", e);
                 }
             }
             if (rs != null)
@@ -254,7 +237,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderhandled", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderhandled", e);
                 }
             }
         }
@@ -268,9 +251,9 @@ public class DashboardDAOImpl implements DashboardDAO
      * @see com.zig.pso.dao.DashboardDAO#getStuckOrderallStatus()
      */
     @Override
-    public ArrayList<StuckOrdersCount> getStuckOrderallStatus()
+    public List<StuckOrdersCount> getStuckOrderallStatus()
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getStuckOrderallStatus", "");
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getStuckOrderallStatus", "");
 
         ArrayList<StuckOrdersCount> stuckOrderList = new ArrayList<StuckOrdersCount>();
         String sql = OrderQueries.getstuckOrderStatusbyCount();
@@ -294,20 +277,17 @@ public class DashboardDAOImpl implements DashboardDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderallStatus", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderallStatus", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderallStatus", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderallStatus", e);
             }
             if (pstm != null)
             {
@@ -317,7 +297,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderallStatus", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderallStatus", e);
                 }
             }
             if (rs != null)
@@ -328,7 +308,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderallStatus", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderallStatus", e);
                 }
             }
         }
@@ -341,9 +321,9 @@ public class DashboardDAOImpl implements DashboardDAO
      * @see com.zig.pso.dao.DashboardDAO#getStuckOrderBackloagDetails()
      */
     @Override
-    public ArrayList<StuckOrderBacklogDBResultsBean> getStuckOrderBackloagDetails()
+    public List<StuckOrderBacklogDBResultsBean> getStuckOrderBackloagDetails()
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getStuckOrderBackloagDetails", "");
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getStuckOrderBackloagDetails", "");
 
         ArrayList<StuckOrderBacklogDBResultsBean> stuckOrderList = new ArrayList<StuckOrderBacklogDBResultsBean>();
         String sql = OrderQueries.getPortalStuckOrderBacklogInfoSQL();
@@ -368,20 +348,17 @@ public class DashboardDAOImpl implements DashboardDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderBackloagDetails", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderBackloagDetails", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderBackloagDetails", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderBackloagDetails", e);
             }
             if (pstm != null)
             {
@@ -391,7 +368,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderBackloagDetails", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderBackloagDetails", e);
                 }
             }
             if (rs != null)
@@ -402,7 +379,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getStuckOrderBackloagDetails", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getStuckOrderBackloagDetails", e);
                 }
             }
         }
@@ -415,7 +392,7 @@ public class DashboardDAOImpl implements DashboardDAO
     @Override
     public int getRegisteredOrdersCount(String type)
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getRegisteredOrdersCount", "");
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getRegisteredOrdersCount", "");
 
         String sql = OrderQueries.getRegisteredOrderCount();
         int count = 0;
@@ -442,20 +419,17 @@ public class DashboardDAOImpl implements DashboardDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getRegisteredOrdersCount", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getRegisteredOrdersCount", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getRegisteredOrdersCount", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getRegisteredOrdersCount", e);
             }
             if (pstm != null)
             {
@@ -465,7 +439,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getRegisteredOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getRegisteredOrdersCount", e);
                 }
             }
             if (rs != null)
@@ -476,7 +450,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getRegisteredOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getRegisteredOrdersCount", e);
                 }
             }
         }
@@ -487,7 +461,7 @@ public class DashboardDAOImpl implements DashboardDAO
     @Override
     public int getACTIorCNCLOrdersCount(String type)
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getACTIorCNCLOrdersCount", "");
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getACTIorCNCLOrdersCount", "");
 
         String sql = OrderQueries.getACTIorCNCLOrderCount();
         int count = 0;
@@ -512,20 +486,17 @@ public class DashboardDAOImpl implements DashboardDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getACTIorCNCLOrdersCount", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getACTIorCNCLOrdersCount", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getACTIorCNCLOrdersCount", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getACTIorCNCLOrdersCount", e);
             }
             if (pstm != null)
             {
@@ -535,7 +506,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getACTIorCNCLOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getACTIorCNCLOrdersCount", e);
                 }
             }
             if (rs != null)
@@ -546,7 +517,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getACTIorCNCLOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getACTIorCNCLOrdersCount", e);
                 }
             }
         }
@@ -557,7 +528,7 @@ public class DashboardDAOImpl implements DashboardDAO
     @Override
     public int getOrdersCount(String type)
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getOrdersCount", "");
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getOrdersCount", "");
 
         String sql = OrderQueries.getRegOrderCount();
         
@@ -584,20 +555,17 @@ public class DashboardDAOImpl implements DashboardDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrdersCount", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getOrdersCount", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrdersCount", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getOrdersCount", e);
             }
             if (pstm != null)
             {
@@ -607,7 +575,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOrdersCount", e);
                 }
             }
             if (rs != null)
@@ -618,7 +586,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOrdersCount", e);
                 }
             }
         }
@@ -629,7 +597,7 @@ public class DashboardDAOImpl implements DashboardDAO
     @Override
     public int getPrepurchaseOrdersCount()
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getPrepurchaseOrdersCount", "");
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getPrepurchaseOrdersCount", "");
 
         String sql = OrderQueries.getPrepurchaseOrderCount();
         
@@ -649,20 +617,17 @@ public class DashboardDAOImpl implements DashboardDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPrepurchaseOrdersCount", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getPrepurchaseOrdersCount", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPrepurchaseOrdersCount", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getPrepurchaseOrdersCount", e);
             }
             if (pstm != null)
             {
@@ -672,7 +637,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPrepurchaseOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getPrepurchaseOrdersCount", e);
                 }
             }
             if (rs != null)
@@ -683,7 +648,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPrepurchaseOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getPrepurchaseOrdersCount", e);
                 }
             }
         }
@@ -694,7 +659,7 @@ public class DashboardDAOImpl implements DashboardDAO
     @Override
     public int getByodOrdersCount()
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getByodOrdersCount", "");
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getByodOrdersCount", "");
 
         String sql = OrderQueries.getByodOrderCount();
         PreparedStatement pstm = null;
@@ -713,20 +678,17 @@ public class DashboardDAOImpl implements DashboardDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getByodOrdersCount", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getByodOrdersCount", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getByodOrdersCount", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getByodOrdersCount", e);
             }
             if (pstm != null)
             {
@@ -736,7 +698,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getByodOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getByodOrdersCount", e);
                 }
             }
             if (rs != null)
@@ -747,7 +709,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getByodOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getByodOrdersCount", e);
                 }
             }
         }
@@ -758,7 +720,7 @@ public class DashboardDAOImpl implements DashboardDAO
     @Override
     public int getSaveDeskOrdersCount()
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getSaveDeskOrdersCount", "");
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getSaveDeskOrdersCount", "");
 
         String sql = OrderQueries.getSaveDeskOrderCount();
         PreparedStatement pstm = null;
@@ -777,20 +739,17 @@ public class DashboardDAOImpl implements DashboardDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getSaveDeskOrdersCount", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getSaveDeskOrdersCount", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getSaveDeskOrdersCount", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getSaveDeskOrdersCount", e);
             }
             if (pstm != null)
             {
@@ -800,7 +759,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getSaveDeskOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getSaveDeskOrdersCount", e);
                 }
             }
             if (rs != null)
@@ -811,7 +770,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getSaveDeskOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getSaveDeskOrdersCount", e);
                 }
             }
         }
@@ -822,9 +781,9 @@ public class DashboardDAOImpl implements DashboardDAO
     // **************************************************************************************
     // Dynamic Graphs Methods
     @Override
-    public ArrayList<RegularOrdersCount> getOrdersCount(String fromDate, String toDate, String type)
+    public List<RegularOrdersCount> getOrdersCount(String fromDate, String toDate, String type)
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getOrdersCount ", "");
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getOrdersCount ", "");
 
         ArrayList<RegularOrdersCount> dynamicOrdersCountList = new ArrayList<RegularOrdersCount>();
 
@@ -850,20 +809,17 @@ public class DashboardDAOImpl implements DashboardDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrdersCount", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getOrdersCount", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrdersCount", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getOrdersCount", e);
             }
             if (pstm != null)
             {
@@ -873,7 +829,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOrdersCount", e);
                 }
             }
             if (rs != null)
@@ -884,7 +840,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOrdersCount", e);
                 }
             }
         }
@@ -893,9 +849,9 @@ public class DashboardDAOImpl implements DashboardDAO
     }
 
     @Override
-    public ArrayList<RegularOrdersCount> getByodOrdersCount(String fromDate, String toDate)
+    public List<RegularOrdersCount> getByodOrdersCount(String fromDate, String toDate)
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getByodOrdersCount ", "");
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getByodOrdersCount ", "");
 
         ArrayList<RegularOrdersCount> dynamicOrdersCountList = new ArrayList<RegularOrdersCount>();
 
@@ -920,20 +876,17 @@ public class DashboardDAOImpl implements DashboardDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getByodOrdersCount", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getByodOrdersCount", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getByodOrdersCount", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getByodOrdersCount", e);
             }
             if (pstm != null)
             {
@@ -943,7 +896,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getByodOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getByodOrdersCount", e);
                 }
             }
             if (rs != null)
@@ -954,7 +907,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getByodOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getByodOrdersCount", e);
                 }
             }
         }
@@ -963,9 +916,9 @@ public class DashboardDAOImpl implements DashboardDAO
     }
 
     @Override
-    public ArrayList<RegularOrdersCount> getPrepurchaseOrdersCount(String fromDate, String toDate)
+    public List<RegularOrdersCount> getPrepurchaseOrdersCount(String fromDate, String toDate)
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getPrepurchaseOrdersCount ", "");
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getPrepurchaseOrdersCount ", "");
 
         ArrayList<RegularOrdersCount> dynamicOrdersCountList = new ArrayList<RegularOrdersCount>();
 
@@ -990,20 +943,17 @@ public class DashboardDAOImpl implements DashboardDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPrepurchaseOrdersCount", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getPrepurchaseOrdersCount", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPrepurchaseOrdersCount", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getPrepurchaseOrdersCount", e);
             }
             if (pstm != null)
             {
@@ -1013,7 +963,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPrepurchaseOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getPrepurchaseOrdersCount", e);
                 }
             }
             if (rs != null)
@@ -1024,7 +974,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getPrepurchaseOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getPrepurchaseOrdersCount", e);
                 }
             }
         }
@@ -1033,9 +983,9 @@ public class DashboardDAOImpl implements DashboardDAO
     }
 
     @Override
-    public ArrayList<RegularOrdersCount> getSaveDeskOrdersCount(String fromDate, String toDate)
+    public List<RegularOrdersCount> getSaveDeskOrdersCount(String fromDate, String toDate)
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getSaveDeskOrdersCount ", "");
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getSaveDeskOrdersCount ", "");
 
         ArrayList<RegularOrdersCount> dynamicOrdersCountList = new ArrayList<RegularOrdersCount>();
 
@@ -1060,20 +1010,17 @@ public class DashboardDAOImpl implements DashboardDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getSaveDeskOrdersCount", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getSaveDeskOrdersCount", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getSaveDeskOrdersCount", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getSaveDeskOrdersCount", e);
             }
             if (pstm != null)
             {
@@ -1083,7 +1030,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getSaveDeskOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getSaveDeskOrdersCount", e);
                 }
             }
             if (rs != null)
@@ -1094,7 +1041,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getSaveDeskOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getSaveDeskOrdersCount", e);
                 }
             }
         }
@@ -1103,9 +1050,9 @@ public class DashboardDAOImpl implements DashboardDAO
     }
 
     @Override
-    public ArrayList<RegularOrdersCount> getACTIorCNCLOrdersCount(String fromDate, String toDate, String type)
+    public List<RegularOrdersCount> getACTIorCNCLOrdersCount(String fromDate, String toDate, String type)
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getACTIorCNCLOrdersCount ", "");
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getACTIorCNCLOrdersCount ", "");
 
         ArrayList<RegularOrdersCount> dynamicOrdersCountList = new ArrayList<RegularOrdersCount>();
 
@@ -1123,28 +1070,25 @@ public class DashboardDAOImpl implements DashboardDAO
             rs = pstm.executeQuery();
             while (rs.next())
             {
-                RegularOrdersCount DynamicOrdersCount = new RegularOrdersCount();
-                DynamicOrdersCount.setCount(rs.getInt("count"));
-                DynamicOrdersCount.setDate(rs.getString("CREATION_DATE"));
-                dynamicOrdersCountList.add(DynamicOrdersCount);
+                RegularOrdersCount dynamicOrdersCount = new RegularOrdersCount();
+                dynamicOrdersCount.setCount(rs.getInt("count"));
+                dynamicOrdersCount.setDate(rs.getString("CREATION_DATE"));
+                dynamicOrdersCountList.add(dynamicOrdersCount);
             }
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getACTIorCNCLOrdersCount", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getACTIorCNCLOrdersCount", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getACTIorCNCLOrdersCount", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getACTIorCNCLOrdersCount", e);
             }
             if (pstm != null)
             {
@@ -1154,7 +1098,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getACTIorCNCLOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getACTIorCNCLOrdersCount", e);
                 }
             }
             if (rs != null)
@@ -1165,7 +1109,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getACTIorCNCLOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getACTIorCNCLOrdersCount", e);
                 }
             }
         }
@@ -1174,9 +1118,9 @@ public class DashboardDAOImpl implements DashboardDAO
     }
 
     @Override
-    public ArrayList<RegularOrdersCount> getRegisteredOrdersCount(String fromDate, String toDate, String type)
+    public List<RegularOrdersCount> getRegisteredOrdersCount(String fromDate, String toDate, String type)
     {
-        PSOLoggerSrv.printDEBUG("DashboardDAOImpl", "getRegisteredOrdersCount ", "");
+        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getRegisteredOrdersCount ", "");
 
         ArrayList<RegularOrdersCount> dynamicOrdersCountList = new ArrayList<RegularOrdersCount>();
 
@@ -1195,28 +1139,25 @@ public class DashboardDAOImpl implements DashboardDAO
             rs = pstm.executeQuery();
             while (rs.next())
             {
-                RegularOrdersCount DynamicOrdersCount = new RegularOrdersCount();
-                DynamicOrdersCount.setCount(rs.getInt("count"));
-                DynamicOrdersCount.setDate(rs.getString("SYS_CREATION_DATE"));
-                dynamicOrdersCountList.add(DynamicOrdersCount);
+                RegularOrdersCount dynamicOrdersCount = new RegularOrdersCount();
+                dynamicOrdersCount.setCount(rs.getInt("count"));
+                dynamicOrdersCount.setDate(rs.getString("SYS_CREATION_DATE"));
+                dynamicOrdersCountList.add(dynamicOrdersCount);
             }
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("DashboardDAOImpl", "getRegisteredOrdersCount", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getRegisteredOrdersCount", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getRegisteredOrdersCount", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getRegisteredOrdersCount", e);
             }
             if (pstm != null)
             {
@@ -1226,7 +1167,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getRegisteredOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getRegisteredOrdersCount", e);
                 }
             }
             if (rs != null)
@@ -1237,7 +1178,7 @@ public class DashboardDAOImpl implements DashboardDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getRegisteredOrdersCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getRegisteredOrdersCount", e);
                 }
             }
         }

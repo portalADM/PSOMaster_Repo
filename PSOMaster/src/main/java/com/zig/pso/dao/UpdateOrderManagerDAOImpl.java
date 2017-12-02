@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -35,6 +36,7 @@ import com.zig.pso.utility.OrderQueries;
 @Repository
 public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
 {
+    public static final String CLASS_NAME = "UpdateOrderManagerDAOImpl";
     
     @Autowired
     OrderInfoManagerDAO orderDAO;
@@ -92,27 +94,24 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 updateOrderRes.setLogRefId(logRefID);
             }
             
-            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateOrderStatus", logRefID, sql,updateOrderRequest, updateOrderRes.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "updateOrderStatus", logRefID, sql,updateOrderRequest, updateOrderRes.getErrorMsg());
         }
         catch (SQLException e)
         {
             updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
             updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
             updateOrderRes.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateOrderStatus", logRefID, sql,updateOrderRequest, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "updateOrderStatus", logRefID, sql,updateOrderRequest, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderStatus", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "updateOrderStatus", e);
             }
             if (pstm != null)
             {
@@ -122,7 +121,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderStatus", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "updateOrderStatus", e);
                 }
             }
         }
@@ -169,7 +168,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 updateOrderRes.setLogRefId(logRefID);
             }
             
-            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateOrderSim", logRefID, sql,updateOrderRequest, updateOrderRes.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "updateOrderSim", logRefID, sql,updateOrderRequest, updateOrderRes.getErrorMsg());
             
         }
         catch (SQLException e)
@@ -177,20 +176,17 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
             updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
             updateOrderRes.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateOrderSim", logRefID, sql,updateOrderRequest, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "updateOrderSim", logRefID, sql,updateOrderRequest, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderSim", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "updateOrderSim", e);
             }
             if (pstm != null)
             {
@@ -200,7 +196,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderSim", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "updateOrderSim", e);
                 }
             }
         }
@@ -248,7 +244,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 updateOrderRes.setLogRefId(logRefID);
             }
             
-            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateOrderImei", logRefID,sql,updateOrderRequest, updateOrderRes.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "updateOrderImei", logRefID,sql,updateOrderRequest, updateOrderRes.getErrorMsg());
         }
         catch (SQLException e)
         {
@@ -256,20 +252,17 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
             updateOrderRes.setLogRefId(logRefID);
             
-            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateOrderImei", logRefID, sql,updateOrderRequest, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "updateOrderImei", logRefID, sql,updateOrderRequest, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderImei", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "updateOrderImei", e);
             }
             if (pstm != null)
             {
@@ -279,7 +272,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderImei", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "updateOrderImei", e);
                 }
             }
         }
@@ -325,7 +318,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 updateOrderRes.setLogRefId(logRefID);
             }
             
-            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateOrderRetryCount", logRefID,sql,updateOrderRequest, updateOrderRes.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "updateOrderRetryCount", logRefID,sql,updateOrderRequest, updateOrderRes.getErrorMsg());
         }
         catch (SQLException e)
         {
@@ -333,20 +326,17 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
             updateOrderRes.setLogRefId(logRefID);
             
-            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateOrderRetryCount", logRefID, sql,updateOrderRequest, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "updateOrderRetryCount", logRefID, sql,updateOrderRequest, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderRetryCount", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "updateOrderRetryCount", e);
             }
             if (pstm != null)
             {
@@ -356,7 +346,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderRetryCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "updateOrderRetryCount", e);
                 }
             }
         }
@@ -401,24 +391,21 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 updateOrderRes.setLogRefId(logRefId);
             }
             
-            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateOrderTrack", logRefId,sql,updateOrderRequest, updateOrderRes.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "updateOrderTrack", logRefId,sql,updateOrderRequest, updateOrderRes.getErrorMsg());
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateOrderTrack", logRefId, sql,updateOrderRequest, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "updateOrderTrack", logRefId, sql,updateOrderRequest, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderTrack", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "updateOrderTrack", e);
             }
             if (pstm != null)
             {
@@ -428,7 +415,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateOrderTrack", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "updateOrderTrack", e);
                 }
             }
         }
@@ -444,7 +431,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
      * @see com.zig.pso.dao.UpdateOrderManagerDAO#updateBulkOrderStatus(java.util.ArrayList)
      */
     @Override
-    public BaseResponseBean updateBulkOrderStatus(ArrayList<OrderUpdateInputData> orderUpdateData)
+    public BaseResponseBean updateBulkOrderStatus(List<OrderUpdateInputData> orderUpdateData)
     {
         BaseResponseBean updateOrderRes = new BaseResponseBean();
         String logRefID = CommonUtility.getLogRefID();
@@ -466,7 +453,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             }
 
             int[] recordsUpdated = pstm.executeBatch();
-            if (recordsUpdated.length < 0)
+            if (recordsUpdated.length == 0)
             {
                 updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
                 updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
@@ -479,7 +466,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 updateOrderRes.setLogRefId(logRefID);
             }
             
-            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateBulkOrderStatus", logRefID,sql,orderUpdateData, updateOrderRes.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "updateBulkOrderStatus", logRefID,sql,orderUpdateData, updateOrderRes.getErrorMsg());
         }
         catch (SQLException e)
         {
@@ -487,20 +474,17 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
             updateOrderRes.setLogRefId(logRefID);
             
-            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateBulkOrderStatus", logRefID, sql,orderUpdateData, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "updateBulkOrderStatus", logRefID, sql,orderUpdateData, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderStatus", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "updateBulkOrderStatus", e);
             }
             if (pstm != null)
             {
@@ -510,7 +494,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderStatus", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "updateBulkOrderStatus", e);
                 }
             }
         }
@@ -524,7 +508,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
      * @see com.zig.pso.dao.UpdateOrderManagerDAO#updateBulkOrderSim(java.util.ArrayList)
      */
     @Override
-    public BaseResponseBean updateBulkOrderSim(ArrayList<OrderUpdateInputData> orderUpdateData)
+    public BaseResponseBean updateBulkOrderSim(List<OrderUpdateInputData> orderUpdateData)
     {
         BaseResponseBean updateOrderRes = new BaseResponseBean();
         String logRefID = CommonUtility.getLogRefID();
@@ -546,7 +530,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             }
 
             int[] recordsUpdated = pstm.executeBatch();
-            if (recordsUpdated.length < 0)
+            if (recordsUpdated.length == 0)
             {
                 updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
                 updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
@@ -559,7 +543,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 updateOrderRes.setLogRefId(logRefID);
             }
             
-            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateBulkOrderSim", logRefID,sql,orderUpdateData, updateOrderRes.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "updateBulkOrderSim", logRefID,sql,orderUpdateData, updateOrderRes.getErrorMsg());
         }
         catch (SQLException e)
         {
@@ -567,20 +551,17 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
             updateOrderRes.setLogRefId(logRefID);
             
-            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateBulkOrderSim", logRefID, sql,orderUpdateData, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "updateBulkOrderSim", logRefID, sql,orderUpdateData, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderSim", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "updateBulkOrderSim", e);
             }
             if (pstm != null)
             {
@@ -590,7 +571,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderSim", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "updateBulkOrderSim", e);
                 }
             }
         }
@@ -604,7 +585,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
      * @see com.zig.pso.dao.UpdateOrderManagerDAO#updateBulkOrderImei(java.util.ArrayList)
      */
     @Override
-    public BaseResponseBean updateBulkOrderImei(ArrayList<OrderUpdateInputData> orderUpdateData)
+    public BaseResponseBean updateBulkOrderImei(List<OrderUpdateInputData> orderUpdateData)
     {
         BaseResponseBean updateOrderRes = new BaseResponseBean();
         String logRefID = CommonUtility.getLogRefID();
@@ -627,7 +608,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             }
 
             int[] recordsUpdated = pstm.executeBatch();
-            if (recordsUpdated.length < 0)
+            if (recordsUpdated.length == 0)
             {
                 updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
                 updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
@@ -640,7 +621,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 updateOrderRes.setLogRefId(logRefID);
             }
             
-            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateBulkOrderImei", logRefID,sql,orderUpdateData, updateOrderRes.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "updateBulkOrderImei", logRefID,sql,orderUpdateData, updateOrderRes.getErrorMsg());
         }
         catch (SQLException e)
         {
@@ -648,20 +629,17 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
             updateOrderRes.setLogRefId(logRefID);
             
-            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateBulkOrderImei", logRefID, sql,orderUpdateData, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "updateBulkOrderImei", logRefID, sql,orderUpdateData, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderImei", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "updateBulkOrderImei", e);
             }
             if (pstm != null)
             {
@@ -671,7 +649,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderImei", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "updateBulkOrderImei", e);
                 }
             }
         }
@@ -685,7 +663,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
      * @see com.zig.pso.dao.UpdateOrderManagerDAO#updateBulkOrderRetryCount(java.util.ArrayList)
      */
     @Override
-    public BaseResponseBean updateBulkOrderRetryCount(ArrayList<OrderUpdateInputData> orderUpdateData)
+    public BaseResponseBean updateBulkOrderRetryCount(List<OrderUpdateInputData> orderUpdateData)
     {
         BaseResponseBean updateOrderRes = new BaseResponseBean();
         String logRefID = CommonUtility.getLogRefID();
@@ -708,7 +686,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             }
 
             int[] recordsUpdated = pstm.executeBatch();
-            if (recordsUpdated.length < 0)
+            if (recordsUpdated.length == 0)
             {
                 updateOrderRes.setErrorCode(PSOConstants.ERROR_CODE);
                 updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
@@ -721,7 +699,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 updateOrderRes.setLogRefId(logRefID);
             }
             
-            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateBulkOrderRetryCount", logRefID,sql,orderUpdateData, updateOrderRes.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "updateBulkOrderRetryCount", logRefID,sql,orderUpdateData, updateOrderRes.getErrorMsg());
         }
         catch (SQLException e)
         {
@@ -729,20 +707,17 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             updateOrderRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
             updateOrderRes.setLogRefId(logRefID);
             
-            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateBulkOrderRetryCount", logRefID, sql,orderUpdateData, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "updateBulkOrderRetryCount", logRefID, sql,orderUpdateData, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderRetryCount", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "updateBulkOrderRetryCount", e);
             }
             if (pstm != null)
             {
@@ -752,7 +727,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderRetryCount", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "updateBulkOrderRetryCount", e);
                 }
             }
         }
@@ -781,7 +756,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             createTempTableResp.setErrorMsg(PSOConstants.BULK_UPDATE_SUCCESS);
             createTempTableResp.setLogRefId(logRefID);
             
-            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "createTempTableForBulkUpdate", logRefID,sql,"Creating Temp table for Bulk update", createTempTableResp.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "createTempTableForBulkUpdate", logRefID,sql,"Creating Temp table for Bulk update", createTempTableResp.getErrorMsg());
         }
         catch (SQLException e)
         {
@@ -789,20 +764,17 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             createTempTableResp.setErrorMsg(PSOConstants.BACKEND_ERROR);
             createTempTableResp.setLogRefId(logRefID);
             
-            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "createTempTableForBulkUpdate", logRefID, sql,"Creating Temp table for Bulk update", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "createTempTableForBulkUpdate", logRefID, sql,"Creating Temp table for Bulk update", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "createTempTableForBulkUpdate", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "createTempTableForBulkUpdate", e);
             }
             if (pstm != null)
             {
@@ -812,7 +784,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "createTempTableForBulkUpdate", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "createTempTableForBulkUpdate", e);
                 }
             }
         }
@@ -824,7 +796,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
      * @see com.zig.pso.dao.UpdateOrderManagerDAO#insertBulkOrderDataInTempTable(java.util.ArrayList)
      */
     @Override
-    public TempInsertBUResponse insertBulkOrderDataInTempTable(ArrayList<OrderUpdateInputData> orderUpdateData)
+    public TempInsertBUResponse insertBulkOrderDataInTempTable(List<OrderUpdateInputData> orderUpdateData)
     {
         TempInsertBUResponse insertDataInTempTableResp = new TempInsertBUResponse();
         String logRefID = CommonUtility.getLogRefID();
@@ -854,7 +826,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             }
 
             int[] recordsInserted = pstm.executeBatch();
-            if (recordsInserted.length < 0)
+            if (recordsInserted.length == 0)
             {
                 insertDataInTempTableResp.setErrorCode(PSOConstants.ERROR_CODE);
                 insertDataInTempTableResp.setErrorMsg(PSOConstants.BACKEND_ERROR);
@@ -867,7 +839,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 insertDataInTempTableResp.setLogRefId(logRefID);
             }
             
-            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "insertBulkOrderDataInTempTable", logRefID,sql,orderUpdateData, insertDataInTempTableResp.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "insertBulkOrderDataInTempTable", logRefID,sql,orderUpdateData, insertDataInTempTableResp.getErrorMsg());
         }
         catch (SQLException e)
         {
@@ -875,20 +847,17 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             insertDataInTempTableResp.setErrorMsg(PSOConstants.BACKEND_ERROR);
             insertDataInTempTableResp.setLogRefId(logRefID);
             
-            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "insertBulkOrderDataInTempTable", logRefID, sql,orderUpdateData, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "insertBulkOrderDataInTempTable", logRefID, sql,orderUpdateData, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "insertBulkOrderDataInTempTable", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "insertBulkOrderDataInTempTable", e);
             }
             if (pstm != null)
             {
@@ -898,7 +867,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "insertBulkOrderDataInTempTable", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "insertBulkOrderDataInTempTable", e);
                 }
             }
         }
@@ -911,7 +880,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
      * @see com.zig.pso.dao.UpdateOrderManagerDAO#getBulkOrderDataFromTempTable(java.lang.String)
      */
     @Override
-    public ArrayList<OrderUpdateInputData> getBulkOrderDataFromTempTable(String bulkUpdateId)
+    public List<OrderUpdateInputData> getBulkOrderDataFromTempTable(String bulkUpdateId)
     {
         ArrayList<OrderUpdateInputData> tempTableDataList = new ArrayList<OrderUpdateInputData>();
         OrderUpdateInputData orderData = null;
@@ -942,20 +911,17 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "getBulkOrderDataFromTempTable", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getBulkOrderDataFromTempTable", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getBulkOrderDataFromTempTable", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getBulkOrderDataFromTempTable", e);
             }
             if (pstm != null)
             {
@@ -965,7 +931,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getBulkOrderDataFromTempTable", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getBulkOrderDataFromTempTable", e);
                 }
             }
             if (rs != null)
@@ -976,7 +942,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "getBulkOrderDataFromTempTable", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getBulkOrderDataFromTempTable", e);
                 }
             }
         }
@@ -990,28 +956,21 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
     @Override
     public BaseResponseBean updateMultiOrderDetails(UpdateMultiOrderDetailsRequestBean updateOrderRequest)
     {
-        String SQL = "UPDATE <TABLE_NAME> SET <UPDATE_COLUMN_DATA> WHERE <CONDITION_CLAUSE>";
-        SQL = SQL.replace("<TABLE_NAME>", updateOrderRequest.getTabName());
+        String sql = "UPDATE <TABLE_NAME> SET <UPDATE_COLUMN_DATA> WHERE <CONDITION_CLAUSE>";
+        sql = sql.replace("<TABLE_NAME>", updateOrderRequest.getTabName());
         
         String aaa = "";
         for(ColumnDataListBean col : updateOrderRequest.getColData()){
             aaa = aaa + col.getColName() + " = '" + col.getColValue() + "', ";
         }
         String bbb = aaa;
-        System.out.println(aaa);
-        System.out.println(aaa.substring(0, aaa.length()-1));
         String finalcolData = bbb.substring(0, bbb.length()-1);
-        System.out.println(finalcolData);
-        SQL = SQL.replace("<UPDATE_COLUMN_DATA>", finalcolData);
+        sql = sql.replace("<UPDATE_COLUMN_DATA>", finalcolData);
         
         String aaa2 = "STATUS_CODE = 'PDRS', RETRY = '0',";
-        System.out.println(aaa2.substring(0, aaa2.length()-1));
         
         String conditionData = " ORDER_ID = " + updateOrderRequest.getOrderId();
-        SQL = SQL.replace("<CONDITION_CLAUSE>", conditionData);
-        
-        
-        System.out.println(SQL);
+        sql = sql.replace("<CONDITION_CLAUSE>", conditionData);
         
         return null;
     }
@@ -1020,7 +979,6 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
     public static void main(String[] args)
     {
         String aaa = "STATUS_CODE = 'PDRS', RETRY = '0',";
-        System.out.println(aaa.substring(0, aaa.length()-1));
     }
 
     /* (non-Javadoc)
@@ -1060,24 +1018,21 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 response.setErrorCode(PSOConstants.ERROR_CODE);
                 response.setErrorMsg(PSOConstants.BULK_UPDATE_FAILURE);
             }
-            PSOLoggerSrv.printSQL_DEBUG("UpdateOrderManagerDAOImpl", "updateBulkOrderDetails", logRefID,sql,bulkUpdateId, errorMessage);
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "updateBulkOrderDetails", logRefID,sql,bulkUpdateId, errorMessage);
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR("UpdateOrderManagerDAOImpl", "updateBulkOrderDetails", logRefID,sql,bulkUpdateId, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "updateBulkOrderDetails", logRefID,sql,bulkUpdateId, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderDetails", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "updateBulkOrderDetails", e);
             }
             if (callableStatement != null)
             {
@@ -1087,7 +1042,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("DashboardDAOImpl", "updateBulkOrderDetails", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "updateBulkOrderDetails", e);
                 }
             }
         }

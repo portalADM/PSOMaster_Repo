@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -31,6 +32,8 @@ import com.zig.pso.utility.OrderQueries;
 @Repository
 public class GroupDAOImpl implements GroupDAO
 {
+    public static final String CLASS_NAME = "GroupDAOImpl";
+    
     public GroupDAOImpl()
     {
         super();
@@ -45,7 +48,7 @@ public class GroupDAOImpl implements GroupDAO
      * @see com.zig.pso.dao.GroupDAO#getRoleList()
      */
     @Override
-    public ArrayList<RoleMaster> getRoleList()
+    public List<RoleMaster> getRoleList()
     {
         ArrayList<RoleMaster> roleList = new ArrayList<RoleMaster>();
         String sql = OrderQueries.getRoleList();
@@ -65,20 +68,17 @@ public class GroupDAOImpl implements GroupDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR("GroupDAOImpl", "getRoleList", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getRoleList", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("GroupDAOImpl", "getRoleList", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getRoleList", e);
             }
             if (pstm != null)
             {
@@ -88,7 +88,7 @@ public class GroupDAOImpl implements GroupDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("GroupDAOImpl", "getRoleList", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getRoleList", e);
                 }
             }
             if (rs != null)
@@ -99,7 +99,7 @@ public class GroupDAOImpl implements GroupDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("GroupDAOImpl", "getRoleList", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getRoleList", e);
                 }
             }
         }
@@ -143,27 +143,24 @@ public class GroupDAOImpl implements GroupDAO
                 addGroupResp.setLogRefId(logRefID);
             }
             
-            PSOLoggerSrv.printSQL_DEBUG("GroupDAOImpl", "addGroup", logRefID, sql,group, addGroupResp.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "addGroup", logRefID, sql,group, addGroupResp.getErrorMsg());
         }
         catch (SQLException e)
         {
             addGroupResp.setErrorCode(PSOConstants.ERROR_CODE);
             addGroupResp.setErrorMsg(PSOConstants.BACKEND_ERROR);
             addGroupResp.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR("GroupDAOImpl", "addGroup", logRefID, sql,group, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "addGroup", logRefID, sql,group, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("GroupDAOImpl", "addGroup", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "addGroup", e);
             }
             if (pstm != null)
             {
@@ -173,7 +170,7 @@ public class GroupDAOImpl implements GroupDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("GroupDAOImpl", "addGroup", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "addGroup", e);
                 }
             }
         }
@@ -217,27 +214,24 @@ public class GroupDAOImpl implements GroupDAO
                 updateGroupResp.setLogRefId(logRefID);
             }
             
-            PSOLoggerSrv.printSQL_DEBUG("GroupDAOImpl", "updateGroup", logRefID, sql,group, updateGroupResp.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "updateGroup", logRefID, sql,group, updateGroupResp.getErrorMsg());
         }
         catch (SQLException e)
         {
             updateGroupResp.setErrorCode(PSOConstants.ERROR_CODE);
             updateGroupResp.setErrorMsg(PSOConstants.BACKEND_ERROR);
             updateGroupResp.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR("GroupDAOImpl", "updateGroup", logRefID, sql,group, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "updateGroup", logRefID, sql,group, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("GroupDAOImpl", "updateGroup", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "updateGroup", e);
             }
             if (pstm != null)
             {
@@ -247,7 +241,7 @@ public class GroupDAOImpl implements GroupDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("GroupDAOImpl", "updateGroup", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "updateGroup", e);
                 }
             }
         }
@@ -259,7 +253,7 @@ public class GroupDAOImpl implements GroupDAO
      * @see com.zig.pso.dao.GroupDAO#getGroupList()
      */
     @Override
-    public ArrayList<GroupMaster> getGroupList()
+    public List<GroupMaster> getGroupList()
     {
         ArrayList<GroupMaster> groupList = new ArrayList<GroupMaster>();
         String sql = OrderQueries.getGroupList();
@@ -279,20 +273,17 @@ public class GroupDAOImpl implements GroupDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR("GroupDAOImpl", "getGroupList", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getGroupList", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("GroupDAOImpl", "getGroupList", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getGroupList", e);
             }
             if (pstm != null)
             {
@@ -302,7 +293,7 @@ public class GroupDAOImpl implements GroupDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("GroupDAOImpl", "getGroupList", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getGroupList", e);
                 }
             }
             if (rs != null)
@@ -313,7 +304,7 @@ public class GroupDAOImpl implements GroupDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("GroupDAOImpl", "getGroupList", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getGroupList", e);
                 }
             }
         }
@@ -353,27 +344,24 @@ public class GroupDAOImpl implements GroupDAO
                 deleteGroupResp.setLogRefId(logRefID);
             }
             
-            PSOLoggerSrv.printSQL_DEBUG("GroupDAOImpl", "deleteGroup", logRefID, sql,groupId, deleteGroupResp.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "deleteGroup", logRefID, sql,groupId, deleteGroupResp.getErrorMsg());
         }
         catch (SQLException e)
         {
             deleteGroupResp.setErrorCode(PSOConstants.ERROR_CODE);
             deleteGroupResp.setErrorMsg(PSOConstants.BACKEND_ERROR);
             deleteGroupResp.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR("GroupDAOImpl", "deleteGroup", logRefID, sql,groupId, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "deleteGroup", logRefID, sql,groupId, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("GroupDAOImpl", "deleteGroup", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "deleteGroup", e);
             }
             if (pstm != null)
             {
@@ -383,7 +371,7 @@ public class GroupDAOImpl implements GroupDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("GroupDAOImpl", "deleteGroup", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "deleteGroup", e);
                 }
             }
         }

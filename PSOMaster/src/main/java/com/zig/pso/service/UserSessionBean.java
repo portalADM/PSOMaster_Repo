@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.UserMaster;
 
 @Component(value = "sessionBean")
@@ -51,7 +52,7 @@ public class UserSessionBean implements Serializable
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                PSOLoggerSrv.printERROR("UserSessionBean", "getUserDetail", e);
             }
             return loggedInUserDetail;
         }

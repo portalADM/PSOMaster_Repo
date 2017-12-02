@@ -54,7 +54,7 @@ public class PSOLoggerSrv
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            psoLogger.error("PSOLoggerSrv", e);
         }
     }
 

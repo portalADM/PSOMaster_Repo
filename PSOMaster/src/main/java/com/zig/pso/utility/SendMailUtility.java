@@ -20,7 +20,6 @@ public class SendMailUtility
     private static final String DEBUG_TRUE = "true";
     private static final boolean SESSION_DEBUG = true;
     private static final String USERNAME = "";
-    private static final String PASSWORD = "";
 
     /**
      * @param emailRequest

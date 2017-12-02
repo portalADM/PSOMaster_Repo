@@ -11,6 +11,8 @@ package com.zig.pso.utility;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.zig.pso.logging.PSOLoggerSrv;
+
 public class PropertyReader
 {
     /* Database properties */
@@ -24,6 +26,9 @@ public class PropertyReader
 
     /* Order SQL properties */
     private static Properties sqlProperties = null;
+    
+    /* Log4j properties */
+    private static Properties log4jProperties = null;
 
     static
     {
@@ -38,7 +43,7 @@ public class PropertyReader
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            PSOLoggerSrv.printERROR("PropertyReader", "Load Database properties", e);
         }
 
         /*
@@ -51,7 +56,7 @@ public class PropertyReader
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            PSOLoggerSrv.printERROR("PropertyReader", "Load Application properties", e);
         }
 
         /*
@@ -64,7 +69,7 @@ public class PropertyReader
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            PSOLoggerSrv.printERROR("PropertyReader", "Load Admin properties", e);
         }
 
         /*
@@ -77,7 +82,20 @@ public class PropertyReader
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            PSOLoggerSrv.printERROR("PropertyReader", "Load SQL properties", e);
+        }
+        
+        /*
+         * Log4j properties
+         */
+        try
+        {
+            log4jProperties = new Properties();
+            log4jProperties.load(PropertyReader.class.getClassLoader().getResourceAsStream("/log4j.properties"));
+        }
+        catch (IOException e)
+        {
+            PSOLoggerSrv.printERROR("PropertyReader", "Log4j properties", e);
         }
     }
 
@@ -111,6 +129,14 @@ public class PropertyReader
     public static Properties getSqlProperties()
     {
         return sqlProperties;
+    }
+    
+    /**
+     * @return the log4jProperties
+     */
+    public static Properties getlog4jProperties()
+    {
+        return log4jProperties;
     }
 
 }

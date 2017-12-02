@@ -8,7 +8,6 @@
 package com.zig.pso.rest.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PortalOrderMasterResponseBean extends BaseResponseBean implements Serializable
@@ -27,12 +26,12 @@ public class PortalOrderMasterResponseBean extends BaseResponseBean implements S
 
     //private PortalShipmentInfoForUI portalShipmentInfo;
     
-    private ArrayList<PortalShipmentInfo> portalShipmentInfo;
+    private List<PortalShipmentInfo> portalShipmentInfo;
     
     /**
      * @return the portalShipmentInfo
      */
-    public ArrayList<PortalShipmentInfo> getPortalShipmentInfo()
+    public List<PortalShipmentInfo> getPortalShipmentInfo()
     {
         return portalShipmentInfo;
     }
@@ -40,7 +39,7 @@ public class PortalOrderMasterResponseBean extends BaseResponseBean implements S
     /**
      * @param portalShipmentInfo the portalShipmentInfo to set
      */
-    public void setPortalShipmentInfo(ArrayList<PortalShipmentInfo> portalShipmentInfo)
+    public void setPortalShipmentInfo(List<PortalShipmentInfo> portalShipmentInfo)
     {
         this.portalShipmentInfo = portalShipmentInfo;
     }

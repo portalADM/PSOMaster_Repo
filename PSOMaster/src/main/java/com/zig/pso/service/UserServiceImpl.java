@@ -118,7 +118,7 @@ public class UserServiceImpl implements IUserService
      * @see com.zig.pso.service.IUserService#getPendingApprovalUserList()
      */
     @Override
-    public ArrayList<UserMaster> getPendingApprovalUserList()
+    public List<UserMaster> getPendingApprovalUserList()
     {
         return userDAO.getUserPendingApprovalList();
     }
@@ -185,7 +185,7 @@ public class UserServiceImpl implements IUserService
      * @see com.zig.pso.service.IUserService#getUserList()
      */
     @Override
-    public ArrayList<UserMaster> getUserList(UserSearchRequestBean userSearchReq)
+    public List<UserMaster> getUserList(UserSearchRequestBean userSearchReq)
     {
         return userDAO.getUserList(userSearchReq);
     }
@@ -212,12 +212,12 @@ public class UserServiceImpl implements IUserService
     
     public Mail getEmailTemlateForSetupPassword(UserMaster user,String urlToSetupPassword)
     {
-        String emailContent = PSOConstants.SETUP_PASSWORD_EMAIL_CONTENT;
+        String emailContent = PSOConstants.SETUP_PW_EMAIL_CONTENT;
         
         emailContent = emailContent.replace(PSOConstants.EMAIL_TEMPLATE_USERNAME, user.getFirstName() +" "+user.getLastName())
         .replace(PSOConstants.EMAIL_TEMPLATE_EMPID, user.getEmpId())
         .replace(PSOConstants.EMAIL_TEMPLATE_EMAILID, user.getEmail())
-        .replace(PSOConstants.EMAIL_TEMPLATE_TEMP_PASSWORD, user.getTempPassword())
+        .replace(PSOConstants.EMAIL_TEMPLATE_TEMP_PW, user.getTempPassword())
         .replace(PSOConstants.EMAIL_TEMPLATE_SETUP_PW_URL, urlToSetupPassword);
         
         
@@ -228,7 +228,7 @@ public class UserServiceImpl implements IUserService
         Mail mail = new Mail();
         mail.setMailFrom(PSOConstants.EMAIL_SEND_FROM);
         mail.setMailTo(mailList);
-        mail.setMailSubject(PSOConstants.SETUP_PASSWORD_EMAIL_SUBJECT);
+        mail.setMailSubject(PSOConstants.SETUP_PW_EMAIL_SUBJECT);
         mail.setMailContent(emailContent);
         
         return mail;
@@ -262,7 +262,7 @@ public class UserServiceImpl implements IUserService
         } else
         {
             response.setErrorCode(PSOConstants.ERROR_CODE);
-            response.setErrorMsg(PSOConstants.CURRENT_PASSWORD_WRONG);
+            response.setErrorMsg(PSOConstants.CURRENT_PW_WRONG);
             return response;
         }
     }

@@ -8,7 +8,7 @@
  */
 package com.zig.pso.dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.OrderUpdateInputData;
@@ -30,17 +30,17 @@ public interface UpdateOrderManagerDAO
 
     public BaseResponseBean updateOrderRetryCount(UpdateOrderRequestBean updateOrderRequest);
 
-    public BaseResponseBean updateBulkOrderStatus(ArrayList<OrderUpdateInputData> orderUpdateData);
+    public BaseResponseBean updateBulkOrderStatus(List<OrderUpdateInputData> orderUpdateData);
 
-    public BaseResponseBean updateBulkOrderSim(ArrayList<OrderUpdateInputData> orderUpdateData);
+    public BaseResponseBean updateBulkOrderSim(List<OrderUpdateInputData> orderUpdateData);
 
-    public BaseResponseBean updateBulkOrderImei(ArrayList<OrderUpdateInputData> orderUpdateData);
+    public BaseResponseBean updateBulkOrderImei(List<OrderUpdateInputData> orderUpdateData);
 
-    public BaseResponseBean updateBulkOrderRetryCount(ArrayList<OrderUpdateInputData> orderUpdateData);
+    public BaseResponseBean updateBulkOrderRetryCount(List<OrderUpdateInputData> orderUpdateData);
     
-    public TempInsertBUResponse insertBulkOrderDataInTempTable(ArrayList<OrderUpdateInputData> orderUpdateData);
+    public TempInsertBUResponse insertBulkOrderDataInTempTable(List<OrderUpdateInputData> orderUpdateData);
     
-    public ArrayList<OrderUpdateInputData> getBulkOrderDataFromTempTable(String bulkUpdateId);
+    public List<OrderUpdateInputData> getBulkOrderDataFromTempTable(String bulkUpdateId);
     
     public BaseResponseBean updateMultiOrderDetails(UpdateMultiOrderDetailsRequestBean updateOrderRequest);
     

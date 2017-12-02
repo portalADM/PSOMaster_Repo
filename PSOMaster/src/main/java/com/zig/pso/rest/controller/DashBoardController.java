@@ -12,7 +12,7 @@
 
 package com.zig.pso.rest.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,18 +54,18 @@ public class DashBoardController
         
         System.out.println(userSession.getLoggedInUserDetail());
 
-        ArrayList<StuckOrdersCount> stuckOrderCountList = dashboardService.getStuckOrderList();
+        List<StuckOrdersCount> stuckOrderCountList = dashboardService.getStuckOrderList();
         stuckOrdersList.setStuckOrderList(stuckOrderCountList);
         return new ResponseEntity<StuckOrderDetailResponse>(stuckOrdersList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/stuckOrderList/{status}", method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<String>> getStuckOrders(@PathVariable("status") String status)
+    public ResponseEntity<List<String>> getStuckOrders(@PathVariable("status") String status)
     {
         PSOLoggerSrv.printDEBUG("DashBoardController", "getStuckOrders", "status : " + status);
 
-        ArrayList<String> stuckOrderCountList = dashboardService.getStuckOrders(status);
-        return new ResponseEntity<ArrayList<String>>(stuckOrderCountList, HttpStatus.OK);
+        List<String> stuckOrderCountList = dashboardService.getStuckOrders(status);
+        return new ResponseEntity<List<String>>(stuckOrderCountList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/stuckOrderHandled", method = RequestMethod.GET)
@@ -75,7 +75,7 @@ public class DashBoardController
 
         StuckOrderDetailResponse stuckOrdersList = new StuckOrderDetailResponse();
 
-        ArrayList<StuckOrdersCount> stuckOrderCountList = dashboardService.getStuckOrderhandled();
+        List<StuckOrdersCount> stuckOrderCountList = dashboardService.getStuckOrderhandled();
         stuckOrdersList.setStuckOrderList(stuckOrderCountList);
         return new ResponseEntity<StuckOrderDetailResponse>(stuckOrdersList, HttpStatus.OK);
     }
@@ -87,7 +87,7 @@ public class DashBoardController
 
         StuckOrderDetailResponse stuckOrdersList = new StuckOrderDetailResponse();
 
-        ArrayList<StuckOrdersCount> stuckOrderCountList = dashboardService.getStuckOrderallStatus();
+        List<StuckOrdersCount> stuckOrderCountList = dashboardService.getStuckOrderallStatus();
         stuckOrdersList.setStuckOrderList(stuckOrderCountList);
         return new ResponseEntity<StuckOrderDetailResponse>(stuckOrdersList, HttpStatus.OK);
     }
@@ -108,7 +108,7 @@ public class DashBoardController
 
         RegularOrdersCountList regularOrdersCountList = new RegularOrdersCountList();
 
-        ArrayList<RegularOrdersCount> regularOrderList = dashboardService.getRegularOrderListData();
+        List<RegularOrdersCount> regularOrderList = dashboardService.getRegularOrderListData();
         regularOrdersCountList.setRegularOrderList(regularOrderList);
         return new ResponseEntity<RegularOrdersCountList>(regularOrdersCountList, HttpStatus.OK);
     }

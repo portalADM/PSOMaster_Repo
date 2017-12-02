@@ -5,10 +5,10 @@ module.controller("SendEmailController",function($scope,$routeParams,$http,Messa
 	$scope.sendEmailResponse={};
 	
 	$scope.sendEmail=function(){
-		toEmailId=$scope.toEmail;
-		ccEmailId=$scope.ccEmail;
-		emailSubject=$scope.subject;
-		emailContent=$scope.content;
+		var toEmailId=$scope.toEmail;
+		var ccEmailId=$scope.ccEmail;
+		var emailSubject=$scope.subject;
+		var emailContent=$scope.content;
 		
 		SendEmailService.sendEmailRes(toEmailId,ccEmailId,emailSubject,emailContent).then(
 				function(d){

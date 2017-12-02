@@ -8,7 +8,7 @@
  */
 package com.zig.pso.rest.bean;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -16,19 +16,19 @@ import java.util.ArrayList;
 public class StuckOrderDetailResponse extends BaseResponseBean{
 
 	
-	public ArrayList<StuckOrdersCount> stuckOrderList;
+	private List<StuckOrdersCount> stuckOrderList;
 
 	/**
 	 * @return the stuckOrderList
 	 */
-	public ArrayList<StuckOrdersCount> getStuckOrderList() {
+	public List<StuckOrdersCount> getStuckOrderList() {
 		return stuckOrderList;
 	}
 
 	/**
 	 * @param stuckOrderList the stuckOrderList to set
 	 */
-	public void setStuckOrderList(ArrayList<StuckOrdersCount> stuckOrderList) {
+	public void setStuckOrderList(List<StuckOrdersCount> stuckOrderList) {
 		this.stuckOrderList = stuckOrderList;
 	}
 	

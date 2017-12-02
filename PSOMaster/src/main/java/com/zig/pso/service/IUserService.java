@@ -8,7 +8,7 @@
  */
 package com.zig.pso.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.LoginRequestBean;
@@ -30,7 +30,7 @@ public interface IUserService
     
     public BaseResponseBean registerUser(UserMaster user);
     
-    public ArrayList<UserMaster> getPendingApprovalUserList();
+    public List<UserMaster> getPendingApprovalUserList();
     
     public BaseResponseBean rejectUser(RejectPendingUserRequest userReq);
     
@@ -42,7 +42,7 @@ public interface IUserService
     
     public BaseResponseBean updateUserAssignments(UserMaster userData);
     
-    public ArrayList<UserMaster> getUserList(UserSearchRequestBean userSearchReq);
+    public List<UserMaster> getUserList(UserSearchRequestBean userSearchReq);
     
     public BaseResponseBean setupPasswordForUser(SetupUserPasswordRequestBean userPassword);
     

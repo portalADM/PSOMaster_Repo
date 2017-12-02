@@ -8,7 +8,6 @@
  */
 package com.zig.pso.rest.bean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +15,7 @@ import java.util.List;
  */
 public class BulkUpdateOrderResponseBean extends BaseResponseBean
 {
-    private ArrayList<OrderUpdateInputData> tempTableDataList;
+    private List<OrderUpdateInputData> tempTableDataList;
     
     private List<String> invalidOrders;
     
@@ -27,7 +26,7 @@ public class BulkUpdateOrderResponseBean extends BaseResponseBean
     /**
      * @return the tempTableDataList
      */
-    public ArrayList<OrderUpdateInputData> getTempTableDataList()
+    public List<OrderUpdateInputData> getTempTableDataList()
     {
         return tempTableDataList;
     }
@@ -35,7 +34,7 @@ public class BulkUpdateOrderResponseBean extends BaseResponseBean
     /**
      * @param tempTableDataList the tempTableDataList to set
      */
-    public void setTempTableDataList(ArrayList<OrderUpdateInputData> tempTableDataList)
+    public void setTempTableDataList(List<OrderUpdateInputData> tempTableDataList)
     {
         this.tempTableDataList = tempTableDataList;
     }

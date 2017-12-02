@@ -223,15 +223,18 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 			 UpdateOrderService.updateOrderDetails(updateType,newValue,orderID,lineID).then(
 						function(response) {
 							$rootScope.spinner.off();
-							if(response!=undefined && response.errorCode == 0){
-								$scope.updateOrderRes = response;
-								MessageService.showSuccess(response.errorMsg,5000);
-								$scope.getPortalLineSimandImeiDetails(updateType);
-							}
-							else{
-								$rootScope.spinner.off();
-								var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
-								MessageService.showError(errorMessage,10000);
+							if(response!=undefined && response!=null)
+							{
+								if(response.errorCode == 0){
+									$scope.updateOrderRes = response;
+									MessageService.showSuccess(response.errorMsg,5000);
+									$scope.getPortalLineSimandImeiDetails(updateType);
+								}
+								else{
+									$rootScope.spinner.off();
+									var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+									MessageService.showError(errorMessage,10000);
+								}
 							}
 			       		},
 				       function(errResponse){
@@ -271,13 +274,17 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 				 UpdateOrderService.updateOrderDetails(updatetype,newValue,orderID,null).then(
 							function(response) {
 								$rootScope.spinner.off();
-								if(response!=undefined && response.errorCode == 0){
-									$scope.updateOrderRes = response;
-									MessageService.showSuccess(response.errorMsg,5000);
-								}
-								else{
-									var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
-									MessageService.showError(errorMessage,10000);
+								if(response!=undefined && response!=null)
+								{
+									if(response.errorCode == 0)
+									{
+										$scope.updateOrderRes = response;
+										MessageService.showSuccess(response.errorMsg,5000);
+									}
+									else{
+										var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+										MessageService.showError(errorMessage,10000);
+									}
 								}
 				       		},
 					       function(errResponse){

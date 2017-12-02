@@ -14,7 +14,6 @@ module.controller("ChangePasswordController", function($scope, $routeParams,$htt
 	
 	$scope.changePassword = function()
 	{
-		console.log($scope.userData);
 		var newPassword = $scope.userData.password;
 		var confirmPassword = $scope.userData.confirmPassword;
 		
@@ -28,15 +27,18 @@ module.controller("ChangePasswordController", function($scope, $routeParams,$htt
 			UserService.changeUserPassword($scope.userData).then(
 					function(response) {
 						$rootScope.spinner.off();
-						if(response!=undefined && response.errorCode == 0){
-							$scope.isSignUpSuccess = true;
-							MessageService.showSuccess(response.errorMsg,10000);
-							$scope.userData = {};
-						}
-						else{
-							var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
-							MessageService.showError(errorMessage,10000);
-						}
+						if(response!=undefined && response!=null)
+						{
+							if(response.errorCode == 0){
+								$scope.isSignUpSuccess = true;
+								MessageService.showSuccess(response.errorMsg,10000);
+								$scope.userData = {};
+							}
+							else{
+								var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+								MessageService.showError(errorMessage,10000);
+							}
+						} 
 		       		},
 			       function(errResponse){
 		       			$rootScope.spinner.off();

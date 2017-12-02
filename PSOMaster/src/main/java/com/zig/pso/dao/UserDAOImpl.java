@@ -36,6 +36,8 @@ import com.zig.pso.utility.OrderQueries;
 @Repository
 public class UserDAOImpl implements UserDAO
 {
+    public static final String CLASS_NAME = "UserDAOImpl";
+    
     public UserDAOImpl()
     {
         super();
@@ -67,20 +69,17 @@ public class UserDAOImpl implements UserDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR("UserDAOImpl", "authenticateUser", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "authenticateUser", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "authenticateUser", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "authenticateUser", e);
             }
             if (pstm != null)
             {
@@ -90,7 +89,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "authenticateUser", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "authenticateUser", e);
                 }
             }
             if (rs != null)
@@ -101,7 +100,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "authenticateUser", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "authenticateUser", e);
                 }
             }
         }
@@ -149,27 +148,24 @@ public class UserDAOImpl implements UserDAO
                 newUserReq.setLogRefId(logRefID);
             }
 
-            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "addNewUserSignUpRequest", logRefID, sql, user, newUserReq.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "addNewUserSignUpRequest", logRefID, sql, user, newUserReq.getErrorMsg());
         }
         catch (SQLException e)
         {
             newUserReq.setErrorCode(PSOConstants.ERROR_CODE);
             newUserReq.setErrorMsg(PSOConstants.BACKEND_ERROR);
             newUserReq.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR("UserDAOImpl", "addNewUserSignUpRequest", logRefID, sql, user, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "addNewUserSignUpRequest", logRefID, sql, user, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "addNewUserSignUpRequest", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "addNewUserSignUpRequest", e);
             }
             if (pstm != null)
             {
@@ -179,7 +175,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "addNewUserSignUpRequest", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "addNewUserSignUpRequest", e);
                 }
             }
         }
@@ -193,7 +189,7 @@ public class UserDAOImpl implements UserDAO
      * @see com.zig.pso.dao.UserDAO#getUserPendingApprovalList()
      */
     @Override
-    public ArrayList<UserMaster> getUserPendingApprovalList()
+    public List<UserMaster> getUserPendingApprovalList()
     {
         ArrayList<UserMaster> pendingUserList = new ArrayList<UserMaster>();
         String sql = OrderQueries.pendingUserList();
@@ -213,20 +209,17 @@ public class UserDAOImpl implements UserDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR("UserDAOImpl", "getUserPendingApprovalList", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getUserPendingApprovalList", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserPendingApprovalList", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getUserPendingApprovalList", e);
             }
             if (pstm != null)
             {
@@ -236,7 +229,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserPendingApprovalList", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getUserPendingApprovalList", e);
                 }
             }
             if (rs != null)
@@ -247,7 +240,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserPendingApprovalList", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getUserPendingApprovalList", e);
                 }
             }
         }
@@ -290,27 +283,24 @@ public class UserDAOImpl implements UserDAO
                 rejectUserResponse.setLogRefId(logRefID);
             }
 
-            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "rejectUser", logRefID, sql, rejectUserreq, rejectUserResponse.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "rejectUser", logRefID, sql, rejectUserreq, rejectUserResponse.getErrorMsg());
         }
         catch (SQLException e)
         {
             rejectUserResponse.setErrorCode(PSOConstants.ERROR_CODE);
             rejectUserResponse.setErrorMsg(PSOConstants.BACKEND_ERROR);
             rejectUserResponse.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR("UserDAOImpl", "rejectUser", logRefID, sql, rejectUserreq, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "rejectUser", logRefID, sql, rejectUserreq, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "rejectUser", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "rejectUser", e);
             }
             if (pstm != null)
             {
@@ -320,7 +310,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "rejectUser", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "rejectUser", e);
                 }
             }
         }
@@ -360,20 +350,17 @@ public class UserDAOImpl implements UserDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR("UserDAOImpl", "getPendingUserDataByEmpId", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getPendingUserDataByEmpId", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getPendingUserDataByEmpId", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getPendingUserDataByEmpId", e);
             }
             if (pstm != null)
             {
@@ -383,7 +370,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getPendingUserDataByEmpId", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getPendingUserDataByEmpId", e);
                 }
             }
             if (rs != null)
@@ -394,7 +381,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getPendingUserDataByEmpId", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getPendingUserDataByEmpId", e);
                 }
             }
         }
@@ -445,27 +432,24 @@ public class UserDAOImpl implements UserDAO
                 createUserAssignmentResponse.setLogRefId(logRefID);
             }
 
-            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "createUserAssignments", logRefID, sql, userData, createUserAssignmentResponse.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "createUserAssignments", logRefID, sql, userData, createUserAssignmentResponse.getErrorMsg());
         }
         catch (SQLException e)
         {
             createUserAssignmentResponse.setErrorCode(PSOConstants.ERROR_CODE);
             createUserAssignmentResponse.setErrorMsg(PSOConstants.BACKEND_ERROR);
             createUserAssignmentResponse.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR("UserDAOImpl", "createUserAssignments", logRefID, sql, userData, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "createUserAssignments", logRefID, sql, userData, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "createUserAssignments", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "createUserAssignments", e);
             }
             if (pstm != null)
             {
@@ -475,7 +459,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "createUserAssignments", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "createUserAssignments", e);
                 }
             }
         }
@@ -523,27 +507,24 @@ public class UserDAOImpl implements UserDAO
                 updateUserAssignmentResponse.setLogRefId(logRefID);
             }
 
-            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "updateUserAssignments", logRefID, sql, userData, updateUserAssignmentResponse.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "updateUserAssignments", logRefID, sql, userData, updateUserAssignmentResponse.getErrorMsg());
         }
         catch (SQLException e)
         {
             updateUserAssignmentResponse.setErrorCode(PSOConstants.ERROR_CODE);
             updateUserAssignmentResponse.setErrorMsg(PSOConstants.BACKEND_ERROR);
             updateUserAssignmentResponse.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR("UserDAOImpl", "updateUserAssignments", logRefID, sql, userData, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "updateUserAssignments", logRefID, sql, userData, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "updateUserAssignments", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "updateUserAssignments", e);
             }
             if (pstm != null)
             {
@@ -553,7 +534,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "updateUserAssignments", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "updateUserAssignments", e);
                 }
             }
         }
@@ -567,7 +548,7 @@ public class UserDAOImpl implements UserDAO
      * @see com.zig.pso.dao.UserDAO#getUserList()
      */
     @Override
-    public ArrayList<UserMaster> getUserList(UserSearchRequestBean userSearchReq)
+    public List<UserMaster> getUserList(UserSearchRequestBean userSearchReq)
     {
         ArrayList<UserMaster> userList = new ArrayList<UserMaster>();
         StringBuilder sql = new StringBuilder(OrderQueries.getUserListQuery());
@@ -642,20 +623,17 @@ public class UserDAOImpl implements UserDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR("UserDAOImpl", "getUserList", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getUserList", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserList", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getUserList", e);
             }
             if (pstm != null)
             {
@@ -665,7 +643,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserList", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getUserList", e);
                 }
             }
             if (rs != null)
@@ -676,7 +654,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserList", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getUserList", e);
                 }
             }
         }
@@ -720,20 +698,17 @@ public class UserDAOImpl implements UserDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR("UserDAOImpl", "getUserDetailsByEmpId", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getUserDetailsByEmpId", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserDetailsByEmpId", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getUserDetailsByEmpId", e);
             }
             if (pstm != null)
             {
@@ -743,7 +718,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserDetailsByEmpId", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getUserDetailsByEmpId", e);
                 }
             }
             if (rs != null)
@@ -754,7 +729,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserDetailsByEmpId", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getUserDetailsByEmpId", e);
                 }
             }
         }
@@ -795,27 +770,24 @@ public class UserDAOImpl implements UserDAO
                 deletePendingUserResponse.setLogRefId(logRefID);
             }
 
-            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "deletePendingUserRequest", logRefID, sql, employeeId, deletePendingUserResponse.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "deletePendingUserRequest", logRefID, sql, employeeId, deletePendingUserResponse.getErrorMsg());
         }
         catch (SQLException e)
         {
             deletePendingUserResponse.setErrorCode(PSOConstants.ERROR_CODE);
             deletePendingUserResponse.setErrorMsg(PSOConstants.BACKEND_ERROR);
             deletePendingUserResponse.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR("UserDAOImpl", "deletePendingUserRequest", logRefID, sql, employeeId, e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "deletePendingUserRequest", logRefID, sql, employeeId, e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "deletePendingUserRequest", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "deletePendingUserRequest", e);
             }
             if (pstm != null)
             {
@@ -825,7 +797,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "deletePendingUserRequest", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "deletePendingUserRequest", e);
                 }
             }
         }
@@ -867,11 +839,11 @@ public class UserDAOImpl implements UserDAO
             else
             {
                 setupUserPasswordResponse.setErrorCode(PSOConstants.SUCCESS_CODE);
-                setupUserPasswordResponse.setErrorMsg(PSOConstants.USER_PASSWORD_SETUP_SUCCESSFULL);
+                setupUserPasswordResponse.setErrorMsg(PSOConstants.USER_PW_SETUP_SUCCESSFULL);
                 setupUserPasswordResponse.setLogRefId(logRefID);
             }
 
-            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "setupPasswordForUser", logRefID, sql, "Emp ID : " + userPassword.getEmpId() + ", Email ID : " + userPassword.getEmailId(),
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "setupPasswordForUser", logRefID, sql, "Emp ID : " + userPassword.getEmpId() + ", Email ID : " + userPassword.getEmailId(),
                     setupUserPasswordResponse.getErrorMsg());
         }
         catch (SQLException e)
@@ -879,20 +851,17 @@ public class UserDAOImpl implements UserDAO
             setupUserPasswordResponse.setErrorCode(PSOConstants.ERROR_CODE);
             setupUserPasswordResponse.setErrorMsg(PSOConstants.BACKEND_ERROR);
             setupUserPasswordResponse.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR("UserDAOImpl", "setupPasswordForUser", logRefID, sql, "Emp ID : " + userPassword.getEmpId() + ", Email ID : " + userPassword.getEmailId(), e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "setupPasswordForUser", logRefID, sql, "Emp ID : " + userPassword.getEmpId() + ", Email ID : " + userPassword.getEmailId(), e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "setupPasswordForUser", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "setupPasswordForUser", e);
             }
             if (pstm != null)
             {
@@ -902,7 +871,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "setupPasswordForUser", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "setupPasswordForUser", e);
                 }
             }
         }
@@ -942,20 +911,17 @@ public class UserDAOImpl implements UserDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR("UserDAOImpl", "getUserDetailsByEmpId", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getUserDetailsByEmpId", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserDetailsByEmpId", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getUserDetailsByEmpId", e);
             }
             if (pstm != null)
             {
@@ -965,7 +931,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserDetailsByEmpId", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getUserDetailsByEmpId", e);
                 }
             }
             if (rs != null)
@@ -976,7 +942,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserDetailsByEmpId", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getUserDetailsByEmpId", e);
                 }
             }
         }
@@ -1011,28 +977,25 @@ public class UserDAOImpl implements UserDAO
             } else
             {
                 changeUserPasswordResponse.setErrorCode(PSOConstants.SUCCESS_CODE);
-                changeUserPasswordResponse.setErrorMsg(PSOConstants.USER_PASSWORD_CHANGE_SUCCESSFULL);
+                changeUserPasswordResponse.setErrorMsg(PSOConstants.USER_PW_CHANGE_SUCCESSFULL);
                 changeUserPasswordResponse.setLogRefId(logRefID);
             }
-            PSOLoggerSrv.printSQL_DEBUG("UserDAOImpl", "changeUserPassword", logRefID, sql, (new StringBuilder()).append("Emp ID : ").append(setupuserpasswordrequestbean.getEmpId()).append(", Email ID : ").append(setupuserpasswordrequestbean.getEmailId()).toString(), changeUserPasswordResponse.getErrorMsg());
+            PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, "changeUserPassword", logRefID, sql, (new StringBuilder()).append("Emp ID : ").append(setupuserpasswordrequestbean.getEmpId()).append(", Email ID : ").append(setupuserpasswordrequestbean.getEmailId()).toString(), changeUserPasswordResponse.getErrorMsg());
 
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR("UserDAOImpl", "changeUserPassword", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "changeUserPassword", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "changeUserPassword", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "changeUserPassword", e);
             }
             if (pstm != null)
             {
@@ -1042,7 +1005,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "changeUserPassword", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "changeUserPassword", e);
                 }
             }
         }
@@ -1075,20 +1038,17 @@ public class UserDAOImpl implements UserDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR("UserDAOImpl", "getUserCurrentPassword", e);
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getUserCurrentPassword", e);
         }
         finally
         {
-            if (con != null)
+            try
             {
-                try
-                {
-                    con.close();
-                }
-                catch (SQLException e)
-                {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserCurrentPassword", e);
-                }
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getUserCurrentPassword", e);
             }
             if (pstm != null)
             {
@@ -1098,7 +1058,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserCurrentPassword", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getUserCurrentPassword", e);
                 }
             }
             if (rs != null)
@@ -1109,7 +1069,7 @@ public class UserDAOImpl implements UserDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR("UserDAOImpl", "getUserCurrentPassword", e);
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getUserCurrentPassword", e);
                 }
             }
         }

@@ -7,9 +7,9 @@ package com.zig.pso.rest.bean;
 
 public class RemediationStepRequest
 {
-    String orderStatus;
-    String type;
-    String remediationSteps;
+    private String orderStatus;
+    private String type;
+    private String remediationSteps;
 
     public String getType()
     {

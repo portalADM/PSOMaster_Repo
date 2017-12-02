@@ -8,7 +8,7 @@
  */
 package com.zig.pso.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@ public class GroupServiceImpl implements GroupService
      * @see com.zig.pso.service.GroupService#getRoleList()
      */
     @Override
-    public ArrayList<RoleMaster> getRoleList()
+    public List<RoleMaster> getRoleList()
     {
         return groupDAO.getRoleList();
     }
@@ -58,7 +58,7 @@ public class GroupServiceImpl implements GroupService
      * @see com.zig.pso.service.GroupService#getGroupList()
      */
     @Override
-    public ArrayList<GroupMaster> getGroupList()
+    public List<GroupMaster> getGroupList()
     {
         return groupDAO.getGroupList();
     }

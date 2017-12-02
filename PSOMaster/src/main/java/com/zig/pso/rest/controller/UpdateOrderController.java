@@ -126,6 +126,8 @@ public class UpdateOrderController
 //            fileName = PSOConstants.UPDATE_RETRY_EXCEL;
 //        }
 
+        InputStream inputStream = null;
+        
         try
         {
             
@@ -163,7 +165,7 @@ public class UpdateOrderController
 
             response.setContentLength((int) file.length());
 
-            InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+            inputStream = new BufferedInputStream(new FileInputStream(file));
 
             // Copy bytes from source to destination(outputstream in this example), closes both streams.
             FileCopyUtils.copy(inputStream, response.getOutputStream());
@@ -171,6 +173,13 @@ public class UpdateOrderController
         catch (Exception e)
         {
             PSOLoggerSrv.printERROR("UpdateOrderController", "exportExcel", e);
+        }
+        finally
+        {
+            if(null!=inputStream)
+            {
+                inputStream.close();
+            }
         }
 
     }

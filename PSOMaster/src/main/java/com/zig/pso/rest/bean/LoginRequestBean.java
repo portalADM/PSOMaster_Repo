@@ -25,9 +25,9 @@ public class LoginRequestBean implements Serializable
         return username;
     }
 
-    public void setUsername(String Username)
+    public void setUsername(String username)
     {
-        this.username = Username;
+        this.username = username;
     }
 
     public String getPassword()
@@ -35,9 +35,9 @@ public class LoginRequestBean implements Serializable
         return password;
     }
 
-    public void setPassword(String Password)
+    public void setPassword(String password)
     {
-        this.password = Password;
+        this.password = password;
     }
 
     public static long getSerialversionuid()

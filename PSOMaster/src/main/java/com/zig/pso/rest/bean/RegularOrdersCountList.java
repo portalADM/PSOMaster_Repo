@@ -7,6 +7,7 @@ package com.zig.pso.rest.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -18,15 +19,15 @@ public class RegularOrdersCountList implements Serializable
      * 
      */
     private static final long serialVersionUID = 4312992109535781242L;
-    public ArrayList<RegularOrdersCount> regularOrderList;
-    public String type;
+    private List<RegularOrdersCount> regularOrderList;
+    private String type;
 
-    public ArrayList<RegularOrdersCount> getRegularOrderList()
+    public List<RegularOrdersCount> getRegularOrderList()
     {
         return regularOrderList;
     }
 
-    public void setRegularOrderList(ArrayList<RegularOrdersCount> regularOrderList)
+    public void setRegularOrderList(List<RegularOrdersCount> regularOrderList)
     {
         this.regularOrderList = regularOrderList;
     }

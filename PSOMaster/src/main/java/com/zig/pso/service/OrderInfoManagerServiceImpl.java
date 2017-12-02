@@ -8,6 +8,7 @@
 package com.zig.pso.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,9 +52,9 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
      * @see com.zig.pso.service.OrderInfoManagerService#getOrderIds()
      */
     @Override
-    public ArrayList<String> getOrderIds()
+    public List<String> getOrderIds()
     {
-        ArrayList<String> orderList = new ArrayList<String>();
+        List<String> orderList = new ArrayList<String>();
         orderList = orderDAO.getOrderIds();
 
         return orderList;
@@ -115,7 +116,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
         }
         
         /* ZIG LINEITEM INFO */
-        ArrayList<PortalLineItemInfoBean> lineItemList = orderDAO.getPortalLineItemInfo(OrderId);
+        List<PortalLineItemInfoBean> lineItemList = orderDAO.getPortalLineItemInfo(OrderId);
         if(lineItemList!=null && lineItemList.size()>0){
             portalOrderDetail.setPortalLineItemList(lineItemList);
         }
@@ -126,7 +127,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
             //PortalShipmentInfoForUI shipmentInfoFromDb = getPortalShipmentInfo(OrderId);
             //portalOrderDetail.setPortalShipmentInfo(shipmentInfoFromDb);
             
-            ArrayList<PortalShipmentInfo> shipmentInfoFromDb = orderDAO.getPortalShipmentInfoFromDB(OrderId);
+            List<PortalShipmentInfo> shipmentInfoFromDb = orderDAO.getPortalShipmentInfoFromDB(OrderId);
             portalOrderDetail.setPortalShipmentInfo(shipmentInfoFromDb);
         }
 
@@ -154,7 +155,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
         }
         else
         {
-            ArrayList<EnsembleLineItemInfoBean> ensLineItemList = orderDAO.getEnsLineItemInfo(orderId);
+            List<EnsembleLineItemInfoBean> ensLineItemList = orderDAO.getEnsLineItemInfo(orderId);
             if(ensLineItemList!=null && ensLineItemList.size()>0)
             {
                 ensOrderDetail.setEnsLineItemList(ensLineItemList);
@@ -203,7 +204,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
     {
         PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getPortalShipmentInfo", "Order ID : " + OrderId);
 
-        ArrayList<PortalShipmentInfo> shipmentInfoFromDb = orderDAO.getPortalShipmentInfoFromDB(OrderId);
+        List<PortalShipmentInfo> shipmentInfoFromDb = orderDAO.getPortalShipmentInfoFromDB(OrderId);
 
         return getShipmentInfoForUI(shipmentInfoFromDb);
     }
@@ -213,7 +214,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
      * 
      * @see com.zig.pso.service.OrderInfoManagerService#getShipmentInfoForUI
      */
-    public PortalShipmentInfoForUI getShipmentInfoForUI(ArrayList<PortalShipmentInfo> shipmentInfFromDb)
+    public PortalShipmentInfoForUI getShipmentInfoForUI(List<PortalShipmentInfo> shipmentInfFromDb)
     {
         PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getPortalShipmentInfo", "Shipment Details : " + shipmentInfFromDb.size());
 
@@ -229,32 +230,32 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
             {
                 shipInfoForUi.setImei(ship.getImei());
             }
-            if (ship.getEsn_number() != null && shipInfoForUi.getEsn() == null)
+            if (ship.getEsnNumber() != null && shipInfoForUi.getEsn() == null)
             {
-                shipInfoForUi.setEsn(ship.getEsn_number());
+                shipInfoForUi.setEsn(ship.getEsnNumber());
             }
-            if (ship.getShipment_date() != null && shipInfoForUi.getShipmentDate() == null)
+            if (ship.getShipmentDate() != null && shipInfoForUi.getShipmentDate() == null)
             {
-                shipInfoForUi.setShipmentDate(ship.getShipment_date());
+                shipInfoForUi.setShipmentDate(ship.getShipmentDate());
             }
-            if (ship.getEpc_sku_id() != null && shipInfoForUi.getEpc_sku_id() == null)
+            if (ship.getEpcSkuId() != null && shipInfoForUi.getEpc_sku_id() == null)
             {
-                shipInfoForUi.setEpc_sku_id(ship.getEpc_sku_id());
+                shipInfoForUi.setEpc_sku_id(ship.getEpcSkuId());
             }
-            if (ADDON.equalsIgnoreCase(ship.getProduct_type()))
+            if (ADDON.equalsIgnoreCase(ship.getProductType()))
             {
                 shipInfoForUi.setAddonAvailable(true);
-                shipInfoForUi.getAddonList().add(ship.getEpc_sku_id());
+                shipInfoForUi.getAddonList().add(ship.getEpcSkuId());
             }
-            if (ACCESSORY.equalsIgnoreCase(ship.getProduct_type()))
+            if (ACCESSORY.equalsIgnoreCase(ship.getProductType()))
             {
                 shipInfoForUi.setAccessoryAvailable(true);
-                shipInfoForUi.getAccessoryList().add(ship.getEpc_sku_id());
+                shipInfoForUi.getAccessoryList().add(ship.getEpcSkuId());
             }
-            if (PLAN.equalsIgnoreCase(ship.getProduct_type()))
+            if (PLAN.equalsIgnoreCase(ship.getProductType()))
             {
                 shipInfoForUi.setPlanAvailable(true);
-                shipInfoForUi.setPlan(ship.getEpc_sku_id());
+                shipInfoForUi.setPlan(ship.getEpcSkuId());
             }
         }
 
@@ -284,7 +285,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
         OrderPortInDetailsResponseBean portDetails = new OrderPortInDetailsResponseBean();
         
         /*Portal Port-in Details*/
-        ArrayList<PortalOrderPortRequestBean> portData = orderDAO.getPortalOrderPortDetails(OrderId);
+        List<PortalOrderPortRequestBean> portData = orderDAO.getPortalOrderPortDetails(OrderId);
         if(portData!=null && portData.size()>0)
         {
             portDetails.setErrorCode(PSOConstants.SUCCESS_CODE);
@@ -299,7 +300,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
         
         
         /*Ensemble Port-in Details*/
-        ArrayList<EnsOrderPortRequestBean> ensPortDetails = orderDAO.getEnsOrderPortDetails(OrderId);
+        List<EnsOrderPortRequestBean> ensPortDetails = orderDAO.getEnsOrderPortDetails(OrderId);
         if(ensPortDetails!=null && ensPortDetails.size()>0)
         {
             portDetails.setErrorCode(PSOConstants.SUCCESS_CODE);
@@ -322,7 +323,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
 	public PortalOrderLineSIMandIMEIDetailsBean getPortalLineSimAndImeiDetails(String orderId) {
 		PortalOrderLineSIMandIMEIDetailsBean portalLineListResponse = new PortalOrderLineSIMandIMEIDetailsBean();
 		
-		ArrayList<PortalShipmentInfo> portalLineSimandImeiList = orderDAO.getPortalLineSimAndImeiDetails(orderId);
+		List<PortalShipmentInfo> portalLineSimandImeiList = orderDAO.getPortalLineSimAndImeiDetails(orderId);
 		portalLineListResponse.setPortalLineSimandImeiList(portalLineSimandImeiList);
 		
 		return portalLineListResponse;
@@ -332,7 +333,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
 	 * @see com.zig.pso.service.OrderInfoManagerService#orderStatusList()
 	 */
 	@Override
-	public ArrayList<String> getOrderStatusList() {
+	public List<String> getOrderStatusList() {
 		return orderDAO.getOrderStatusList();
 	}
 
@@ -341,7 +342,6 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
 	 */
 	@Override
 	public InventoryStatusofItemBean getInventoryStatusDetails(String skuId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -350,7 +350,6 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
 	 */
 	@Override
 	public NameDataBean getESNReuseData(String esn) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

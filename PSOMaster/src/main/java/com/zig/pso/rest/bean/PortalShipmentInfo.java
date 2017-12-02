@@ -16,12 +16,12 @@ import java.io.Serializable;
 public class PortalShipmentInfo implements Serializable {
 	
 	private static final long serialVersionUID = 2877440920582859690L;
-	private String epc_sku_id;
-    private String product_type;
+	private String epcSkuId;
+    private String productType;
     private String sim;
     private String imei;
-    private String esn_number;
-    private String shipment_date;
+    private String esnNumber;
+    private String shipmentDate;
     private String lineItemNo;
     private String deviceDisplayName;
     private String subscriberId;
@@ -35,76 +35,69 @@ public class PortalShipmentInfo implements Serializable {
     {
         super();
     }
-    
-    
-    
-
-
 
     /**
-	 * @param epc_sku_id
-	 * @param product_type
-	 * @param sim
-	 * @param imei
-	 * @param esn_number
-	 * @param shipment_date
-	 * @param lineItemNo
-	 * @param deviceDisplayName
-	 * @param subscriberId
-	 * @param ptn
-	 * @param orderId
-	 */
-	public PortalShipmentInfo(String epc_sku_id, String product_type,
-			String sim, String imei, String esn_number, String shipment_date,
-			String lineItemNo, String deviceDisplayName, String subscriberId,
-			String ptn, String orderId) {
-		super();
-		this.epc_sku_id = epc_sku_id;
-		this.product_type = product_type;
-		this.sim = sim;
-		this.imei = imei;
-		this.esn_number = esn_number;
-		this.shipment_date = shipment_date;
-		this.lineItemNo = lineItemNo;
-		this.deviceDisplayName = deviceDisplayName;
-		this.subscriberId = subscriberId;
-		this.ptn = ptn;
-		this.orderId = orderId;
-	}
-
-
-
-
-
-
-	/**
-     * @return the epc_sku_id
+     * @param epcSkuId
+     * @param productType
+     * @param sim
+     * @param imei
+     * @param esnNumber
+     * @param shipmentDate
+     * @param lineItemNo
+     * @param deviceDisplayName
+     * @param subscriberId
+     * @param ptn
+     * @param orderId
      */
-    public String getEpc_sku_id()
+    public PortalShipmentInfo(String epcSkuId, String productType, String sim, String imei, String esnNumber, String shipmentDate, String lineItemNo, String deviceDisplayName, String subscriberId,
+            String ptn, String orderId)
     {
-        return epc_sku_id;
+        super();
+        this.epcSkuId = epcSkuId;
+        this.productType = productType;
+        this.sim = sim;
+        this.imei = imei;
+        this.esnNumber = esnNumber;
+        this.shipmentDate = shipmentDate;
+        this.lineItemNo = lineItemNo;
+        this.deviceDisplayName = deviceDisplayName;
+        this.subscriberId = subscriberId;
+        this.ptn = ptn;
+        this.orderId = orderId;
     }
+
     /**
-     * @param epc_sku_id the epc_sku_id to set
+     * @return the epcSkuId
      */
-    public void setEpc_sku_id(String epc_sku_id)
+    public String getEpcSkuId()
     {
-        this.epc_sku_id = epc_sku_id;
+        return epcSkuId;
     }
+
     /**
-     * @return the product_type
+     * @param epcSkuId the epcSkuId to set
      */
-    public String getProduct_type()
+    public void setEpcSkuId(String epcSkuId)
     {
-        return product_type;
+        this.epcSkuId = epcSkuId;
     }
+
     /**
-     * @param product_type the product_type to set
+     * @return the productType
      */
-    public void setProduct_type(String product_type)
+    public String getProductType()
     {
-        this.product_type = product_type;
+        return productType;
     }
+
+    /**
+     * @param productType the productType to set
+     */
+    public void setProductType(String productType)
+    {
+        this.productType = productType;
+    }
+
     /**
      * @return the sim
      */
@@ -112,6 +105,7 @@ public class PortalShipmentInfo implements Serializable {
     {
         return sim;
     }
+
     /**
      * @param sim the sim to set
      */
@@ -119,6 +113,7 @@ public class PortalShipmentInfo implements Serializable {
     {
         this.sim = sim;
     }
+
     /**
      * @return the imei
      */
@@ -126,6 +121,7 @@ public class PortalShipmentInfo implements Serializable {
     {
         return imei;
     }
+
     /**
      * @param imei the imei to set
      */
@@ -133,34 +129,39 @@ public class PortalShipmentInfo implements Serializable {
     {
         this.imei = imei;
     }
+
     /**
-     * @return the esn_number
+     * @return the esnNumber
      */
-    public String getEsn_number()
+    public String getEsnNumber()
     {
-        return esn_number;
+        return esnNumber;
     }
+
     /**
-     * @param esn_number the esn_number to set
+     * @param esnNumber the esnNumber to set
      */
-    public void setEsn_number(String esn_number)
+    public void setEsnNumber(String esnNumber)
     {
-        this.esn_number = esn_number;
+        this.esnNumber = esnNumber;
     }
+
     /**
-     * @return the shipment_date
+     * @return the shipmentDate
      */
-    public String getShipment_date()
+    public String getShipmentDate()
     {
-        return shipment_date;
+        return shipmentDate;
     }
+
     /**
-     * @param shipment_date the shipment_date to set
+     * @param shipmentDate the shipmentDate to set
      */
-    public void setShipment_date(String shipment_date)
+    public void setShipmentDate(String shipmentDate)
     {
-        this.shipment_date = shipment_date;
+        this.shipmentDate = shipmentDate;
     }
+
     /**
      * @return the lineItemNo
      */
@@ -168,6 +169,7 @@ public class PortalShipmentInfo implements Serializable {
     {
         return lineItemNo;
     }
+
     /**
      * @param lineItemNo the lineItemNo to set
      */
@@ -175,6 +177,7 @@ public class PortalShipmentInfo implements Serializable {
     {
         this.lineItemNo = lineItemNo;
     }
+
     /**
      * @return the deviceDisplayName
      */
@@ -182,6 +185,7 @@ public class PortalShipmentInfo implements Serializable {
     {
         return deviceDisplayName;
     }
+
     /**
      * @param deviceDisplayName the deviceDisplayName to set
      */
@@ -190,187 +194,181 @@ public class PortalShipmentInfo implements Serializable {
         this.deviceDisplayName = deviceDisplayName;
     }
 
-
+    /**
+     * @return the subscriberId
+     */
+    public String getSubscriberId()
+    {
+        return subscriberId;
+    }
 
     /**
-	 * @return the subscriberId
-	 */
-	public String getSubscriberId() {
-		return subscriberId;
-	}
+     * @param subscriberId the subscriberId to set
+     */
+    public void setSubscriberId(String subscriberId)
+    {
+        this.subscriberId = subscriberId;
+    }
 
+    /**
+     * @return the ptn
+     */
+    public String getPtn()
+    {
+        return ptn;
+    }
 
+    /**
+     * @param ptn the ptn to set
+     */
+    public void setPtn(String ptn)
+    {
+        this.ptn = ptn;
+    }
 
-	/**
-	 * @param subscriberId the subscriberId to set
-	 */
-	public void setSubscriberId(String subscriberId) {
-		this.subscriberId = subscriberId;
-	}
+    /**
+     * @return the orderId
+     */
+    public String getOrderId()
+    {
+        return orderId;
+    }
 
+    /**
+     * @param orderId the orderId to set
+     */
+    public void setOrderId(String orderId)
+    {
+        this.orderId = orderId;
+    }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((deviceDisplayName == null) ? 0 : deviceDisplayName.hashCode());
+        result = prime * result + ((epcSkuId == null) ? 0 : epcSkuId.hashCode());
+        result = prime * result + ((esnNumber == null) ? 0 : esnNumber.hashCode());
+        result = prime * result + ((imei == null) ? 0 : imei.hashCode());
+        result = prime * result + ((lineItemNo == null) ? 0 : lineItemNo.hashCode());
+        result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
+        result = prime * result + ((productType == null) ? 0 : productType.hashCode());
+        result = prime * result + ((ptn == null) ? 0 : ptn.hashCode());
+        result = prime * result + ((shipmentDate == null) ? 0 : shipmentDate.hashCode());
+        result = prime * result + ((sim == null) ? 0 : sim.hashCode());
+        result = prime * result + ((subscriberId == null) ? 0 : subscriberId.hashCode());
+        return result;
+    }
 
-	/**
-	 * @return the ptn
-	 */
-	public String getPtn() {
-		return ptn;
-	}
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        PortalShipmentInfo other = (PortalShipmentInfo) obj;
+        if (deviceDisplayName == null)
+        {
+            if (other.deviceDisplayName != null)
+                return false;
+        }
+        else if (!deviceDisplayName.equals(other.deviceDisplayName))
+            return false;
+        if (epcSkuId == null)
+        {
+            if (other.epcSkuId != null)
+                return false;
+        }
+        else if (!epcSkuId.equals(other.epcSkuId))
+            return false;
+        if (esnNumber == null)
+        {
+            if (other.esnNumber != null)
+                return false;
+        }
+        else if (!esnNumber.equals(other.esnNumber))
+            return false;
+        if (imei == null)
+        {
+            if (other.imei != null)
+                return false;
+        }
+        else if (!imei.equals(other.imei))
+            return false;
+        if (lineItemNo == null)
+        {
+            if (other.lineItemNo != null)
+                return false;
+        }
+        else if (!lineItemNo.equals(other.lineItemNo))
+            return false;
+        if (orderId == null)
+        {
+            if (other.orderId != null)
+                return false;
+        }
+        else if (!orderId.equals(other.orderId))
+            return false;
+        if (productType == null)
+        {
+            if (other.productType != null)
+                return false;
+        }
+        else if (!productType.equals(other.productType))
+            return false;
+        if (ptn == null)
+        {
+            if (other.ptn != null)
+                return false;
+        }
+        else if (!ptn.equals(other.ptn))
+            return false;
+        if (shipmentDate == null)
+        {
+            if (other.shipmentDate != null)
+                return false;
+        }
+        else if (!shipmentDate.equals(other.shipmentDate))
+            return false;
+        if (sim == null)
+        {
+            if (other.sim != null)
+                return false;
+        }
+        else if (!sim.equals(other.sim))
+            return false;
+        if (subscriberId == null)
+        {
+            if (other.subscriberId != null)
+                return false;
+        }
+        else if (!subscriberId.equals(other.subscriberId))
+            return false;
+        return true;
+    }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return "PortalShipmentInfo [epcSkuId=" + epcSkuId + ", productType=" + productType + ", sim=" + sim + ", imei=" + imei + ", esnNumber=" + esnNumber + ", shipmentDate=" + shipmentDate
+                + ", lineItemNo=" + lineItemNo + ", deviceDisplayName=" + deviceDisplayName + ", subscriberId=" + subscriberId + ", ptn=" + ptn + ", orderId=" + orderId + "]";
+    }
+    
+    
+    
 
-
-	/**
-	 * @param ptn the ptn to set
-	 */
-	public void setPtn(String ptn) {
-		this.ptn = ptn;
-	}
-
-
-
-	/**
-	 * @return the orderId
-	 */
-	public String getOrderId() {
-		return orderId;
-	}
-
-
-
-	/**
-	 * @param orderId the orderId to set
-	 */
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
-	}
-
-
-
-
-
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime
-				* result
-				+ ((deviceDisplayName == null) ? 0 : deviceDisplayName
-						.hashCode());
-		result = prime * result
-				+ ((epc_sku_id == null) ? 0 : epc_sku_id.hashCode());
-		result = prime * result
-				+ ((esn_number == null) ? 0 : esn_number.hashCode());
-		result = prime * result + ((imei == null) ? 0 : imei.hashCode());
-		result = prime * result
-				+ ((lineItemNo == null) ? 0 : lineItemNo.hashCode());
-		result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
-		result = prime * result
-				+ ((product_type == null) ? 0 : product_type.hashCode());
-		result = prime * result + ((ptn == null) ? 0 : ptn.hashCode());
-		result = prime * result
-				+ ((shipment_date == null) ? 0 : shipment_date.hashCode());
-		result = prime * result + ((sim == null) ? 0 : sim.hashCode());
-		result = prime * result
-				+ ((subscriberId == null) ? 0 : subscriberId.hashCode());
-		return result;
-	}
-
-
-
-
-
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PortalShipmentInfo other = (PortalShipmentInfo) obj;
-		if (deviceDisplayName == null) {
-			if (other.deviceDisplayName != null)
-				return false;
-		} else if (!deviceDisplayName.equals(other.deviceDisplayName))
-			return false;
-		if (epc_sku_id == null) {
-			if (other.epc_sku_id != null)
-				return false;
-		} else if (!epc_sku_id.equals(other.epc_sku_id))
-			return false;
-		if (esn_number == null) {
-			if (other.esn_number != null)
-				return false;
-		} else if (!esn_number.equals(other.esn_number))
-			return false;
-		if (imei == null) {
-			if (other.imei != null)
-				return false;
-		} else if (!imei.equals(other.imei))
-			return false;
-		if (lineItemNo == null) {
-			if (other.lineItemNo != null)
-				return false;
-		} else if (!lineItemNo.equals(other.lineItemNo))
-			return false;
-		if (orderId == null) {
-			if (other.orderId != null)
-				return false;
-		} else if (!orderId.equals(other.orderId))
-			return false;
-		if (product_type == null) {
-			if (other.product_type != null)
-				return false;
-		} else if (!product_type.equals(other.product_type))
-			return false;
-		if (ptn == null) {
-			if (other.ptn != null)
-				return false;
-		} else if (!ptn.equals(other.ptn))
-			return false;
-		if (shipment_date == null) {
-			if (other.shipment_date != null)
-				return false;
-		} else if (!shipment_date.equals(other.shipment_date))
-			return false;
-		if (sim == null) {
-			if (other.sim != null)
-				return false;
-		} else if (!sim.equals(other.sim))
-			return false;
-		if (subscriberId == null) {
-			if (other.subscriberId != null)
-				return false;
-		} else if (!subscriberId.equals(other.subscriberId))
-			return false;
-		return true;
-	}
-
-
-
-
-
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "PortalShipmentInfo [epc_sku_id=" + epc_sku_id
-				+ ", product_type=" + product_type + ", sim=" + sim + ", imei="
-				+ imei + ", esn_number=" + esn_number + ", shipment_date="
-				+ shipment_date + ", lineItemNo=" + lineItemNo
-				+ ", deviceDisplayName=" + deviceDisplayName
-				+ ", subscriberId=" + subscriberId + ", ptn=" + ptn
-				+ ", orderId=" + orderId + "]";
-	}
 
 }

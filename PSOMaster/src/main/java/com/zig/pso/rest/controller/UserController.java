@@ -11,6 +11,7 @@ package com.zig.pso.rest.controller;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -70,13 +71,13 @@ public class UserController
      * This Method will add get list of pending approval users list
      */
     @RequestMapping(value = "/pendingApprovalUserList", method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<UserMaster>> getPendingApprovalUserList()
+    public ResponseEntity<List<UserMaster>> getPendingApprovalUserList()
     {
         PSOLoggerSrv.printDEBUG("UserController", "getPendingApprovalUserList", null);
 
-        ArrayList<UserMaster> pendingUserList = new ArrayList<UserMaster>();
+        List<UserMaster> pendingUserList = new ArrayList<UserMaster>();
         pendingUserList = userService.getPendingApprovalUserList();
-        return new ResponseEntity<ArrayList<UserMaster>>(pendingUserList, HttpStatus.OK);
+        return new ResponseEntity<List<UserMaster>>(pendingUserList, HttpStatus.OK);
     }
     
     /**
@@ -153,14 +154,14 @@ public class UserController
      * This Method will add get list of users list
      */
     @RequestMapping(value = "/getUserList", method = RequestMethod.POST)
-    public ResponseEntity<ArrayList<UserMaster>> getUserList(@RequestBody UserSearchRequestBean userSearchReq)
+    public ResponseEntity<List<UserMaster>> getUserList(@RequestBody UserSearchRequestBean userSearchReq)
     {
        /* String updateDetails = "Order ID : "+updateOrderRequest.getOrderId()+" \nNew Value : "+updateOrderRequest.getNewValue()+" \nUpdate Type : "+updateOrderRequest.getType()+" \nLine Id : "+updateOrderRequest.getLineId();
         PSOLoggerSrv.printDEBUG("UpdateOrderController", "updateSingleOrder", updateDetails);*/
 
-        ArrayList<UserMaster> userList = new ArrayList<UserMaster>();
+        List<UserMaster> userList = new ArrayList<UserMaster>();
         userList = userService.getUserList(userSearchReq);
-        return new ResponseEntity<ArrayList<UserMaster>>(userList, HttpStatus.OK);
+        return new ResponseEntity<List<UserMaster>>(userList, HttpStatus.OK);
     }
     
     /**
@@ -177,7 +178,11 @@ public class UserController
         return new ResponseEntity<BaseResponseBean>(response, HttpStatus.OK);
     }
     
-    public ResponseEntity<BaseResponseBean> checkUsername(String userName)
+    /**
+     * This Method will check if the username is already present or not
+     */
+    @RequestMapping(value={"/checkUsername/{userName}"}, method = RequestMethod.GET)
+    public ResponseEntity<BaseResponseBean> checkUsername(@PathVariable("userName") String userName)
     {
         PSOLoggerSrv.printDEBUG("UserController", "checkUsername", "userName : "+userName);
         
@@ -186,17 +191,24 @@ public class UserController
         return new ResponseEntity<BaseResponseBean>(userData, HttpStatus.OK);
     }
 
-    public ResponseEntity<BaseResponseBean> changePassword(SetupUserPasswordRequestBean changePasswordRequest)
+    /**
+     * This Method will change the user password
+     */
+    @RequestMapping(value={"/changePassword"}, method={RequestMethod.POST})
+    public ResponseEntity<BaseResponseBean> changePassword(@RequestBody SetupUserPasswordRequestBean changePasswordRequest)
     {
         PSOLoggerSrv.printDEBUG("UserController", "changePassword", "EmpID : "+changePasswordRequest.getEmpId());
         
         BaseResponseBean response = userService.changeUserPassword(changePasswordRequest);
         return new ResponseEntity<BaseResponseBean>(response, HttpStatus.OK);
     }
-
+    
+    /**
+     * This Method will generate URL for emails for further operations
+     */
     private String generateURLForNextStep(HttpServletRequest request, String stepName)
     {
-        String urlForSetupPassword = "";
+        String urlForSetupPW = "";
         String stepURLPart = "";
         if("setupPassword".equals(stepName))
             stepURLPart = "/#setupUserPassword";
@@ -206,14 +218,14 @@ public class UserController
             String protocolName = asdasd.substring(0, asdasd.indexOf(":"));
             String hostName = InetAddress.getLocalHost().getHostName();
             String contextPathName = request.getContextPath();
-            urlForSetupPassword = (new StringBuilder()).append(protocolName).append("://").append(hostName).append(":").append(request.getServerPort()).append(contextPathName).append(stepURLPart).toString();
-            PSOLoggerSrv.printDEBUG("UserController", "generateURLForNextStep", urlForSetupPassword);
+            urlForSetupPW = (new StringBuilder()).append(protocolName).append("://").append(hostName).append(":").append(request.getServerPort()).append(contextPathName).append(stepURLPart).toString();
+            PSOLoggerSrv.printDEBUG("UserController", "generateURLForNextStep", urlForSetupPW);
         }
         catch(UnknownHostException e)
         {
             PSOLoggerSrv.printERROR("UserController", "generateURLForNextStep - Generate Setup Password URL ", e);
         }
-        return urlForSetupPassword;
+        return urlForSetupPW;
     }
 
     

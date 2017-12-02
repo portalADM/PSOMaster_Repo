@@ -85,18 +85,18 @@ public class UserAuthResponse extends BaseResponseBean{
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (getClass() != obj.getClass())
+		if (null!=obj && getClass() != obj.getClass())
 			return false;
 		UserAuthResponse other = (UserAuthResponse) obj;
 		if (PSO_SESSION_TOKEN == null) {
 			if (other.PSO_SESSION_TOKEN != null)
 				return false;
-		} else if (!PSO_SESSION_TOKEN.equals(other.PSO_SESSION_TOKEN))
+		} else if (null!=other && !PSO_SESSION_TOKEN.equals(other.PSO_SESSION_TOKEN))
 			return false;
 		if (user == null) {
-			if (other.user != null)
+			if (null!=other && other.user != null)
 				return false;
-		} else if (!user.equals(other.user))
+		} else if (null!=other && !user.equals(other.user))
 			return false;
 		return true;
 	}

@@ -8,46 +8,47 @@
  */
 package com.zig.pso.rest.bean;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
  */
-public class PortalOrderLineSIMandIMEIDetailsBean extends BaseResponseBean{
+public class PortalOrderLineSIMandIMEIDetailsBean extends BaseResponseBean
+{
 
-	private ArrayList<PortalShipmentInfo> portalLineSimandImeiList;
+    private List<PortalShipmentInfo> portalLineSimandImeiList;
 
-	/**
-	 * 
-	 */
-	public PortalOrderLineSIMandIMEIDetailsBean() {
-		super();
-	}
+    /**
+     * 
+     */
+    public PortalOrderLineSIMandIMEIDetailsBean()
+    {
+        super();
+    }
 
-	/**
-	 * @param portalLineSimandImeiList
-	 */
-	public PortalOrderLineSIMandIMEIDetailsBean(
-			ArrayList<PortalShipmentInfo> portalLineSimandImeiList) {
-		super();
-		this.portalLineSimandImeiList = portalLineSimandImeiList;
-	}
+    /**
+     * @param portalLineSimandImeiList
+     */
+    public PortalOrderLineSIMandIMEIDetailsBean(List<PortalShipmentInfo> portalLineSimandImeiList)
+    {
+        super();
+        this.portalLineSimandImeiList = portalLineSimandImeiList;
+    }
 
-	/**
-	 * @return the portalLineSimandImeiList
-	 */
-	public ArrayList<PortalShipmentInfo> getPortalLineSimandImeiList() {
-		return portalLineSimandImeiList;
-	}
+    /**
+     * @return the portalLineSimandImeiList
+     */
+    public List<PortalShipmentInfo> getPortalLineSimandImeiList()
+    {
+        return portalLineSimandImeiList;
+    }
 
-	/**
-	 * @param portalLineSimandImeiList the portalLineSimandImeiList to set
-	 */
-	public void setPortalLineSimandImeiList(
-			ArrayList<PortalShipmentInfo> portalLineSimandImeiList) {
-		this.portalLineSimandImeiList = portalLineSimandImeiList;
-	}
-	
-	
-	
+    /**
+     * @param portalLineSimandImeiList the portalLineSimandImeiList to set
+     */
+    public void setPortalLineSimandImeiList(List<PortalShipmentInfo> portalLineSimandImeiList)
+    {
+        this.portalLineSimandImeiList = portalLineSimandImeiList;
+    }
+
 }

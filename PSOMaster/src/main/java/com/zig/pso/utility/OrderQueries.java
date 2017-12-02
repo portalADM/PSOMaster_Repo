@@ -395,5 +395,15 @@ public class OrderQueries
     {
         return orderProp.getProperty("user.getCurrentPassword");
     }
+    
+    public static String getNameOfCustomerQuery()
+    {
+        return orderProp.getProperty("order.getNameOfCustomer");
+    }
+    
+    public static String getNameForCustomerQuery()
+    {
+        return orderProp.getProperty("order.getNameForCustomer");
+    }
 
 }

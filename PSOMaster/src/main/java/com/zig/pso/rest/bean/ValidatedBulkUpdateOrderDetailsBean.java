@@ -8,7 +8,6 @@
  */
 package com.zig.pso.rest.bean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,14 +15,14 @@ import java.util.List;
  */
 public class ValidatedBulkUpdateOrderDetailsBean
 {
-    private ArrayList<OrderUpdateInputData> validOrderData;
+    private List<OrderUpdateInputData> validOrderData;
 
     private List<String> invalidOrders;
 
     /**
      * @return the orderUpdateData
      */
-    public ArrayList<OrderUpdateInputData> getValidOrderData()
+    public List<OrderUpdateInputData> getValidOrderData()
     {
         return validOrderData;
     }
@@ -31,7 +30,7 @@ public class ValidatedBulkUpdateOrderDetailsBean
     /**
      * @param orderUpdateData the orderUpdateData to set
      */
-    public void setOrderUpdateData(ArrayList<OrderUpdateInputData> orderUpdateData)
+    public void setOrderUpdateData(List<OrderUpdateInputData> orderUpdateData)
     {
         this.validOrderData = orderUpdateData;
     }

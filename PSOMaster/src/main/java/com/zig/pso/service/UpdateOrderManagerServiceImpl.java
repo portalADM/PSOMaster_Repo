@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
@@ -269,7 +270,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 
         for (OrderUpdateInputData orders : orderBulkData.getOrderUpdateData())
         {
-            if(null == orders.getOrderId())
+            if(StringUtils.isEmpty(orders.getOrderId()))
             {
             	isValidOrder = false;
             }	
@@ -310,7 +311,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
             TempInsertBUResponse insertTempDataResp = updateDAO.insertBulkOrderDataInTempTable(validOrderData);
             if(insertTempDataResp.getErrorCode() == PSOConstants.SUCCESS_CODE)
             {
-                ArrayList<OrderUpdateInputData> tempTableDataList = updateDAO.getBulkOrderDataFromTempTable(insertTempDataResp.getBulkUpdateId());
+                List<OrderUpdateInputData> tempTableDataList = updateDAO.getBulkOrderDataFromTempTable(insertTempDataResp.getBulkUpdateId());
                 validatedOrderData.setOrderUpdateData(tempTableDataList);
             }
         }

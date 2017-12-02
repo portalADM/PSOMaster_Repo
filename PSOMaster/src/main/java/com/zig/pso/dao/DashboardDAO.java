@@ -5,7 +5,7 @@
  */
 package com.zig.pso.dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.zig.pso.rest.bean.RegularOrdersCount;
 import com.zig.pso.rest.bean.StuckOrderBacklogDBResultsBean;
@@ -17,7 +17,7 @@ import com.zig.pso.rest.bean.StuckOrdersCount;
 public interface DashboardDAO
 {
 
-    public ArrayList<StuckOrdersCount> getStuckOrderList();
+    public List<StuckOrdersCount> getStuckOrderList();
 
     // public ArrayList<String> getStuckOrderList1();
 
@@ -25,21 +25,21 @@ public interface DashboardDAO
      * @param status
      * @return
      */
-    public ArrayList<String> getStuckOrderList1(String status);
+    public List<String> getStuckOrderList1(String status);
 
     /**
      * @param status
      * @return
      */
-    ArrayList<StuckOrdersCount> getStuckOrderhandled();
+    public List<StuckOrdersCount> getStuckOrderhandled();
 
     /**
      * @param status
      * @return
      */
-    ArrayList<StuckOrdersCount> getStuckOrderallStatus();
+    public List<StuckOrdersCount> getStuckOrderallStatus();
 
-    ArrayList<StuckOrderBacklogDBResultsBean> getStuckOrderBackloagDetails();
+    public List<StuckOrderBacklogDBResultsBean> getStuckOrderBackloagDetails();
 
     /**
      * @return
@@ -56,15 +56,15 @@ public interface DashboardDAO
 
     public int getSaveDeskOrdersCount();
 
-    public ArrayList<RegularOrdersCount> getRegisteredOrdersCount(String fromDate, String toDate, String type);
+    public List<RegularOrdersCount> getRegisteredOrdersCount(String fromDate, String toDate, String type);
 
-    public ArrayList<RegularOrdersCount> getACTIorCNCLOrdersCount(String fromDate, String toDate, String type);
+    public List<RegularOrdersCount> getACTIorCNCLOrdersCount(String fromDate, String toDate, String type);
 
-    public ArrayList<RegularOrdersCount> getSaveDeskOrdersCount(String fromDate, String toDate);
+    public List<RegularOrdersCount> getSaveDeskOrdersCount(String fromDate, String toDate);
 
-    public ArrayList<RegularOrdersCount> getPrepurchaseOrdersCount(String fromDate, String toDate);
+    public List<RegularOrdersCount> getPrepurchaseOrdersCount(String fromDate, String toDate);
 
-    public ArrayList<RegularOrdersCount> getByodOrdersCount(String fromDate, String toDate);
+    public List<RegularOrdersCount> getByodOrdersCount(String fromDate, String toDate);
 
-    public ArrayList<RegularOrdersCount> getOrdersCount(String fromDate, String toDate, String type);
+    public List<RegularOrdersCount> getOrdersCount(String fromDate, String toDate, String type);
 }

@@ -9,6 +9,7 @@
 package com.zig.pso.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,13 +44,13 @@ public class StuckOrderDetailsServiceImpl implements StuckOrderDetailsService
 		if (status.equals("OSHF")){
 			OSHFOrdersResponse oSHFOrdersResponse=new OSHFOrdersResponse();
 			
-			ArrayList<OSHFSingleLineResponse> oSHFSingleLineResponselist=new ArrayList<OSHFSingleLineResponse>();
+			List<OSHFSingleLineResponse> oSHFSingleLineResponselist=new ArrayList<OSHFSingleLineResponse>();
 			oSHFSingleLineResponselist=stuckOrderDetailsDAO.getOSHFSingleLineOrder();
 			oSHFOrdersResponse.setOSHFSingleLineResponselist(oSHFSingleLineResponselist);
 			
-			ArrayList<OSHFMultiLineResponse> OSHFMultiLineResponseList=new ArrayList<OSHFMultiLineResponse>();
-			OSHFMultiLineResponseList=stuckOrderDetailsDAO.getOSHFMultiLineOrder();
-			oSHFOrdersResponse.setOSHFMultiLineResponseList(OSHFMultiLineResponseList); 
+			List<OSHFMultiLineResponse> oSHFMultiLineResponseList=new ArrayList<OSHFMultiLineResponse>();
+			oSHFMultiLineResponseList=stuckOrderDetailsDAO.getOSHFMultiLineOrder();
+			oSHFOrdersResponse.setOSHFMultiLineResponseList(oSHFMultiLineResponseList); 
 			
 			stuckOrderDetailsResponse.setOshfOrdersResponse(oSHFOrdersResponse);	
 		}

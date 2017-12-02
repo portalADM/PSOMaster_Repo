@@ -8,7 +8,7 @@
  */
 package com.zig.pso.dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.zig.pso.rest.bean.OSHFMultiLineResponse;
 import com.zig.pso.rest.bean.OSHFSingleLineResponse;
@@ -20,10 +20,10 @@ public interface StuckOrderDetailsDAO {
 
 	
 	 //segregation Of Orders 
-    public ArrayList<OSHFSingleLineResponse> getOSHFSingleLineOrder();
+    public List<OSHFSingleLineResponse> getOSHFSingleLineOrder();
 
 	/**
 	 * @return
 	 */
-	public ArrayList<OSHFMultiLineResponse> getOSHFMultiLineOrder();
+	public List<OSHFMultiLineResponse> getOSHFMultiLineOrder();
 }

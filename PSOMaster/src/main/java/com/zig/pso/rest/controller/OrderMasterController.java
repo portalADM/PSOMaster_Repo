@@ -10,7 +10,7 @@
  */
 package com.zig.pso.rest.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -125,12 +125,12 @@ public class OrderMasterController
      * This Method provides the list of Order statuses
      */
     @RequestMapping(value = "/getOrderStatusList", method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<String>> getOrderStatusList()
+    public ResponseEntity<List<String>> getOrderStatusList()
     {
         PSOLoggerSrv.printDEBUG("OrderMasterController", "getOrderStatusList", null);
 
-        ArrayList<String> orderStatusList = orderService.getOrderStatusList();
-        return new ResponseEntity<ArrayList<String>>(orderStatusList, HttpStatus.OK);
+        List<String> orderStatusList = orderService.getOrderStatusList();
+        return new ResponseEntity<List<String>>(orderStatusList, HttpStatus.OK);
     }
     
     

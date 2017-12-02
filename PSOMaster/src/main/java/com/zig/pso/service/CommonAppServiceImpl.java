@@ -38,7 +38,7 @@ public class CommonAppServiceImpl implements CommonAppService
         else
         {
             sentMailResponse.setErrorCode(PSOConstants.ERROR_CODE);
-            sentMailResponse.setErrorMsg(PSOConstants.Invalid_Request);
+            sentMailResponse.setErrorMsg(PSOConstants.INVALID_REQUEST);
             return sentMailResponse;
         }
 

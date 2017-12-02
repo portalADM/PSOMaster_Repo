@@ -10,7 +10,7 @@
  */
 package com.zig.pso.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
@@ -23,7 +23,7 @@ import com.zig.pso.rest.bean.PortalShipmentInfoForUI;
 
 public interface OrderInfoManagerService
 {
-    public ArrayList<String> getOrderIds();
+    public List<String> getOrderIds();
 
     /**
      * @param OrderId
@@ -64,7 +64,7 @@ public interface OrderInfoManagerService
     public PortalOrderLineSIMandIMEIDetailsBean getPortalLineSimAndImeiDetails(String OrderId);
     
     
-    public ArrayList<String> getOrderStatusList();
+    public List<String> getOrderStatusList();
     
     public InventoryStatusofItemBean getInventoryStatusDetails(String skuId);
     

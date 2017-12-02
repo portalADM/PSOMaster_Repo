@@ -23,6 +23,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.zig.pso.config.InitConfiguration;
+import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.Mail;
 
 /**
@@ -63,19 +64,21 @@ public class MailServiceImpl implements MailService
             
             mailSender.send(mimeMessageHelper.getMimeMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            PSOLoggerSrv.printERROR("MailServiceImpl", "sendEmail", e);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            PSOLoggerSrv.printERROR("MailServiceImpl", "sendEmail", e);
+        }catch (Exception e) {
+            PSOLoggerSrv.printERROR("MailServiceImpl", "sendEmail", e);
         }
     }
     
     public static void main(String[] args)
     {
         Mail mail = new Mail();
-        mail.setMailFrom("nilesh.patil@amdocs.com");
-        //mail.setMailTo("nilesh.patil@amdocs.com;mankita@amdocs.com");
+        mail.setMailFrom("");
+        //mail.setMailTo("");
         mail.setMailSubject("TEST Email");
-        mail.setMailContent("Tumhara Gorakhpur Gaon he Gaon!!!");
+        mail.setMailContent("");
  
         /*List < Object > attachments = new ArrayList < Object > ();
         attachments.add(new ClassPathResource("dog.jpg"));

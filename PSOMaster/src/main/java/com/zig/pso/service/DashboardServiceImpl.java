@@ -36,7 +36,7 @@ public class DashboardServiceImpl implements DashboardService
      * @see com.zig.pso.service.DashboardService#getStuckOrderList()
      */
     @Override
-    public ArrayList<StuckOrdersCount> getStuckOrderList()
+    public List<StuckOrdersCount> getStuckOrderList()
     {
         PSOLoggerSrv.printDEBUG("DashboardServiceImpl", "getStuckOrderList", "");
         return dashboardDAO.getStuckOrderList();
@@ -47,7 +47,7 @@ public class DashboardServiceImpl implements DashboardService
      * @see com.zig.pso.service.DashboardService#getStuckOrderList1(java.lang.String)
      */
     @Override
-    public ArrayList<String> getStuckOrders(String status)
+    public List<String> getStuckOrders(String status)
     {
         PSOLoggerSrv.printDEBUG("DashboardServiceImpl", "getStuckOrders", "status : " + "");
         return dashboardDAO.getStuckOrderList1(status);
@@ -58,7 +58,7 @@ public class DashboardServiceImpl implements DashboardService
      * @see com.zig.pso.service.DashboardService#getStuckOrderList1(java.lang.String)
      */
     @Override
-    public ArrayList<StuckOrdersCount> getStuckOrderhandled()
+    public List<StuckOrdersCount> getStuckOrderhandled()
     {
         PSOLoggerSrv.printDEBUG("DashboardServiceImpl", "getStuckOrderhandled", "");
         return dashboardDAO.getStuckOrderhandled();
@@ -69,7 +69,7 @@ public class DashboardServiceImpl implements DashboardService
      * @see com.zig.pso.service.DashboardService#getStuckOrderList1(java.lang.String)
      */
     @Override
-    public ArrayList<StuckOrdersCount> getStuckOrderallStatus()
+    public List<StuckOrdersCount> getStuckOrderallStatus()
     {
         PSOLoggerSrv.printDEBUG("DashboardServiceImpl", "getStuckOrderallStatus", "");
         return dashboardDAO.getStuckOrderallStatus();
@@ -84,7 +84,7 @@ public class DashboardServiceImpl implements DashboardService
     {
 
         StuckOrderBacklogUiResponseBean response = new StuckOrderBacklogUiResponseBean();
-        ArrayList<StuckOrderBacklogDBResultsBean> stuckOrderDbResults = dashboardDAO.getStuckOrderBackloagDetails();
+        List<StuckOrderBacklogDBResultsBean> stuckOrderDbResults = dashboardDAO.getStuckOrderBackloagDetails();
 
         if (stuckOrderDbResults.size() > 0)
         {
@@ -163,7 +163,7 @@ public class DashboardServiceImpl implements DashboardService
     {
         PSOLoggerSrv.printDEBUG("DashboardServiceImpl", "getDynamicOrderListData", "");
         RegularOrdersCountList dynOrderCountList = new RegularOrdersCountList();
-        ArrayList<RegularOrdersCount> dynamicOrdersCountList = new ArrayList<RegularOrdersCount>();
+        List<RegularOrdersCount> dynamicOrdersCountList = new ArrayList<RegularOrdersCount>();
 
         if ("PORTIN".equals(dynamicGraphRequest.getType()))
         {

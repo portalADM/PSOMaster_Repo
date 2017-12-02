@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zig.pso.constants.PSOConstants;
+import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.LoginRequestBean;
 import com.zig.pso.rest.bean.UserAuthResponse;
 import com.zig.pso.rest.bean.UserMaster;
@@ -49,7 +50,7 @@ public class LoginServiceImpl implements LoginService
 	            }
 	            catch (Exception e)
 	            {
-	                e.printStackTrace();
+	                PSOLoggerSrv.printERROR("LoginServiceImpl", "authenticateUser", e);
 	            }
 	        }
 	        else{

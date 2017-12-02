@@ -8,7 +8,7 @@
  */
 package com.zig.pso.dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.LoginRequestBean;
@@ -24,7 +24,7 @@ public interface UserDAO
 {
     public BaseResponseBean registerUser(UserMaster user);
     
-    public ArrayList<UserMaster> getUserPendingApprovalList();
+    public List<UserMaster> getUserPendingApprovalList();
     
     public BaseResponseBean rejectUser(RejectPendingUserRequest rejectUserreq);
 
@@ -36,7 +36,7 @@ public interface UserDAO
     
     public BaseResponseBean updateUserAssignments(UserMaster userData);
     
-    public ArrayList<UserMaster> getUserList(UserSearchRequestBean userSearchReq);
+    public List<UserMaster> getUserList(UserSearchRequestBean userSearchReq);
     
     public BaseResponseBean deletePendingUserRequest(String employeeId);
     

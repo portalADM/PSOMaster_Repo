@@ -53,13 +53,16 @@ module.controller("ManageUserController", function($scope, $routeParams,$http,Us
 		UserService.getPendingApprovalUserList().then(
 				function(response) {
 					$rootScope.spinner.off();
-					if(response!=undefined && response.length>0){
-						$scope.pendingUserList = response;
-					}
-					else{
-						$rootScope.spinner.off();
-						var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
-						MessageService.showError(errorMessage,10000);
+					if(response!=undefined && response!=null)
+					{
+						if(response.length>0){
+							$scope.pendingUserList = response;
+						}
+						else{
+							$rootScope.spinner.off();
+							var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+							MessageService.showError(errorMessage,10000);
+						}
 					}
 	       		},
 		       function(errResponse){
@@ -75,15 +78,18 @@ module.controller("ManageUserController", function($scope, $routeParams,$http,Us
 		UserService.rejectUserRequest(empdata).then(
 				function(response) {
 					$rootScope.spinner.off();
-					if(response!=undefined && response.errorCode == '0'){
-						MessageService.showSuccess(response.errorMessage,10000);
-						$("#RejectUserConfirmation-modal").modal('hide');
-						getPendingUserList();
-					}
-					else{
-						$rootScope.spinner.off();
-						var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
-						MessageService.showError(errorMessage,10000);
+					if(response!=undefined && response!=null)
+					{
+						if(response.errorCode == '0'){
+							MessageService.showSuccess(response.errorMessage,10000);
+							$("#RejectUserConfirmation-modal").modal('hide');
+							getPendingUserList();
+						}
+						else{
+							$rootScope.spinner.off();
+							var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+							MessageService.showError(errorMessage,10000);
+						}
 					}
 	       		},
 		       function(errResponse){
@@ -121,15 +127,18 @@ module.controller("ManageUserController", function($scope, $routeParams,$http,Us
 		UserService.getUserList(searchData).then(
 				function(response) {
 					$rootScope.spinner.off();
-					if(response!=undefined){
-						$scope.userList = response;
-						if(response.length==0)
-							MessageService.showInfo('No data found.',5000);
-					}
-					else{
-						$rootScope.spinner.off();
-						var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
-						MessageService.showError(errorMessage,10000);
+					if(response!=undefined && response!=null)
+					{
+						if(response.length>0){
+							$scope.userList = response;
+							if(response.length==0)
+								MessageService.showInfo('No data found.',5000);
+						}
+						else{
+							$rootScope.spinner.off();
+							var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+							MessageService.showError(errorMessage,10000);
+						}
 					}
 	       		},
 		       function(errResponse){

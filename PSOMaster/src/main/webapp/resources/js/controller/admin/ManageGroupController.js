@@ -47,10 +47,11 @@ module.controller("ManageGroupController", function($scope, MessageService,$http
 	}
 	
 	$scope.createEditGroup = function(){
+		var groupDetails = $scope.groupData;
 		if($scope.oprFlag === 'create')
-			addNewGroup($scope.groupData);
+			addNewGroup(groupDetails);
 		else
-			editGroupData($scope.groupData);
+			editGroupData(groupDetails);
 	}
 	
 	$scope.deleteGroup = function(){
@@ -59,13 +60,16 @@ module.controller("ManageGroupController", function($scope, MessageService,$http
 		ManageGroupService.deleteGroup($scope.groupData.groupId).then(
 				function(response) {
 					$rootScope.spinner.off();
-					if(response!=undefined && response.errorCode == 0){
-						getGroupList();
-						MessageService.showSuccess(response.errorMsg,10000);
-					}
-					else{
-						var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
-						MessageService.showError(errorMessage,10000);
+					if(response!=undefined && response!=null)
+					{
+						if(response.errorCode == 0){
+							getGroupList();
+							MessageService.showSuccess(response.errorMsg,5000);
+						}
+						else{
+							var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+							MessageService.showError(errorMessage,5000);
+						}
 					}
 	       		},
 		       function(errResponse){
@@ -105,13 +109,16 @@ module.controller("ManageGroupController", function($scope, MessageService,$http
 		ManageGroupService.createNewGroup(groupData).then(
 				function(response) {
 					$rootScope.spinner.off();
-					if(response!=undefined && response.errorCode == 0){
-						getGroupList();
-						MessageService.showSuccess(response.errorMsg,10000);
-					}
-					else{
-						var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
-						MessageService.showError(errorMessage,10000);
+					if(response!=undefined && response!=null)
+					{
+						if(response.errorCode == 0){
+							getGroupList();
+							MessageService.showSuccess(response.errorMsg,5000);
+						}
+						else{
+							var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+							MessageService.showError(errorMessage,5000);
+						}
 					}
 	       		},
 		       function(errResponse){
@@ -121,19 +128,22 @@ module.controller("ManageGroupController", function($scope, MessageService,$http
 		);
 	}
 	
-	function editGroupData(){
+	function editGroupData(groupDetails){
 		$rootScope.spinner.on();
 		$("#CreateEditGroup-modal").modal('hide');
-		ManageGroupService.updateGroupDetails($scope.groupData).then(
+		ManageGroupService.updateGroupDetails(groupDetails).then(
 				function(response) {
 					$rootScope.spinner.off();
-					if(response!=undefined && response.errorCode == 0){
-						getGroupList();
-						MessageService.showSuccess(response.errorMsg,10000);
-					}
-					else{
-						var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
-						MessageService.showError(errorMessage,10000);
+					if(response!=undefined && response!=null)
+					{
+						if(response!=undefined && response.errorCode == 0){
+							getGroupList();
+							MessageService.showSuccess(response.errorMsg,5000);
+						}
+						else{
+							var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+							MessageService.showError(errorMessage,5000);
+						}
 					}
 	       		},
 		       function(errResponse){

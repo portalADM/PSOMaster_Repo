@@ -35,7 +35,7 @@ public class DBConnection
             String driver = prop.getProperty(PSOConstants.PORTAL_DB_DRIVER);
             String url = prop.getProperty(PSOConstants.PORTAL_DB_URL);
             String user = prop.getProperty(PSOConstants.PORTAL_DB_USER);
-            String password = PSOPropertyEncryptDecryptUtil.decryptValue(prop.getProperty(PSOConstants.PORTAL_DB_PASSWORD));
+            String password = PSOPropertyEncryptDecryptUtil.decryptValue(prop.getProperty(PSOConstants.PORTAL_DB_PW));
             Class.forName(driver);
             portalDBConnection = DriverManager.getConnection(url, user, password);
         }
@@ -65,7 +65,7 @@ public class DBConnection
             String driver = prop.getProperty(PSOConstants.ENS_DB_DRIVER);
             String url = prop.getProperty(PSOConstants.ENS_DB_URL);
             String user = prop.getProperty(PSOConstants.ENS_DB_USER);
-            String password = PSOPropertyEncryptDecryptUtil.decryptValue(prop.getProperty(PSOConstants.ENS_DB_PASSWORD));
+            String password = PSOPropertyEncryptDecryptUtil.decryptValue(prop.getProperty(PSOConstants.ENS_DB_PW));
             Class.forName(driver);
             ensDBConnection = DriverManager.getConnection(url, user, password);
         }

@@ -4,8 +4,15 @@ module.controller("SignupController", function($scope, SignupService,$location,M
 	
 	$scope.isSignUpSuccess = false;
 	
+	$scope.init = function()
+	{
+		$("#setuPassword-modal").modal();
+		MessageService.hideMessage();
+	}
+	
 	$scope.signUp = function()
 	{
+		MessageService.hideMessage();
 		var userData = $scope.userData;
 		
 		if(userData.firstName==null ||userData.lastName==null ||userData.empId==null  || userData.company==null 
@@ -20,15 +27,18 @@ module.controller("SignupController", function($scope, SignupService,$location,M
 			SignupService.registerUser($scope.userData).then(
 					function(response) {
 						$rootScope.spinner.off();
-						if(response!=undefined && response.errorCode == 0){
-							$scope.isSignUpSuccess = true;
-							MessageService.showSuccess('The request has been sent for approval. You will receive an email once it is approved.',10000);
-							$scope.userData = {};
-							$scope.validUserName = null;
-						}
-						else{
-							var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
-							MessageService.showError(errorMessage,10000);
+						if(response!=undefined && response!=null)
+						{
+							if(response.errorCode == 0){
+								$scope.isSignUpSuccess = true;
+								MessageService.showSuccess('The request has been sent for approval. You will receive an email once it is approved.',10000);
+								$scope.userData = {};
+								$scope.validUserName = null;
+							}
+							else{
+								var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+								MessageService.showError(errorMessage,10000);
+							}
 						}
 		       		},
 			       function(errResponse){
@@ -41,6 +51,7 @@ module.controller("SignupController", function($scope, SignupService,$location,M
 	
 	$scope.setupUserPassword = function()
 	{
+		MessageService.hideMessage();
 		var newPassword = $scope.userData.password;
 		var confirmPassword = $scope.userData.confirmPassword;
 		
@@ -54,13 +65,15 @@ module.controller("SignupController", function($scope, SignupService,$location,M
 			SignupService.setupUserPassword($scope.userData).then(
 					function(response) {
 						$rootScope.spinner.off();
-						if(response!=undefined && response.errorCode == 0){
-							$scope.setupMessage = response.errorMsg;
-							$("#setuPassword-modal").modal();
-						}
-						else{
-							var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
-							MessageService.showError(errorMessage,10000);
+						if(response!=undefined && response!=null){
+							if(response.errorCode == 0){
+								$scope.setupMessage = response.errorMsg;
+								$("#setuPassword-modal").modal();
+							}
+							else{
+								var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+								MessageService.showError(errorMessage,10000);
+							}
 						}
 		       		},
 			       function(errResponse){
@@ -71,24 +84,30 @@ module.controller("SignupController", function($scope, SignupService,$location,M
 		}
 	}
 	
-	$scope.redirectToLoginPage = function(){
+	$scope.redirectToLoginPage = function()
+	{
 		$("#setuPassword-modal").modal('hide');
 		$location.path('/login');
 	}
 	
-	$scope.checkUserName = function(){
+	$scope.checkUserName = function()
+	{
+		MessageService.hideMessage();
 		var username = $scope.userData.username;
-		if(username!=undefined || username!='' || username!=null){
+		if(username!=undefined && username!='' && username!=null){
 			$scope.validUserName = '';
 			SignupService.checkUsername(username).then(
 					function(response) {
-						if(response!=undefined && response.errorCode == 0){
-							$scope.validUserName = 'true';
-						}
-						else{
-							$scope.validUserName = 'false';
-							var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
-							MessageService.showError(errorMessage,10000);
+						if(response!=undefined && response!=null)
+						{
+							if(response.errorCode == 0){
+								$scope.validUserName = 'true';
+							}
+							else{
+								$scope.validUserName = 'false';
+								var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');
+								MessageService.showError(errorMessage,10000);
+							}
 						}
 		       		},
 			       function(errResponse){
@@ -98,5 +117,7 @@ module.controller("SignupController", function($scope, SignupService,$location,M
 			);
 		}
 	}
+	
+	$scope.init();
 	
 });

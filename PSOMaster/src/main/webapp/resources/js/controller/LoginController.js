@@ -2,8 +2,14 @@ module.controller("LoginController", function($scope, $routeParams,$http,$locati
 {
 	$rootScope.spinner.off();
 	
+	$scope.init = function(){
+		MessageService.hideMessage();
+		removeModelBackDrop();
+	}
+	
 	$scope.authenticateUser = function()
 	{
+		MessageService.hideMessage();
 		var username = $scope.username;
 		var password = $scope.password;
 		if(username == undefined || username == null || password == undefined || password == null )
@@ -32,6 +38,13 @@ module.controller("LoginController", function($scope, $routeParams,$http,$locati
 	        });
 		}
 		
+	}
+	
+	$scope.init();
+	
+	function removeModelBackDrop()
+	{
+		angular.element( document.querySelector( '.modal-backdrop' ) ).remove('.modal-backdrop')
 	}
 	
 });

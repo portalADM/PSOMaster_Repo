@@ -35,5 +35,13 @@ module.service('MessageService', function($http,Flash) {
 		 var msgWithIcon = '<span class="glyphicon glyphicon-exclamation-sign marRight8"></span>'+message;
 		 var id = Flash.create('warning', msgWithIcon, timeout, {class: 'custom-class', id: 'custom-id'}, true);
 	}
+	
+	/*
+	 * Service Method that clear all flash messages
+	 * 
+	 */
+	this.hideMessage = function() {
+		Flash.clear();
+	}
 
 });

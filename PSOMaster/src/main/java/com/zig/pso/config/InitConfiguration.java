@@ -37,8 +37,8 @@ public class InitConfiguration extends WebMvcConfigurerAdapter
 {
     private static final String EMAIL_HOST = "emailHost";
     private static final String EMAIL_SMTP_AUTH = "emailSMTPauth";
-    private static final String MAIL_DEBUG = "false";
-    private static final String TRANSPORT_PROTOCOL = "smtp";
+    private static final String MAIL_DEBUG = "mailDebug";
+    private static final String TRANSPORT_PROTOCOL = "transportProtocol";
     
     @Autowired
     private Environment env;

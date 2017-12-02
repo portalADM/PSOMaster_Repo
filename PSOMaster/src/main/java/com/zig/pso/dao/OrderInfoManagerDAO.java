@@ -10,7 +10,7 @@
  */
 package com.zig.pso.dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.zig.pso.rest.bean.ApiOrderMasterResponseBean;
 import com.zig.pso.rest.bean.EnsOrderMasterResponseBean;
@@ -29,7 +29,7 @@ import com.zig.pso.rest.bean.PortalShipmentInfo;
  */
 public interface OrderInfoManagerDAO
 {
-    public ArrayList<String> getOrderIds();
+    public List<String> getOrderIds();
 
     public PortalOrderMasterResponseBean getPortalDataInfo(String OrderId);
 
@@ -37,7 +37,7 @@ public interface OrderInfoManagerDAO
 
     public ApiOrderMasterResponseBean getAPIDataInfo(String orderId);
 
-    public ArrayList<PortalShipmentInfo> getPortalShipmentInfoFromDB(String orderId);
+    public List<PortalShipmentInfo> getPortalShipmentInfoFromDB(String orderId);
 
     public String getAPIRequestResponseBody(String seq_number,String callType);
 
@@ -53,17 +53,17 @@ public interface OrderInfoManagerDAO
 
     public String getOrderTypeFromExtraOrder(String orderId);
     
-    public ArrayList<PortalLineItemInfoBean> getPortalLineItemInfo(String orderId);
+    public List<PortalLineItemInfoBean> getPortalLineItemInfo(String orderId);
     
-    public ArrayList<EnsembleLineItemInfoBean> getEnsLineItemInfo(String orderId);
+    public List<EnsembleLineItemInfoBean> getEnsLineItemInfo(String orderId);
     
-    public ArrayList<PortalOrderPortRequestBean> getPortalOrderPortDetails(String orderId);
+    public List<PortalOrderPortRequestBean> getPortalOrderPortDetails(String orderId);
     
-    public ArrayList<EnsOrderPortRequestBean> getEnsOrderPortDetails(String orderId);
+    public List<EnsOrderPortRequestBean> getEnsOrderPortDetails(String orderId);
     
-    public ArrayList<PortalShipmentInfo>  getPortalLineSimAndImeiDetails(String orderId);
+    public List<PortalShipmentInfo>  getPortalLineSimAndImeiDetails(String orderId);
     
     public String getOrderCurrentValue(String orderId,String lineId,String updateType);
     
-    public ArrayList<String> getOrderStatusList();
+    public List<String> getOrderStatusList();
 }
