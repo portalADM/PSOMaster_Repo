@@ -49,5 +49,7 @@ public interface IUserService
     public abstract BaseResponseBean checkUsername(String s);
 
     public abstract BaseResponseBean changeUserPassword(SetupUserPasswordRequestBean setupuserpasswordrequestbean);
+    
+    public UserMaster getUserDetailsByUserName(String userName);
 
 }

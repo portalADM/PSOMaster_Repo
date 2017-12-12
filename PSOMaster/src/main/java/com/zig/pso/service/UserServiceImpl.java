@@ -32,7 +32,7 @@ public class UserServiceImpl implements IUserService
 	
 	private static final boolean isLoginSimulated = false;
     
-    @Autowired(required = true)
+    /*@Autowired(required = true)*/
     private UserSessionBean sessionBean;
     
     @Autowired
@@ -274,6 +274,15 @@ public class UserServiceImpl implements IUserService
     public BaseResponseBean checkUsername(String userName)
     {
         return userDAO.checkUsername(userName);
+    }
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.service.IUserService#getUserDetailsByUserName(java.lang.String)
+     */
+    @Override
+    public UserMaster getUserDetailsByUserName(String userName)
+    {
+        return userDAO.getUserByUserName(userName);
     }
 
 

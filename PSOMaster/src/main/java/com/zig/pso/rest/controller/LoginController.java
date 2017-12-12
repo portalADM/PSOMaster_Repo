@@ -61,7 +61,7 @@ public class LoginController
         return model;
     }
     
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login11", method = RequestMethod.POST)
     public ResponseEntity<UserAuthResponse> authenticateUser(@RequestBody LoginRequestBean loginRequest)
     {
       /*  LoginRequestBean loginRequest = new LoginRequestBean();

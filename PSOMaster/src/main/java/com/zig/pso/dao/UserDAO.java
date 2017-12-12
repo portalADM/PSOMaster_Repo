@@ -49,5 +49,7 @@ public interface UserDAO
     public abstract BaseResponseBean changeUserPassword(SetupUserPasswordRequestBean setupuserpasswordrequestbean);
 
     public abstract String getUserCurrentPassword(String s);
+    
+    public UserMaster getUserByUserName(String userName);
 
 }

@@ -24,10 +24,22 @@ angular.module('AuthServices', ['ngResource', 'ngStorage'])
     };
          
     auth.login = function(username, password){
-        return $http({
+    	 var config = {/*
+                 ignoreAuthModule: 'ignoreAuthModule',*/
+                 headers: {'Content-Type': 'application/x-www-form-urlencoded',
+                	 'authorization' : "Basic "+ btoa(username + ":" + password)
+                	 }
+                 
+             };
+    	
+      /*  return $http({
 			method : "POST",
-			url : "login",
-			data :{username:username, password:password}
+			url : "authenticate",
+			data :$.param({
+	            username: username,
+	            password: password
+	        }),
+			config : config
 		}).then(
 		function(response){
 			$sessionStorage.user = response.data.user;    
@@ -37,12 +49,29 @@ angular.module('AuthServices', ['ngResource', 'ngStorage'])
 		function(errResponse){
 			console.error('Error while login');
 			return $q.reject(errResponse);
-		});
+		});*/
+        
+        
+    	 return $http.post('authenticate', $.param({
+            username: username,
+            password: password
+        }), config).then(
+        		function(response){
+        			$sessionStorage.user = response.data.user;    
+                    $rootScope.user = $sessionStorage.user;
+        			return response.data;
+        		}, 
+        		function(errResponse){
+        			console.error('Error while login');
+        			return $q.reject(errResponse);
+        		});
+        
         
     };
      
  
     auth.logout = function() {
+    	$http.post('logout');
         delete $sessionStorage.user;
         delete $rootScope.user;
     };

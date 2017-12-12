@@ -267,11 +267,11 @@ public class DashboardDAOImpl implements DashboardDAO
             pstm = con.prepareStatement(sql);
             rs = pstm.executeQuery();
             StuckOrdersCount stuckOrderCount = null;
-            while (rs.next())
+            while(rs.next())
             {
                 stuckOrderCount = new StuckOrdersCount();
-                stuckOrderCount.setCount(rs.getInt("count"));
                 stuckOrderCount.setOrderStatus(rs.getString("status_code"));
+                stuckOrderCount.setCount(rs.getInt("count"));
                 stuckOrderList.add(stuckOrderCount);
             }
         }

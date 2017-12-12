@@ -24,7 +24,6 @@ import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.GroupMaster;
 import com.zig.pso.rest.bean.RoleMaster;
 import com.zig.pso.service.GroupService;
-import com.zig.pso.service.UserSessionBean;
 
 /**
  * 
@@ -35,9 +34,6 @@ public class ManageGroupController
     @Autowired
     GroupService groupService;
     
-    @Autowired
-    UserSessionBean userSession;
-
     /**
      * This Method provides list of Roles
      */

@@ -1,14 +1,18 @@
-module.factory('myInterceptor', ['$q', function($q) {  
-	var timestampMarker = {
-	        request: function(config) {
-	            config.requestTimestamp = new Date().getTime();
-	            return config;
-	        },
-	        response: function(response) {
-	            response.config.responseTimestamp = new Date().getTime();
-	            return response;
-	        }
-	    };
-	    return timestampMarker;
+module.factory('myInterceptor', ['$q', '$location', '$rootScope', function ($q, $location, $rootScope) {  
+	 function success(response) {
+	        return response;
+	    }
 
+	    function error(response) {
+	        var status = response.status;
+	        if (status == 401) {
+	            $location.path('/login');
+	        }
+	        return $q.reject(response);
+	    }
+
+	    return function (promise) {
+	        return promise.then(success, error);
+	    }
 }]);
+

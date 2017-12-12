@@ -40,6 +40,6 @@ public class PSOUserAuthenticator
     
     public static void main(String[] args)
     {
-        System.out.println(PSOUserAuthenticator.getHashedPassword("unix123"));
+        System.out.println(PSOUserAuthenticator.getHashedPassword("nilesh"));
     }
 }

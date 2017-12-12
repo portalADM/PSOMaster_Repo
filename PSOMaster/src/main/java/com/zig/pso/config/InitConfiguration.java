@@ -15,21 +15,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.resource.ResourceUrlEncodingFilter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import com.zig.pso.utility.PropertyReader;
 
 @Configuration
+@Import({SecurityConfig.class})
 @EnableWebMvc
 @ComponentScan(basePackages = "com.zig.pso")
 @PropertySource("classpath:application.properties")
@@ -39,6 +43,11 @@ public class InitConfiguration extends WebMvcConfigurerAdapter
     private static final String EMAIL_SMTP_AUTH = "emailSMTPauth";
     private static final String MAIL_DEBUG = "mailDebug";
     private static final String TRANSPORT_PROTOCOL = "transportProtocol";
+    
+    @Bean
+    public ResourceUrlEncodingFilter resourceUrlEncodingFilter() {
+        return new ResourceUrlEncodingFilter();
+    }
     
     @Autowired
     private Environment env;
@@ -91,5 +100,11 @@ public class InitConfiguration extends WebMvcConfigurerAdapter
     public void addResourceHandlers(ResourceHandlerRegistry registry)
     {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+    }
+    
+
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
     }
 }

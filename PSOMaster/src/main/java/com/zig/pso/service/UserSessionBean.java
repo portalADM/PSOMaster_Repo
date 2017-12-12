@@ -14,14 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.UserMaster;
 
 @Component(value = "sessionBean")
-@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
+@Scope(value = "session")
 public class UserSessionBean implements Serializable
 {
     private static final long serialVersionUID = -3364120758157904154L;

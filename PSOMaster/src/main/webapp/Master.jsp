@@ -66,6 +66,7 @@
 	<script src="resources/js/libs/angularjs/angular.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.3.0/angular-resource.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-cookies.js"></script>
 	<script src="resources/js/libs/angularjs/angular-animate.js"></script>
 	<script src="resources/js/libs/angularjs/angular-route.min.js"></script>
 	<script src="resources/js/libs/angularjs/angular-sanitize.min.js"></script>

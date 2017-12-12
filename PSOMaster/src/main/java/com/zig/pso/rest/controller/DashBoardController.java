@@ -39,7 +39,7 @@ public class DashBoardController
     @Autowired
     DashboardService dashboardService;
     
-    @Autowired
+   /* @Autowired*/
     UserSessionBean userSession;
 
     /*
@@ -52,8 +52,6 @@ public class DashBoardController
 
         StuckOrderDetailResponse stuckOrdersList = new StuckOrderDetailResponse();
         
-        System.out.println(userSession.getLoggedInUserDetail());
-
         List<StuckOrdersCount> stuckOrderCountList = dashboardService.getStuckOrderList();
         stuckOrdersList.setStuckOrderList(stuckOrderCountList);
         return new ResponseEntity<StuckOrderDetailResponse>(stuckOrdersList, HttpStatus.OK);

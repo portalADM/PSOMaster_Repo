@@ -345,6 +345,11 @@ public class OrderQueries
     {
         return orderProp.getProperty("user.getUserDataByEmpId");
     }
+    
+    public static String getUserDataByUserName()
+    {
+        return orderProp.getProperty("user.getUserDataByUserName");
+    }
 
     public static String getDeletePendingUserReqQuery()
     {

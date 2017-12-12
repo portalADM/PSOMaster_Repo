@@ -1,4 +1,4 @@
-var module = angular.module("PSOMaster", ['ngResource','ngRoute', 'ngSanitize','ng-fusioncharts','ngFlash','ngAnimate', 'ui.bootstrap','treasure-overlay-spinner','AuthServices']);//,'chart.js'
+var module = angular.module("PSOMaster", ['ngResource','ngRoute', 'ngSanitize','ng-fusioncharts','ngFlash','ngAnimate', 'ui.bootstrap','treasure-overlay-spinner','AuthServices','ngCookies']);//,'chart.js'
 
 module.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/login', {
@@ -89,9 +89,50 @@ module.config([ '$routeProvider', function($routeProvider) {
 	});
 } ]);
 
-/*module.config(['$httpProvider', function($httpProvider) {  
-    $httpProvider.interceptors.push('myInterceptor');
-}]);*/
+
+module.factory('XSRFInterceptor', function ($cookies) {
+
+  var XSRFInterceptor = {
+
+    request: function(config) {
+
+      var token = $cookies.get('XSRF-TOKEN');
+
+      if (token) {
+        config.headers['X-XSRF-TOKEN'] = token;
+      }
+
+      return config;
+    }
+  };
+  return XSRFInterceptor;
+});
+
+var interceptor = function ($q, $location) {
+    return {
+        request: function (config) {//req
+            return config;
+        },
+        response: function (result) {//res
+            return result;
+        },
+        responseError: function (rejection) {//error
+            if (rejection.status == 401) {
+        		$location.path('/logout');
+            }
+            return $q.reject(rejection);
+        }
+    }
+};
+
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+module.config(function ($httpProvider) {
+    $httpProvider.interceptors.push(interceptor);
+    $httpProvider.interceptors.push('XSRFInterceptor');
+    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+    $httpProvider.defaults.headers.common[header] = token;
+});
 
 
 module.run(run);

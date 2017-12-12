@@ -19,7 +19,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     @Override
     protected Class<?>[] getRootConfigClasses()
     {
-        return new Class[] { InitConfiguration.class };
+        return new Class[] { SecurityConfig.class,InitConfiguration.class };
     }
 
     @Override
@@ -33,5 +33,6 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     {
         return new String[] { "/" };
     }
+    
 
 }

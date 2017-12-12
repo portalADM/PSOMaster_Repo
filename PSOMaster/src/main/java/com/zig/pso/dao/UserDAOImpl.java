@@ -13,13 +13,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.logging.PSOLoggerSrv;
+import com.zig.pso.rest.bean.Authority;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.LoginRequestBean;
 import com.zig.pso.rest.bean.RejectPendingUserRequest;
@@ -1075,6 +1078,81 @@ public class UserDAOImpl implements UserDAO
         }
 
         return currentPassword;
+    }
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.dao.UserDAO#getUserByUserName(java.lang.String)
+     */
+    @Override
+    public UserMaster getUserByUserName(String userName)
+    {
+        UserMaster user = new UserMaster();
+        String sql = OrderQueries.getUserDataByUserName();
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getPortalDbConnction();
+        Set<Authority> authorities = new HashSet<Authority>();
+        try
+        {
+            pstm = con.prepareStatement(sql);
+            pstm.setString(1, userName);
+            rs = pstm.executeQuery();
+            while (rs.next())
+            {
+                user = new UserMaster();
+                user.setId(rs.getInt("USER_ID"));
+                user.setEmpId(rs.getString("EMP_ID"));
+                user.setUsername(rs.getString("USERNAME"));
+                user.setPassword(rs.getString("PASSWORD"));
+                user.setFirstName(rs.getString("FIRSTNAME"));
+                user.setLastName(rs.getString("LASTNAME"));
+                user.setEmail(rs.getString("EMAIL"));
+                user.setCompany(rs.getString("COMPANY"));
+                user.setGroupId(rs.getInt("GROUP_ID"));
+                user.setUserGroup(rs.getString("GROUP_NAME"));
+                user.setUserRole(rs.getString("ROLE_NAME"));
+                authorities.add(new Authority(0, rs.getString("ROLE_NAME")));
+                user.setAuthorities(authorities);
+            }
+        }
+        catch (SQLException e)
+        {
+            PSOLoggerSrv.printERROR(CLASS_NAME, "getUserDetailsByEmpId", e);
+        }
+        finally
+        {
+            try
+            {
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(CLASS_NAME, "getUserDetailsByEmpId", e);
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getUserDetailsByEmpId", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR(CLASS_NAME, "getUserDetailsByEmpId", e);
+                }
+            }
+        }
+        return user;
     }
 
 }

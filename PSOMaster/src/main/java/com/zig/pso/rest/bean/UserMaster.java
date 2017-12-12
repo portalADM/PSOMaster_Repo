@@ -9,6 +9,8 @@
 package com.zig.pso.rest.bean;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 
@@ -31,6 +33,7 @@ public class UserMaster implements Serializable
     private String userGroup;
     private String status;
     private String tempPassword;
+    private Set<Authority> authorities = new HashSet<Authority>();
     
     
     /**
@@ -491,6 +494,24 @@ public class UserMaster implements Serializable
         return "UserMaster [id=" + id + ", empId=" + empId + ", username=" + username + ", password=" + password + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
                 + ", company=" + company + ", roleId=" + roleId + ", userRole=" + userRole + ", groupId=" + groupId + ", userGroup=" + userGroup + ", status=" + status + ", tempPassword="
                 + tempPassword + "]";
+    }
+
+
+    /**
+     * @return the authorities
+     */
+    public Set<Authority> getAuthorities()
+    {
+        return authorities;
+    }
+
+
+    /**
+     * @param authorities the authorities to set
+     */
+    public void setAuthorities(Set<Authority> authorities)
+    {
+        this.authorities = authorities;
     }
 
 
