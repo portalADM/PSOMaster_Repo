@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Update Order</title>
 </head>
 <body>
@@ -358,7 +360,7 @@
                                        <div class="form-group marTop30">
                                               <label class="col-lg-2 control-label textAlgnInit noPadTop">Upload File</label>
                                               <div class="col-lg-10 noPadLeft">
-						   							  <input type = "file" class="custom-file-input padLeft15" file-model = "myFile"/>
+						   							  <input type = "file" accept="application/excel" class="custom-file-input padLeft15" file-model = "myFile"/>
                                               </div>
                                        </div>
                                        <div class="form-group marTop30">

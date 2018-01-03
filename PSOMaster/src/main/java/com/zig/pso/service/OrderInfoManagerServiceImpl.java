@@ -10,6 +10,7 @@ package com.zig.pso.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,8 @@ import com.zig.pso.utility.CommonUtility;
 @Service
 public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
 {
-
+    static final Logger logger = Logger.getLogger(OrderInfoManagerServiceImpl.class);
+    
     @Autowired
     OrderInfoManagerDAO orderDAO;
 
@@ -69,7 +71,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
     public PortalOrderMasterResponseBean getPortalOrderDataInfo(String OrderId)
     {
 
-        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getPortalOrderDataInfo", "Order ID : " + OrderId);
+        PSOLoggerSrv.printDEBUG(logger,"OrderInfoManagerServiceImpl", "getPortalOrderDataInfo", "Order ID : " + OrderId);
 
         PortalOrderMasterResponseBean portalOrderDetail = new PortalOrderMasterResponseBean();
 
@@ -88,7 +90,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
         {
             portalOrderDetail.setErrorCode(PSOConstants.INFO_CODE);
             portalOrderDetail.setErrorMsg(PSOConstants.NO_DATA);
-            PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getPortalOrderDataInfo", "No Data found in ZIG_AUTO_MASTER for Order ID : " + OrderId);
+            PSOLoggerSrv.printDEBUG(logger,"OrderInfoManagerServiceImpl", "getPortalOrderDataInfo", "No Data found in ZIG_AUTO_MASTER for Order ID : " + OrderId);
         }
 
         /* ZIG ENROLLMENT */
@@ -143,7 +145,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
     @Override
     public EnsOrderMasterResponseBean getEnsOrderDataInfo(String orderId)
     {
-        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getEnsOrderDataInfo - Start", "Order ID : " + orderId);
+        PSOLoggerSrv.printDEBUG(logger,"OrderInfoManagerServiceImpl", "getEnsOrderDataInfo - Start", "Order ID : " + orderId);
 
         EnsOrderMasterResponseBean ensOrderDetail = new EnsOrderMasterResponseBean();
         ensOrderDetail = orderDAO.getEnsembleDataInfo(orderId);
@@ -151,7 +153,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
         {
             ensOrderDetail.setErrorCode(PSOConstants.INFO_CODE);
             ensOrderDetail.setErrorMsg(PSOConstants.NO_DATA);
-            PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getEnsOrderDataInfo - End", PSOConstants.NO_DATA);
+            PSOLoggerSrv.printDEBUG(logger,"OrderInfoManagerServiceImpl", "getEnsOrderDataInfo - End", PSOConstants.NO_DATA);
         }
         else
         {
@@ -173,7 +175,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
     @Override
     public ApiOrderMasterResponseBean getAPIOrderDataInfo(String OrderId)
     {
-        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getAPIOrderDataInfo - Start", "Order ID : " + OrderId);
+        PSOLoggerSrv.printDEBUG(logger,"OrderInfoManagerServiceImpl", "getAPIOrderDataInfo - Start", "Order ID : " + OrderId);
         ApiOrderMasterResponseBean apiResponse = new ApiOrderMasterResponseBean();
         apiResponse = orderDAO.getAPIDataInfo(OrderId);
         if(apiResponse!=null && apiResponse.getErrorCode()!=PSOConstants.ERROR_CODE)
@@ -181,13 +183,13 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
             if(apiResponse.getOrderAPIList().size()>0)
             {
                 apiResponse.setErrorCode(PSOConstants.SUCCESS_CODE);
-                PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getAPIOrderDataInfo", "Num of API in response : " +apiResponse.getOrderAPIList().size());
+                PSOLoggerSrv.printDEBUG(logger,"OrderInfoManagerServiceImpl", "getAPIOrderDataInfo", "Num of API in response : " +apiResponse.getOrderAPIList().size());
             }
             else
             {
                 apiResponse.setErrorCode(PSOConstants.INFO_CODE);
                 apiResponse.setErrorMsg(PSOConstants.NO_DATA);
-                PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getAPIOrderDataInfo - End", PSOConstants.NO_DATA);
+                PSOLoggerSrv.printDEBUG(logger,"OrderInfoManagerServiceImpl", "getAPIOrderDataInfo - End", PSOConstants.NO_DATA);
             }
         }
         
@@ -202,7 +204,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
     @Override
     public PortalShipmentInfoForUI getPortalShipmentInfo(String OrderId)
     {
-        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getPortalShipmentInfo", "Order ID : " + OrderId);
+        PSOLoggerSrv.printDEBUG(logger,"OrderInfoManagerServiceImpl", "getPortalShipmentInfo", "Order ID : " + OrderId);
 
         List<PortalShipmentInfo> shipmentInfoFromDb = orderDAO.getPortalShipmentInfoFromDB(OrderId);
 
@@ -216,7 +218,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
      */
     public PortalShipmentInfoForUI getShipmentInfoForUI(List<PortalShipmentInfo> shipmentInfFromDb)
     {
-        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getPortalShipmentInfo", "Shipment Details : " + shipmentInfFromDb.size());
+        PSOLoggerSrv.printDEBUG(logger,"OrderInfoManagerServiceImpl", "getPortalShipmentInfo", "Shipment Details : " + shipmentInfFromDb.size());
 
         PortalShipmentInfoForUI shipInfoForUi = new PortalShipmentInfoForUI();
 
@@ -270,7 +272,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
     @Override
     public String getAPIRequestResponseBody(String seq_number,String callType)
     {
-        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getAPIRequestBody", "Seq_number : " + seq_number);
+        PSOLoggerSrv.printDEBUG(logger,"OrderInfoManagerServiceImpl", "getAPIRequestBody", "Seq_number : " + seq_number);
 
         return orderDAO.getAPIRequestResponseBody(seq_number,callType);
     }
@@ -281,7 +283,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
     @Override
     public OrderPortInDetailsResponseBean getPortalOrderPortDetails(String OrderId)
     {
-        PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getPortalOrderPortDetails - Start", "Order ID : " + OrderId);
+        PSOLoggerSrv.printDEBUG(logger,"OrderInfoManagerServiceImpl", "getPortalOrderPortDetails - Start", "Order ID : " + OrderId);
         OrderPortInDetailsResponseBean portDetails = new OrderPortInDetailsResponseBean();
         
         /*Portal Port-in Details*/
@@ -295,7 +297,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
         {
             portDetails.setErrorCode(PSOConstants.INFO_CODE);
             portDetails.setErrorMsg(PSOConstants.NO_DATA);
-            PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getPortalOrderPortDetails - End", PSOConstants.NO_DATA);
+            PSOLoggerSrv.printDEBUG(logger,"OrderInfoManagerServiceImpl", "getPortalOrderPortDetails - End", PSOConstants.NO_DATA);
         }
         
         
@@ -310,7 +312,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
         {
             portDetails.setErrorCode(PSOConstants.INFO_CODE);
             portDetails.setErrorMsg(PSOConstants.NO_DATA);
-            PSOLoggerSrv.printDEBUG("OrderInfoManagerServiceImpl", "getPortalOrderPortDetails - End", PSOConstants.NO_DATA);
+            PSOLoggerSrv.printDEBUG(logger,"OrderInfoManagerServiceImpl", "getPortalOrderPortDetails - End", PSOConstants.NO_DATA);
         }
         
         return portDetails;
@@ -333,7 +335,8 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
 	 * @see com.zig.pso.service.OrderInfoManagerService#orderStatusList()
 	 */
 	@Override
-	public List<String> getOrderStatusList() {
+	public List<String> getOrderStatusList() 
+	{
 		return orderDAO.getOrderStatusList();
 	}
 

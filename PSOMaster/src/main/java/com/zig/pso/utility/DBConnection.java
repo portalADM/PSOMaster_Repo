@@ -13,11 +13,17 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.logging.PSOLoggerSrv;
 
 public class DBConnection
 {
+    public static final String CLASS_NAME = "DBConnection";
+    
+    static final Logger logger = Logger.getLogger(DBConnection.class);
+    
     /* Portal DB Connection object */
     private static Connection portalDBConnection = null;
 
@@ -29,6 +35,7 @@ public class DBConnection
      */
     public static Connection getPortalDBConnection()
     {
+        PSOLoggerSrv.printINFO(logger, "getPortalDBConnection : Creating Portal DB Connection.");
         try
         {
             Properties prop = PropertyReader.getDbProperties();
@@ -41,15 +48,15 @@ public class DBConnection
         }
         catch (ClassNotFoundException e)
         {
-            PSOLoggerSrv.printERROR(e.getMessage());
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalDBConnection", e);
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR(e.getMessage());
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalDBConnection", e);
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR(e.getMessage());
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalDBConnection", e);
         }
         return portalDBConnection;
     }
@@ -59,6 +66,7 @@ public class DBConnection
      */
     public static Connection getENSDBConnection()
     {
+        PSOLoggerSrv.printINFO(logger, "getENSDBConnection : Creating ENS DB Connection.");
         try
         {
             Properties prop = PropertyReader.getDbProperties();
@@ -71,15 +79,15 @@ public class DBConnection
         }
         catch (ClassNotFoundException e)
         {
-            PSOLoggerSrv.printERROR(e.getMessage());
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getENSDBConnection", e);
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR(e.getMessage());
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getENSDBConnection", e);
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR(e.getMessage());
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getENSDBConnection", e);
         }
         return ensDBConnection;
     }

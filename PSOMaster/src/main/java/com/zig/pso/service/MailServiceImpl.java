@@ -14,6 +14,7 @@ import java.io.IOException;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -32,6 +33,8 @@ import com.zig.pso.rest.bean.Mail;
 @Service
 public class MailServiceImpl implements MailService
 {
+    static final Logger logger = Logger.getLogger(MailServiceImpl.class);
+    
     @Autowired
     JavaMailSender mailSender;
 
@@ -64,11 +67,11 @@ public class MailServiceImpl implements MailService
             
             mailSender.send(mimeMessageHelper.getMimeMessage());
         } catch (IOException e) {
-            PSOLoggerSrv.printERROR("MailServiceImpl", "sendEmail", e);
+            PSOLoggerSrv.printERROR(logger,"MailServiceImpl", "sendEmail", e);
         } catch (MessagingException e) {
-            PSOLoggerSrv.printERROR("MailServiceImpl", "sendEmail", e);
+            PSOLoggerSrv.printERROR(logger,"MailServiceImpl", "sendEmail", e);
         }catch (Exception e) {
-            PSOLoggerSrv.printERROR("MailServiceImpl", "sendEmail", e);
+            PSOLoggerSrv.printERROR(logger,"MailServiceImpl", "sendEmail", e);
         }
     }
     

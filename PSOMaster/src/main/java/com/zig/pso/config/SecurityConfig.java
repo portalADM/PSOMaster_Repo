@@ -98,14 +98,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         
         http.authorizeRequests().antMatchers("/authenticate").permitAll()
-                .antMatchers("/Master.jsp",  "/authenticate","/logout").permitAll()
+                .antMatchers("/Master.jsp",  "/authenticate","/logout","/checkUsername/**","/registerUser","/setupPassword").permitAll()
                 /*.antMatchers("/v2/api-docs").hasAnyAuthority("admin")
                 .antMatchers("/users/**").hasAnyAuthority("admin")*/
                 /*.antMatchers("/v2/api-docs").hasAnyAuthority("admin")
                 .antMatchers("/users/**").hasAnyAuthority("admin")*/
                 .anyRequest().authenticated()
                 .and()
-            .exceptionHandling()
+            .exceptionHandling()    
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .accessDeniedHandler(restAccessDeniedHandler)
                 .and()
@@ -123,7 +123,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .deleteCookies("JSESSIONID")
                 .permitAll().and()
             .csrf()
-                .ignoringAntMatchers("/authenticate").csrfTokenRepository(csrfTokenRepository())
+                .ignoringAntMatchers("/authenticate","/checkUsername/**","/registerUser","/setupPassword").csrfTokenRepository(csrfTokenRepository())
                 .and().httpBasic().and()
                 .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
                 .headers().disable();

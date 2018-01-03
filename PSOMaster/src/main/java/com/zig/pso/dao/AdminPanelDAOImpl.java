@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.zig.pso.constants.PSOConstants;
@@ -31,6 +32,7 @@ import com.zig.pso.utility.OrderQueries;
 @Repository
 public class AdminPanelDAOImpl implements AdminPanelDAO
 {
+    static final Logger logger = Logger.getLogger(AdminPanelDAOImpl.class);
     
     public static final String CLASS_NAME = "AdminPanelDAOImpl";
     public static final String ADD_REM_STEP = "addRemediationStep";
@@ -78,7 +80,7 @@ public class AdminPanelDAOImpl implements AdminPanelDAO
                 remediationStepRes.setErrorCode(PSOConstants.SUCCESS_CODE);
                 remediationStepRes.setErrorMsg(PSOConstants.ORDER_UPDATE_SUCCESSFULL);
                 remediationStepRes.setLogRefId(logRefID);
-                PSOLoggerSrv.printSQL_DEBUG(CLASS_NAME, ADD_REM_STEP, logRefID, addSQL, remediationRequest, remediationStepRes.getErrorMsg());
+                PSOLoggerSrv.printSQL_DEBUG(logger,CLASS_NAME, ADD_REM_STEP, logRefID, addSQL, remediationRequest, remediationStepRes.getErrorMsg());
             }
 
         }
@@ -87,7 +89,7 @@ public class AdminPanelDAOImpl implements AdminPanelDAO
             remediationStepRes.setErrorCode(PSOConstants.ERROR_CODE);
             remediationStepRes.setErrorMsg(PSOConstants.BACKEND_ERROR);
             remediationStepRes.setLogRefId(logRefID);
-            PSOLoggerSrv.printERROR(CLASS_NAME, ADD_REM_STEP, e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, ADD_REM_STEP, e);
         }
         finally
         {
@@ -97,7 +99,7 @@ public class AdminPanelDAOImpl implements AdminPanelDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, ADD_REM_STEP, e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, ADD_REM_STEP, e);
             }
             if (pstm != null)
             {
@@ -107,7 +109,7 @@ public class AdminPanelDAOImpl implements AdminPanelDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, ADD_REM_STEP, e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, ADD_REM_STEP, e);
                 }
             }
             if (pstm2 != null)
@@ -118,7 +120,7 @@ public class AdminPanelDAOImpl implements AdminPanelDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, ADD_REM_STEP, e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, ADD_REM_STEP, e);
                 }
             }
         }

@@ -9,10 +9,17 @@
 package com.zig.pso.utility;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
+
+import com.zig.pso.constants.PSOConstants;
+import com.zig.pso.rest.bean.UserMaster;
 
 /**
  * 
@@ -20,6 +27,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommonUtility
 {
+
+    private static final String[] ALLOWED_FILE_TYPES = {"application/excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"};
+    
     /*
      * This method returns the Order Type
      */
@@ -91,6 +101,24 @@ public class CommonUtility
     public static String getTempPasswordForUsers()
     {
         return RandomStringUtils.random(10, true, true);
+    }
+    
+    /*
+     * This method will check if the uploaded file is valid type or not.
+     */
+    public static Boolean isValidContentType(String contentType) 
+    {
+        if (!Arrays.asList(ALLOWED_FILE_TYPES).contains(contentType)) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public static UserMaster getLoggedInUserDetails(HttpServletRequest request)
+    {
+        HttpSession sessoin = request.getSession();
+        return ((sessoin.getAttribute(PSOConstants.SESSION_USER_DATA)!=null)?(UserMaster)sessoin.getAttribute(PSOConstants.SESSION_USER_DATA) : null);
     }
     
   

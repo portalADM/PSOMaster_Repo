@@ -164,23 +164,24 @@
 							<h4 class="modal-title">Are you sure want to reject this request?</h4>
 						</div>
 						<div class="modal-body ">
-		                   <div class="row">
-		                   		<form class="form-horizontal marLeft10">
-									<div class="form-group col-lg-2">
-										<textarea class="form-control" rows="3" cols="60" ng-model="reject.comments"></textarea>
-									</div>
-								</form>
-						   </div>
-						   <div class="row">
-		                   		<form class="form-horizontal marLeft10">
-									<div class="form-group col-lg-2">
-											<button type="button" class="btn btn-default" ng-click="rejectUserRequest()">Yes</button>
-									</div>
-									<div class="form-group col-lg-2">
-											<button type="button" class="btn btn-default" ng-click="closeRejectUserConfirmationPopup()">Cancel</button>
-									</div>
-								</form>
-						   </div>
+							<form class="form-horizontal marLeft40" name="rejectUserForm">
+								<div class="row">
+											<div class="form-group col-lg-2">
+												<textarea class="form-control" rows="3" cols="60" ng-model="reject.comments" required></textarea>
+											</div>
+								   </div>
+								   <div class="row">
+												<span class="col-lg-8"  style="color:Red" ng-show="!rejectUserForm.$valid">*Please Provide reject comments.</span>
+								   </div>
+								   <div class="row">
+											<div class="form-group col-lg-2">
+													<button type="button" class="btn btn-default" ng-click="rejectUserRequest()">Yes</button>
+											</div>
+											<div class="form-group col-lg-2">
+													<button type="button" class="btn btn-default" ng-click="closeRejectUserConfirmationPopup()">Cancel</button>
+											</div>
+								   </div>
+							</form>
 						</div>
 					</div>
 				</div>

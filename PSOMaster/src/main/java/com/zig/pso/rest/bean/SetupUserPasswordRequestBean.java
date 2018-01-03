@@ -20,6 +20,7 @@ public class SetupUserPasswordRequestBean implements Serializable
      */
     private static final long serialVersionUID = 2629254893573400943L;
     private String empId;
+    private String username;
     private String password;
     private String tempPassword;
     private String emailId;
@@ -32,22 +33,7 @@ public class SetupUserPasswordRequestBean implements Serializable
     {
         super();
     }
-    /**
-     * @param empId
-     * @param password
-     * @param tempPassword
-     * @param emailId
-     * @param currentPassword
-     */
-    public SetupUserPasswordRequestBean(String empId, String password, String tempPassword, String emailId, String currentPassword)
-    {
-        super();
-        this.empId = empId;
-        this.password = password;
-        this.tempPassword = tempPassword;
-        this.emailId = emailId;
-        this.currentPassword = currentPassword;
-    }
+   
 
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
@@ -62,8 +48,10 @@ public class SetupUserPasswordRequestBean implements Serializable
         result = prime * result + ((empId == null) ? 0 : empId.hashCode());
         result = prime * result + ((password == null) ? 0 : password.hashCode());
         result = prime * result + ((tempPassword == null) ? 0 : tempPassword.hashCode());
+        result = prime * result + ((username == null) ? 0 : username.hashCode());
         return result;
     }
+
 
     /* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
@@ -113,8 +101,16 @@ public class SetupUserPasswordRequestBean implements Serializable
         }
         else if (!tempPassword.equals(other.tempPassword))
             return false;
+        if (username == null)
+        {
+            if (other.username != null)
+                return false;
+        }
+        else if (!username.equals(other.username))
+            return false;
         return true;
     }
+
 
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
@@ -122,8 +118,10 @@ public class SetupUserPasswordRequestBean implements Serializable
     @Override
     public String toString()
     {
-        return "SetupUserPasswordRequestBean [empId=" + empId + ", password=" + password + ", tempPassword=" + tempPassword + ", emailId=" + emailId + ", currentPassword=" + currentPassword + "]";
+        return "SetupUserPasswordRequestBean [empId=" + empId + ", username=" + username + ", password=" + password + ", tempPassword=" + tempPassword + ", emailId=" + emailId + ", currentPassword="
+                + currentPassword + "]";
     }
+
 
     /**
      * @return the empId
@@ -203,6 +201,20 @@ public class SetupUserPasswordRequestBean implements Serializable
     public void setCurrentPassword(String currentPassword)
     {
         this.currentPassword = currentPassword;
+    }
+    /**
+     * @return the username
+     */
+    public String getUsername()
+    {
+        return username;
+    }
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(String username)
+    {
+        this.username = username;
     }
     
     

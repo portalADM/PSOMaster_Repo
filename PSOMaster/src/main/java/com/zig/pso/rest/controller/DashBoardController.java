@@ -14,6 +14,7 @@ package com.zig.pso.rest.controller;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,16 +32,14 @@ import com.zig.pso.rest.bean.StuckOrderBacklogUiResponseBean;
 import com.zig.pso.rest.bean.StuckOrderDetailResponse;
 import com.zig.pso.rest.bean.StuckOrdersCount;
 import com.zig.pso.service.DashboardService;
-import com.zig.pso.service.UserSessionBean;
 
 @RestController
 public class DashBoardController
 {
+    static final Logger logger = Logger.getLogger(DashBoardController.class);
+    
     @Autowired
     DashboardService dashboardService;
-    
-   /* @Autowired*/
-    UserSessionBean userSession;
 
     /*
      * This REST provides count of Stuck orders
@@ -48,10 +47,10 @@ public class DashBoardController
     @RequestMapping(value = "/stuckOrderCount", method = RequestMethod.GET)
     public ResponseEntity<StuckOrderDetailResponse> getStuckOrdersCount()
     {
-        PSOLoggerSrv.printDEBUG("DashBoardController", "getStuckOrdersCount", "");
+        PSOLoggerSrv.printDEBUG(logger, "DashBoardController", "getStuckOrdersCount", "");
 
         StuckOrderDetailResponse stuckOrdersList = new StuckOrderDetailResponse();
-        
+
         List<StuckOrdersCount> stuckOrderCountList = dashboardService.getStuckOrderList();
         stuckOrdersList.setStuckOrderList(stuckOrderCountList);
         return new ResponseEntity<StuckOrderDetailResponse>(stuckOrdersList, HttpStatus.OK);
@@ -60,7 +59,7 @@ public class DashBoardController
     @RequestMapping(value = "/stuckOrderList/{status}", method = RequestMethod.GET)
     public ResponseEntity<List<String>> getStuckOrders(@PathVariable("status") String status)
     {
-        PSOLoggerSrv.printDEBUG("DashBoardController", "getStuckOrders", "status : " + status);
+        PSOLoggerSrv.printDEBUG(logger, "DashBoardController", "getStuckOrders", "status : " + status);
 
         List<String> stuckOrderCountList = dashboardService.getStuckOrders(status);
         return new ResponseEntity<List<String>>(stuckOrderCountList, HttpStatus.OK);
@@ -69,7 +68,7 @@ public class DashBoardController
     @RequestMapping(value = "/stuckOrderHandled", method = RequestMethod.GET)
     public ResponseEntity<StuckOrderDetailResponse> getStuckOrderhandled()
     {
-        PSOLoggerSrv.printDEBUG("DashBoardController", "getStuckOrderhandled", "");
+        PSOLoggerSrv.printDEBUG(logger, "DashBoardController", "getStuckOrderhandled", "");
 
         StuckOrderDetailResponse stuckOrdersList = new StuckOrderDetailResponse();
 
@@ -81,7 +80,7 @@ public class DashBoardController
     @RequestMapping(value = "/stuckOrderallStatus", method = RequestMethod.GET)
     public ResponseEntity<StuckOrderDetailResponse> getStuckOrderallStatus()
     {
-        PSOLoggerSrv.printDEBUG("DashBoardController", "getStuckOrderallStatus", "");
+        PSOLoggerSrv.printDEBUG(logger, "DashBoardController", "getStuckOrderallStatus", "");
 
         StuckOrderDetailResponse stuckOrdersList = new StuckOrderDetailResponse();
 
@@ -93,7 +92,7 @@ public class DashBoardController
     @RequestMapping(value = "/stuckOrderBacklogs", method = RequestMethod.GET)
     public ResponseEntity<StuckOrderBacklogUiResponseBean> getStuckOrderBacklogList()
     {
-        PSOLoggerSrv.printDEBUG("DashBoardController", "getStuckOrderallStatus", "");
+        PSOLoggerSrv.printDEBUG(logger, "DashBoardController", "getStuckOrderallStatus", "");
 
         StuckOrderBacklogUiResponseBean data = dashboardService.getStuckOrderBacklogData();
         return new ResponseEntity<StuckOrderBacklogUiResponseBean>(data, HttpStatus.OK);
@@ -102,7 +101,7 @@ public class DashBoardController
     @RequestMapping(value = "/regularOrderList", method = RequestMethod.GET)
     public ResponseEntity<RegularOrdersCountList> getRegularOrderList()
     {
-        PSOLoggerSrv.printDEBUG("DashBoardController", "getRegularOrderList", "");
+        PSOLoggerSrv.printDEBUG(logger, "DashBoardController", "getRegularOrderList", "");
 
         RegularOrdersCountList regularOrdersCountList = new RegularOrdersCountList();
 
@@ -114,7 +113,7 @@ public class DashBoardController
     @RequestMapping(value = "/dynamicRegOrderList", method = RequestMethod.POST)
     public ResponseEntity<RegularOrdersCountList> getDynamicOrderList(@RequestBody DynamicGraphRequestBean dynamicGraphRequest)
     {
-        PSOLoggerSrv.printDEBUG("DashBoardController", "getDynamicOrderList", "");
+        PSOLoggerSrv.printDEBUG(logger, "DashBoardController", "getDynamicOrderList", "");
 
         RegularOrdersCountList dynamicOrdersCountList = new RegularOrdersCountList();
 

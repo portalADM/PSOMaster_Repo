@@ -5,6 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>PSO Master</title>
 <!-- <link rel="stylesheet" href="resources/css/login.css" media="screen"> -->
 </head>
@@ -25,6 +27,12 @@
 					<label class="col-lg-2 control-label textAlgnInit">Employee Id</label>
 					<div class="col-lg-8">
 						<input type="text" class="form-control" ng-model="userData.empId" required="required" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-2 control-label textAlgnInit">User Name</label>
+					<div class="col-lg-8">
+						<input type="text" class="form-control" ng-model="userData.username" required="required" />
 					</div>
 				</div>
 				<div class="form-group">

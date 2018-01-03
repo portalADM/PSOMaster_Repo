@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
@@ -42,7 +43,8 @@ import com.zig.pso.utility.PropertyReader;
 @Service
 public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 {
-
+    static final Logger logger = Logger.getLogger(UpdateOrderManagerServiceImpl.class);
+    
     @Autowired
     UpdateOrderManagerDAO updateDAO;
 
@@ -58,7 +60,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
     @Override
     public BaseResponseBean updateSingleOrderData(UpdateOrderRequestBean updateOrderRequest)
     {
-        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "updateSingleOrderData","");
+        PSOLoggerSrv.printDEBUG(logger,"UpdateOrderManagerServiceImpl", "updateSingleOrderData","");
         
         if (updateOrderRequest.getType().equalsIgnoreCase(STATUS))
         {
@@ -136,7 +138,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
     @Override
     public BaseResponseBean updateBulkOrderStatus(ArrayList<OrderUpdateInputData> orderUpdateData)
     {
-        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "updateBulkOrderStatus", "Number of Orders to update: "+orderUpdateData.size());
+        PSOLoggerSrv.printDEBUG(logger,"UpdateOrderManagerServiceImpl", "updateBulkOrderStatus", "Number of Orders to update: "+orderUpdateData.size());
         return updateDAO.updateBulkOrderStatus(orderUpdateData);
     }
 
@@ -147,7 +149,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
     @Override
     public BaseResponseBean updateBulkOrderSim(ArrayList<OrderUpdateInputData> orderUpdateData)
     {
-        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "updateBulkOrderSim", "Number of Orders to update: "+orderUpdateData.size());
+        PSOLoggerSrv.printDEBUG(logger,"UpdateOrderManagerServiceImpl", "updateBulkOrderSim", "Number of Orders to update: "+orderUpdateData.size());
         return updateDAO.updateBulkOrderSim(orderUpdateData);
     }
 
@@ -158,7 +160,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
     @Override
     public BaseResponseBean updateBulkOrderImei(ArrayList<OrderUpdateInputData> orderUpdateData)
     {
-        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "updateBulkOrderImei", "Number of Orders to update: "+orderUpdateData.size());
+        PSOLoggerSrv.printDEBUG(logger,"UpdateOrderManagerServiceImpl", "updateBulkOrderImei", "Number of Orders to update: "+orderUpdateData.size());
         return updateDAO.updateBulkOrderImei(orderUpdateData);
     }
 
@@ -169,7 +171,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
     @Override
     public BaseResponseBean updateBulkOrderRetryCount(ArrayList<OrderUpdateInputData> orderUpdateData)
     {
-        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "updateBulkOrderRetryCount", "Number of Orders to update: "+orderUpdateData.size());
+        PSOLoggerSrv.printDEBUG(logger,"UpdateOrderManagerServiceImpl", "updateBulkOrderRetryCount", "Number of Orders to update: "+orderUpdateData.size());
         return updateDAO.updateBulkOrderRetryCount(orderUpdateData);
     }
 
@@ -180,7 +182,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
     @Override
     public BulkUpdateInputBean getUploadedFileData(MultipartFile file, String updateType)
     {
-        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "getUploadedFileData", "updateType: "+ updateType);
+        PSOLoggerSrv.printDEBUG(logger,"UpdateOrderManagerServiceImpl", "getUploadedFileData", "updateType: "+ updateType);
         BulkUpdateInputBean orderBulkData = new BulkUpdateInputBean();
         ArrayList<OrderUpdateInputData> orderUpdateData = new ArrayList<OrderUpdateInputData>();
 
@@ -249,16 +251,16 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("UpdateOrderManagerServiceImpl", "getUploadedFileData", e);
+            PSOLoggerSrv.printERROR(logger,"UpdateOrderManagerServiceImpl", "getUploadedFileData", e);
         }
 
         return orderBulkData;
     }
-
+    
     @Override
     public ValidatedBulkUpdateOrderDetailsBean validateUploadedData(BulkUpdateInputBean orderBulkData)
     {
-        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "validateUploadedData", "");
+        PSOLoggerSrv.printDEBUG(logger,"UpdateOrderManagerServiceImpl", "validateUploadedData", "");
         
         ValidatedBulkUpdateOrderDetailsBean validatedOrderData = new ValidatedBulkUpdateOrderDetailsBean();
         List<String> invalidOrderIDs = new ArrayList<String>();
@@ -300,7 +302,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
         }
 
         String debugMsg = "Num of Valid Orders : "+validOrderData.size()+" \nNum of Invalid Orders : "+invalidOrderIDs.size();
-        PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "validateUploadedData", debugMsg);
+        PSOLoggerSrv.printDEBUG(logger,"UpdateOrderManagerServiceImpl", "validateUploadedData", debugMsg);
         
         validatedOrderData.setInvalidOrders(invalidOrderIDs);
         
@@ -324,7 +326,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
 	@Override
 	public AllowedUpdatesResponseBean getAllowdedUpdates() {
 		
-		PSOLoggerSrv.printDEBUG("UpdateOrderManagerServiceImpl", "getAllowdedUpdates", "");
+		PSOLoggerSrv.printDEBUG(logger,"UpdateOrderManagerServiceImpl", "getAllowdedUpdates", "");
 		
 		AllowedUpdatesResponseBean  updatesList = new AllowedUpdatesResponseBean(); 
 		

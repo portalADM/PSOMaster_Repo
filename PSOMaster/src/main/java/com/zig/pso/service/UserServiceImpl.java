@@ -11,11 +11,14 @@ package com.zig.pso.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.dao.UserDAO;
+import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.LoginRequestBean;
 import com.zig.pso.rest.bean.Mail;
@@ -29,7 +32,10 @@ import com.zig.pso.utility.PSOUserAuthenticator;
 @Service
 public class UserServiceImpl implements IUserService
 {
-	
+    static final Logger logger = Logger.getLogger(UserServiceImpl.class);
+    
+    public static final String CLASS_NAME = "UserServiceImpl";
+    
 	private static final boolean isLoginSimulated = false;
     
     /*@Autowired(required = true)*/
@@ -48,6 +54,7 @@ public class UserServiceImpl implements IUserService
     @Override
     public void buildUserDetail(String employeeId) throws Exception
     {
+        PSOLoggerSrv.printDEBUG(logger, CLASS_NAME, "buildUserDetail", "Emp ID :" +employeeId);
         if (employeeId != null)
         {
             UserMaster user = getUserDetailsByEmpId(employeeId);
@@ -57,6 +64,7 @@ public class UserServiceImpl implements IUserService
     
     public UserMaster getUserByUsername(String employeeId)
     {
+        PSOLoggerSrv.printDEBUG(logger, CLASS_NAME, "getUserByUsername", "UserName :" +employeeId);
     	UserMaster user = new UserMaster();
     	if(isLoginSimulated){
     		 /*user.setUsername(username);
@@ -110,7 +118,7 @@ public class UserServiceImpl implements IUserService
     @Override
     public BaseResponseBean registerUser(UserMaster user)
     {
-        //user.setPassword(PSOUserAuthenticator.getHashedPassword(user.getPassword()));
+        PSOLoggerSrv.printDEBUG(logger, CLASS_NAME, "registerUser", "UserName :" +user.getUsername());
         return userDAO.registerUser(user);
     }
 
@@ -120,6 +128,7 @@ public class UserServiceImpl implements IUserService
     @Override
     public List<UserMaster> getPendingApprovalUserList()
     {
+        PSOLoggerSrv.printDEBUG(logger, CLASS_NAME, "getPendingApprovalUserList", StringUtils.EMPTY);
         return userDAO.getUserPendingApprovalList();
     }
 
@@ -127,12 +136,13 @@ public class UserServiceImpl implements IUserService
      * @see com.zig.pso.service.IUserService#rejectUser(java.lang.String)
      */
     @Override
-    public BaseResponseBean rejectUser(RejectPendingUserRequest userReq)
+    public BaseResponseBean rejectUser(RejectPendingUserRequest userReq, String rejectedBy)
     {
+        PSOLoggerSrv.printDEBUG(logger, CLASS_NAME, "rejectUser", "Rejected Emp ID : "+userReq.getEmpId()+" ,Rejected By : "+rejectedBy);
         BaseResponseBean response = userDAO.rejectUser(userReq);
         if(response.getErrorCode() == 0)
         {
-            Mail emailData = getEmailTemlateForRejectUser(userReq);
+            Mail emailData = getEmailTemlateForRejectUser(userReq, rejectedBy);
             emailService.sendEmail(emailData);
         }
 
@@ -145,6 +155,7 @@ public class UserServiceImpl implements IUserService
     @Override
     public UserMaster getPendingUserDataByEmpId(String employeeId)
     {
+        PSOLoggerSrv.printDEBUG(logger, CLASS_NAME, "getPendingUserDataByEmpId", "Emp ID : "+employeeId);
         return userDAO.getPendingUserDataByEmpId(employeeId);
     }
 
@@ -154,6 +165,7 @@ public class UserServiceImpl implements IUserService
     @Override
     public BaseResponseBean createUserAssignments(UserMaster userData,String urlToSetupPassword)
     {
+        PSOLoggerSrv.printDEBUG(logger, CLASS_NAME, "getPendingUserDataByEmpId", "Emp ID : "+userData.getEmpId());
         String tempPassword = CommonUtility.getTempPasswordForUsers();
         
         userData.setTempPassword(tempPassword);
@@ -178,6 +190,7 @@ public class UserServiceImpl implements IUserService
     @Override
     public BaseResponseBean updateUserAssignments(UserMaster userData)
     {
+        PSOLoggerSrv.printDEBUG(logger, CLASS_NAME, "updateUserAssignments", "Emp ID : "+userData.getEmpId());
         return userDAO.updateUserAssignments(userData);
     }
 
@@ -187,6 +200,7 @@ public class UserServiceImpl implements IUserService
     @Override
     public List<UserMaster> getUserList(UserSearchRequestBean userSearchReq)
     {
+        PSOLoggerSrv.printDEBUG(logger, CLASS_NAME, "updateUserAssignments", StringUtils.EMPTY);
         return userDAO.getUserList(userSearchReq);
     }
 
@@ -196,6 +210,7 @@ public class UserServiceImpl implements IUserService
     @Override
     public UserMaster getUserDetailsByEmpId(String employeeId)
     {
+        PSOLoggerSrv.printDEBUG(logger, CLASS_NAME, "getUserDetailsByEmpId", "Emp ID : "+employeeId);
         return userDAO.getUserDetailsByEmpId(employeeId);
     }
 
@@ -205,6 +220,7 @@ public class UserServiceImpl implements IUserService
     @Override
     public BaseResponseBean setupPasswordForUser(SetupUserPasswordRequestBean userPassword)
     {
+        PSOLoggerSrv.printDEBUG(logger, CLASS_NAME, "setupPasswordForUser", "Emp ID : "+userPassword.getEmpId());
         String hashedPassword = PSOUserAuthenticator.getHashedPassword(userPassword.getPassword());
         userPassword.setPassword(hashedPassword);
         return userDAO.setupPasswordForUser(userPassword);
@@ -214,10 +230,11 @@ public class UserServiceImpl implements IUserService
     {
         String emailContent = PSOConstants.SETUP_PW_EMAIL_CONTENT;
         
-        emailContent = emailContent.replace(PSOConstants.EMAIL_TEMPLATE_USERNAME, user.getFirstName() +" "+user.getLastName())
+        emailContent = emailContent.replace(PSOConstants.EMAIL_TEMPLATE_NAME, user.getFirstName() +" "+user.getLastName())
         .replace(PSOConstants.EMAIL_TEMPLATE_EMPID, user.getEmpId())
         .replace(PSOConstants.EMAIL_TEMPLATE_EMAILID, user.getEmail())
         .replace(PSOConstants.EMAIL_TEMPLATE_TEMP_PW, user.getTempPassword())
+        .replace(PSOConstants.EMAIL_TEMPLATE_USERNAME, user.getUsername())
         .replace(PSOConstants.EMAIL_TEMPLATE_SETUP_PW_URL, urlToSetupPassword);
         
         
@@ -234,11 +251,10 @@ public class UserServiceImpl implements IUserService
         return mail;
     }
     
-    public Mail getEmailTemlateForRejectUser(RejectPendingUserRequest userReq)
+    public Mail getEmailTemlateForRejectUser(RejectPendingUserRequest userReq,String rejectedBy)
     {
         String emailContent = PSOConstants.REJECT_USER_EMAIL_CONTENT;
-        UserMaster loggedInUserData = sessionBean.getLoggedInUserDetail();
-        emailContent = emailContent.replace(PSOConstants.EMAIL_TEMPLATE_USERNAME, (new StringBuilder()).append(loggedInUserData.getFirstName()).append(" ").append(loggedInUserData.getLastName()).toString()).replace("#REJECT_REASON#", userReq.getRejectComments());
+        emailContent = emailContent.replace(PSOConstants.EMAIL_TEMPLATE_USERNAME, (new StringBuilder()).append(rejectedBy).toString()).replace("#REJECT_REASON#", userReq.getRejectComments());
         List<String> mailList = new ArrayList<String>();
         mailList.add(userReq.getEmailId());
         Mail mail = new Mail();
@@ -252,6 +268,7 @@ public class UserServiceImpl implements IUserService
     @Override
     public BaseResponseBean changeUserPassword(SetupUserPasswordRequestBean userPassword)
     {
+        PSOLoggerSrv.printDEBUG(logger, CLASS_NAME, "changeUserPassword", "Emp ID : "+userPassword.getEmpId());
         BaseResponseBean response = new BaseResponseBean();
         String currentPasswordFromDB = userDAO.getUserCurrentPassword(userPassword.getEmpId());
         if(PSOUserAuthenticator.checkIfPasswordIsSame(userPassword.getCurrentPassword(), currentPasswordFromDB))
@@ -273,6 +290,7 @@ public class UserServiceImpl implements IUserService
     @Override
     public BaseResponseBean checkUsername(String userName)
     {
+        PSOLoggerSrv.printDEBUG(logger, CLASS_NAME, "checkUsername", "User Name : "+userName);
         return userDAO.checkUsername(userName);
     }
 
@@ -282,6 +300,7 @@ public class UserServiceImpl implements IUserService
     @Override
     public UserMaster getUserDetailsByUserName(String userName)
     {
+        PSOLoggerSrv.printDEBUG(logger, CLASS_NAME, "getUserDetailsByUserName", "User Name : "+userName);
         return userDAO.getUserByUserName(userName);
     }
 

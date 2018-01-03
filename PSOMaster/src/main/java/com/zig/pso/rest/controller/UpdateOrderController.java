@@ -21,6 +21,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +46,7 @@ import com.zig.pso.rest.bean.UpdateMultiOrderDetailsRequestBean;
 import com.zig.pso.rest.bean.UpdateOrderRequestBean;
 import com.zig.pso.rest.bean.ValidatedBulkUpdateOrderDetailsBean;
 import com.zig.pso.service.UpdateOrderManagerService;
+import com.zig.pso.utility.CommonUtility;
 
 /**
  * 
@@ -53,6 +55,8 @@ import com.zig.pso.service.UpdateOrderManagerService;
 @MultipartConfig(fileSizeThreshold = 20971520)
 public class UpdateOrderController
 {
+    static final Logger logger = Logger.getLogger(UpdateOrderController.class);
+    
     @Autowired
     UpdateOrderManagerService updateService;
 
@@ -60,7 +64,7 @@ public class UpdateOrderController
     public ResponseEntity<BaseResponseBean> updateSingleOrder(@RequestBody UpdateOrderRequestBean updateOrderRequest)
     {
         String updateDetails = "Order ID : "+updateOrderRequest.getOrderId()+" \nNew Value : "+updateOrderRequest.getNewValue()+" \nUpdate Type : "+updateOrderRequest.getType()+" \nLine Id : "+updateOrderRequest.getLineId();
-        PSOLoggerSrv.printDEBUG("UpdateOrderController", "updateSingleOrder", updateDetails);
+        PSOLoggerSrv.printDEBUG(logger,"UpdateOrderController", "updateSingleOrder", updateDetails);
 
         BaseResponseBean nameList = new BaseResponseBean();
         nameList = updateService.updateSingleOrderData(updateOrderRequest);
@@ -70,34 +74,46 @@ public class UpdateOrderController
     @RequestMapping(value = "/upload/{updateType}", method = RequestMethod.POST)
     public ResponseEntity<BaseResponseBean> uploadFile(HttpServletRequest request, @RequestParam Map<String, Object> params, @PathVariable("updateType") String updateType)
     {
-        PSOLoggerSrv.printDEBUG("UpdateOrderController", "uploadFile", "updateType : "+updateType);
+        PSOLoggerSrv.printDEBUG(logger,"UpdateOrderController", "uploadFile", "updateType : "+updateType);
         
         BulkUpdateOrderResponseBean bulkUpdateResponse = new BulkUpdateOrderResponseBean();
         if (request instanceof MultipartRequest)
         {
             BaseResponseBean response = new BaseResponseBean();
             MultipartFile file = ((MultipartRequest) request).getFile("file");
-
-            BulkUpdateInputBean orderBulkData = updateService.getUploadedFileData(file, updateType);
-
-            ValidatedBulkUpdateOrderDetailsBean validatedOrders = updateService.validateUploadedData(orderBulkData);
-            if(null!=validatedOrders.getValidOrderData())
+            
+            if(null!=file && !file.isEmpty())
             {
-                
-                bulkUpdateResponse.setTempTableDataList(validatedOrders.getValidOrderData());
-                bulkUpdateResponse.setBulkUpdateId(validatedOrders.getValidOrderData().get(0).getBulkUpdateId());
-                
-                bulkUpdateResponse.setErrorCode(response.getErrorCode());
-                bulkUpdateResponse.setErrorMsg(response.getErrorMsg());
-                bulkUpdateResponse.setLogRefId(response.getLogRefId());
-            }
-            else
-            {
-                bulkUpdateResponse.setErrorCode(PSOConstants.SUCCESS_CODE);
-                bulkUpdateResponse.setErrorMsg(PSOConstants.NO_VALID_ORDERS);
+                String contentType = file.getContentType().toString().toLowerCase();
+                if (CommonUtility.isValidContentType(contentType)) 
+                {
+                    BulkUpdateInputBean orderBulkData = updateService.getUploadedFileData(file, updateType);
+
+                    ValidatedBulkUpdateOrderDetailsBean validatedOrders = updateService.validateUploadedData(orderBulkData);
+                    if(null!=validatedOrders.getValidOrderData())
+                    {
+                        bulkUpdateResponse.setTempTableDataList(validatedOrders.getValidOrderData());
+                        bulkUpdateResponse.setBulkUpdateId(validatedOrders.getValidOrderData().get(0).getBulkUpdateId());
+                        bulkUpdateResponse.setErrorCode(response.getErrorCode());
+                        bulkUpdateResponse.setErrorMsg(response.getErrorMsg());
+                        bulkUpdateResponse.setLogRefId(response.getLogRefId());
+                    }
+                    else
+                    {
+                        bulkUpdateResponse.setErrorCode(PSOConstants.SUCCESS_CODE);
+                        bulkUpdateResponse.setErrorMsg(PSOConstants.NO_VALID_ORDERS);
+                    }
+
+                    bulkUpdateResponse.setInvalidOrders(validatedOrders.getInvalidOrders());
+                }
+                else
+                {
+                    bulkUpdateResponse.setErrorCode(PSOConstants.ERROR_CODE);
+                    bulkUpdateResponse.setErrorMsg(PSOConstants.INVALID_FILE_TYPE);
+                }
             }
 
-            bulkUpdateResponse.setInvalidOrders(validatedOrders.getInvalidOrders());
+            
         }
         return new ResponseEntity<BaseResponseBean>(bulkUpdateResponse, HttpStatus.OK);
     }
@@ -106,42 +122,22 @@ public class UpdateOrderController
     @ResponseBody
     public void exportExcel(HttpServletResponse response) throws IOException
     {
-        PSOLoggerSrv.printDEBUG("UpdateOrderController", "exportExcel", null);
+        PSOLoggerSrv.printDEBUG(logger,"UpdateOrderController", "exportExcel", null);
         
-        String fileName = PSOConstants.UPDATE_STATUS_EXCEL;
-//        if (orderType.equalsIgnoreCase(PSOConstants.STATUS))
-//        {
-//            fileName = PSOConstants.UPDATE_STATUS_EXCEL;
-//        }
-//        else if (orderType.equalsIgnoreCase(PSOConstants.SIM))
-//        {
-//            fileName = PSOConstants.UPDATE_SIM_EXCEL;
-//        }
-//        else if (orderType.equalsIgnoreCase(PSOConstants.IMEI))
-//        {
-//            fileName = PSOConstants.UPDATE_IMEI_EXCEL;
-//        }
-//        else if (orderType.equalsIgnoreCase(PSOConstants.RETRY_COUNT))
-//        {
-//            fileName = PSOConstants.UPDATE_RETRY_EXCEL;
-//        }
+        String fileName = PSOConstants.BULK_UPDATE_EXCEL;
 
         InputStream inputStream = null;
         
         try
         {
-            
-            fileName = "BULK_UPDATE.xlsx";
             File file = null;
             ClassLoader classloader = Thread.currentThread().getContextClassLoader();
             file = new File(classloader.getResource("sampleExcels/" + fileName).getFile());
 
             if (!file.exists())
             {
-                String errorMessage = "Sorry. The file you are looking for does not exist";
-                System.out.println(errorMessage);
                 OutputStream outputStream = response.getOutputStream();
-                outputStream.write(errorMessage.getBytes(Charset.forName("UTF-8")));
+                outputStream.write(PSOConstants.FILE_NOT_EXISTS.getBytes(Charset.forName("UTF-8")));
                 outputStream.close();
                 return;
             }
@@ -172,7 +168,7 @@ public class UpdateOrderController
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("UpdateOrderController", "exportExcel", e);
+            PSOLoggerSrv.printERROR(logger,"UpdateOrderController", "exportExcel", e);
         }
         finally
         {
@@ -187,7 +183,7 @@ public class UpdateOrderController
     @RequestMapping(value = "/getAllowedUpdates", method = RequestMethod.POST)
     public ResponseEntity<AllowedUpdatesResponseBean> getAllowedUpdates(HttpServletRequest request, @RequestParam Map<String, Object> params)
     {
-        PSOLoggerSrv.printDEBUG("UpdateOrderController", "getAllowedUpdates", null);
+        PSOLoggerSrv.printDEBUG(logger,"UpdateOrderController", "getAllowedUpdates", null);
 
         AllowedUpdatesResponseBean allowdedUpdatelist = new AllowedUpdatesResponseBean();
         allowdedUpdatelist = updateService.getAllowdedUpdates();
@@ -204,6 +200,8 @@ public class UpdateOrderController
     @RequestMapping(value = "/updateBulkOrderDetails/{bulkUpdateId}", method = RequestMethod.POST)
     public ResponseEntity<BaseResponseBean> updateBulkOrderDetails(HttpServletRequest request, @RequestParam Map<String, Object> params, @PathVariable("bulkUpdateId") String bulkUpdateId)
     {
+        PSOLoggerSrv.printDEBUG(logger,"UpdateOrderController", "updateBulkOrderDetails", "bulkUpdateId : "+bulkUpdateId);
+        
     	BaseResponseBean resp =  new BaseResponseBean();
     	resp = updateService.updateBulkOrderDetails(bulkUpdateId);
         return new ResponseEntity<BaseResponseBean>(resp, HttpStatus.OK);

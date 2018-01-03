@@ -309,7 +309,8 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 	     FileUploadService.uploadFileToUrl(file, uploadUrl).then(
 				function(response) {
 					$rootScope.spinner.off();
-					if(response.errorCode == 0){
+					if(response.errorCode == 0 && response.tempTableDataList!=null){
+						
 						$scope.validOrderList = response.tempTableDataList;
 						$scope.bulkUpdateID = response.bulkUpdateId;
 						MessageService.showSuccess(response.errorMsg,5000);
@@ -321,11 +322,14 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 						MessageService.showInfo(response.errorMsg,5000);
 					}
 					else if(response.errorCode == -1){
-						var errorMessage = response.errorMsg + "\n Log Reference ID : " + response.logRefId;
-						MessageService.showError(errorMessage,null);
+						var errorMessage = response.errorMsg + ((response.logRefId!=null)?( "\n Log Reference ID : " + response.logRefId ): "");
+						MessageService.showError(errorMessage,5000);
+					}
+					else{
+						MessageService.showError("No Data found to update.",5000);
 					}
 					
-					if(response.invalidOrders.length>0){
+					if(response.errorCode != 0 && response.invalidOrders.length>0){
 						$scope.inValidOrders = response.invalidOrders;
 						$("#UpdateResponse-modal").modal();
 					}

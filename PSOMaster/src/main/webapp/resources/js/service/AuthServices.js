@@ -63,7 +63,8 @@ angular.module('AuthServices', ['ngResource', 'ngStorage'])
         		}, 
         		function(errResponse){
         			console.error('Error while login');
-        			return $q.reject(errResponse);
+        			//return $q.reject(errResponse);
+        			return errResponse.data;
         		});
         
         

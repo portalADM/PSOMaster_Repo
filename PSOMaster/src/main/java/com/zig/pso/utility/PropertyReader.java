@@ -11,10 +11,14 @@ package com.zig.pso.utility;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 import com.zig.pso.logging.PSOLoggerSrv;
 
 public class PropertyReader
 {
+    static final Logger logger = Logger.getLogger(PropertyReader.class);
+    
     /* Database properties */
     private static Properties dbProperties = null;
 
@@ -43,7 +47,7 @@ public class PropertyReader
         }
         catch (IOException e)
         {
-            PSOLoggerSrv.printERROR("PropertyReader", "Load Database properties", e);
+            PSOLoggerSrv.printERROR(logger,"PropertyReader", "Load Database properties", e);
         }
 
         /*
@@ -56,7 +60,7 @@ public class PropertyReader
         }
         catch (IOException e)
         {
-            PSOLoggerSrv.printERROR("PropertyReader", "Load Application properties", e);
+            PSOLoggerSrv.printERROR(logger,"PropertyReader", "Load Application properties", e);
         }
 
         /*
@@ -69,7 +73,7 @@ public class PropertyReader
         }
         catch (IOException e)
         {
-            PSOLoggerSrv.printERROR("PropertyReader", "Load Admin properties", e);
+            PSOLoggerSrv.printERROR(logger,"PropertyReader", "Load Admin properties", e);
         }
 
         /*
@@ -82,7 +86,7 @@ public class PropertyReader
         }
         catch (IOException e)
         {
-            PSOLoggerSrv.printERROR("PropertyReader", "Load SQL properties", e);
+            PSOLoggerSrv.printERROR(logger,"PropertyReader", "Load SQL properties", e);
         }
         
         /*
@@ -95,7 +99,7 @@ public class PropertyReader
         }
         catch (IOException e)
         {
-            PSOLoggerSrv.printERROR("PropertyReader", "Log4j properties", e);
+            PSOLoggerSrv.printERROR(logger,"PropertyReader", "Log4j properties", e);
         }
     }
 

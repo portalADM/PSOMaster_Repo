@@ -8,6 +8,7 @@
  */
 package com.zig.pso.rest.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,16 +25,17 @@ import com.zig.pso.service.StuckOrderDetailsService;
  * 
  */
 @RestController
-public class StuckOrderDetailsController {
-
-	@Autowired
+public class StuckOrderDetailsController
+{
+    static final Logger logger = Logger.getLogger(StuckOrderDetailsController.class);
+    
+    @Autowired
     StuckOrderDetailsService stuckOrderDetailsService;
-	
-	//segregationOfOrders
+
     @RequestMapping(value = "/segregatedOrderList/{status}", method = RequestMethod.GET)
     public ResponseEntity<StuckOrderDetailsResponse> getSegregatedOrders(@PathVariable("status") String status)
     {
-        PSOLoggerSrv.printDEBUG("StuckOrderDetailsController", "getSegregatedOrders", "status : " + status);
+        PSOLoggerSrv.printDEBUG(logger,"StuckOrderDetailsController", "getSegregatedOrders", "status : " + status);
 
         StuckOrderDetailsResponse stuckOrderDetailsResponse = stuckOrderDetailsService.getSegregatedOrders(status);
         return new ResponseEntity<StuckOrderDetailsResponse>(stuckOrderDetailsResponse, HttpStatus.OK);

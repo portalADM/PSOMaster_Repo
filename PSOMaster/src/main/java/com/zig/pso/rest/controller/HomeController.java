@@ -7,6 +7,7 @@
  */
 package com.zig.pso.rest.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,8 @@ import com.zig.pso.service.CommonAppService;
 @RestController
 public class HomeController
 {
-
+    static final Logger logger = Logger.getLogger(HomeController.class);
+    
     @Autowired
     CommonAppService commonAppService;
 
@@ -32,7 +34,7 @@ public class HomeController
     {
 
         String emailDetails ="TO : "+emailRequest.getToEmailIdList() +" \n CC : "+emailRequest.getCcEmailIdList() + " \n Subject : "+emailRequest.getEmailSubject();
-        PSOLoggerSrv.printDEBUG("OrderMasterController", "sendEmailMethod",  emailDetails);
+        PSOLoggerSrv.printDEBUG(logger,"OrderMasterController", "sendEmailMethod",  emailDetails);
 
         BaseResponseBean nameList = new BaseResponseBean();
         nameList = commonAppService.sendEmailService(emailRequest);

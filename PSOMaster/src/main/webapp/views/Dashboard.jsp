@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Insert title here</title>
 </head>
 <body>
@@ -146,7 +148,7 @@
 	            <h3 class="panel-title">Stuck Order backlogs in last 10 Days</h3>
 	          </div>
 	          <div class="panel-body panelMinHeight">
-		       	<h3 id="navbar">
+		       	<h3 id="navIconsID">
 					<a class="glyphicon glyphicon-chevron-left cursorPointer marRight40 noTextDeco" ng-click="showGraph('prev')"></a>{{curDate}}
 					<a class="glyphicon glyphicon-chevron-right cursorPointer marLeft40 noTextDeco" ng-click="showGraph('next')"></a>
 				</h3>

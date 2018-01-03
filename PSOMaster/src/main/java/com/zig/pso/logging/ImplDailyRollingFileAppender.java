@@ -18,6 +18,8 @@ import com.zig.pso.utility.PropertyReader;
  */
 public class ImplDailyRollingFileAppender extends DailyRollingFileAppender
 {
+    static final Logger logger = Logger.getLogger(ImplDailyRollingFileAppender.class);
+    
     /** Hold the logger that print to the file. */
     private static Logger psoLogger = null;
     /** Hold the logger name in the log4j.properties flie. */
@@ -43,7 +45,7 @@ public class ImplDailyRollingFileAppender extends DailyRollingFileAppender
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR("ImplDailyRollingFileAppender", "getStuckOrderList", e);
+            PSOLoggerSrv.printERROR(logger, "ImplDailyRollingFileAppender", "getStuckOrderList", e);
         }
     }
     
@@ -65,6 +67,7 @@ public class ImplDailyRollingFileAppender extends DailyRollingFileAppender
     	String logFileName = new SimpleDateFormat("yyyyMMdd_HHmmss'.log'").format(new Date());
     	
         super.setFile(FILEPATH + SLA_LOG_FILE_NAME+logFileName, append, bufferedIO, bufferSize);
+        //super.setFile("C:\\Users\\nilesp\\Documents\\Softwares\\eclipse-jee-luna-SR2-win32-x86_64\\logs"+ SLA_LOG_FILE_NAME+logFileName, append, bufferedIO, bufferSize);
     }
     
 }

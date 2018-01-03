@@ -11,6 +11,7 @@ package com.zig.pso.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,8 @@ import com.zig.pso.rest.bean.StuckOrderDetailsResponse;
 @Service
 public class StuckOrderDetailsServiceImpl implements StuckOrderDetailsService
 {
-
+    static final Logger logger = Logger.getLogger(StuckOrderDetailsServiceImpl.class);
+    
 	/* (non-Javadoc)
 	 * @see com.zig.pso.service.StuckOrderDetailsService#getSegregatedOrders(java.lang.String)
 	 */
@@ -38,7 +40,7 @@ public class StuckOrderDetailsServiceImpl implements StuckOrderDetailsService
 	
 	@Override
 	public StuckOrderDetailsResponse getSegregatedOrders(String status) {
-		PSOLoggerSrv.printDEBUG("StuckOrderDetailsServiceImpl", "getSegregatedOrders", "status : " +status);
+		PSOLoggerSrv.printDEBUG(logger,"StuckOrderDetailsServiceImpl", "getSegregatedOrders", "status : " +status);
 		StuckOrderDetailsResponse stuckOrderDetailsResponse= new StuckOrderDetailsResponse();
 		
 		if (status.equals("OSHF")){

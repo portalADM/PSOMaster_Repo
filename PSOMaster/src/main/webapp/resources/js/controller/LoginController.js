@@ -3,12 +3,13 @@ module.controller("LoginController", function($scope, $routeParams,$http,$locati
 	$rootScope.spinner.off();
 	
 	$scope.init = function(){
-		MessageService.hideMessage();
+		//MessageService.hideMessage();
 		removeModelBackDrop();
 	}
 	
 	$scope.authenticateUser = function()
 	{
+		MessageService.showError('Username or Password is wrong',5000);
 		MessageService.hideMessage();
 		var username = $scope.username;
 		var password = $scope.password;
@@ -22,8 +23,7 @@ module.controller("LoginController", function($scope, $routeParams,$http,$locati
 			
 			Auth.login(username, password).then(function(response) {
 				$rootScope.spinner.off();
-	        	if (response.errorCode === 401) {
-					$location.path('/login');	
+	        	if (response.errorCode === 401 || response.code === 401) {
 					MessageService.showError('Username or Password is wrong',5000);
 				}
 	        	else 

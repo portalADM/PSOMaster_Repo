@@ -1,10 +1,14 @@
 /************************************************************************************************************
- * Class Name : AdminPanelController.java Description:Contains functionalities for Admin level updates
+ * Class Name : AdminPanelController.java 
+ * Description:Contains functionalities for Admin level updates
  * 
- * Author : Ankita Mishra Date : Apr 10, 2017 **********************************************************************************************************
+ * Author : Ankita Mishra 
+ * Date : Apr 10, 2017 
+ * **********************************************************************************************************
  */
 package com.zig.pso.rest.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +29,8 @@ import com.zig.pso.service.AdminPanelService;
 @RestController
 public class AdminPanelController
 {
+    static final Logger logger = Logger.getLogger(AdminPanelController.class);
+    
     @Autowired
     AdminPanelService adminPanelServ;
 
@@ -32,7 +38,7 @@ public class AdminPanelController
     public ResponseEntity<BaseResponseBean> addRemediationSteps(@RequestBody RemediationStepRequest remediationRequest)
     {
 
-        PSOLoggerSrv.printDEBUG("AdminPanelController", "addRemediationSteps ", "adding remediation step");
+        PSOLoggerSrv.printDEBUG(logger,"AdminPanelController", "addRemediationSteps ", "adding remediation step");
 
         BaseResponseBean nameList = new BaseResponseBean();
         nameList = adminPanelServ.addRemediationStep(remediationRequest);

@@ -213,12 +213,12 @@ module.controller("OrderMasterController", function($scope, $routeParams,$http,O
 			);
 	}
 	
-	$scope.getInventoryStatusDetails = function(){
+	$scope.getInvStatusDetails = function(){
 		getInventoryStatusDetails($scope.skuIDInvSearch);
 	}
 	
 	$scope.getInventory = function(){
-		$("#inventoryDetail-modal").modal();
+		$('#inventoryDetail-modal').modal();
 	}
 	
 	

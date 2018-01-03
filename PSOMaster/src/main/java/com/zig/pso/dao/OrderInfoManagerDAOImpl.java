@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.zig.pso.constants.PSOConstants;
@@ -40,6 +41,8 @@ import com.zig.pso.utility.OrderQueries;
 @Repository
 public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 {
+    static final Logger logger = Logger.getLogger(OrderInfoManagerDAOImpl.class);
+    
     public static final String CLASS_NAME = "OrderInfoManagerDAOImpl";
     
     public OrderInfoManagerDAOImpl()
@@ -83,7 +86,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getOrderIds", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOrderIds", e);
         }
         finally
         {
@@ -93,7 +96,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getOrderIds", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOrderIds", e);
             }
             if (pstm != null)
             {
@@ -103,7 +106,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOrderIds", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOrderIds", e);
                 }
             }
             if (rs != null)
@@ -114,7 +117,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOrderIds", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOrderIds", e);
                 }
             }
         }
@@ -178,7 +181,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             portalOrderlist.setErrorCode(PSOConstants.ERROR_CODE);
             portalOrderlist.setErrorMsg(e.getMessage());
 
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalDataInfo", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalDataInfo", e);
         }
         finally
         {
@@ -188,7 +191,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalDataInfo", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalDataInfo", e);
             }
             if (pstm != null)
             {
@@ -198,7 +201,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalDataInfo", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalDataInfo", e);
                 }
             }
             if (rs != null)
@@ -209,7 +212,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalDataInfo", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalDataInfo", e);
                 }
             }
         }
@@ -262,7 +265,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         {
             ensOrderlist.setErrorCode(PSOConstants.ERROR_CODE);
             ensOrderlist.setErrorMsg(PSOConstants.BACKEND_ERROR);
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getEnsembleDataInfo", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getEnsembleDataInfo", e);
         }
         finally
         {
@@ -272,7 +275,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getEnsembleDataInfo", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getEnsembleDataInfo", e);
             }
             if (pstm != null)
             {
@@ -282,7 +285,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getEnsembleDataInfo", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getEnsembleDataInfo", e);
                 }
             }
             if (rs != null)
@@ -293,7 +296,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getEnsembleDataInfo", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getEnsembleDataInfo", e);
                 }
             }
         }
@@ -338,7 +341,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalShipmentInfoFromDB", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalShipmentInfoFromDB", e);
         }
         finally
         {
@@ -348,7 +351,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalShipmentInfoFromDB", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalShipmentInfoFromDB", e);
             }
             if (pstm != null)
             {
@@ -358,7 +361,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalShipmentInfoFromDB", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalShipmentInfoFromDB", e);
                 }
             }
             if (rs != null)
@@ -369,7 +372,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalShipmentInfoFromDB", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalShipmentInfoFromDB", e);
                 }
             }
         }
@@ -418,7 +421,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             orderApiRsponse.setErrorCode(PSOConstants.ERROR_CODE);
             orderApiRsponse.setErrorMsg(PSOConstants.BACKEND_ERROR);
             ;
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getAPIDataInfo", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getAPIDataInfo", e);
         }
         finally
         {
@@ -428,7 +431,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getAPIDataInfo", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getAPIDataInfo", e);
             }
             if (pstm != null)
             {
@@ -438,7 +441,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getAPIDataInfo", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getAPIDataInfo", e);
                 }
             }
             if (rs != null)
@@ -449,7 +452,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getAPIDataInfo", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getAPIDataInfo", e);
                 }
             }
         }
@@ -486,7 +489,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
 
         }
         catch(Exception e){
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getAPIRequestBody", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getAPIRequestBody", e);
         }
         finally
         {
@@ -496,7 +499,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getAPIRequestResponseBody", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getAPIRequestResponseBody", e);
             }
             if (pstm != null)
             {
@@ -506,7 +509,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getAPIRequestResponseBody", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getAPIRequestResponseBody", e);
                 }
             }
             if (rs != null)
@@ -517,7 +520,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getAPIRequestResponseBody", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getAPIRequestResponseBody", e);
                 }
             }
         }
@@ -525,7 +528,8 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         return apiReqBody;
     }
     
-    public String getApiBodyQuery(String callType){
+    public String getApiBodyQuery(String callType)
+    {
         return ("request".equals(callType)) ? OrderQueries.getAPIRequest() : OrderQueries.getAPIResponse();
     }
 
@@ -534,7 +538,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
      */
     public PortalOrderMasterResponseBean getZigAutoMasterData(String orderId)
     {
-        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getZigAutoMasterData", "Order ID : " + orderId);
+        PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getZigAutoMasterData", "Order ID : " + orderId);
 
         PortalOrderMasterResponseBean portalOrderlist = null;
 
@@ -568,14 +572,14 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 portalOrderlist.setErrorCode(PSOConstants.INFO_CODE);
                 portalOrderlist.setErrorMsg(PSOConstants.NO_DATA);
 
-                PSOLoggerSrv.printDEBUG(CLASS_NAME, "getZigAutoMasterData", PSOConstants.NO_DATA);
+                PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getZigAutoMasterData", PSOConstants.NO_DATA);
             }
         }
         catch (SQLException e)
         {
             portalOrderlist.setErrorCode(PSOConstants.ERROR_CODE);
             portalOrderlist.setErrorMsg(e.getMessage());
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getZigAutoMasterData", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getZigAutoMasterData", e);
         }
         finally
         {
@@ -585,7 +589,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getZigAutoMasterData", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getZigAutoMasterData", e);
             }
             if (pstm != null)
             {
@@ -595,7 +599,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getZigAutoMasterData", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getZigAutoMasterData", e);
                 }
             }
             if (rs != null)
@@ -606,7 +610,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getZigAutoMasterData", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getZigAutoMasterData", e);
                 }
             }
         }
@@ -621,7 +625,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
      */
     public String getOrderTypeFromExtraOrder(String orderId)
     {
-        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getOrderTypeFromExtraOrder", "Order ID : " + orderId);
+        PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getOrderTypeFromExtraOrder", "Order ID : " + orderId);
 
         String sql = OrderQueries.getOrderType();
 
@@ -643,7 +647,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getOrderTypeFromExtraOrder", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOrderTypeFromExtraOrder", e);
         }
         finally
         {
@@ -653,7 +657,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getOrderTypeFromExtraOrder", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOrderTypeFromExtraOrder", e);
             }
             if (pstm != null)
             {
@@ -663,7 +667,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOrderTypeFromExtraOrder", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOrderTypeFromExtraOrder", e);
                 }
             }
             if (rs != null)
@@ -674,14 +678,14 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOrderTypeFromExtraOrder", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOrderTypeFromExtraOrder", e);
                 }
             }
         }
 
         if (orderStatus == null)
         {
-            PSOLoggerSrv.printDEBUG(CLASS_NAME, "getOrderTypeFromExtraOrder", PSOConstants.NO_DATA);
+            PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getOrderTypeFromExtraOrder", PSOConstants.NO_DATA);
         }
 
         return orderStatus;
@@ -692,7 +696,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
      */
     public PortalOrderMasterResponseBean getCustomerBANandCTN(String orderId)
     {
-        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getCustomerBANandCTN", "Order ID : " + orderId);
+        PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getCustomerBANandCTN", "Order ID : " + orderId);
 
         PortalOrderMasterResponseBean portalOrderlist = null;
 
@@ -719,7 +723,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         {
             portalOrderlist.setErrorCode(PSOConstants.ERROR_CODE);
             portalOrderlist.setErrorMsg(e.getMessage());
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getCustomerBANandCTN", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getCustomerBANandCTN", e);
         }
         finally
         {
@@ -729,7 +733,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getCustomerBANandCTN", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getCustomerBANandCTN", e);
             }
             if (pstm != null)
             {
@@ -739,7 +743,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getCustomerBANandCTN", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getCustomerBANandCTN", e);
                 }
             }
             if (rs != null)
@@ -750,7 +754,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getCustomerBANandCTN", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getCustomerBANandCTN", e);
                 }
             }
         }
@@ -763,7 +767,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
      */
     public PortalEnrollmentInfo getOrderEnrollmentInfo(String orderId)
     {
-        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getOrderEnrollmentInfo", "Order ID : " + orderId);
+        PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getOrderEnrollmentInfo", "Order ID : " + orderId);
 
         PortalEnrollmentInfo enrollInfo = null;
 
@@ -795,7 +799,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getOrderEnrollmentInfo", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOrderEnrollmentInfo", e);
         }
         finally
         {
@@ -805,7 +809,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getOrderEnrollmentInfo", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOrderEnrollmentInfo", e);
             }
             if (pstm != null)
             {
@@ -815,7 +819,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOrderEnrollmentInfo", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOrderEnrollmentInfo", e);
                 }
             }
             if (rs != null)
@@ -826,7 +830,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOrderEnrollmentInfo", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOrderEnrollmentInfo", e);
                 }
             }
         }
@@ -840,7 +844,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
     @Override
     public List<PortalLineItemInfoBean> getPortalLineItemInfo(String orderId)
     {
-        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getPortalLineItemInfo", "Order ID : " + orderId);
+        PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getPortalLineItemInfo", "Order ID : " + orderId);
 
         ArrayList<PortalLineItemInfoBean> lineItemsList = new ArrayList<PortalLineItemInfoBean>();
         PortalLineItemInfoBean lineItem = null;
@@ -875,12 +879,12 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             
             if (lineItemsList == null || lineItemsList.isEmpty())
             {
-                PSOLoggerSrv.printDEBUG(CLASS_NAME, "getPortalLineItemInfo", PSOConstants.NO_DATA);
+                PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getPortalLineItemInfo", PSOConstants.NO_DATA);
             }
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalLineItemInfo", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalLineItemInfo", e);
         }
         finally
         {
@@ -890,7 +894,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalLineItemInfo", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalLineItemInfo", e);
             }
             if (pstm != null)
             {
@@ -900,7 +904,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalLineItemInfo", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalLineItemInfo", e);
                 }
             }
             if (rs != null)
@@ -911,7 +915,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalLineItemInfo", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalLineItemInfo", e);
                 }
             }
         }
@@ -935,7 +939,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
     @Override
     public List<EnsembleLineItemInfoBean> getEnsLineItemInfo(String orderId)
     {
-        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getEnsLineItemInfo", "Order ID : " + orderId);
+        PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getEnsLineItemInfo", "Order ID : " + orderId);
 
         ArrayList<EnsembleLineItemInfoBean> enslineItemsList = new ArrayList<EnsembleLineItemInfoBean>();
         EnsembleLineItemInfoBean lineItem = null;
@@ -968,7 +972,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getEnsLineItemInfo", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getEnsLineItemInfo", e);
         }
         finally
         {
@@ -978,7 +982,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getEnsLineItemInfo", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getEnsLineItemInfo", e);
             }
             if (pstm != null)
             {
@@ -988,7 +992,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getEnsLineItemInfo", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getEnsLineItemInfo", e);
                 }
             }
             if (rs != null)
@@ -999,14 +1003,14 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getEnsLineItemInfo", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getEnsLineItemInfo", e);
                 }
             }
         }
 
         if (enslineItemsList == null || enslineItemsList.isEmpty())
         {
-            PSOLoggerSrv.printDEBUG(CLASS_NAME, "getEnsLineItemInfo", PSOConstants.NO_DATA);
+            PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getEnsLineItemInfo", PSOConstants.NO_DATA);
         }
 
         return enslineItemsList;
@@ -1020,7 +1024,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
     @Override
     public List<PortalOrderPortRequestBean> getPortalOrderPortDetails(String orderId)
     {
-        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getPortalOrderPortDetails", "Order ID : " + orderId);
+        PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getPortalOrderPortDetails", "Order ID : " + orderId);
 
         ArrayList<PortalOrderPortRequestBean> portItemList = new ArrayList<PortalOrderPortRequestBean>();
         PortalOrderPortRequestBean portLine = null;
@@ -1049,7 +1053,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalOrderPortDetails", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalOrderPortDetails", e);
         }
         finally
         {
@@ -1059,7 +1063,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalOrderPortDetails", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalOrderPortDetails", e);
             }
             if (pstm != null)
             {
@@ -1069,7 +1073,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalOrderPortDetails", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalOrderPortDetails", e);
                 }
             }
             if (rs != null)
@@ -1080,14 +1084,14 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalOrderPortDetails", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalOrderPortDetails", e);
                 }
             }
         }
 
         if (portItemList == null || portItemList.isEmpty())
         {
-            PSOLoggerSrv.printDEBUG(CLASS_NAME, "getPortalOrderPortDetails", PSOConstants.NO_DATA);
+            PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getPortalOrderPortDetails", PSOConstants.NO_DATA);
         }
 
         return portItemList;
@@ -1101,7 +1105,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
     @Override
     public List<EnsOrderPortRequestBean> getEnsOrderPortDetails(String orderId)
     {
-        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getEnsOrderPortDetails", "Order ID : " + orderId);
+        PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getEnsOrderPortDetails", "Order ID : " + orderId);
 
         ArrayList<EnsOrderPortRequestBean> portItemList = new ArrayList<EnsOrderPortRequestBean>();
         EnsOrderPortRequestBean portLine = null;
@@ -1132,7 +1136,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getEnsOrderPortDetails", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getEnsOrderPortDetails", e);
         }
         finally
         {
@@ -1142,7 +1146,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getEnsOrderPortDetails", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getEnsOrderPortDetails", e);
             }
             if (pstm != null)
             {
@@ -1152,7 +1156,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getEnsOrderPortDetails", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getEnsOrderPortDetails", e);
                 }
             }
             if (rs != null)
@@ -1163,14 +1167,14 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getEnsOrderPortDetails", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getEnsOrderPortDetails", e);
                 }
             }
         }
 
         if (portItemList == null || portItemList.isEmpty())
         {
-            PSOLoggerSrv.printDEBUG(CLASS_NAME, "getEnsOrderPortDetails", PSOConstants.NO_DATA);
+            PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getEnsOrderPortDetails", PSOConstants.NO_DATA);
         }
 
         return portItemList;
@@ -1184,7 +1188,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
     @Override
     public List<PortalShipmentInfo> getPortalLineSimAndImeiDetails(String orderId)
     {
-        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getPortalLineSimAndImeiDetails", "Order ID : " + orderId);
+        PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getPortalLineSimAndImeiDetails", "Order ID : " + orderId);
 
         ArrayList<PortalShipmentInfo> portLineList = new ArrayList<PortalShipmentInfo>();
         PortalShipmentInfo portLine = null;
@@ -1214,7 +1218,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalLineSimAndImeiDetails", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalLineSimAndImeiDetails", e);
         }
         finally
         {
@@ -1224,7 +1228,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalLineSimAndImeiDetails", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalLineSimAndImeiDetails", e);
             }
             if (pstm != null)
             {
@@ -1234,7 +1238,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalLineSimAndImeiDetails", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalLineSimAndImeiDetails", e);
                 }
             }
             if (rs != null)
@@ -1245,14 +1249,14 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getPortalLineSimAndImeiDetails", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getPortalLineSimAndImeiDetails", e);
                 }
             }
         }
 
         if (portLineList == null || portLineList.isEmpty())
         {
-            PSOLoggerSrv.printDEBUG(CLASS_NAME, "getPortalLineSimAndImeiDetails", PSOConstants.NO_DATA);
+            PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getPortalLineSimAndImeiDetails", PSOConstants.NO_DATA);
         }
 
         return portLineList;
@@ -1307,7 +1311,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getOrderCurrentValue", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOrderCurrentValue", e);
         }
         finally
         {
@@ -1317,7 +1321,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getOrderCurrentValue", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOrderCurrentValue", e);
             }
             if (pstm != null)
             {
@@ -1327,7 +1331,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOrderCurrentValue", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOrderCurrentValue", e);
                 }
             }
             if (rs != null)
@@ -1338,7 +1342,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOrderCurrentValue", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOrderCurrentValue", e);
                 }
             }
         }
@@ -1374,7 +1378,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         }
         catch (SQLException e)
         {
-            PSOLoggerSrv.printERROR(CLASS_NAME, "orderStatusList", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "orderStatusList", e);
         }
         finally
         {
@@ -1384,7 +1388,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "orderStatusList", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "orderStatusList", e);
             }
             if (pstm != null)
             {
@@ -1394,7 +1398,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "orderStatusList", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "orderStatusList", e);
                 }
             }
             if (rs != null)
@@ -1405,7 +1409,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "orderStatusList", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "orderStatusList", e);
                 }
             }
         }
@@ -1416,7 +1420,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
     public InventoryStatusofItemBean getInventoryStatus(String skuId)
     {
 
-        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getInventoryStatus", "SKU ID : " + skuId);
+        PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getInventoryStatus", "SKU ID : " + skuId);
 
         InventoryStatusofItemBean inventoryDetails = null;
 
@@ -1449,7 +1453,6 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             rs1 = pstm1.executeQuery();
             while (rs1.next())
             {
-                // inventoryDetails.setStockStatus(rs1.getString("UPHOLD_LEVEL"));
                 if (null != rs1.getString("UPHOLD_LEVEL"))
                 {
                     int stockFlag = Integer.parseInt(inventoryDetails.getStockLevel()) - Integer.parseInt(inventoryDetails.getStockThresh()) - Integer.parseInt(rs1.getString("UPHOLD_LEVEL"));
@@ -1469,7 +1472,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         {
             inventoryDetails.setErrorCode(PSOConstants.ERROR_CODE);
             inventoryDetails.setErrorMsg(e.getMessage());
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getInventoryStatus", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getInventoryStatus", e);
         }
         finally
         {
@@ -1479,7 +1482,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getInventoryStatus", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getInventoryStatus", e);
             }
             if (pstm != null)
             {
@@ -1489,7 +1492,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getInventoryStatus", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getInventoryStatus", e);
                 }
             }
             if (rs != null)
@@ -1500,7 +1503,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getInventoryStatus", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getInventoryStatus", e);
                 }
             }
 
@@ -1512,7 +1515,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getInventoryStatus", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getInventoryStatus", e);
                 }
             }
             if (rs1 != null)
@@ -1523,7 +1526,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getInventoryStatus", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getInventoryStatus", e);
                 }
             }
         }
@@ -1535,7 +1538,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
     public NameDataBean getESNReuseData(String ESN)
     {
 
-        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getESNReuseData", "ESN:" + ESN);
+        PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getESNReuseData", "ESN:" + ESN);
 
         NameDataBean nameData = null;
 
@@ -1592,7 +1595,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         {
             nameData.setErrorCode(PSOConstants.ERROR_CODE);
             nameData.setErrorMsg(e.getMessage());
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getInventoryStatus", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getInventoryStatus", e);
         }
         finally
         {
@@ -1602,7 +1605,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getESNReuseData", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getESNReuseData", e);
             }
             if (pstm != null)
             {
@@ -1612,7 +1615,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getESNReuseData", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getESNReuseData", e);
                 }
             }
             if (pstm1 != null)
@@ -1623,7 +1626,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getESNReuseData", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getESNReuseData", e);
                 }
             }
             if (pstm2 != null)
@@ -1634,7 +1637,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getESNReuseData", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getESNReuseData", e);
                 }
             }
             if (rs != null)
@@ -1645,7 +1648,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getESNReuseData", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getESNReuseData", e);
                 }
             }
 
@@ -1657,7 +1660,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getESNReuseData", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getESNReuseData", e);
                 }
             }
             if (rs2 != null)
@@ -1668,7 +1671,7 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getESNReuseData", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getESNReuseData", e);
                 }
             }
         }

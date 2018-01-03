@@ -14,8 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +42,8 @@ import com.zig.pso.service.IUserService;
 @Controller
 public class UserController
 {
+    static final Logger logger = Logger.getLogger(UserController.class);
+    
     @Autowired
     IUserService userService;
     
@@ -50,7 +54,7 @@ public class UserController
     public ResponseEntity<BaseResponseBean> registerUser(@RequestBody UserMaster user)
     {
         String userData = (new StringBuilder()).append("User Name ").append(user.getCompany()).append(" \nFirest Name : ").append(user.getFirstName()).append(" \nLast Name : ").append(user.getLastName()).append(" \nEmail ID : ").append(user.getEmail()).append(" \nEmployee ID : ").append(user.getEmpId()).append(" \nCompany : ").append(user.getCompany()).toString();
-        PSOLoggerSrv.printDEBUG("UserController", "registerUser", userData);
+        PSOLoggerSrv.printDEBUG(logger, "UserController", "registerUser", user.toString());
         
         BaseResponseBean regUserResponse = new BaseResponseBean();
         if(StringUtils.isEmpty(user.getCompany()) || StringUtils.isEmpty(user.getEmail()) || StringUtils.isEmpty(user.getEmpId()) 
@@ -59,7 +63,8 @@ public class UserController
         {
             regUserResponse.setErrorCode(PSOConstants.ERROR_CODE);
             regUserResponse.setErrorMsg(PSOConstants.ALL_DATA_MANDATORY);
-        } else
+        } 
+        else
         {
             regUserResponse = userService.registerUser(user);
         }
@@ -73,7 +78,7 @@ public class UserController
     @RequestMapping(value = "/pendingApprovalUserList", method = RequestMethod.GET)
     public ResponseEntity<List<UserMaster>> getPendingApprovalUserList()
     {
-        PSOLoggerSrv.printDEBUG("UserController", "getPendingApprovalUserList", null);
+        PSOLoggerSrv.printDEBUG(logger, "UserController", "getPendingApprovalUserList", null);
 
         List<UserMaster> pendingUserList = new ArrayList<UserMaster>();
         pendingUserList = userService.getPendingApprovalUserList();
@@ -84,13 +89,18 @@ public class UserController
      * This Method will reject user request
      */
     @RequestMapping(value = "/rejectUser", method = RequestMethod.POST)
-    public ResponseEntity<BaseResponseBean> rejectUser(@RequestBody RejectPendingUserRequest rejectUserReq)
+    public ResponseEntity<BaseResponseBean> rejectUser(@RequestBody RejectPendingUserRequest rejectUserReq,HttpServletRequest request)
     {
         String rejectUserData = (new StringBuilder()).append("Employee Id : ").append(rejectUserReq.getEmpId()).append(" \nReject Commnets : ").append(rejectUserReq.getRejectComments()).toString();
-        PSOLoggerSrv.printDEBUG("UserController", "rejectUser", rejectUserData);
+        PSOLoggerSrv.printDEBUG(logger, "UserController", "rejectUser", rejectUserData);
+        
+        HttpSession sessoin = request.getSession();
+        UserMaster loggedInUserData = (sessoin.getAttribute(PSOConstants.SESSION_USER_DATA)!=null)?(UserMaster)sessoin.getAttribute(PSOConstants.SESSION_USER_DATA):null;
 
+        String rejectedBy = (loggedInUserData!=null)?loggedInUserData.getFirstName() + " " + loggedInUserData.getLastName() : StringUtils.EMPTY;
+        
         BaseResponseBean rejectUserResponse = new BaseResponseBean();
-        rejectUserResponse = userService.rejectUser(rejectUserReq);
+        rejectUserResponse = userService.rejectUser(rejectUserReq,rejectedBy);
         return new ResponseEntity<BaseResponseBean>(rejectUserResponse, HttpStatus.OK);
     }
     
@@ -100,7 +110,7 @@ public class UserController
     @RequestMapping(value = "/getPendingUserDetailsByEmpId/{empId}", method = RequestMethod.GET)
     public ResponseEntity<UserMaster> getPendingUserDetailsByEmpId(@PathVariable("empId") String employeeId)
     {
-        PSOLoggerSrv.printDEBUG("UserController", "getPendingUserDetailsByEmpId", (new StringBuilder()).append("Emaployee ID : ").append(employeeId).toString());
+        PSOLoggerSrv.printDEBUG(logger, "UserController", "getPendingUserDetailsByEmpId", (new StringBuilder()).append("Emaployee ID : ").append(employeeId).toString());
 
         UserMaster userData = new UserMaster();
         userData = userService.getPendingUserDataByEmpId(employeeId);
@@ -113,7 +123,7 @@ public class UserController
     @RequestMapping(value = "/getUserDetailsByEmpId/{empId}", method = RequestMethod.GET)
     public ResponseEntity<UserMaster> getUserDetailsByEmpId(@PathVariable("empId") String employeeId)
     {
-        PSOLoggerSrv.printDEBUG("UserController", "getUserDetailsByEmpId", (new StringBuilder()).append("Emaployee ID : ").append(employeeId).toString());
+        PSOLoggerSrv.printDEBUG(logger, "UserController", "getUserDetailsByEmpId", (new StringBuilder()).append("Emaployee ID : ").append(employeeId).toString());
 
         UserMaster userData = new UserMaster();
         userData = userService.getUserDetailsByEmpId(employeeId);
@@ -127,7 +137,7 @@ public class UserController
     public ResponseEntity<BaseResponseBean> createUserAssigments(@RequestBody UserMaster user,HttpServletRequest request)
     {
         String userData = (new StringBuilder()).append("User Name ").append(user.getCompany()).append(" \nFirest Name : ").append(user.getFirstName()).append(" \nLast Name : ").append(user.getLastName()).append(" \nEmail ID : ").append(user.getEmail()).append(" \nEmployee ID : ").append(user.getEmpId()).append(" \nCompany : ").append(user.getCompany()).append(" \nGroup ID : ").append(user.getGroupId()).toString();
-        PSOLoggerSrv.printDEBUG("UserController", "createUserAssigments", userData);
+        PSOLoggerSrv.printDEBUG(logger, "UserController", "createUserAssigments", userData);
         
         String urlForSetupPassword = generateURLForNextStep(request, "setupPassword");
 
@@ -143,7 +153,7 @@ public class UserController
     public ResponseEntity<BaseResponseBean> updateUserAssigments(@RequestBody UserMaster user)
     {
         String userData = (new StringBuilder()).append("User Name ").append(user.getCompany()).append(" \nFirest Name : ").append(user.getFirstName()).append(" \nLast Name : ").append(user.getLastName()).append(" \nEmail ID : ").append(user.getEmail()).append(" \nEmployee ID : ").append(user.getEmpId()).append(" \nCompany : ").append(user.getCompany()).append(" \nGroup ID : ").append(user.getGroupId()).toString();
-        PSOLoggerSrv.printDEBUG("UserController", "updateUserAssigments", userData);
+        PSOLoggerSrv.printDEBUG(logger, "UserController", "updateUserAssigments", user.toString());
 
         BaseResponseBean updateUserAssignmentResponse = new BaseResponseBean();
         updateUserAssignmentResponse = userService.updateUserAssignments(user);
@@ -156,8 +166,8 @@ public class UserController
     @RequestMapping(value = "/getUserList", method = RequestMethod.POST)
     public ResponseEntity<List<UserMaster>> getUserList(@RequestBody UserSearchRequestBean userSearchReq)
     {
-       /* String updateDetails = "Order ID : "+updateOrderRequest.getOrderId()+" \nNew Value : "+updateOrderRequest.getNewValue()+" \nUpdate Type : "+updateOrderRequest.getType()+" \nLine Id : "+updateOrderRequest.getLineId();
-        PSOLoggerSrv.printDEBUG("UpdateOrderController", "updateSingleOrder", updateDetails);*/
+       //String updateDetails = "Order ID : "+updateOrderRequest.getOrderId()+" \nNew Value : "+updateOrderRequest.getNewValue()+" \nUpdate Type : "+updateOrderRequest.getType()+" \nLine Id : "+updateOrderRequest.getLineId();
+        PSOLoggerSrv.printDEBUG(logger, "UpdateOrderController", "getUserList", userSearchReq.toString());
 
         List<UserMaster> userList = new ArrayList<UserMaster>();
         userList = userService.getUserList(userSearchReq);
@@ -170,8 +180,8 @@ public class UserController
     @RequestMapping(value = "/setupPassword", method = RequestMethod.POST)
     public ResponseEntity<BaseResponseBean> setupPassword(@RequestBody SetupUserPasswordRequestBean userPasswordSetup)
     {
-       /* String updateDetails = "Order ID : "+updateOrderRequest.getOrderId()+" \nNew Value : "+updateOrderRequest.getNewValue()+" \nUpdate Type : "+updateOrderRequest.getType()+" \nLine Id : "+updateOrderRequest.getLineId();
-        PSOLoggerSrv.printDEBUG("UpdateOrderController", "updateSingleOrder", updateDetails);*/
+       // String updateDetails = "Order ID : "+updateOrderRequest.getOrderId()+" \nNew Value : "+updateOrderRequest.getNewValue()+" \nUpdate Type : "+updateOrderRequest.getType()+" \nLine Id : "+updateOrderRequest.getLineId();
+        PSOLoggerSrv.printDEBUG(logger, "UpdateOrderController", "setupPassword", userPasswordSetup.toString());
         
       
         BaseResponseBean response = userService.setupPasswordForUser(userPasswordSetup);
@@ -184,7 +194,7 @@ public class UserController
     @RequestMapping(value={"/checkUsername/{userName}"}, method = RequestMethod.GET)
     public ResponseEntity<BaseResponseBean> checkUsername(@PathVariable("userName") String userName)
     {
-        PSOLoggerSrv.printDEBUG("UserController", "checkUsername", "userName : "+userName);
+        PSOLoggerSrv.printDEBUG(logger, "UserController", "checkUsername", "userName : "+userName);
         
         BaseResponseBean userData = new BaseResponseBean();
         userData = userService.checkUsername(userName);
@@ -197,7 +207,7 @@ public class UserController
     @RequestMapping(value={"/changePassword"}, method={RequestMethod.POST})
     public ResponseEntity<BaseResponseBean> changePassword(@RequestBody SetupUserPasswordRequestBean changePasswordRequest)
     {
-        PSOLoggerSrv.printDEBUG("UserController", "changePassword", "EmpID : "+changePasswordRequest.getEmpId());
+        PSOLoggerSrv.printDEBUG(logger, "UserController", "changePassword", "EmpID : "+changePasswordRequest.getEmpId());
         
         BaseResponseBean response = userService.changeUserPassword(changePasswordRequest);
         return new ResponseEntity<BaseResponseBean>(response, HttpStatus.OK);
@@ -219,11 +229,11 @@ public class UserController
             String hostName = InetAddress.getLocalHost().getHostName();
             String contextPathName = request.getContextPath();
             urlForSetupPW = (new StringBuilder()).append(protocolName).append("://").append(hostName).append(":").append(request.getServerPort()).append(contextPathName).append(stepURLPart).toString();
-            PSOLoggerSrv.printDEBUG("UserController", "generateURLForNextStep", urlForSetupPW);
+            PSOLoggerSrv.printDEBUG(logger, "UserController", "generateURLForNextStep", urlForSetupPW);
         }
         catch(UnknownHostException e)
         {
-            PSOLoggerSrv.printERROR("UserController", "generateURLForNextStep - Generate Setup Password URL ", e);
+            PSOLoggerSrv.printERROR(logger, "UserController", "generateURLForNextStep - Generate Setup Password URL ", e);
         }
         return urlForSetupPW;
     }

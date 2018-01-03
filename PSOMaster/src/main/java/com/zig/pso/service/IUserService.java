@@ -32,7 +32,7 @@ public interface IUserService
     
     public List<UserMaster> getPendingApprovalUserList();
     
-    public BaseResponseBean rejectUser(RejectPendingUserRequest userReq);
+    public BaseResponseBean rejectUser(RejectPendingUserRequest userReq,String rejectedBy);
     
     public UserMaster getPendingUserDataByEmpId(String employeeId);
     

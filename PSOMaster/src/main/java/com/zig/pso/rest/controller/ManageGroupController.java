@@ -10,6 +10,9 @@ package com.zig.pso.rest.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,7 @@ import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.BaseResponseBean;
 import com.zig.pso.rest.bean.GroupMaster;
 import com.zig.pso.rest.bean.RoleMaster;
+import com.zig.pso.security.SecurityUtils;
 import com.zig.pso.service.GroupService;
 
 /**
@@ -31,6 +35,8 @@ import com.zig.pso.service.GroupService;
 @Controller
 public class ManageGroupController
 {
+    static final Logger logger = Logger.getLogger(ManageGroupController.class);
+    
     @Autowired
     GroupService groupService;
     
@@ -40,7 +46,7 @@ public class ManageGroupController
     @RequestMapping(value = "/getRoleList", method = RequestMethod.GET)
     public ResponseEntity<List<RoleMaster>> getRoleList()
     {
-        PSOLoggerSrv.printDEBUG("ManageGroupController", "getRoleList", "");
+        PSOLoggerSrv.printDEBUG(logger,"ManageGroupController", "getRoleList", "");
         List<RoleMaster> roleList = groupService.getRoleList();
         
         return new ResponseEntity<List<RoleMaster>>(roleList, HttpStatus.OK);
@@ -52,7 +58,7 @@ public class ManageGroupController
     @RequestMapping(value = "/getGroupList", method = RequestMethod.GET)
     public ResponseEntity<List<GroupMaster>> getGroupList()
     {
-        PSOLoggerSrv.printDEBUG("ManageGroupController", "getRoleList", "");
+        PSOLoggerSrv.printDEBUG(logger,"ManageGroupController", "getRoleList", "");
         List<GroupMaster> groupList = groupService.getGroupList();
         
         return new ResponseEntity<List<GroupMaster>>(groupList, HttpStatus.OK);
@@ -62,12 +68,12 @@ public class ManageGroupController
      * This Method will add new group
      */
     @RequestMapping(value = "/addGroup", method = RequestMethod.POST)
-    public ResponseEntity<BaseResponseBean> addGroup(@RequestBody GroupMaster groupMaster)
+    public ResponseEntity<BaseResponseBean> addGroup(@RequestBody GroupMaster groupMaster, HttpServletRequest request)
     {
-       /* String updateDetails = "Order ID : "+updateOrderRequest.getOrderId()+" \nNew Value : "+updateOrderRequest.getNewValue()+" \nUpdate Type : "+updateOrderRequest.getType()+" \nLine Id : "+updateOrderRequest.getLineId();
-        PSOLoggerSrv.printDEBUG("UpdateOrderController", "updateSingleOrder", updateDetails);*/
+        String updateDetails = "Group ID : "+groupMaster.getGroupId()+" \nGroup Name : "+groupMaster.getGroupName()+" \nGroup Desc : "+groupMaster.getGroupDesc()+" \nRole Id : "+groupMaster.getRoleId()+" \nRole Name : "+groupMaster.getRoleName();
+        PSOLoggerSrv.printDEBUG(logger,"ManageGroupController", "addGroup", "New Group Details : "+updateDetails);
 
-        groupMaster.setCreatedBy("ADMIN");
+        groupMaster.setCreatedBy(SecurityUtils.getCurrentLogin());
         
         BaseResponseBean addGroupResponse = new BaseResponseBean();
         addGroupResponse = groupService.addGroup(groupMaster);
@@ -80,10 +86,10 @@ public class ManageGroupController
     @RequestMapping(value = "/updateGroup", method = RequestMethod.POST)
     public ResponseEntity<BaseResponseBean> updateGroup(@RequestBody GroupMaster groupMaster)
     {
-       /* String updateDetails = "Order ID : "+updateOrderRequest.getOrderId()+" \nNew Value : "+updateOrderRequest.getNewValue()+" \nUpdate Type : "+updateOrderRequest.getType()+" \nLine Id : "+updateOrderRequest.getLineId();
-        PSOLoggerSrv.printDEBUG("UpdateOrderController", "updateSingleOrder", updateDetails);*/
+        String updateDetails = "Group ID : "+groupMaster.getGroupId()+" \nGroup Name : "+groupMaster.getGroupName()+" \nGroup Desc : "+groupMaster.getGroupDesc()+" \nRole Id : "+groupMaster.getRoleId()+" \nRole Name : "+groupMaster.getRoleName();
+        PSOLoggerSrv.printDEBUG(logger,"ManageGroupController", "updateGroup", "update Details : "+updateDetails);
 
-        groupMaster.setCreatedBy("ADMIN");
+        groupMaster.setCreatedBy(SecurityUtils.getCurrentLogin());
         
         BaseResponseBean updateGroupResponse = new BaseResponseBean();
         updateGroupResponse = groupService.updateGroup(groupMaster);
@@ -96,8 +102,7 @@ public class ManageGroupController
     @RequestMapping(value = "/deleteGroup/{id}", method = RequestMethod.POST)
     public ResponseEntity<BaseResponseBean> deleteGroup(@PathVariable("id") int groupId)
     {
-       /* String updateDetails = "Order ID : "+updateOrderRequest.getOrderId()+" \nNew Value : "+updateOrderRequest.getNewValue()+" \nUpdate Type : "+updateOrderRequest.getType()+" \nLine Id : "+updateOrderRequest.getLineId();
-        PSOLoggerSrv.printDEBUG("UpdateOrderController", "updateSingleOrder", updateDetails);*/
+        PSOLoggerSrv.printDEBUG(logger,"ManageGroupController", "deleteGroup", "Group ID : "+groupId);
 
         BaseResponseBean deleteGroupResponse = new BaseResponseBean();
         deleteGroupResponse = groupService.deleteGroup(groupId);

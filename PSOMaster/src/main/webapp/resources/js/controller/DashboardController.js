@@ -228,13 +228,6 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 							});
 			
 							$scope.myDataSourcePie.data = Data;
-			
-							/* Hide Chart label 
-							$("tspan").filter(function(idx) {
-									if (this.innerHTML.indexOf('FusionCharts XT Trial') == 0) {
-										$(this).css("display","none")
-									}
-							});*/
 						}
 			
 					},
@@ -245,15 +238,22 @@ module.controller("DashboardController",function($scope, $routeParams, $http, Da
 		
 		/* Stuck Order backlogs in last 10 Days */
 		DashboardService.getStuckOrderBacklog().then(function(data) {
+					if(data.dateList!=null)
+					{
 						$scope.dateList = data.dateList;
 						$scope.curDate = $scope.dateList[0];
 						$scope.backLogList = data.backLogList;
 						
 						filterDataByDate($scope.backLogList,$scope.curDate);
-					},
-					function(errResponse) {
-						console.error('Error while fetching Currencies');
-					});
+						angular.element('#navIconsID')[0].style.display='block';
+					}
+					else{
+						angular.element('#navIconsID')[0].style.display='none';
+					}
+				},
+				function(errResponse) {
+					console.error('Error while fetching Currencies');
+				});
 		
 		$scope.regularOrderStatistics = [];
 		/* Regular Orders */

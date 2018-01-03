@@ -47,7 +47,7 @@ public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
             
             /*Save USER in session*/
             HttpSession sessoin = request.getSession(true);
-            sessoin.setAttribute("UserDetails", user);
+            sessoin.setAttribute(PSOConstants.SESSION_USER_DATA, user);
             
             authResponse.setUser(user);
             authResponse.setErrorCode(PSOConstants.SUCCESS_CODE);

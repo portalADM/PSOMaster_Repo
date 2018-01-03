@@ -6,7 +6,6 @@ module.controller("SignupController", function($scope, SignupService,$location,M
 	
 	$scope.init = function()
 	{
-		$("#setuPassword-modal").modal();
 		MessageService.hideMessage();
 	}
 	

@@ -12,6 +12,7 @@ package com.zig.pso.rest.controller;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,7 @@ import com.zig.pso.service.OrderInfoManagerService;
 @RestController
 public class OrderMasterController
 {
+    static final Logger logger = Logger.getLogger(OrderMasterController.class);
 
     @Autowired
     OrderInfoManagerService orderService;
@@ -46,8 +48,7 @@ public class OrderMasterController
     @RequestMapping(value = "/portalOrder/{id}", method = RequestMethod.GET)
     public ResponseEntity<PortalOrderMasterResponseBean> getPortalOrderDetails(@PathVariable("id") String id)
     {
-
-        PSOLoggerSrv.printDEBUG("OrderMasterController", "getPortalOrderDetails", "Order ID : " + id);
+        PSOLoggerSrv.printDEBUG(logger,"OrderMasterController", "getPortalOrderDetails", "Order ID : " + id);
 
         PortalOrderMasterResponseBean nameList = new PortalOrderMasterResponseBean();
         nameList = orderService.getPortalOrderDataInfo(id);
@@ -60,8 +61,7 @@ public class OrderMasterController
     @RequestMapping(value = "/ensembleOrder/{id}", method = RequestMethod.GET)
     public ResponseEntity<EnsOrderMasterResponseBean> getOrderEnsDetail(@PathVariable("id") String id)
     {
-
-        PSOLoggerSrv.printDEBUG("OrderMasterController", "getOrderEnsDetail", "Order ID : " + id);
+        PSOLoggerSrv.printDEBUG(logger,"OrderMasterController", "getOrderEnsDetail", "Order ID : " + id);
 
         EnsOrderMasterResponseBean nameList = new EnsOrderMasterResponseBean();
         nameList = orderService.getEnsOrderDataInfo(id);
@@ -74,7 +74,7 @@ public class OrderMasterController
     @RequestMapping(value = "/apiOrder/{id}", method = RequestMethod.GET)
     public ResponseEntity<ApiOrderMasterResponseBean> getOrderApiDetails(@PathVariable("id") String id)
     {
-        PSOLoggerSrv.printDEBUG("OrderMasterController", "getOrderApiDetails", "Order ID : " + id);
+        PSOLoggerSrv.printDEBUG(logger,"OrderMasterController", "getOrderApiDetails", "Order ID : " + id);
         ApiOrderMasterResponseBean orderApiResponse = new ApiOrderMasterResponseBean();
         orderApiResponse = orderService.getAPIOrderDataInfo(id);
         return new ResponseEntity<ApiOrderMasterResponseBean>(orderApiResponse, HttpStatus.OK);
@@ -86,7 +86,7 @@ public class OrderMasterController
     @RequestMapping(value = "/getAPIRequestResponse/{seq_number}/CallType/{CallType}", method = RequestMethod.GET,produces = {"application/xml"})
     public ResponseEntity<String> getOrderAPIRequest(@PathVariable("seq_number") String seq_number,@PathVariable("CallType") String callType)
     {
-        PSOLoggerSrv.printDEBUG("OrderMasterController", "getOrderAPIRequest", "seq_number : " + seq_number);
+        PSOLoggerSrv.printDEBUG(logger,"OrderMasterController", "getOrderAPIRequest", "seq_number : " + seq_number);
 
         String data = orderService.getAPIRequestResponseBody(seq_number,callType);
         return new ResponseEntity<String>(data, HttpStatus.OK);
@@ -98,7 +98,7 @@ public class OrderMasterController
     @RequestMapping(value = "/getPortInDetails/{id}", method = RequestMethod.GET)
     public ResponseEntity<OrderPortInDetailsResponseBean> getPortinDetails(@PathVariable("id") String orderId)
     {
-        PSOLoggerSrv.printDEBUG("OrderMasterController", "getPortinDetails", "orderId : " + orderId);
+        PSOLoggerSrv.printDEBUG(logger,"OrderMasterController", "getPortinDetails", "orderId : " + orderId);
 
         OrderPortInDetailsResponseBean portData = orderService.getPortalOrderPortDetails(orderId);
         return new ResponseEntity<OrderPortInDetailsResponseBean>(portData, HttpStatus.OK);
@@ -113,7 +113,7 @@ public class OrderMasterController
     public ResponseEntity<PortalOrderLineSIMandIMEIDetailsBean> getPortalLineSimandImei(@PathVariable("id") String id)
     {
 
-        PSOLoggerSrv.printDEBUG("OrderMasterController", "getPortalLineSimandImei", "Order ID : " + id);
+        PSOLoggerSrv.printDEBUG(logger,"OrderMasterController", "getPortalLineSimandImei", "Order ID : " + id);
 
         PortalOrderLineSIMandIMEIDetailsBean nameList = new PortalOrderLineSIMandIMEIDetailsBean();
         nameList = orderService.getPortalLineSimAndImeiDetails(id);
@@ -127,7 +127,7 @@ public class OrderMasterController
     @RequestMapping(value = "/getOrderStatusList", method = RequestMethod.GET)
     public ResponseEntity<List<String>> getOrderStatusList()
     {
-        PSOLoggerSrv.printDEBUG("OrderMasterController", "getOrderStatusList", null);
+        PSOLoggerSrv.printDEBUG(logger,"OrderMasterController", "getOrderStatusList", null);
 
         List<String> orderStatusList = orderService.getOrderStatusList();
         return new ResponseEntity<List<String>>(orderStatusList, HttpStatus.OK);
@@ -140,7 +140,7 @@ public class OrderMasterController
     @RequestMapping(value="/getInventoryStatusDetails/{skuId}", method = RequestMethod.GET)
     public ResponseEntity<InventoryStatusofItemBean> getInventoryStatusDetails(@PathVariable("skuId") String skuId)
     {
-        PSOLoggerSrv.printDEBUG("OrderMasterController", "getInventoryStatusDetails", null);
+        PSOLoggerSrv.printDEBUG(logger,"OrderMasterController", "getInventoryStatusDetails", null);
         InventoryStatusofItemBean details = new InventoryStatusofItemBean();
         details=orderService.getInventoryStatusDetails(skuId);
         return new ResponseEntity<InventoryStatusofItemBean>(details, HttpStatus.OK);
@@ -153,7 +153,7 @@ public class OrderMasterController
     @RequestMapping(value="/getESNReuseData/{esn}", method = RequestMethod.GET)
     public ResponseEntity<NameDataBean> getESNReuseData(@PathVariable("esn") String esn)
     {
-        PSOLoggerSrv.printDEBUG("OrderMasterController", "getESNReuseData", null);
+        PSOLoggerSrv.printDEBUG(logger,"OrderMasterController", "getESNReuseData", null);
         NameDataBean details = new NameDataBean();
         details=orderService.getESNReuseData(esn);
         return new ResponseEntity<NameDataBean>(details, HttpStatus.OK);

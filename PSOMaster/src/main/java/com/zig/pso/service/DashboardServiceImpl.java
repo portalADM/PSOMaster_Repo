@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,8 @@ import com.zig.pso.rest.bean.StuckOrdersCount;
 @Service
 public class DashboardServiceImpl implements DashboardService
 {
+    static final Logger logger = Logger.getLogger(DashboardServiceImpl.class);
+    
     @Autowired
     DashboardDAO dashboardDAO;
 
@@ -38,7 +41,7 @@ public class DashboardServiceImpl implements DashboardService
     @Override
     public List<StuckOrdersCount> getStuckOrderList()
     {
-        PSOLoggerSrv.printDEBUG("DashboardServiceImpl", "getStuckOrderList", "");
+        PSOLoggerSrv.printDEBUG(logger, "DashboardServiceImpl", "getStuckOrderList", "");
         return dashboardDAO.getStuckOrderList();
     }
 
@@ -49,7 +52,7 @@ public class DashboardServiceImpl implements DashboardService
     @Override
     public List<String> getStuckOrders(String status)
     {
-        PSOLoggerSrv.printDEBUG("DashboardServiceImpl", "getStuckOrders", "status : " + "");
+        PSOLoggerSrv.printDEBUG(logger, "DashboardServiceImpl", "getStuckOrders", "status : " + status);
         return dashboardDAO.getStuckOrderList1(status);
     }
 
@@ -60,7 +63,7 @@ public class DashboardServiceImpl implements DashboardService
     @Override
     public List<StuckOrdersCount> getStuckOrderhandled()
     {
-        PSOLoggerSrv.printDEBUG("DashboardServiceImpl", "getStuckOrderhandled", "");
+        PSOLoggerSrv.printDEBUG(logger, "DashboardServiceImpl", "getStuckOrderhandled", "");
         return dashboardDAO.getStuckOrderhandled();
     }
 
@@ -71,7 +74,7 @@ public class DashboardServiceImpl implements DashboardService
     @Override
     public List<StuckOrdersCount> getStuckOrderallStatus()
     {
-        PSOLoggerSrv.printDEBUG("DashboardServiceImpl", "getStuckOrderallStatus", "");
+        PSOLoggerSrv.printDEBUG(logger, "DashboardServiceImpl", "getStuckOrderallStatus", "");
         return dashboardDAO.getStuckOrderallStatus();
     }
 
@@ -82,7 +85,7 @@ public class DashboardServiceImpl implements DashboardService
     @Override
     public StuckOrderBacklogUiResponseBean getStuckOrderBacklogData()
     {
-
+        PSOLoggerSrv.printDEBUG(logger, "DashboardServiceImpl", "getStuckOrderBacklogData", "");
         StuckOrderBacklogUiResponseBean response = new StuckOrderBacklogUiResponseBean();
         List<StuckOrderBacklogDBResultsBean> stuckOrderDbResults = dashboardDAO.getStuckOrderBackloagDetails();
 
@@ -116,7 +119,7 @@ public class DashboardServiceImpl implements DashboardService
     @Override
     public ArrayList<RegularOrdersCount> getRegularOrderListData()
     {
-        PSOLoggerSrv.printDEBUG("DashboardServiceImpl", "getRegularOrderListData", "");
+        PSOLoggerSrv.printDEBUG(logger, "DashboardServiceImpl", "getRegularOrderListData", "");
         ArrayList<RegularOrdersCount> regOrderCountList = new ArrayList<RegularOrdersCount>();
 
         int portInCount = dashboardDAO.getOrdersCount("PORTIN");
@@ -161,7 +164,7 @@ public class DashboardServiceImpl implements DashboardService
     @Override
     public RegularOrdersCountList getDynamicOrderListData(DynamicGraphRequestBean dynamicGraphRequest)
     {
-        PSOLoggerSrv.printDEBUG("DashboardServiceImpl", "getDynamicOrderListData", "");
+        PSOLoggerSrv.printDEBUG(logger, "DashboardServiceImpl", "getDynamicOrderListData", "");
         RegularOrdersCountList dynOrderCountList = new RegularOrdersCountList();
         List<RegularOrdersCount> dynamicOrdersCountList = new ArrayList<RegularOrdersCount>();
 
@@ -231,16 +234,6 @@ public class DashboardServiceImpl implements DashboardService
             dynOrderCountList.setRegularOrderList(dynamicOrdersCountList); // (new RegularOrdersCount("PORTIN", portInCount));
             dynOrderCountList.setType(dynamicGraphRequest.getType());
         }
-
-        /*
-         * int byodCount = dashboardDAO.getByodOrdersCount(); dynOrderCountList.add(new RegularOrdersCount("BYOD", byodCount)); int prepurchaseCount = dashboardDAO.getPrepurchaseOrdersCount();
-         * dynOrderCountList.add(new RegularOrdersCount("PRE-PURCHASE", prepurchaseCount)); int saveDeskCount = dashboardDAO.getSaveDeskOrdersCount(); dynOrderCountList.add(new
-         * RegularOrdersCount("SAVEDESK", saveDeskCount)); int activeCount = dashboardDAO.getACTIorCNCLOrdersCount("ACTIVE"); dynOrderCountList.add(new RegularOrdersCount("ACTIVATION", activeCount));
-         * int cancelCount = dashboardDAO.getACTIorCNCLOrdersCount("CANCEL"); dynOrderCountList.add(new RegularOrdersCount("CANCELLATION", cancelCount)); int addlineCount =
-         * dashboardDAO.getRegisteredOrdersCount("ADDLINE"); dynOrderCountList.add(new RegularOrdersCount("ADDLINE", addlineCount)); int upgradeCount =
-         * dashboardDAO.getRegisteredOrdersCount("UPGRADE"); dynOrderCountList.add(new RegularOrdersCount("UPGRADE", upgradeCount)); int simSwapCount =
-         * dashboardDAO.getRegisteredOrdersCount("SIMSWAP"); dynOrderCountList.add(new RegularOrdersCount("SIM_SWAP", simSwapCount));
-         */
         return dynOrderCountList;
     }
 

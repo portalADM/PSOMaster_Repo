@@ -33,7 +33,7 @@
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Admin<span class="caret marLeft8"></span>
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="themes">
-							<li><a href="#/login">Manage Help</a></li>
+							<!-- <li><a href="#/login">Manage Help</a></li> -->
 							<li><a href="#/manageGroup">Manage Group</a></li>
 							<li><a href="#/manageUser">Manage User</a></li>
 						</ul>
@@ -64,9 +64,9 @@
 	<!-- Application Libreries Import -->
 	<script src="resources/js/libs/jquery/jquery-1.10.2.min.js"></script>
 	<script src="resources/js/libs/angularjs/angular.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.3.0/angular-resource.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-cookies.js"></script>
+	<script src="resources/js/libs/angularjs/angular-resource.js"></script>
+	<script src="resources/js/libs/angularjs/ngStorage.js"></script>
+	<script src="resources/js/libs/angularjs/angular-cookies.js"></script>
 	<script src="resources/js/libs/angularjs/angular-animate.js"></script>
 	<script src="resources/js/libs/angularjs/angular-route.min.js"></script>
 	<script src="resources/js/libs/angularjs/angular-sanitize.min.js"></script>

@@ -7,6 +7,7 @@
  */
 package com.zig.pso.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,8 @@ import com.zig.pso.utility.PSOUserAuthenticator;
 @Service
 public class LoginServiceImpl implements LoginService 
 {
+    static final Logger logger = Logger.getLogger(LoginServiceImpl.class);
+    
     @Autowired
     IUserService userService;
 	
@@ -50,7 +53,7 @@ public class LoginServiceImpl implements LoginService
 	            }
 	            catch (Exception e)
 	            {
-	                PSOLoggerSrv.printERROR("LoginServiceImpl", "authenticateUser", e);
+	                PSOLoggerSrv.printERROR(logger,"LoginServiceImpl", "authenticateUser", e);
 	            }
 	        }
 	        else{

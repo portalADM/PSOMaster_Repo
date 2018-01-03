@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.zig.pso.logging.PSOLoggerSrv;
@@ -29,6 +30,8 @@ import com.zig.pso.utility.OrderQueries;
 @Repository
 public class StuckOrderDetailsDAOImpl implements StuckOrderDetailsDAO
 {
+    static final Logger logger = Logger.getLogger(StuckOrderDetailsDAOImpl.class);
+    
     public static final String CLASS_NAME = "StuckOrderDetailsDAOImpl";
 
     private Connection getPortalDbConnction()
@@ -44,7 +47,7 @@ public class StuckOrderDetailsDAOImpl implements StuckOrderDetailsDAO
     @Override
     public List<OSHFSingleLineResponse> getOSHFSingleLineOrder()
     {
-        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getOSHFSingleLineOrder", "");
+        PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getOSHFSingleLineOrder", "");
         String sql = null;
 
         ArrayList<OSHFSingleLineResponse> oSHFSingleLineResponseList = new ArrayList<OSHFSingleLineResponse>();
@@ -72,7 +75,7 @@ public class StuckOrderDetailsDAOImpl implements StuckOrderDetailsDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getOSHFSingleLineOrder", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOSHFSingleLineOrder", e);
         }
         finally
         {
@@ -82,7 +85,7 @@ public class StuckOrderDetailsDAOImpl implements StuckOrderDetailsDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getOSHFSingleLineOrder", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOSHFSingleLineOrder", e);
             }
             if (pstm != null)
             {
@@ -92,7 +95,7 @@ public class StuckOrderDetailsDAOImpl implements StuckOrderDetailsDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOSHFSingleLineOrder", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOSHFSingleLineOrder", e);
                 }
             }
             if (rs != null)
@@ -103,7 +106,7 @@ public class StuckOrderDetailsDAOImpl implements StuckOrderDetailsDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOSHFSingleLineOrder", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOSHFSingleLineOrder", e);
                 }
             }
         }
@@ -119,7 +122,7 @@ public class StuckOrderDetailsDAOImpl implements StuckOrderDetailsDAO
     @Override
     public List<OSHFMultiLineResponse> getOSHFMultiLineOrder()
     {
-        PSOLoggerSrv.printDEBUG(CLASS_NAME, "getOSHFMultiLineOrder", "");
+        PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getOSHFMultiLineOrder", "");
         String sql = null;
 
         ArrayList<OSHFMultiLineResponse> oSHFMultiLineResponseList = new ArrayList<OSHFMultiLineResponse>();
@@ -149,7 +152,7 @@ public class StuckOrderDetailsDAOImpl implements StuckOrderDetailsDAO
         }
         catch (Exception e)
         {
-            PSOLoggerSrv.printERROR(CLASS_NAME, "getOSHFMultiLineOrder", e);
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOSHFMultiLineOrder", e);
         }
         finally
         {
@@ -159,7 +162,7 @@ public class StuckOrderDetailsDAOImpl implements StuckOrderDetailsDAO
             }
             catch (SQLException e)
             {
-                PSOLoggerSrv.printERROR(CLASS_NAME, "getOSHFMultiLineOrder", e);
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOSHFMultiLineOrder", e);
             }
             if (pstm != null)
             {
@@ -169,7 +172,7 @@ public class StuckOrderDetailsDAOImpl implements StuckOrderDetailsDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOSHFMultiLineOrder", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOSHFMultiLineOrder", e);
                 }
             }
             if (rs != null)
@@ -180,7 +183,7 @@ public class StuckOrderDetailsDAOImpl implements StuckOrderDetailsDAO
                 }
                 catch (SQLException e)
                 {
-                    PSOLoggerSrv.printERROR(CLASS_NAME, "getOSHFMultiLineOrder", e);
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getOSHFMultiLineOrder", e);
                 }
             }
         }

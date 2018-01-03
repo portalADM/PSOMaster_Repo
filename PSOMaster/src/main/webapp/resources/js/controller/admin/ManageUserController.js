@@ -27,7 +27,6 @@ module.controller("ManageUserController", function($scope, $routeParams,$http,Us
 	
 	$scope.rejectUserConfirm = function(empData){
 		$scope.userData = empData;
-		console.log(empData);
 		$("#RejectUserConfirmation-modal").modal();
 	}
 	
@@ -36,12 +35,18 @@ module.controller("ManageUserController", function($scope, $routeParams,$http,Us
 	}
 	
 	$scope.rejectUserRequest = function(){
-		var empdata= {
-				empId : $scope.userData.empId,
-				emailId : $scope.userData.email,
-				rejectComments : $scope.reject.comments
+		
+		if(!$scope.rejectUserForm.$valid){
+			MessageService.showInfo('Please enter valid Email ID',5000);
 		}
-		rejectUser(empdata);
+		else{
+				var empdata= {
+						empId : $scope.userData.empId,
+						emailId : $scope.userData.email,
+						rejectComments : $scope.reject.comments
+				}
+				rejectUser(empdata);
+		}
 	}
 	
 	$scope.searchUser = function(){
@@ -73,6 +78,7 @@ module.controller("ManageUserController", function($scope, $routeParams,$http,Us
 	}
 	
 	function rejectUser(empdata){
+		$("#RejectUserConfirmation-modal").modal('hide');
 		$rootScope.spinner.on();
 		
 		UserService.rejectUserRequest(empdata).then(
@@ -81,8 +87,7 @@ module.controller("ManageUserController", function($scope, $routeParams,$http,Us
 					if(response!=undefined && response!=null)
 					{
 						if(response.errorCode == '0'){
-							MessageService.showSuccess(response.errorMessage,10000);
-							$("#RejectUserConfirmation-modal").modal('hide');
+							MessageService.showSuccess(response.errorMsg,10000);
 							getPendingUserList();
 						}
 						else{

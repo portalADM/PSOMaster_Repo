@@ -12,6 +12,7 @@ import java.io.Serializable;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,8 @@ import com.zig.pso.rest.bean.UserMaster;
 @Scope(value = "session")
 public class UserSessionBean implements Serializable
 {
+    static final Logger logger = Logger.getLogger(UserSessionBean.class);
+    
     private static final long serialVersionUID = -3364120758157904154L;
     
     /** The logged in user detail. */
@@ -51,7 +54,7 @@ public class UserSessionBean implements Serializable
             }
             catch (Exception e)
             {
-                PSOLoggerSrv.printERROR("UserSessionBean", "getUserDetail", e);
+                PSOLoggerSrv.printERROR(logger,"UserSessionBean", "getUserDetail", e);
             }
             return loggedInUserDetail;
         }

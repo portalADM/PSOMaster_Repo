@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Insert title here</title>
 </head>
 <body>
@@ -31,8 +33,8 @@
 							<a permission="['ADMINISTRATOR','REMIDIATOR']" ng-href="{{orderID.length>0 ? '#updateOrder/'+orderID : '#updateOrder'}}">
 								<span tooltip-placement="bottom" uib-tooltip="Update Order" class="glyphicon glyphicon-edit floatRight panelHeaderIcon marRight50" aria-hidden="true"></span>
 								</a> 
-								<!-- <a href="#sendEmail"><span tooltip-placement="bottom" uib-tooltip="Send Email" class="glyphicon glyphicon-envelope floatRight panelHeaderIcon" aria-hidden="true"></a> -->
-								</span> 
+								<!-- <a href="#sendEmail"><span tooltip-placement="bottom" uib-tooltip="Send Email" class="glyphicon glyphicon-envelope floatRight panelHeaderIcon" aria-hidden="true"></a>
+								</span>  -->
 								<a class="cursorPointer" ng-click="getHelp()"><span tooltip-placement="bottom" uib-tooltip="Help" class="glyphicon glyphicon-info-sign floatRight panelHeaderIcon" aria-hidden="true"></span></a>
 								
 								<a class="cursorPointer" ng-click="getInventory()"><span tooltip-placement="bottom" uib-tooltip="Check Inventory" class="glyphicon glyphicon glyphicon-search floatRight panelHeaderIcon" aria-hidden="true"></span></a>
@@ -54,7 +56,6 @@
 				</div>
 			</div>
 		</div>
-
 
 
 
@@ -242,20 +243,20 @@
 											<td><span ng-class="{{lineItem.purchseDeviceCalled}} ? 'glyphicon glyphicon-ok clrGREEN marLeft60' : 'glyphicon glyphicon-remove clrRED marLeft60'"></span></td>
 										</tr>
 										<tr ng-if="lineItem.expanded" ng-repeat="ship in portalOrderDetails.portalShipmentInfo | filter : lineItem.lineId" ng-repeat-end="">
-											<th colspan="2" ng-if="ship.product_type=='device' || ship.product_type=='plan' || ship.product_type=='addon' || ship.product_type=='accessory'">{{ship.product_type | uppercase}} : </th>
-											<td colspan="6" ng-if="ship.product_type=='device'  || ship.product_type=='plan' || ship.product_type=='addon' || ship.product_type=='accessory'">{{ship.epc_sku_id}} (<i> {{ship.deviceDisplayName}} </i>)</td>
+											<th colspan="2" ng-if="ship.productType=='device' || ship.productType=='plan' || ship.productType=='addon' || ship.productType=='accessory'">{{ship.productType | uppercase}} : </th>
+											<td colspan="6" ng-if="ship.productType=='device'  || ship.productType=='plan' || ship.productType=='addon' || ship.productType=='accessory'">{{ship.epcSkuId}} (<i> {{ship.deviceDisplayName}} </i>)</td>
 							            </tr> 
 							            <tr ng-if="lineItem.expanded" ng-repeat="ship in portalOrderDetails.portalShipmentInfo | filter : lineItem.lineId" ng-repeat-end="">
-											<th colspan="2" ng-if="ship.product_type=='sim'">DEVICE : </th>
-											<td colspan="6" ng-if="ship.product_type=='sim'">{{ship.epc_sku_id}} (<i> {{ship.deviceDisplayName}} </i>)</td>
+											<th colspan="2" ng-if="ship.productType=='sim'">DEVICE : </th>
+											<td colspan="6" ng-if="ship.productType=='sim'">{{ship.epcSkuId}} (<i> {{ship.deviceDisplayName}} </i>)</td>
 							            </tr> 
 							            <tr ng-if="lineItem.expanded" ng-repeat="ship in portalOrderDetails.portalShipmentInfo | filter : lineItem.lineId" ng-repeat-end="">
-											<th colspan="2" ng-if="ship.product_type=='device' || ship.product_type=='sim'">SIM : </th>
-											<td colspan="6" ng-if="ship.product_type=='device' || ship.product_type=='sim'">{{ship.sim}}</td>
+											<th colspan="2" ng-if="ship.productType=='device' || ship.productType=='sim'">SIM : </th>
+											<td colspan="6" ng-if="ship.productType=='device' || ship.productType=='sim'">{{ship.sim}}</td>
 							            </tr>
 							            <tr ng-if="lineItem.expanded" ng-repeat="ship in portalOrderDetails.portalShipmentInfo | filter : lineItem.lineId" ng-repeat-end="">
-											<th colspan="2" ng-if="ship.product_type=='device'">IMEI : </th>
-											<td colspan="6" ng-if="ship.product_type=='device'">{{ship.imei}}</td>
+											<th colspan="2" ng-if="ship.productType=='device'">IMEI : </th>
+											<td colspan="6" ng-if="ship.productType=='device'">{{ship.imei}}</td>
 							            </tr>
 									</tbody>
 								</table>
@@ -311,7 +312,7 @@
 									<label class="col-lg-6 control-label textAignLeft">First Name :</label>
 									<div class="col-lg-6">
 										<div class="radio">
-											<label> {{portalOrderDetails.enrollInfo.first_name}}
+											<label> {{portalOrderDetails.enrollInfo.firstName}}
 											</label>
 										</div>
 									</div>
@@ -320,7 +321,7 @@
 									<label class="col-lg-6 control-label textAignLeft">Last Name:</label>
 									<div class="col-lg-6">
 										<div class="radio">
-											<label> {{portalOrderDetails.enrollInfo.last_name}} </label>
+											<label> {{portalOrderDetails.enrollInfo.lastName}} </label>
 										</div>
 									</div>
 								</div>
@@ -338,7 +339,7 @@
 									<div class="col-lg-6">
 										<div class="radio">
 											<label>
-												{{portalOrderDetails.enrollInfo.phone_number}} </label>
+												{{portalOrderDetails.enrollInfo.phoneNumber}} </label>
 										</div>
 									</div>
 								</div>
@@ -357,7 +358,7 @@
 									<label class="col-lg-6 control-label textAignLeft">ZIP :</label>
 									<div class="col-lg-6">
 										<div class="radio">
-											<label> {{portalOrderDetails.enrollInfo.zip_code}} </label>
+											<label> {{portalOrderDetails.enrollInfo.zipCode}} </label>
 										</div>
 									</div>
 								</div>
@@ -464,7 +465,7 @@
 						              <span class="glyphicon glyphicon-plus-sign cursorPointer clrBlue" ng-if="!api.expanded" ng-click="api.expanded = true"></span>
 						            </td>
 									<td>{{api.source}}</td>
-									<td>{{api.apiname}}</td>
+									<td>{{api.aPIName}}</td>
 									<td>{{api.sysCreationDate}}</td>
 									<td>{{api.originatorID}}</td>
 									<td>
@@ -483,6 +484,8 @@
 					</div>
 				</div>
 			</div>
+		</div>	
+		
 			<!-- Order API Req Body Popup Panel start -->
 			<div id="orderApiReqBody-modal" class="modal fade">
 				<div class="modal-dialog modal-lg">
@@ -529,33 +532,37 @@
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal"
 								aria-hidden="true">&times;</button>
-							<h4 class="modal-title">Inventory Status!</h4>
+							<h4 class="modal-title">Inventory Status</h4>
 						</div>
 						<div class="modal-body ">
-							<input type="input" ng-model="skuIDInvSearch" place-holder="SKU ID"/>
-							<button type="button" ng-click="getInventoryStatusDetails()"> Search!</button>
+							<form class="navbar-form navbar-left noPad" role="search">
+								<div class="form-group">
+									<input type="text" class="form-control" ng-model="skuIDInvSearch" placeholder="SKU ID"/>
+								</div>
+								<button type="button" class="btn btn-default" ng-click="getInvStatusDetails()"> Search</button>
+							</form>
 							<div class="row">
-									 	<table class="table table-striped table-hover ">
-											<thead>
-												<tr>
-													<th>Display Name</th>
-													<th>Avail Status</th>
-													<th>Stock Level</th>
-													<th>Stock Thresh</th>
-													<th>Stock Status</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>{{inventoryStatusDetails.displayName}}</td>
-													<td>{{inventoryStatusDetails.availStatus}}</td>
-													<td>{{inventoryStatusDetails.stockLevel}}</td>
-													<td>{{inventoryStatusDetails.stockThresh}}</td>
-													<td>{{inventoryStatusDetails.stockStatus}}</td>
-												</tr>
-											</tbody>
-										</table>
-									 </div>
+							 	<table class="table table-striped table-hover ">
+									<thead>
+										<tr>
+											<th>Display Name</th>
+											<th>Avail Status</th>
+											<th>Stock Level</th>
+											<th>Stock Thresh</th>
+											<th>Stock Status</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>{{inventoryStatusDetails.displayName}}</td>
+											<td>{{inventoryStatusDetails.availStatus}}</td>
+											<td>{{inventoryStatusDetails.stockLevel}}</td>
+											<td>{{inventoryStatusDetails.stockThresh}}</td>
+											<td>{{inventoryStatusDetails.stockStatus}}</td>
+										</tr>
+									</tbody>
+								</table>
+							 </div>
 						</div>
 					</div>
 				</div>
@@ -569,11 +576,15 @@
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal"
 								aria-hidden="true">&times;</button>
-							<h4 class="modal-title">Name Details!</h4>
+							<h4 class="modal-title">Name Details</h4>
 						</div>
 						<div class="modal-body ">
-							<input type="input" ng-model="esnNameSearch" place-holder="SIM/IMEI"/>
-							<button type="button" ng-click="getNameDetails()"> Search!</button>
+							<form class="navbar-form navbar-left noPad" role="search">
+								<div class="form-group">
+									<input type="text" class="form-control" ng-model="esnNameSearch" placeholder="SIM/IMEI"/>
+								</div>
+								<button type="button" class="btn btn-default" ng-click="getNameDetails()"> Search</button>
+							</form>
 							<div class="row">
 									 	<table class="table table-striped table-hover ">
 											<thead>
@@ -679,7 +690,7 @@
 			</div>
 			<!-- Order Help Popup Panel start -->
 
-		</div>
+		
 
 	</div>
 

@@ -7,6 +7,7 @@
  */
 package com.zig.pso.rest.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,8 @@ import com.zig.pso.service.MailService;
 @RestController
 public class LoginController
 {
+    static final Logger logger = Logger.getLogger(LoginController.class);
+    
     @Autowired
     LoginService loginService;
     
@@ -61,13 +64,9 @@ public class LoginController
         return model;
     }
     
-    @RequestMapping(value = "/login11", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<UserAuthResponse> authenticateUser(@RequestBody LoginRequestBean loginRequest)
     {
-      /*  LoginRequestBean loginRequest = new LoginRequestBean();
-        loginRequest.setUsername(userName);
-        loginRequest.setPassword(password);*/
-        
         UserAuthResponse authConfirm = loginService.authenticateUser(loginRequest);
         
         return new ResponseEntity<UserAuthResponse>(authConfirm, HttpStatus.OK);
