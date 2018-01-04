@@ -3,6 +3,9 @@
  * Description: This class implements methods for order related operations.
  * Author : Ankita Mishra 
  * Date : Jun 26, 2016 
+ * 
+ * Modified by : Pankaj C
+ * Date : Jan 4, 2018 
  * **********************************************************************************************************
  */
 package com.zig.pso.service;
@@ -345,7 +348,7 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
 	 */
 	@Override
 	public InventoryStatusofItemBean getInventoryStatusDetails(String skuId) {
-		return null;
+		return orderDAO.getInventoryStatus(skuId);
 	}
 
 	/* (non-Javadoc)
@@ -353,6 +356,6 @@ public class OrderInfoManagerServiceImpl implements OrderInfoManagerService
 	 */
 	@Override
 	public NameDataBean getESNReuseData(String esn) {
-		return null;
+		return orderDAO.getESNReuseData(esn);
 	}
 }

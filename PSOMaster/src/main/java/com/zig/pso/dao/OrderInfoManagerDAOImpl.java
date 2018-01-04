@@ -6,6 +6,9 @@
   --------------------------------
  * Modified by : Pankaj Chaudhary
  * Date : Nov 21, 2017 
+ * 
+ * * Modified by : Pankaj Chaudhary
+ * Date : Jan 4, 2017 
  * **********************************************************************************************************
  */
 package com.zig.pso.dao;
@@ -1466,6 +1469,10 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
                     }
                 }
             }
+            if (null==inventoryDetails.getStockStatus() && Integer.parseInt(inventoryDetails.getStockLevel())-Integer.parseInt(inventoryDetails.getStockThresh())>0) {
+            	 inventoryDetails.setStockStatus("SKU is in Stock");
+			}
+            
 
         }
         catch (SQLException e)
