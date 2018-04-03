@@ -20,7 +20,9 @@ import java.util.Map;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,7 +46,9 @@ import com.zig.pso.rest.bean.BulkUpdateInputBean;
 import com.zig.pso.rest.bean.BulkUpdateOrderResponseBean;
 import com.zig.pso.rest.bean.UpdateMultiOrderDetailsRequestBean;
 import com.zig.pso.rest.bean.UpdateOrderRequestBean;
+import com.zig.pso.rest.bean.UserMaster;
 import com.zig.pso.rest.bean.ValidatedBulkUpdateOrderDetailsBean;
+import com.zig.pso.service.IUserService;
 import com.zig.pso.service.UpdateOrderManagerService;
 import com.zig.pso.utility.CommonUtility;
 
@@ -58,14 +62,22 @@ public class UpdateOrderController
     static final Logger logger = Logger.getLogger(UpdateOrderController.class);
     
     @Autowired
+    IUserService userService;
+    
+    @Autowired
     UpdateOrderManagerService updateService;
 
     @RequestMapping(value = "/updateOrder", method = RequestMethod.POST)
-    public ResponseEntity<BaseResponseBean> updateSingleOrder(@RequestBody UpdateOrderRequestBean updateOrderRequest)
+    public ResponseEntity<BaseResponseBean> updateSingleOrder(@RequestBody UpdateOrderRequestBean updateOrderRequest,HttpServletRequest request)
     {
         String updateDetails = "Order ID : "+updateOrderRequest.getOrderId()+" \nNew Value : "+updateOrderRequest.getNewValue()+" \nUpdate Type : "+updateOrderRequest.getType()+" \nLine Id : "+updateOrderRequest.getLineId();
         PSOLoggerSrv.printDEBUG(logger,"UpdateOrderController", "updateSingleOrder", updateDetails);
 
+        UserMaster loggedInUserData = getLoggedInUserDetails(request);
+        if(null!=loggedInUserData){
+            updateOrderRequest.setUpdatedBy(loggedInUserData.getUsername());
+        }
+        
         BaseResponseBean nameList = new BaseResponseBean();
         nameList = updateService.updateSingleOrderData(updateOrderRequest);
         return new ResponseEntity<BaseResponseBean>(nameList, HttpStatus.OK);
@@ -87,8 +99,11 @@ public class UpdateOrderController
                 String contentType = file.getContentType().toString().toLowerCase();
                 if (CommonUtility.isValidContentType(contentType)) 
                 {
+                    UserMaster loggedInUserData = getLoggedInUserDetails(request);
+                    
                     BulkUpdateInputBean orderBulkData = updateService.getUploadedFileData(file, updateType);
-
+                    orderBulkData.setUpdatedBy(loggedInUserData.getUsername());
+                    
                     ValidatedBulkUpdateOrderDetailsBean validatedOrders = updateService.validateUploadedData(orderBulkData);
                     if(null!=validatedOrders.getValidOrderData())
                     {
@@ -202,9 +217,24 @@ public class UpdateOrderController
     {
         PSOLoggerSrv.printDEBUG(logger,"UpdateOrderController", "updateBulkOrderDetails", "bulkUpdateId : "+bulkUpdateId);
         
+        String updateMadeByUser = StringUtils.EMPTY;
+        UserMaster loggedInUserData = getLoggedInUserDetails(request);
+        if(null!=loggedInUserData){
+            updateMadeByUser = loggedInUserData.getUsername();
+        }
+        
     	BaseResponseBean resp =  new BaseResponseBean();
-    	resp = updateService.updateBulkOrderDetails(bulkUpdateId);
+    	resp = updateService.updateBulkOrderDetails(bulkUpdateId,updateMadeByUser);
         return new ResponseEntity<BaseResponseBean>(resp, HttpStatus.OK);
     }
+    
+    
+    private UserMaster getLoggedInUserDetails(HttpServletRequest request){
+        HttpSession sessoin = request.getSession();
+        UserMaster loggedInUserData = (sessoin.getAttribute(PSOConstants.SESSION_USER_DATA)!=null)?(UserMaster)sessoin.getAttribute(PSOConstants.SESSION_USER_DATA):null;
+        
+        return loggedInUserData;
+    }
+    
     
 }

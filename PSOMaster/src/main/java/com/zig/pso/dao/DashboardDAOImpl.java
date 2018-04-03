@@ -17,7 +17,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
+import com.zig.pso.constants.PSOConstants;
 import com.zig.pso.logging.PSOLoggerSrv;
+import com.zig.pso.rest.bean.RegOrderStatisticsDetailsOutput;
 import com.zig.pso.rest.bean.RegularOrdersCount;
 import com.zig.pso.rest.bean.StuckOrderBacklogDBResultsBean;
 import com.zig.pso.rest.bean.StuckOrdersCount;
@@ -1187,5 +1189,89 @@ public class DashboardDAOImpl implements DashboardDAO
         }
 
         return dynamicOrdersCountList;
+    }
+    
+    @Override
+    public RegOrderStatisticsDetailsOutput getRegOrderStatistics()
+    {
+        PSOLoggerSrv.printDEBUG(logger,CLASS_NAME, "getRegisteredOrdersCount ", "");
+
+        RegOrderStatisticsDetailsOutput regOrderStatistics = new RegOrderStatisticsDetailsOutput();
+
+        String sql = OrderQueries.getRegOrderStatistics();
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        Connection con = this.getPortalDbConnction();
+        
+        try
+        {
+            pstm = con.prepareStatement(sql);
+
+            rs = pstm.executeQuery();
+            while (rs.next())
+            {
+                regOrderStatistics.setAccessory(PSOConstants.ACCESSORY);
+                regOrderStatistics.setAccessoryCount(rs.getInt("ACCESSORY"));
+                regOrderStatistics.setActivation(PSOConstants.ACTIVATION);
+                regOrderStatistics.setActivationCount(rs.getInt("ACTIVATION"));
+                regOrderStatistics.setAddline(PSOConstants.ADDLINE);
+                regOrderStatistics.setAddlineCount(rs.getInt("ADDLINE"));
+                regOrderStatistics.setByod(PSOConstants.BYOD);
+                regOrderStatistics.setByodCount(rs.getInt("BYOD"));
+                regOrderStatistics.setCancellation(PSOConstants.CANCELLATION);
+                regOrderStatistics.setCancellationCount(rs.getInt("CANCELLATION"));
+                regOrderStatistics.setPortin(PSOConstants.PORTIN);
+                regOrderStatistics.setPortinCount(rs.getInt("PORTIN"));
+                regOrderStatistics.setPrepurchase(PSOConstants.PREPURCHASE);
+                regOrderStatistics.setPrepurchaseCount(rs.getInt("PREPURCHASE"));
+                regOrderStatistics.setRegular(PSOConstants.REGULAR);
+                regOrderStatistics.setRegularCount(rs.getInt("REGULAR"));
+                regOrderStatistics.setSavedesk(PSOConstants.SAVEDESK);
+                regOrderStatistics.setSavedeskCount(rs.getInt("SAVEDESK"));
+                regOrderStatistics.setSimswap(PSOConstants.SIMSWAP);
+                regOrderStatistics.setSimswapCount(rs.getInt("SIMSWAP"));
+                regOrderStatistics.setUpgrade(PSOConstants.UPGRADE);
+                regOrderStatistics.setUpgradeCount(rs.getInt("UPGRADE"));
+            }
+        }
+        catch (Exception e)
+        {
+            PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getRegOrderStatistics", e);
+        }
+        finally
+        {
+            try
+            {
+                con.close();
+            }
+            catch (SQLException e)
+            {
+                PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getRegOrderStatistics", e);
+            }
+            if (pstm != null)
+            {
+                try
+                {
+                    pstm.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getRegOrderStatistics", e);
+                }
+            }
+            if (rs != null)
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (SQLException e)
+                {
+                    PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getRegOrderStatistics", e);
+                }
+            }
+        }
+
+        return regOrderStatistics;
     }
 }

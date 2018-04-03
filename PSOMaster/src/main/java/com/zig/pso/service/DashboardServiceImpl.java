@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.zig.pso.dao.DashboardDAO;
 import com.zig.pso.logging.PSOLoggerSrv;
 import com.zig.pso.rest.bean.DynamicGraphRequestBean;
+import com.zig.pso.rest.bean.RegOrderStatisticsDetailsOutput;
 import com.zig.pso.rest.bean.RegularOrdersCount;
 import com.zig.pso.rest.bean.RegularOrdersCountList;
 import com.zig.pso.rest.bean.StuckOrderBacklogDBResultsBean;
@@ -235,6 +236,31 @@ public class DashboardServiceImpl implements DashboardService
             dynOrderCountList.setType(dynamicGraphRequest.getType());
         }
         return dynOrderCountList;
+    }
+
+    /* (non-Javadoc)
+     * @see com.zig.pso.service.DashboardService#getRegOrderStatistics()
+     */
+    @Override
+    public ArrayList<RegularOrdersCount> getRegOrderStatistics()
+    {
+        
+        ArrayList<RegularOrdersCount> regOrderCountList = new ArrayList<RegularOrdersCount>();
+        
+        RegOrderStatisticsDetailsOutput data = dashboardDAO.getRegOrderStatistics();
+        regOrderCountList.add(new RegularOrdersCount("PORTIN", data.getPortinCount(), "Order_Type"));
+        regOrderCountList.add(new RegularOrdersCount("REGULAR", data.getRegularCount(), "Order_Type"));
+        regOrderCountList.add(new RegularOrdersCount("ACCESSORY", data.getAccessoryCount(), "Order_Type"));
+        regOrderCountList.add(new RegularOrdersCount("BYOD", data.getByodCount(), "FLOW_Type"));
+        regOrderCountList.add(new RegularOrdersCount("PRE-PURCHASE", data.getPrepurchaseCount(), "FLOW_Type"));
+        regOrderCountList.add(new RegularOrdersCount("SAVEDESK", data.getSavedeskCount(), "FLOW_Type"));
+        regOrderCountList.add(new RegularOrdersCount("ACTIVATION", data.getActivationCount(), "STATUS"));
+        regOrderCountList.add(new RegularOrdersCount("CANCELLATION", data.getCancellationCount(), "STATUS"));
+        regOrderCountList.add(new RegularOrdersCount("ADDLINE", data.getAddlineCount(), "SUB_FLOW"));
+        regOrderCountList.add(new RegularOrdersCount("UPGRADE", data.getUpgradeCount(), "SUB_FLOW"));
+        regOrderCountList.add(new RegularOrdersCount("SIM_SWAP", data.getSimswapCount(), "SUB_FLOW"));
+        
+        return regOrderCountList;
     }
 
 }

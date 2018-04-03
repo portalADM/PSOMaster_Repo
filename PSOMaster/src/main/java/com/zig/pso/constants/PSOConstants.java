@@ -140,4 +140,17 @@ public class PSOConstants
     public static final String EMAIL_TEMPLATE_NAME = "#NAME#";
     public static final String EMAIL_TEMPLATE_USERNAME = "#USER_NAME#";
 
+    /*Regular order statistics order types*/
+    public static final String PORTIN = "PORTIN";
+    public static final String REGULAR = "REGULAR";
+    public static final String ACCESSORY = "ACCESSORY";
+    public static final String BYOD = "BYOD";
+    public static final String PREPURCHASE = "PREPURCHASE";
+    public static final String SAVEDESK = "SAVEDESK";
+    public static final String ACTIVATION = "ACTIVATION";
+    public static final String CANCELLATION = "CANCELLATION";
+    public static final String ADDLINE = "ADDLINE";
+    public static final String UPGRADE = "UPGRADE";
+    public static final String SIMSWAP = "SIMSWAP";
+
 }

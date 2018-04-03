@@ -4,6 +4,7 @@
 
 package com.zig.pso.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.zig.pso.rest.bean.DynamicGraphRequestBean;
@@ -40,5 +41,7 @@ public interface DashboardService
     public List<RegularOrdersCount> getRegularOrderListData();
 
     public RegularOrdersCountList getDynamicOrderListData(DynamicGraphRequestBean dynamicGraphRequest);
+    
+    public ArrayList<RegularOrdersCount> getRegOrderStatistics();
 
 }

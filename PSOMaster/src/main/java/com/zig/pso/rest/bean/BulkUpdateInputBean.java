@@ -17,6 +17,7 @@ public class BulkUpdateInputBean
 {
     private List<OrderUpdateInputData> orderUpdateData;
     private String updateType;
+    private String updatedBy;
 
     /**
      * @return the orderUpdateData
@@ -43,6 +44,22 @@ public class BulkUpdateInputBean
     }
 
     /**
+     * @return the updatedBy
+     */
+    public String getUpdatedBy()
+    {
+        return updatedBy;
+    }
+
+    /**
+     * @param updatedBy the updatedBy to set
+     */
+    public void setUpdatedBy(String updatedBy)
+    {
+        this.updatedBy = updatedBy;
+    }
+
+    /**
      * @param updateType the updateType to set
      */
     public void setUpdateType(String updateType)
@@ -50,15 +67,14 @@ public class BulkUpdateInputBean
         this.updateType = updateType;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
+    /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString()
     {
-        return "BulkUpdateInputBean [orderUpdateData=" + orderUpdateData + ", updateType=" + updateType + "]";
+        return "BulkUpdateInputBean [orderUpdateData=" + orderUpdateData + ", updateType=" + updateType + ", updatedBy=" + updatedBy + "]";
     }
 
+   
 }

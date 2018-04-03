@@ -166,8 +166,8 @@ public class UserServiceImpl implements IUserService
     public BaseResponseBean createUserAssignments(UserMaster userData,String urlToSetupPassword)
     {
         PSOLoggerSrv.printDEBUG(logger, CLASS_NAME, "getPendingUserDataByEmpId", "Emp ID : "+userData.getEmpId());
+       
         String tempPassword = CommonUtility.getTempPasswordForUsers();
-        
         userData.setTempPassword(tempPassword);
         
         BaseResponseBean response = userDAO.createUserAssignments(userData);
@@ -191,6 +191,7 @@ public class UserServiceImpl implements IUserService
     public BaseResponseBean updateUserAssignments(UserMaster userData)
     {
         PSOLoggerSrv.printDEBUG(logger, CLASS_NAME, "updateUserAssignments", "Emp ID : "+userData.getEmpId());
+        
         return userDAO.updateUserAssignments(userData);
     }
 

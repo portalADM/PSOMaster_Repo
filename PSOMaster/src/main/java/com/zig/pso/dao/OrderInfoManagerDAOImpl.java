@@ -423,7 +423,6 @@ public class OrderInfoManagerDAOImpl implements OrderInfoManagerDAO
         {
             orderApiRsponse.setErrorCode(PSOConstants.ERROR_CODE);
             orderApiRsponse.setErrorMsg(PSOConstants.BACKEND_ERROR);
-            ;
             PSOLoggerSrv.printERROR(logger,CLASS_NAME, "getAPIDataInfo", e);
         }
         finally

@@ -34,6 +34,7 @@ public class UserMaster implements Serializable
     private String status;
     private String tempPassword;
     private Set<Authority> authorities = new HashSet<Authority>();
+    private String updatedBy; 
     
     
     /**
@@ -354,6 +355,43 @@ public class UserMaster implements Serializable
     }
 
 
+
+    /**
+     * @return the authorities
+     */
+    public Set<Authority> getAuthorities()
+    {
+        return authorities;
+    }
+
+
+    /**
+     * @param authorities the authorities to set
+     */
+    public void setAuthorities(Set<Authority> authorities)
+    {
+        this.authorities = authorities;
+    }
+
+
+    /**
+     * @return the updatedBy
+     */
+    public String getUpdatedBy()
+    {
+        return updatedBy;
+    }
+
+
+    /**
+     * @param updatedBy the updatedBy to set
+     */
+    public void setUpdatedBy(String updatedBy)
+    {
+        this.updatedBy = updatedBy;
+    }
+
+
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
@@ -362,6 +400,7 @@ public class UserMaster implements Serializable
     {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ((authorities == null) ? 0 : authorities.hashCode());
         result = prime * result + ((company == null) ? 0 : company.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
         result = prime * result + ((empId == null) ? 0 : empId.hashCode());
@@ -373,6 +412,7 @@ public class UserMaster implements Serializable
         result = prime * result + roleId;
         result = prime * result + ((status == null) ? 0 : status.hashCode());
         result = prime * result + ((tempPassword == null) ? 0 : tempPassword.hashCode());
+        result = prime * result + ((updatedBy == null) ? 0 : updatedBy.hashCode());
         result = prime * result + ((userGroup == null) ? 0 : userGroup.hashCode());
         result = prime * result + ((userRole == null) ? 0 : userRole.hashCode());
         result = prime * result + ((username == null) ? 0 : username.hashCode());
@@ -393,6 +433,13 @@ public class UserMaster implements Serializable
         if (getClass() != obj.getClass())
             return false;
         UserMaster other = (UserMaster) obj;
+        if (authorities == null)
+        {
+            if (other.authorities != null)
+                return false;
+        }
+        else if (!authorities.equals(other.authorities))
+            return false;
         if (company == null)
         {
             if (other.company != null)
@@ -460,6 +507,13 @@ public class UserMaster implements Serializable
         }
         else if (!tempPassword.equals(other.tempPassword))
             return false;
+        if (updatedBy == null)
+        {
+            if (other.updatedBy != null)
+                return false;
+        }
+        else if (!updatedBy.equals(other.updatedBy))
+            return false;
         if (userGroup == null)
         {
             if (other.userGroup != null)
@@ -493,25 +547,7 @@ public class UserMaster implements Serializable
     {
         return "UserMaster [id=" + id + ", empId=" + empId + ", username=" + username + ", password=" + password + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
                 + ", company=" + company + ", roleId=" + roleId + ", userRole=" + userRole + ", groupId=" + groupId + ", userGroup=" + userGroup + ", status=" + status + ", tempPassword="
-                + tempPassword + "]";
-    }
-
-
-    /**
-     * @return the authorities
-     */
-    public Set<Authority> getAuthorities()
-    {
-        return authorities;
-    }
-
-
-    /**
-     * @param authorities the authorities to set
-     */
-    public void setAuthorities(Set<Authority> authorities)
-    {
-        this.authorities = authorities;
+                + tempPassword + ", authorities=" + authorities + ", updatedBy=" + updatedBy + "]";
     }
 
 

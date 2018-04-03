@@ -410,5 +410,10 @@ public class OrderQueries
     {
         return orderProp.getProperty("order.getNameForCustomer");
     }
+    
+    public static String getRegOrderStatistics()
+    {
+        return orderProp.getProperty("order.getRegOrderStatistics");
+    }
 
 }

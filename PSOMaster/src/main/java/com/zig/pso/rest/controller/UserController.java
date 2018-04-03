@@ -139,6 +139,11 @@ public class UserController
         String userData = (new StringBuilder()).append("User Name ").append(user.getCompany()).append(" \nFirest Name : ").append(user.getFirstName()).append(" \nLast Name : ").append(user.getLastName()).append(" \nEmail ID : ").append(user.getEmail()).append(" \nEmployee ID : ").append(user.getEmpId()).append(" \nCompany : ").append(user.getCompany()).append(" \nGroup ID : ").append(user.getGroupId()).toString();
         PSOLoggerSrv.printDEBUG(logger, "UserController", "createUserAssigments", userData);
         
+        UserMaster loggedInUserData = getLoggedInUserDetails(request);
+        if(null!=loggedInUserData){
+            user.setUpdatedBy(loggedInUserData.getUsername());
+        }
+        
         String urlForSetupPassword = generateURLForNextStep(request, "setupPassword");
 
         BaseResponseBean createUserAssignmentResponse = new BaseResponseBean();
@@ -150,11 +155,17 @@ public class UserController
      * This Method will add User Assignment
      */
     @RequestMapping(value = "/updateUserAssigments", method = RequestMethod.POST)
-    public ResponseEntity<BaseResponseBean> updateUserAssigments(@RequestBody UserMaster user)
+    public ResponseEntity<BaseResponseBean> updateUserAssigments(@RequestBody UserMaster user,HttpServletRequest request)
     {
         String userData = (new StringBuilder()).append("User Name ").append(user.getCompany()).append(" \nFirest Name : ").append(user.getFirstName()).append(" \nLast Name : ").append(user.getLastName()).append(" \nEmail ID : ").append(user.getEmail()).append(" \nEmployee ID : ").append(user.getEmpId()).append(" \nCompany : ").append(user.getCompany()).append(" \nGroup ID : ").append(user.getGroupId()).toString();
-        PSOLoggerSrv.printDEBUG(logger, "UserController", "updateUserAssigments", user.toString());
+        PSOLoggerSrv.printDEBUG(logger, "UserController", "updateUserAssigments", userData);
 
+        UserMaster loggedInUserData = getLoggedInUserDetails(request);
+        if(null!=loggedInUserData){
+            user.setUpdatedBy(loggedInUserData.getUsername());
+        }
+        
+        
         BaseResponseBean updateUserAssignmentResponse = new BaseResponseBean();
         updateUserAssignmentResponse = userService.updateUserAssignments(user);
         return new ResponseEntity<BaseResponseBean>(updateUserAssignmentResponse, HttpStatus.OK);
@@ -238,5 +249,11 @@ public class UserController
         return urlForSetupPW;
     }
 
+    private UserMaster getLoggedInUserDetails(HttpServletRequest request){
+        HttpSession sessoin = request.getSession();
+        UserMaster loggedInUserData = (sessoin.getAttribute(PSOConstants.SESSION_USER_DATA)!=null)?(UserMaster)sessoin.getAttribute(PSOConstants.SESSION_USER_DATA):null;
+        
+        return loggedInUserData;
+    }
     
 }

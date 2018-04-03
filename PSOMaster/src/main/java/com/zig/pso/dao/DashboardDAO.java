@@ -7,6 +7,7 @@ package com.zig.pso.dao;
 
 import java.util.List;
 
+import com.zig.pso.rest.bean.RegOrderStatisticsDetailsOutput;
 import com.zig.pso.rest.bean.RegularOrdersCount;
 import com.zig.pso.rest.bean.StuckOrderBacklogDBResultsBean;
 import com.zig.pso.rest.bean.StuckOrdersCount;
@@ -67,4 +68,6 @@ public interface DashboardDAO
     public List<RegularOrdersCount> getByodOrdersCount(String fromDate, String toDate);
 
     public List<RegularOrdersCount> getOrdersCount(String fromDate, String toDate, String type);
+    
+    public RegOrderStatisticsDetailsOutput getRegOrderStatistics();
 }

@@ -428,7 +428,7 @@ public class UserDAOImpl implements UserDAO
             pstm.setString(6, userData.getEmail());
             pstm.setString(7, userData.getCompany());
             pstm.setInt(8, userData.getGroupId());
-            pstm.setString(9, "Admin");
+            pstm.setString(9, userData.getUsername());
             pstm.setString(10, PSOConstants.USER_IN_PROGRESS); // I : User setup In Progress, A : Active
             int i = pstm.executeUpdate();
             if (i < 1)
@@ -504,7 +504,7 @@ public class UserDAOImpl implements UserDAO
             pstm.setString(3, userData.getEmail());
             pstm.setString(4, userData.getCompany());
             pstm.setInt(5, userData.getGroupId());
-            pstm.setString(6, "Admin");
+            pstm.setString(6, userData.getUsername());
             pstm.setString(7, userData.getEmpId());
             int i = pstm.executeUpdate();
             if (i < 1)

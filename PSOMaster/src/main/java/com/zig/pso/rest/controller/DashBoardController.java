@@ -98,7 +98,7 @@ public class DashBoardController
         return new ResponseEntity<StuckOrderBacklogUiResponseBean>(data, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/regularOrderList", method = RequestMethod.GET)
+    @RequestMapping(value = "/regularOrderList1", method = RequestMethod.GET)
     public ResponseEntity<RegularOrdersCountList> getRegularOrderList()
     {
         PSOLoggerSrv.printDEBUG(logger, "DashBoardController", "getRegularOrderList", "");
@@ -106,6 +106,16 @@ public class DashBoardController
         RegularOrdersCountList regularOrdersCountList = new RegularOrdersCountList();
 
         List<RegularOrdersCount> regularOrderList = dashboardService.getRegularOrderListData();
+        regularOrdersCountList.setRegularOrderList(regularOrderList);
+        return new ResponseEntity<RegularOrdersCountList>(regularOrdersCountList, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/regularOrderList", method = RequestMethod.GET)
+    public ResponseEntity<RegularOrdersCountList> getRegularOrderList1()
+    {
+        PSOLoggerSrv.printDEBUG(logger, "DashBoardController", "getRegularOrderList", "");
+        RegularOrdersCountList regularOrdersCountList = new RegularOrdersCountList();
+        List<RegularOrdersCount> regularOrderList = dashboardService.getRegOrderStatistics();
         regularOrdersCountList.setRegularOrderList(regularOrderList);
         return new ResponseEntity<RegularOrdersCountList>(regularOrdersCountList, HttpStatus.OK);
     }

@@ -38,12 +38,12 @@ public interface UpdateOrderManagerDAO
 
     public BaseResponseBean updateBulkOrderRetryCount(List<OrderUpdateInputData> orderUpdateData);
     
-    public TempInsertBUResponse insertBulkOrderDataInTempTable(List<OrderUpdateInputData> orderUpdateData);
+    public TempInsertBUResponse insertBulkOrderDataInTempTable(List<OrderUpdateInputData> orderUpdateData,String updateMadeByUser);
     
     public List<OrderUpdateInputData> getBulkOrderDataFromTempTable(String bulkUpdateId);
     
     public BaseResponseBean updateMultiOrderDetails(UpdateMultiOrderDetailsRequestBean updateOrderRequest);
     
-    public BaseResponseBean updateBulkOrderDetails(String bulkUpdateId);
+    public BaseResponseBean updateBulkOrderDetails(String bulkUpdateId,String updateMadeByUser);
 
 }

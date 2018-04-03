@@ -45,5 +45,5 @@ public interface UpdateOrderManagerService
     
     public BaseResponseBean updateMultiOrderDetails(UpdateMultiOrderDetailsRequestBean updateOrderRequest);
     
-    public BaseResponseBean updateBulkOrderDetails(String bulkUpdateId);
+    public BaseResponseBean updateBulkOrderDetails(String bulkUpdateId, String updateByUser);
 }

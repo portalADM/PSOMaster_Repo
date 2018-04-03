@@ -304,7 +304,8 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 	  * This method will upload and review bulk orders 
 	  */
 	 function uploadAndReviewOrders(file,uploadUrl){
-	      
+		 $scope.validOrderList = [];
+		 $scope.inValidOrders = [];
 		 $rootScope.spinner.on();
 	     FileUploadService.uploadFileToUrl(file, uploadUrl).then(
 				function(response) {
@@ -313,7 +314,10 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 						
 						$scope.validOrderList = response.tempTableDataList;
 						$scope.bulkUpdateID = response.bulkUpdateId;
-						MessageService.showSuccess(response.errorMsg,5000);
+						if(response.errorMsg!==null){
+							MessageService.showSuccess(response.errorMsg,5000);
+						}
+							
 						
 						$scope.accordion='Valid';
 						$("#UpdateResponse-modal").modal();
@@ -329,7 +333,7 @@ module.controller("UpdateOrderController", function($scope, $filter,$routeParams
 						MessageService.showError("No Data found to update.",5000);
 					}
 					
-					if(response.errorCode != 0 && response.invalidOrders.length>0){
+					if(response.errorCode == 0 && response.invalidOrders.length>0){
 						$scope.inValidOrders = response.invalidOrders;
 						$("#UpdateResponse-modal").modal();
 					}

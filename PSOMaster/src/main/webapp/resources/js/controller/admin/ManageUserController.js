@@ -63,6 +63,9 @@ module.controller("ManageUserController", function($scope, $routeParams,$http,Us
 						if(response.length>0){
 							$scope.pendingUserList = response;
 						}
+						else if(response.length==0){
+							MessageService.showInfo("No Pending User request found.",5000);
+						}
 						else{
 							$rootScope.spinner.off();
 							var errorMessage = response.errorMsg + ((response.logRefId!==null) ? "\n Log Reference ID : " + response.logRefId : '');

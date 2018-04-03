@@ -47,6 +47,9 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
     
     @Autowired
     UpdateOrderManagerDAO updateDAO;
+    
+    @Autowired
+    IUserService userService;
 
     private static final String SIM = "sim";
     private static final String IMEI = "imei";
@@ -280,15 +283,20 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
             {
                 isValidOrder = false;
             }
-            else if (null != orders.getSim()  && ( !orders.getSim().matches(numOnlyRegex) || (orders.getSim().length()> 20 || orders.getSim().length() < 18)) || null==orders.getLineId())
+            else if ((null != orders.getSim())  && ( !orders.getSim().matches(numOnlyRegex) || (orders.getSim().length()> 20 || orders.getSim().length() < 18) || null==orders.getLineId()))
             {
                 isValidOrder = false;
             }
-            else if (null != orders.getImei()  && ( !orders.getImei().matches(numOnlyRegex) || orders.getImei().length() != 15) || null==orders.getLineId())
+            else if (null != orders.getImei()  && ( !orders.getImei().matches(numOnlyRegex) || orders.getImei().length() != 15 || null==orders.getLineId()) )
             {
                 isValidOrder = false;
             }
-            else if (null != orders.getRetryCount()  && ( !orders.getRetryCount().matches(numOnlyRegex) || orders.getRetryCount().length() != 1))
+            else if (null != orders.getRetryCount()  && ( !orders.getRetryCount().matches(numOnlyRegex) || orders.getRetryCount().length() != 1 || (Integer.parseInt(orders.getRetryCount())>6 || Integer.parseInt(orders.getRetryCount())<0)) )
+            {
+                isValidOrder = false;
+            }
+            
+            if(orders.getImei()==null && orders.getRetryCount()==null && orders.getSim()==null && orders.getStatus()==null)
             {
                 isValidOrder = false;
             }
@@ -310,7 +318,7 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
         /* Insert Valid records in to temporary table for further Bulk update process */
         if(validOrderData.size()>0)
         {
-            TempInsertBUResponse insertTempDataResp = updateDAO.insertBulkOrderDataInTempTable(validOrderData);
+            TempInsertBUResponse insertTempDataResp = updateDAO.insertBulkOrderDataInTempTable(validOrderData,orderBulkData.getUpdatedBy());
             if(insertTempDataResp.getErrorCode() == PSOConstants.SUCCESS_CODE)
             {
                 List<OrderUpdateInputData> tempTableDataList = updateDAO.getBulkOrderDataFromTempTable(insertTempDataResp.getBulkUpdateId());
@@ -357,8 +365,8 @@ public class UpdateOrderManagerServiceImpl implements UpdateOrderManagerService
      * @see com.zig.pso.service.UpdateOrderManagerService#updateBulkOrderDetails(java.lang.String)
      */
     @Override
-    public BaseResponseBean updateBulkOrderDetails(String bulkUpdateId)
+    public BaseResponseBean updateBulkOrderDetails(String bulkUpdateId,String updateMadeByUser)
     {
-        return updateDAO.updateBulkOrderDetails(bulkUpdateId);
+        return updateDAO.updateBulkOrderDetails(bulkUpdateId,updateMadeByUser);
     }
 }

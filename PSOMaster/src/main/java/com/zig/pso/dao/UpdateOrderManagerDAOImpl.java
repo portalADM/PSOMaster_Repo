@@ -378,7 +378,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
             pstm.setString(4, currentValue);
             pstm.setString(5, updateOrderRequest.getNewValue());
             pstm.setString(6, logRefId);
-            pstm.setString(7, "admin");
+            pstm.setString(7, updateOrderRequest.getUpdatedBy());
             pstm.setString(8, tablename);
             int i = pstm.executeUpdate();
             if (i < 1)
@@ -799,7 +799,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
      * @see com.zig.pso.dao.UpdateOrderManagerDAO#insertBulkOrderDataInTempTable(java.util.ArrayList)
      */
     @Override
-    public TempInsertBUResponse insertBulkOrderDataInTempTable(List<OrderUpdateInputData> orderUpdateData)
+    public TempInsertBUResponse insertBulkOrderDataInTempTable(List<OrderUpdateInputData> orderUpdateData, String updateMadeByUser)
     {
         TempInsertBUResponse insertDataInTempTableResp = new TempInsertBUResponse();
         String logRefID = CommonUtility.getLogRefID();
@@ -824,7 +824,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
                 pstm.setString(5, order.getImei());
                 pstm.setString(6, order.getStatus());
                 pstm.setString(7, order.getRetryCount());
-                pstm.setString(8, PSOConstants.PSO_ADMIN_USER);
+                pstm.setString(8, updateMadeByUser);
                 pstm.addBatch();
             }
 
@@ -988,7 +988,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
      * @see com.zig.pso.dao.UpdateOrderManagerDAO#updateBulkOrderDetails(java.lang.String)
      */
     @Override
-    public BaseResponseBean updateBulkOrderDetails(String bulkUpdateId)
+    public BaseResponseBean updateBulkOrderDetails(String bulkUpdateId,String updateMadeByUser)
     {
         BaseResponseBean response = new BaseResponseBean();
         
@@ -1003,7 +1003,7 @@ public class UpdateOrderManagerDAOImpl implements UpdateOrderManagerDAO
         {
             callableStatement = con.prepareCall(sql);
             callableStatement.setString(1, bulkUpdateId);
-            callableStatement.setString(2, "Admin");
+            callableStatement.setString(2, updateMadeByUser);
             callableStatement.setString(3, logRefID);
             callableStatement.registerOutParameter(4, java.sql.Types.VARCHAR);
             callableStatement.registerOutParameter(5, java.sql.Types.VARCHAR);
